@@ -106,6 +106,10 @@
             CreateBuildLog_Button = new Button();
             openFileDialog2 = new OpenFileDialog();
             MetaDataPatcher_Button = new Button();
+            ExpandedLink_Panel = new Panel();
+            ExpandedLink_LL = new LinkLabel();
+            ExpandedLink_CloseButton = new PictureBox();
+            label22 = new Label();
             TitlePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
@@ -125,6 +129,8 @@
             ((System.ComponentModel.ISupportInitialize)Icon_PB).BeginInit();
             BugReport_Panel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)BugReport_CloseButton).BeginInit();
+            ExpandedLink_Panel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)ExpandedLink_CloseButton).BeginInit();
             SuspendLayout();
             // 
             // TitlePanel
@@ -1118,6 +1124,61 @@
             MetaDataPatcher_Button.UseVisualStyleBackColor = false;
             MetaDataPatcher_Button.Click += MetaDataPatcher_Button_Click;
             // 
+            // ExpandedLink_Panel
+            // 
+            ExpandedLink_Panel.BackColor = Color.FromArgb(75, 68, 138);
+            ExpandedLink_Panel.BorderStyle = BorderStyle.FixedSingle;
+            ExpandedLink_Panel.Controls.Add(ExpandedLink_LL);
+            ExpandedLink_Panel.Controls.Add(ExpandedLink_CloseButton);
+            ExpandedLink_Panel.Controls.Add(label22);
+            ExpandedLink_Panel.Location = new Point(213, 330);
+            ExpandedLink_Panel.Name = "ExpandedLink_Panel";
+            ExpandedLink_Panel.Size = new Size(765, 100);
+            ExpandedLink_Panel.TabIndex = 50;
+            ExpandedLink_Panel.Visible = false;
+            // 
+            // ExpandedLink_LL
+            // 
+            ExpandedLink_LL.ActiveLinkColor = SystemColors.MenuHighlight;
+            ExpandedLink_LL.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            ExpandedLink_LL.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            ExpandedLink_LL.LinkColor = SystemColors.MenuHighlight;
+            ExpandedLink_LL.Location = new Point(21, 40);
+            ExpandedLink_LL.Margin = new Padding(4, 0, 4, 0);
+            ExpandedLink_LL.Name = "ExpandedLink_LL";
+            ExpandedLink_LL.Size = new Size(726, 48);
+            ExpandedLink_LL.TabIndex = 36;
+            ExpandedLink_LL.TabStop = true;
+            ExpandedLink_LL.Tag = "null";
+            ExpandedLink_LL.Text = "https://discord.com/channels/1080948953161400320/1276994043196211301";
+            ExpandedLink_LL.TextAlign = ContentAlignment.MiddleCenter;
+            ExpandedLink_LL.VisitedLinkColor = SystemColors.MenuHighlight;
+            ExpandedLink_LL.LinkClicked += ExpandedLink_LL_LinkClicked;
+            // 
+            // ExpandedLink_CloseButton
+            // 
+            ExpandedLink_CloseButton.Image = Properties.Resources.Close_Icon;
+            ExpandedLink_CloseButton.Location = new Point(729, 5);
+            ExpandedLink_CloseButton.Name = "ExpandedLink_CloseButton";
+            ExpandedLink_CloseButton.Size = new Size(30, 30);
+            ExpandedLink_CloseButton.SizeMode = PictureBoxSizeMode.Zoom;
+            ExpandedLink_CloseButton.TabIndex = 34;
+            ExpandedLink_CloseButton.TabStop = false;
+            ExpandedLink_CloseButton.Click += ExpandedLink_CloseButton_Click;
+            ExpandedLink_CloseButton.MouseEnter += ExpandedLink_CloseButton_MouseEnter;
+            ExpandedLink_CloseButton.MouseLeave += ExpandedLink_CloseButton_MouseLeave;
+            // 
+            // label22
+            // 
+            label22.AutoSize = true;
+            label22.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label22.ForeColor = SystemColors.ActiveCaption;
+            label22.Location = new Point(356, 4);
+            label22.Name = "label22";
+            label22.Size = new Size(50, 30);
+            label22.TabIndex = 2;
+            label22.Text = "Link";
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1125,6 +1186,7 @@
             BackColor = Color.FromArgb(32, 34, 81);
             ClientSize = new Size(1134, 761);
             ControlBox = false;
+            Controls.Add(ExpandedLink_Panel);
             Controls.Add(MetaDataPatcher_Button);
             Controls.Add(CreateBuildLog_Button);
             Controls.Add(OpenWLFolder_Button);
@@ -1181,6 +1243,9 @@
             BugReport_Panel.ResumeLayout(false);
             BugReport_Panel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)BugReport_CloseButton).EndInit();
+            ExpandedLink_Panel.ResumeLayout(false);
+            ExpandedLink_Panel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)ExpandedLink_CloseButton).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1264,5 +1329,9 @@
         private Button CreateBuildLog_Button;
         private OpenFileDialog openFileDialog2;
         private Button MetaDataPatcher_Button;
+        private Panel ExpandedLink_Panel;
+        private LinkLabel ExpandedLink_LL;
+        private PictureBox ExpandedLink_CloseButton;
+        private Label label22;
     }
 }

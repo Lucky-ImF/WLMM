@@ -922,7 +922,9 @@ namespace WSMM
         private void Mod_LinkButton_Click(object sender, EventArgs e)
         {
             LinkLabel Casted = sender as LinkLabel;
-            Process.Start("explorer", Casted.Tag.ToString());
+            //Process.Start("explorer", Casted.Tag.ToString());
+            ExpandedLink_Panel.Show();
+            ExpandedLink_LL.Text = Casted.Tag.ToString();
         }
 
         private void ModEnabledCB_CheckStateChanged(object sender, EventArgs e)
@@ -2376,6 +2378,26 @@ namespace WSMM
             MetaDataPatcher MetaDataPatcher_Form = new MetaDataPatcher();
             MetaDataPatcher_Form.Show();
             MetaDataPatcher_Form.TransferInfo(LoadedWLPath, LoadedWLVersion);
+        }
+
+        private void ExpandedLink_CloseButton_MouseEnter(object sender, EventArgs e)
+        {
+            ExpandedLink_CloseButton.Image = Properties.Resources.Close_Icon_Hover;
+        }
+
+        private void ExpandedLink_CloseButton_MouseLeave(object sender, EventArgs e)
+        {
+            ExpandedLink_CloseButton.Image = Properties.Resources.Close_Icon;
+        }
+
+        private void ExpandedLink_CloseButton_Click(object sender, EventArgs e)
+        {
+            ExpandedLink_Panel.Hide();
+        }
+
+        private void ExpandedLink_LL_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("explorer", ExpandedLink_LL.Text);
         }
     }
 }
