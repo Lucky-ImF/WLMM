@@ -119,6 +119,11 @@ namespace WSMM
             mouseDown = false;
         }
 
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            ControlPaint.DrawBorder(e.Graphics, ClientRectangle, Color.Black, ButtonBorderStyle.Solid);
+        }
+
         private void Close_Button_Click(object sender, EventArgs e)
         {
             this.Close();

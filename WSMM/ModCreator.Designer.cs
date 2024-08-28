@@ -48,6 +48,7 @@
             AutoModList = new ListView();
             CreateAutoMod_Button = new Button();
             panel1 = new Panel();
+            CopyMetaData_Button = new Button();
             ModIconSetDefault_LL = new LinkLabel();
             ModIconBrowse_Button = new Button();
             label9 = new Label();
@@ -71,7 +72,6 @@
             LoadMod_Button = new Button();
             openFileDialog3 = new OpenFileDialog();
             Icon_PB = new PictureBox();
-            CopyMetaData_Button = new Button();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             TitlePanel.SuspendLayout();
@@ -107,9 +107,9 @@
             TitlePanel.BackColor = Color.FromArgb(32, 34, 81);
             TitlePanel.Controls.Add(ByLuckyLabel);
             TitlePanel.Controls.Add(TitleLabel);
-            TitlePanel.Location = new Point(-1, -1);
+            TitlePanel.Location = new Point(1, 1);
             TitlePanel.Name = "TitlePanel";
-            TitlePanel.Size = new Size(661, 40);
+            TitlePanel.Size = new Size(656, 40);
             TitlePanel.TabIndex = 2;
             TitlePanel.MouseDown += TitlePanel_MouseDown;
             TitlePanel.MouseMove += TitlePanel_MouseMove;
@@ -320,6 +320,21 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(570, 303);
             panel1.TabIndex = 14;
+            // 
+            // CopyMetaData_Button
+            // 
+            CopyMetaData_Button.BackColor = Color.FromArgb(75, 68, 138);
+            CopyMetaData_Button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            CopyMetaData_Button.FlatStyle = FlatStyle.Flat;
+            CopyMetaData_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            CopyMetaData_Button.ForeColor = SystemColors.ActiveCaption;
+            CopyMetaData_Button.Location = new Point(327, 266);
+            CopyMetaData_Button.Name = "CopyMetaData_Button";
+            CopyMetaData_Button.Size = new Size(228, 27);
+            CopyMetaData_Button.TabIndex = 20;
+            CopyMetaData_Button.Text = "Copy MetaData Patch to Clipboard";
+            CopyMetaData_Button.UseVisualStyleBackColor = false;
+            CopyMetaData_Button.Click += CopyMetaData_Button_Click;
             // 
             // ModIconSetDefault_LL
             // 
@@ -596,21 +611,6 @@
             Icon_PB.MouseDown += TitlePanel_MouseDown;
             Icon_PB.MouseMove += TitlePanel_MouseMove;
             Icon_PB.MouseUp += TitlePanel_MouseUp;
-            // 
-            // CopyMetaData_Button
-            // 
-            CopyMetaData_Button.BackColor = Color.FromArgb(75, 68, 138);
-            CopyMetaData_Button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            CopyMetaData_Button.FlatStyle = FlatStyle.Flat;
-            CopyMetaData_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            CopyMetaData_Button.ForeColor = SystemColors.ActiveCaption;
-            CopyMetaData_Button.Location = new Point(327, 266);
-            CopyMetaData_Button.Name = "CopyMetaData_Button";
-            CopyMetaData_Button.Size = new Size(228, 27);
-            CopyMetaData_Button.TabIndex = 20;
-            CopyMetaData_Button.Text = "Copy MetaData Patch to Clipboard";
-            CopyMetaData_Button.UseVisualStyleBackColor = false;
-            CopyMetaData_Button.Click += CopyMetaData_Button_Click;
             // 
             // ModCreator
             // 

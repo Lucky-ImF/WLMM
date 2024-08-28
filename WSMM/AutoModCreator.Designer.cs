@@ -383,9 +383,9 @@
             TitlePanel.BackColor = Color.FromArgb(32, 34, 81);
             TitlePanel.Controls.Add(ByLuckyLabel);
             TitlePanel.Controls.Add(TitleLabel);
-            TitlePanel.Location = new Point(-1, -1);
+            TitlePanel.Location = new Point(1, 1);
             TitlePanel.Name = "TitlePanel";
-            TitlePanel.Size = new Size(624, 40);
+            TitlePanel.Size = new Size(619, 40);
             TitlePanel.TabIndex = 5;
             TitlePanel.MouseDown += TitlePanel_MouseDown;
             TitlePanel.MouseMove += TitlePanel_MouseMove;

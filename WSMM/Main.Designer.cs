@@ -107,10 +107,10 @@
             openFileDialog2 = new OpenFileDialog();
             MetaDataPatcher_Button = new Button();
             ExpandedLink_Panel = new Panel();
+            ExpandedLinkCopy_LL = new LinkLabel();
             ExpandedLink_LL = new LinkLabel();
             ExpandedLink_CloseButton = new PictureBox();
             label22 = new Label();
-            ExpandedLinkCopy_LL = new LinkLabel();
             TitlePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
@@ -141,9 +141,9 @@
             TitlePanel.Controls.Add(UpdateLink);
             TitlePanel.Controls.Add(ByLuckyLabel);
             TitlePanel.Controls.Add(TitleLabel);
-            TitlePanel.Location = new Point(-1, -1);
+            TitlePanel.Location = new Point(1, 1);
             TitlePanel.Name = "TitlePanel";
-            TitlePanel.Size = new Size(1136, 40);
+            TitlePanel.Size = new Size(1132, 40);
             TitlePanel.TabIndex = 0;
             TitlePanel.MouseDown += TitlePanel_MouseDown;
             TitlePanel.MouseMove += TitlePanel_MouseMove;
@@ -1139,6 +1139,22 @@
             ExpandedLink_Panel.TabIndex = 50;
             ExpandedLink_Panel.Visible = false;
             // 
+            // ExpandedLinkCopy_LL
+            // 
+            ExpandedLinkCopy_LL.ActiveLinkColor = SystemColors.ActiveCaption;
+            ExpandedLinkCopy_LL.AutoSize = true;
+            ExpandedLinkCopy_LL.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            ExpandedLinkCopy_LL.LinkColor = SystemColors.Highlight;
+            ExpandedLinkCopy_LL.Location = new Point(481, 11);
+            ExpandedLinkCopy_LL.Name = "ExpandedLinkCopy_LL";
+            ExpandedLinkCopy_LL.Size = new Size(165, 21);
+            ExpandedLinkCopy_LL.TabIndex = 37;
+            ExpandedLinkCopy_LL.TabStop = true;
+            ExpandedLinkCopy_LL.Tag = "https://discord.com/channels/1105479421932097566/1220011707469004893";
+            ExpandedLinkCopy_LL.Text = "Copy link to Clipboard";
+            ExpandedLinkCopy_LL.VisitedLinkColor = SystemColors.Highlight;
+            ExpandedLinkCopy_LL.LinkClicked += ExpandedLinkCopy_LL_LinkClicked;
+            // 
             // ExpandedLink_LL
             // 
             ExpandedLink_LL.ActiveLinkColor = SystemColors.MenuHighlight;
@@ -1180,22 +1196,6 @@
             label22.Size = new Size(50, 30);
             label22.TabIndex = 2;
             label22.Text = "Link";
-            // 
-            // ExpandedLinkCopy_LL
-            // 
-            ExpandedLinkCopy_LL.ActiveLinkColor = SystemColors.ActiveCaption;
-            ExpandedLinkCopy_LL.AutoSize = true;
-            ExpandedLinkCopy_LL.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            ExpandedLinkCopy_LL.LinkColor = SystemColors.Highlight;
-            ExpandedLinkCopy_LL.Location = new Point(481, 11);
-            ExpandedLinkCopy_LL.Name = "ExpandedLinkCopy_LL";
-            ExpandedLinkCopy_LL.Size = new Size(165, 21);
-            ExpandedLinkCopy_LL.TabIndex = 37;
-            ExpandedLinkCopy_LL.TabStop = true;
-            ExpandedLinkCopy_LL.Tag = "https://discord.com/channels/1105479421932097566/1220011707469004893";
-            ExpandedLinkCopy_LL.Text = "Copy link to Clipboard";
-            ExpandedLinkCopy_LL.VisitedLinkColor = SystemColors.Highlight;
-            ExpandedLinkCopy_LL.LinkClicked += ExpandedLinkCopy_LL_LinkClicked;
             // 
             // Main
             // 

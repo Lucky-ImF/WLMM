@@ -86,6 +86,11 @@ namespace WSMM
             mouseDown = false;
         }
 
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            ControlPaint.DrawBorder(e.Graphics, ClientRectangle, Color.Black, ButtonBorderStyle.Solid);
+        }
+
         private void ModCreator_Button_Click(object sender, EventArgs e)
         {
             ModCreator ModCreator_Form = new ModCreator();

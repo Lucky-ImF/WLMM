@@ -147,6 +147,7 @@
             Name = "CustomMsgBox";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "WLMM - Message Box";
+            Load += CustomMsgBox_Load;
             ResumeLayout(false);
             PerformLayout();
         }

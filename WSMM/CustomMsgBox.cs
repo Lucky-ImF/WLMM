@@ -18,6 +18,11 @@ namespace WSMM
             InitializeComponent();
         }
 
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            ControlPaint.DrawBorder(e.Graphics, ClientRectangle, Color.Black, ButtonBorderStyle.Solid);
+        }
+
         private void Keep_Button_Click(object sender, EventArgs e)
         {
             this.Invoke((System.Windows.Forms.MethodInvoker)delegate
@@ -42,7 +47,7 @@ namespace WSMM
             {
                 myParent.Enabled = true;
             });
-            this.DialogResult= DialogResult.No;
+            this.DialogResult = DialogResult.No;
         }
 
         private void RemoveAll_Button_Click(object sender, EventArgs e)
@@ -59,6 +64,11 @@ namespace WSMM
             myParent = myParent_;
             ModName_Label.Text = ModName;
             ModName_Label.Left = this.Width / 2 - ModName_Label.Width / 2;
+        }
+
+        private void CustomMsgBox_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
