@@ -26,7 +26,7 @@ namespace WSMM
         private bool StartingUp = true;
         private bool HasOldChanges = false;
 
-        private string WLMM_Version = "0.0.3";
+        private string WLMM_Version = "1.0.0";
         string BuildLog = string.Empty;
 
         //Panel, Picturebox, Label(Name), Label(Error), Label(Version), Label(SupportedVersions), Label(Author), LinkLabel(Remove), LinkLabel(Link), Checkbox
@@ -96,12 +96,10 @@ namespace WSMM
         private void Mod_RemoveButtonClick(object sender, EventArgs e)
         {
             LinkLabel Casted = sender as LinkLabel;
-            //CreateCustCharEntry(int.Parse(Casted.Tag.ToString()));
         }
         private void Mod_LinkButtonClick(object sender, EventArgs e)
         {
             LinkLabel Casted = sender as LinkLabel;
-            //CreateCustCharEntry(int.Parse(Casted.Tag.ToString()));
         }
 
         private void LoadGame_Button_Click(object sender, EventArgs e)
@@ -194,14 +192,12 @@ namespace WSMM
                         else if (NotSupported == true)
                         {
                             MessageBox.Show("This version of Wild Life is not supported.\nPlease manually specify version." + Version, "Wild Life Mod Manager", MessageBoxButtons.OK);
-                            //SelectWLVersion_CB.Text = "Please specify version...";
-                            //SelectWLVersionPath_TB.Text = "None";
                             SelectWLVersion_CB.Text = "Please specify version...";
                         }
                     }
                     else
                     {
-                        MessageBox.Show("Couldn't find a Wild Life instance.\nMake sure you select the root folder of Wild Life.", "Wild Life Mod Manager", MessageBoxButtons.OK);
+                        MessageBox.Show("Couldn't find a Wild Life instance.\nMake sure you select the WildLifeC.exe in the root folder.", "Wild Life Mod Manager", MessageBoxButtons.OK);
                     }
                 }
             }
@@ -1227,6 +1223,7 @@ namespace WSMM
 
         private string GenerateJSON()
         {
+            //This needs a rewrite
             int OutfitNR = 0;
             int CustomNR = 0;
             string ClothesOutfit = string.Empty;
@@ -1883,10 +1880,7 @@ namespace WSMM
 
                 ClothesOutfit = ClothesOutfit.Replace("[ENTRYSTART]", CompiledEntries);
                 ClothesOutfit = ClothesOutfit.Replace("[NAMEMAPSTART]", CompiledNameMap);
-                //if (DebugFilesCB.Checked == true)
-                //{
                 File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_ClothesOutfit_Debug.json", ClothesOutfit);
-                //}
                 dynamic ClothesArray = JsonConvert.DeserializeObject(ClothesOutfit);
                 string ClothesjsonString = JsonConvert.SerializeObject(ClothesArray, Newtonsoft.Json.Formatting.Indented);
                 File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_ClothesOutfit_Generated.json", ClothesjsonString);
@@ -1894,7 +1888,6 @@ namespace WSMM
             }
             catch (Exception ex)
             {
-                //MessageBox.Show(ex.Message);
                 return "DT_ClothesOutfit json error: " + ex.Message;
             }
 
@@ -1911,8 +1904,6 @@ namespace WSMM
                         if (TempArray[0] == GameChar)
                         {
                             CompiledEntries += TempArray[1];
-                            //Debug.WriteLine(GameChar + " = " + TempArray[0]);
-                            //Debug.Write(TempArray[1]);
                         }
                     }
                     CompiledEntries = CompiledEntries.TrimEnd(',');
@@ -1921,7 +1912,6 @@ namespace WSMM
                     else
                     {
                         CompiledEntries = CompiledEntries.Insert(0, "\n");
-                        //Debug.Write(CompiledEntries);
                         GameCharacterOutfits = GameCharacterOutfits.Replace("[" + GameChar.ToUpper() + "_OUTFITADD]", CompiledEntries);
 
                     }
@@ -1934,13 +1924,8 @@ namespace WSMM
                 }
                 CompiledNameMap = CompiledNameMap.TrimEnd(',');
 
-                //GameCharacterOutfits = GameCharacterOutfits.Replace("[OUTFITADDSTART]", CompiledEntries);
                 GameCharacterOutfits = GameCharacterOutfits.Replace("[NAMEMAPSTART]", CompiledNameMap);
-
-                //if (DebugFilesCB.Checked == true)
-                //{
                 File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GameCharacterOutfits_Debug.json", GameCharacterOutfits);
-                //}
                 dynamic OutfitsArray = JsonConvert.DeserializeObject(GameCharacterOutfits);
                 string OutfitsjsonString = JsonConvert.SerializeObject(OutfitsArray, Newtonsoft.Json.Formatting.Indented);
                 File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GameCharacterOutfits_Generated.json", OutfitsjsonString);
@@ -1974,7 +1959,6 @@ namespace WSMM
                             CompiledHairEntries = "\n" + TempArray[1].TrimEnd('\n') + ",[" + GameChar + "_HAIR]";
                             GameCharacterCustom = GameCharacterCustom.Replace("[" + GameChar + "_HAIR]", CompiledHairEntries);
                         }
-                        //GameCharacterCustom = GameCharacterCustom.Replace(",[" + GameChar + "_HAIR]", "");
 
                         foreach (string Ent in Skin)
                         {
@@ -1983,7 +1967,6 @@ namespace WSMM
                             CompiledSkinEntries = "\n" + TempArray[1].TrimEnd('\n') + ",[" + GameChar + "_SKIN]";
                             GameCharacterCustom = GameCharacterCustom.Replace("[" + GameChar + "_SKIN]", CompiledSkinEntries);
                         }
-                        //GameCharacterCustom = GameCharacterCustom.Replace(",[" + GameChar + "_SKIN]", "");
 
                         foreach (string Ent in PubicHair)
                         {
@@ -1992,7 +1975,6 @@ namespace WSMM
                             CompiledPubicHairEntries = "\n" + TempArray[1].TrimEnd('\n') + ",[" + GameChar + "_PUBICHAIR]";
                             GameCharacterCustom = GameCharacterCustom.Replace("[" + GameChar + "_PUBICHAIR]", CompiledPubicHairEntries);
                         }
-                        //GameCharacterCustom = GameCharacterCustom.Replace(",[" + GameChar + "_PUBICHAIR]", "");
 
                         foreach (string Ent in Eyes)
                         {
@@ -2001,7 +1983,6 @@ namespace WSMM
                             CompiledEyesEntries = "\n" + TempArray[1].TrimEnd('\n') + ",[" + GameChar + "_EYES]";
                             GameCharacterCustom = GameCharacterCustom.Replace("[" + GameChar + "_EYES]", CompiledEyesEntries);
                         }
-                        //GameCharacterCustom = GameCharacterCustom.Replace(",[" + GameChar + "_EYES]", "");
 
                         foreach (string Ent in EyeLiner)
                         {
@@ -2010,7 +1991,6 @@ namespace WSMM
                             CompiledEyeLinerEntries = "\n" + TempArray[1].TrimEnd('\n') + ",[" + GameChar + "_EYELINER]";
                             GameCharacterCustom = GameCharacterCustom.Replace("[" + GameChar + "_EYELINER]", CompiledEyeLinerEntries);
                         }
-                        //GameCharacterCustom = GameCharacterCustom.Replace(",[" + GameChar + "_EYELINER]", "");
 
                         foreach (string Ent in EyeShadow)
                         {
@@ -2019,7 +1999,6 @@ namespace WSMM
                             CompiledEyeShadowEntries = "\n" + TempArray[1].TrimEnd('\n') + ",[" + GameChar + "_EYESHADOW]";
                             GameCharacterCustom = GameCharacterCustom.Replace("[" + GameChar + "_EYESHADOW]", CompiledEyeShadowEntries);
                         }
-                        //GameCharacterCustom = GameCharacterCustom.Replace(",[" + GameChar + "_EYESHADOW]", "");
 
                         foreach (string Ent in Lipstick)
                         {
@@ -2028,7 +2007,6 @@ namespace WSMM
                             CompiledLipstickEntries = "\n" + TempArray[1].TrimEnd('\n') + ",[" + GameChar + "_LIPSTICK]";
                             GameCharacterCustom = GameCharacterCustom.Replace("[" + GameChar + "_LIPSTICK]", CompiledLipstickEntries);
                         }
-                        //GameCharacterCustom = GameCharacterCustom.Replace(",[" + GameChar + "_LIPSTICK]", "");
 
                         foreach (string Ent in Tanlines)
                         {
@@ -2037,7 +2015,6 @@ namespace WSMM
                             CompiledTanlinesEntries = "\n" + TempArray[1].TrimEnd('\n') + ",[" + GameChar + "_TANLINES]";
                             GameCharacterCustom = GameCharacterCustom.Replace("[" + GameChar + "_TANLINES]", CompiledTanlinesEntries);
                         }
-                        //GameCharacterCustom = GameCharacterCustom.Replace(",[" + GameChar + "_TANLINES]", "");
 
                         // Remove Markers
                         foreach (string GmCh in CustomizerCharacters)
@@ -2060,10 +2037,7 @@ namespace WSMM
                         CompiledCustomNameMap = CompiledCustomNameMap.TrimEnd(',');
 
                         GameCharacterCustom = GameCharacterCustom.Replace("[NAMEMAPSTART]", CompiledCustomNameMap);
-                        //if (DebugFilesCB.Checked == true)
-                        //{
                         File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GameCharacterCustomization_Debug.json", GameCharacterCustom);
-                        //}
                         dynamic CustomArray = JsonConvert.DeserializeObject(GameCharacterCustom);
                         string CustomjsonString = JsonConvert.SerializeObject(CustomArray, Newtonsoft.Json.Formatting.Indented);
                         File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GameCharacterCustomization_Generated.json", CustomjsonString);
@@ -2097,10 +2071,7 @@ namespace WSMM
                     {
                         stringBuilder.AppendLine(line);
                     }
-                    //if (DebugFilesCB.Checked == true)
-                    //{
                     File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GFur_Debug.json", stringBuilder.ToString());
-                    //}
                     dynamic CustomArray = JsonConvert.DeserializeObject(stringBuilder.ToString());
                     string CustomjsonString = JsonConvert.SerializeObject(CustomArray, Newtonsoft.Json.Formatting.Indented);
                     File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GFur_Generated.json", CustomjsonString);

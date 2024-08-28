@@ -202,7 +202,7 @@
             TitleLabel.Name = "TitleLabel";
             TitleLabel.Size = new Size(310, 30);
             TitleLabel.TabIndex = 0;
-            TitleLabel.Text = "Wild Life Mod Manager - v.0.0.3";
+            TitleLabel.Text = "Wild Life Mod Manager - v.1.0.0";
             TitleLabel.MouseDown += TitlePanel_MouseDown;
             TitleLabel.MouseMove += TitlePanel_MouseMove;
             TitleLabel.MouseUp += TitlePanel_MouseUp;
