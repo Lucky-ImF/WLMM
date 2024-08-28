@@ -114,6 +114,20 @@ namespace WSMM
 
         public void AddToAutoModList(string AMPath)
         {
+            ListViewItem FoundDupe = null;
+            foreach (ListViewItem LVI in AutoModList.Items)
+            {
+                if (LVI.Text == Path.GetFileName(AMPath))
+                {
+                    FoundDupe = LVI;
+                    break;
+                }
+            }
+            if (FoundDupe != null)
+            {
+                AutoModList.Items.Remove(FoundDupe);
+            }
+
             AutoModList.Items.Add(Path.GetFileName(AMPath), 1);
             AutoModList.Items[AutoModList.Items.Count - 1].Tag = AMPath;
         }
