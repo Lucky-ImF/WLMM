@@ -2398,6 +2398,13 @@ namespace WSMM
         private void ExpandedLink_LL_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start("explorer", ExpandedLink_LL.Text);
+            ExpandedLink_Panel.Hide();
+        }
+
+        private void ExpandedLinkCopy_LL_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Clipboard.SetText(ExpandedLink_LL.Text);
+            ExpandedLink_Panel.Hide();
         }
     }
 }

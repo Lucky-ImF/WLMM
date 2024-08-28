@@ -110,6 +110,7 @@
             ExpandedLink_LL = new LinkLabel();
             ExpandedLink_CloseButton = new PictureBox();
             label22 = new Label();
+            ExpandedLinkCopy_LL = new LinkLabel();
             TitlePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
@@ -1128,6 +1129,7 @@
             // 
             ExpandedLink_Panel.BackColor = Color.FromArgb(75, 68, 138);
             ExpandedLink_Panel.BorderStyle = BorderStyle.FixedSingle;
+            ExpandedLink_Panel.Controls.Add(ExpandedLinkCopy_LL);
             ExpandedLink_Panel.Controls.Add(ExpandedLink_LL);
             ExpandedLink_Panel.Controls.Add(ExpandedLink_CloseButton);
             ExpandedLink_Panel.Controls.Add(label22);
@@ -1178,6 +1180,22 @@
             label22.Size = new Size(50, 30);
             label22.TabIndex = 2;
             label22.Text = "Link";
+            // 
+            // ExpandedLinkCopy_LL
+            // 
+            ExpandedLinkCopy_LL.ActiveLinkColor = SystemColors.ActiveCaption;
+            ExpandedLinkCopy_LL.AutoSize = true;
+            ExpandedLinkCopy_LL.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            ExpandedLinkCopy_LL.LinkColor = SystemColors.Highlight;
+            ExpandedLinkCopy_LL.Location = new Point(481, 11);
+            ExpandedLinkCopy_LL.Name = "ExpandedLinkCopy_LL";
+            ExpandedLinkCopy_LL.Size = new Size(165, 21);
+            ExpandedLinkCopy_LL.TabIndex = 37;
+            ExpandedLinkCopy_LL.TabStop = true;
+            ExpandedLinkCopy_LL.Tag = "https://discord.com/channels/1105479421932097566/1220011707469004893";
+            ExpandedLinkCopy_LL.Text = "Copy link to Clipboard";
+            ExpandedLinkCopy_LL.VisitedLinkColor = SystemColors.Highlight;
+            ExpandedLinkCopy_LL.LinkClicked += ExpandedLinkCopy_LL_LinkClicked;
             // 
             // Main
             // 
@@ -1333,5 +1351,6 @@
         private LinkLabel ExpandedLink_LL;
         private PictureBox ExpandedLink_CloseButton;
         private Label label22;
+        private LinkLabel ExpandedLinkCopy_LL;
     }
 }
