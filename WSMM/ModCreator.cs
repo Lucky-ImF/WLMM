@@ -82,8 +82,19 @@ namespace WSMM
 
         private void ModCreator_Load(object sender, EventArgs e)
         {
+            LoadSupportedVersions();
+
             ModIconPath_TB.Text = "Default";
             ModIcon_Preview.ImageLocation = Application.StartupPath + @"System\Default_Icon.png";
+        }
+
+        private void LoadSupportedVersions()
+        {
+            if (File.Exists(Application.StartupPath + @"System\SupportedVersions.ini"))
+            {
+                SupportedWLVersions_CLB.Items.Clear();
+                SupportedWLVersions_CLB.Items.AddRange(File.ReadAllLines(Application.StartupPath + @"System\SupportedVersions.ini"));
+            }
         }
 
         private void ModIconBrowse_Button_Click(object sender, EventArgs e)

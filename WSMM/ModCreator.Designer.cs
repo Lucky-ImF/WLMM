@@ -472,7 +472,6 @@
             SupportedWLVersions_CLB.BorderStyle = BorderStyle.FixedSingle;
             SupportedWLVersions_CLB.ForeColor = SystemColors.ActiveCaption;
             SupportedWLVersions_CLB.FormattingEnabled = true;
-            SupportedWLVersions_CLB.Items.AddRange(new object[] { "2024.08.22_Shipping_Full_Build_1", "All Versions" });
             SupportedWLVersions_CLB.Location = new Point(12, 81);
             SupportedWLVersions_CLB.Name = "SupportedWLVersions_CLB";
             SupportedWLVersions_CLB.ScrollAlwaysVisible = true;
