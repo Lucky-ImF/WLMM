@@ -615,12 +615,14 @@ namespace WSMM
                 ProgressInfo_Label.Invoke((System.Windows.Forms.MethodInvoker)delegate
                 {
                     ProgressInfo_Label.Text = "Copying " + Path.GetFileName(Mod) + "...";
+                    ProgressInfo_Label.Left = ProgressPanel.Width / 2 - ProgressInfo_Label.Width / 2;
                 });
                 File.Copy(Mod, Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + Path.GetFileName(Mod), true);
                 //Unzip to Loaded\Mod Name
                 ProgressInfo_Label.Invoke((System.Windows.Forms.MethodInvoker)delegate
                 {
                     ProgressInfo_Label.Text = "Unpacking " + Path.GetFileName(Mod) + "...";
+                    ProgressInfo_Label.Left = ProgressPanel.Width / 2 - ProgressInfo_Label.Width / 2;
                 });
                 if (Directory.Exists(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + Path.GetFileNameWithoutExtension(Mod)))
                 {
