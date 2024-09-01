@@ -517,10 +517,12 @@ namespace WSMM
 
         private void AutoModList_DoubleClick(object sender, EventArgs e)
         {
-            AutoModCreator AutoModCreator_Form = new AutoModCreator();
-            AutoModCreator_Form.Show();
-            AutoModCreator_Form.TransferInfo(LoadedWLPath, LoadedWLVersion, this);
-            AutoModCreator_Form.LoadAutoMod(AutoModList.SelectedItems[0].Tag.ToString());
+            if (AutoModList.SelectedItems[0].Tag.ToString().EndsWith(".txt")) {
+                AutoModCreator AutoModCreator_Form = new AutoModCreator();
+                AutoModCreator_Form.Show();
+                AutoModCreator_Form.TransferInfo(LoadedWLPath, LoadedWLVersion, this);
+                AutoModCreator_Form.LoadAutoMod(AutoModList.SelectedItems[0].Tag.ToString());
+            }
         }
 
         private void ModIconPath_TB_TextChanged(object sender, EventArgs e)
