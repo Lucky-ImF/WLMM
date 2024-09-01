@@ -29,6 +29,10 @@ namespace WSMM
         private string WLMM_Version = "1.0.0";
         string BuildLog = string.Empty;
 
+        public string prevIconPath = string.Empty;
+        public string prevPakPath = string.Empty;
+        public string prevAutoModPath = string.Empty;
+
         //Panel, Picturebox, Label(Name), Label(Error), Label(Version), Label(SupportedVersions), Label(Author), LinkLabel(Remove), LinkLabel(Link), Checkbox
         Panel[] Mod_Panel = new Panel[100];
         PictureBox[] Mod_Icon = new PictureBox[100];
@@ -95,7 +99,7 @@ namespace WSMM
         {
             ModCreator ModCreator_Form = new ModCreator();
             ModCreator_Form.Show();
-            ModCreator_Form.TransferInfo(LoadedWLPath, LoadedWLVersion);
+            ModCreator_Form.TransferInfo(LoadedWLPath, LoadedWLVersion, this);
         }
 
         private void Mod_RemoveButtonClick(object sender, EventArgs e)
@@ -489,6 +493,18 @@ namespace WSMM
                             ChangesMade_Label.Text = "Changes Made: " + ChangesMade.ToString();
                         }
                     }
+                    else if (file.StartsWith("prevIconPath"))
+                    {
+                        prevIconPath = GetSlice(file, "=", 1);
+                    }
+                    else if (file.StartsWith("prevPakPath"))
+                    {
+                        prevPakPath = GetSlice(file, "=", 1);
+                    }
+                    else if (file.StartsWith("prevAutoModPath"))
+                    {
+                        prevAutoModPath = GetSlice(file, "=", 1);
+                    }
                 }
 
                 if (LoadedWLPath != "" && LoadedWLPath != string.Empty)
@@ -506,7 +522,7 @@ namespace WSMM
 
         private void SaveSession()
         {
-            string SaveFile = "WL_Path = " + LoadedWLPath + "\nWL_Version = " + LoadedWLVersion + "\nChangesMade = " + ChangesMade.ToString();
+            string SaveFile = "WL_Path = " + LoadedWLPath + "\nWL_Version = " + LoadedWLVersion + "\nChangesMade = " + ChangesMade.ToString() + "\nprevIconPath = " + prevIconPath + "\nprevPakPath = " + prevPakPath + "\nprevAutoModPath = " + prevAutoModPath;
             File.WriteAllText(Application.StartupPath + @"System\Session.dat", SaveFile);
         }
 

@@ -21,11 +21,13 @@ namespace WSMM
 
         private string LoadedWLVersion = string.Empty;
         private string LoadedWLPath = string.Empty;
+        private Main ParentForm = null;
 
-        public void TransferInfo(string Path, string Version)
+        public void TransferInfo(string Path, string Version, Main main)
         {
             LoadedWLVersion = Version;
             LoadedWLPath = Path;
+            ParentForm = main;
         }
 
         public ModCreator()
@@ -99,16 +101,25 @@ namespace WSMM
 
         private void ModIconBrowse_Button_Click(object sender, EventArgs e)
         {
+            if (ParentForm.prevIconPath != string.Empty)
+            {
+                openFileDialog2.InitialDirectory = ParentForm.prevIconPath;
+            }
             if (openFileDialog2.ShowDialog() == DialogResult.OK)
             {
                 ModIconPath_TB.Text = openFileDialog2.FileName;
                 ModIcon_Preview.ImageLocation = ModIconPath_TB.Text;
+                ParentForm.prevIconPath = Path.GetDirectoryName(openFileDialog2.FileName);
             }
         }
 
         private void AddPak_Button_Click(object sender, EventArgs e)
         {
             openFileDialog1.Filter = "pak files (*.pak)|*.pak|All files (*.*)|*.*";
+            if (ParentForm.prevPakPath != string.Empty)
+            {
+                openFileDialog1.InitialDirectory = ParentForm.prevPakPath;
+            }
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 string[] paks = openFileDialog1.FileNames;
@@ -117,6 +128,7 @@ namespace WSMM
                     PakList.Items.Add(Path.GetFileName(pak), 0);
                     PakList.Items[PakList.Items.Count - 1].Tag = pak;
                 }
+                ParentForm.prevPakPath = Path.GetDirectoryName(openFileDialog1.FileName);
             }
         }
 
@@ -151,6 +163,10 @@ namespace WSMM
         private void AddAutoMod_Button_Click(object sender, EventArgs e)
         {
             openFileDialog1.Filter = ".txt files (*.txt)|*.txt| .collection files (*.collection)|*.collection|All files (*.*)|*.*";
+            if (ParentForm.prevAutoModPath != string.Empty)
+            {
+                openFileDialog1.InitialDirectory = ParentForm.prevAutoModPath;
+            }
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 string[] automods = openFileDialog1.FileNames;
@@ -171,6 +187,7 @@ namespace WSMM
                         MessageBox.Show(AMs.ToString() + " is not a valid AutoMod file.");
                     }
                 }
+                ParentForm.prevAutoModPath = Path.GetDirectoryName(openFileDialog1.FileName);
             }
         }
 
