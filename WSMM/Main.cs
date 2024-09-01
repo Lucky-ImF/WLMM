@@ -26,7 +26,7 @@ namespace WSMM
         private bool StartingUp = true;
         private bool HasOldChanges = false;
 
-        private string WLMM_Version = "1.0.0";
+        private string WLMM_Version = "1.0.1";
         string BuildLog = string.Empty;
 
         public string prevIconPath = string.Empty;
@@ -298,6 +298,10 @@ namespace WSMM
 
         private void Main_Load(object sender, EventArgs e)
         {
+            //Set title
+            this.Text = "Wild Life Mod Manager - v." + WLMM_Version;
+            TitleLabel.Text = "Wild Life Mod Manager - v." + WLMM_Version;
+
             //Version Check
             CheckForUpdate();
 

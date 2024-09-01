@@ -1230,7 +1230,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Main";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Wild Life Mod Manager - v.0.0.3";
+            Text = "Wild Life Mod Manager - ";
             FormClosing += Main_FormClosing;
             Load += Main_Load;
             TitlePanel.ResumeLayout(false);
