@@ -11,6 +11,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using UAssetAPI.UnrealTypes;
 using UAssetAPI.Unversioned;
 using System.Net;
+using System.Security.Cryptography;
 
 namespace WSMM
 {
@@ -553,6 +554,17 @@ namespace WSMM
                     {
                         BS_Mappings.Text = GetSlice(file, "=", 1);
                     }
+                    else if (file.StartsWith("VerifyIntegrity"))
+                    {
+                        if (GetSlice(file, "=", 1) == "Checked")
+                        {
+                            BS_VerifyFI_CB.Checked = true;
+                        }
+                        else
+                        {
+                            BS_VerifyFI_CB.Checked = false;
+                        }
+                    }
                 }
             }
             else
@@ -573,7 +585,7 @@ namespace WSMM
         private void SaveBuildSettings()
         {
             string SaveFile = "DT_ClothesOutfit = " + BS_BaseClothesOutfitFile.Text + "\nDT_GameCharacterOutfits = " + BS_BaseGameCharacterOutfitFile.Text +
-                "\nDT_GameCharacterCustomization = " + BS_BaseGameCharacterCustomizationFile.Text + "\nMappings = " + BS_Mappings.Text;
+                "\nDT_GameCharacterCustomization = " + BS_BaseGameCharacterCustomizationFile.Text + "\nMappings = " + BS_Mappings.Text + "\nVerifyIntegrity = " + BS_VerifyFI_CB.CheckState.ToString();
             File.WriteAllText(Application.StartupPath + @"System\" + LoadedWLVersion + @"_BuildSettings.ini", SaveFile);
         }
 
@@ -649,6 +661,22 @@ namespace WSMM
                     Directory.Delete(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + Path.GetFileNameWithoutExtension(Mod), true);
                 }
                 ZipFile.ExtractToDirectory(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + Path.GetFileName(Mod), Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + Path.GetFileNameWithoutExtension(Mod), true);
+
+
+                //Calculate hash for each .pak
+                string Hashes = string.Empty;
+                foreach (string file in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + Path.GetFileNameWithoutExtension(Mod) + @"\Paks", "*.pak"))
+                {
+                    ProgressInfo_Label.Invoke((System.Windows.Forms.MethodInvoker)delegate
+                    {
+                        ProgressInfo_Label.Text = "Calculating MD5 hash for " + Path.GetFileName(file) + "...";
+                        ProgressInfo_Label.Left = ProgressPanel.Width / 2 - ProgressInfo_Label.Width / 2;
+                    });
+                    string Md5Hash = CalculateMD5(file);
+                    Hashes += Path.GetFileName(file) + " = " + Md5Hash + "\n";
+                }
+                Hashes = Hashes.Trim();
+                File.WriteAllText(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + Path.GetFileNameWithoutExtension(Mod) + @"\Integrity.dat", Hashes);
                 ProgressInfo_Label.Invoke((System.Windows.Forms.MethodInvoker)delegate
                 {
                     BuildModProgress_PB.Value++;
@@ -677,6 +705,32 @@ namespace WSMM
             foreach (string file in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded", "*.wlmm"))
             {
                 string ModName = Path.GetFileNameWithoutExtension(file);
+
+                //Create Integrity.dat if missing
+                if (File.Exists(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\Integrity.dat") == false)
+                {
+                    //Calculate hash for each .pak
+                    string Hashes = string.Empty;
+                    foreach (string pak in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\Paks", "*.pak"))
+                    {
+                        this.Invoke((System.Windows.Forms.MethodInvoker)delegate
+                        {
+                            ProgressPanel.Show();
+                            ProgressTitle_Label.Text = "Patching...";
+                            ProgressInfo_Label.Text = "Calculating MD5 hash for " + Path.GetFileName(pak) + "...";
+                            ProgressInfo_Label.Left = ProgressPanel.Width / 2 - ProgressInfo_Label.Width / 2;
+                        });
+                        string Md5Hash = CalculateMD5(pak);
+                        Hashes += Path.GetFileName(pak) + " = " + Md5Hash + "\n";
+                    }
+                    Hashes = Hashes.Trim();
+                    File.WriteAllText(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\Integrity.dat", Hashes);
+                    ProgressPanel.Invoke((System.Windows.Forms.MethodInvoker)delegate
+                    {
+                        ProgressPanel.Hide();
+                    });
+                }
+
                 CreateModEntry(ModName);
                 NoModsFound_Label.Invoke((System.Windows.Forms.MethodInvoker)delegate
                 {
@@ -1017,6 +1071,7 @@ namespace WSMM
             ProgressInfo_Label.Text = "Initializing...";
             BuildModProgress_PB.Value = 0;
             BuildModProgress_PB.Maximum = Mod_Entries.Count + 2;
+            BuildMods_Button.Enabled = false;
 
             // Create a thread and call a background method
             Thread backgroundThread = new Thread(() => BuildMods());
@@ -1030,6 +1085,7 @@ namespace WSMM
             BuildLog += "Initializing...\n";
             bool HasAutoMod = false;
             List<string> ActiveMods = new List<string>();
+            Dictionary<string, string> HashDict = new Dictionary<string, string>();
             //ActiveMods.Add("AutoMod_P.pak");
             ActiveMods.Add("WildLifeC-Windows.pak");
             //Clear files in AutoMod
@@ -1074,6 +1130,26 @@ namespace WSMM
                         BuildLog += "+ + " + Path.GetFileName(AMFile) + "\n";
                         File.Copy(AMFile, Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\AutoMod\" + Path.GetFileName(AMFile), true);
                         HasAutoMod = true;
+                    }
+
+                    //Read Integrity.dat
+                    if (BS_VerifyFI_CB.Checked)
+                    {
+                        if (File.Exists(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\Integrity.dat"))
+                        {
+                            string[] Integrity = File.ReadAllLines(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\Integrity.dat");
+                            foreach (string hash in Integrity)
+                            {
+                                if (HashDict.ContainsKey(GetSlice(hash, "=", 0)) == false)
+                                {
+                                    HashDict.Add(GetSlice(hash, "=", 0), GetSlice(hash, "=", 1));
+                                }
+                                else
+                                {
+                                    BuildLog += "+ - " + GetSlice(hash, "=", 0) + " already exists in HashDict.\n";
+                                }
+                            }
+                        }
                     }
                 }
                 else
@@ -1234,6 +1310,40 @@ namespace WSMM
             {
                 BuildLog += "Skipping AutoMod Process.\n";
             }
+
+            //Verify integrity of .paks
+            if (BS_VerifyFI_CB.Checked)
+            {
+                ProgressInfo_Label.Invoke((System.Windows.Forms.MethodInvoker)delegate
+                {
+                    ProgressInfo_Label.Text = "Verifying file integrity...";
+                    ProgressInfo_Label.Left = ProgressPanel.Width / 2 - ProgressInfo_Label.Width / 2;
+                });
+                BuildLog += "Verifying file integrity...\n";
+                foreach (string pak in Directory.EnumerateFiles(LoadedWLPath + @"\WildLifeC\Content\Paks", "*.pak"))
+                {
+                    if (HashDict.ContainsKey(Path.GetFileName(pak)))
+                    {
+                        string CalculatedHash = CalculateMD5(pak);
+                        string OriginalHash = HashDict[Path.GetFileName(pak)];
+                        if (CalculatedHash == OriginalHash)
+                        {
+                            BuildLog += "+ " + Path.GetFileName(pak) + " valid.\n";
+                        }
+                        else
+                        {
+                            BuildLog += "- " + Path.GetFileName(pak) + " invalid.\n";
+                            MessageBox.Show(Path.GetFileName(pak) + " failed file verification.\nTry re-building mods or updating the affected mod.", "Wild Life Mod Manager");
+                        }
+                    }
+                    else
+                    {
+                        BuildLog += "- " + Path.GetFileName(pak) + " skipped verification.\n";
+                    }
+                }
+                BuildLog += "Verification completed.\n";
+            }
+
             BuildLog += "Mods successfully deployed.\n";
 
             ResetFromBuilding();
@@ -1250,6 +1360,7 @@ namespace WSMM
                 BuildModProgress_PB.Maximum = 100;
                 ChangesMade_Label.Text = "Build Completed.";
                 ChangesMade = 0;
+                BuildMods_Button.Enabled = true;
 
                 File.WriteAllText(Application.StartupPath + @"System\LatestBuildLog.txt", BuildLog);
             });
@@ -2436,6 +2547,26 @@ namespace WSMM
         {
             Clipboard.SetText(ExpandedLink_LL.Text);
             ExpandedLink_Panel.Hide();
+        }
+
+        static string CalculateMD5(string filename)
+        {
+            using (var md5 = MD5.Create())
+            {
+                using (var stream = File.OpenRead(filename))
+                {
+                    var hash = md5.ComputeHash(stream);
+                    return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
+                }
+            }
+        }
+
+        private void BS_VerifyFI_CB_CheckedChanged(object sender, EventArgs e)
+        {
+            if (StartingUp == false)
+            {
+                SaveBuildSettings();
+            }
         }
     }
 }

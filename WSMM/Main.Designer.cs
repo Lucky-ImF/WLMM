@@ -56,7 +56,6 @@
             label17 = new Label();
             linkLabel2 = new LinkLabel();
             label6 = new Label();
-            checkBox1 = new CheckBox();
             linkLabel1 = new LinkLabel();
             label5 = new Label();
             label4 = new Label();
@@ -111,6 +110,8 @@
             ExpandedLink_LL = new LinkLabel();
             ExpandedLink_CloseButton = new PictureBox();
             label22 = new Label();
+            checkBox1 = new CheckBox();
+            BS_VerifyFI_CB = new CheckBox();
             TitlePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
@@ -500,18 +501,6 @@
             label6.TabIndex = 8;
             label6.Text = "by: Mr.Sergoo";
             // 
-            // checkBox1
-            // 
-            checkBox1.AutoSize = true;
-            checkBox1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            checkBox1.ForeColor = SystemColors.ActiveCaption;
-            checkBox1.Location = new Point(741, 80);
-            checkBox1.Name = "checkBox1";
-            checkBox1.Size = new Size(84, 25);
-            checkBox1.TabIndex = 7;
-            checkBox1.Text = "Enabled";
-            checkBox1.UseVisualStyleBackColor = true;
-            // 
             // linkLabel1
             // 
             linkLabel1.ActiveLinkColor = Color.MistyRose;
@@ -816,6 +805,7 @@
             // BuildSettings_Panel
             // 
             BuildSettings_Panel.BorderStyle = BorderStyle.FixedSingle;
+            BuildSettings_Panel.Controls.Add(BS_VerifyFI_CB);
             BuildSettings_Panel.Controls.Add(label1);
             BuildSettings_Panel.Controls.Add(BS_Mappings);
             BuildSettings_Panel.Controls.Add(BuildSettingsDTFolder_Button);
@@ -825,9 +815,9 @@
             BuildSettings_Panel.Controls.Add(BS_BaseGameCharacterOutfitFile);
             BuildSettings_Panel.Controls.Add(label14);
             BuildSettings_Panel.Controls.Add(BS_BaseClothesOutfitFile);
-            BuildSettings_Panel.Location = new Point(898, 398);
+            BuildSettings_Panel.Location = new Point(898, 371);
             BuildSettings_Panel.Name = "BuildSettings_Panel";
-            BuildSettings_Panel.Size = new Size(231, 237);
+            BuildSettings_Panel.Size = new Size(231, 264);
             BuildSettings_Panel.TabIndex = 13;
             BuildSettings_Panel.Visible = false;
             // 
@@ -1197,6 +1187,33 @@
             label22.TabIndex = 2;
             label22.Text = "Link";
             // 
+            // checkBox1
+            // 
+            checkBox1.AutoSize = true;
+            checkBox1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            checkBox1.ForeColor = SystemColors.ActiveCaption;
+            checkBox1.Location = new Point(741, 80);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new Size(84, 25);
+            checkBox1.TabIndex = 7;
+            checkBox1.Text = "Enabled";
+            checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // BS_VerifyFI_CB
+            // 
+            BS_VerifyFI_CB.AutoSize = true;
+            BS_VerifyFI_CB.Checked = true;
+            BS_VerifyFI_CB.CheckState = CheckState.Checked;
+            BS_VerifyFI_CB.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BS_VerifyFI_CB.ForeColor = SystemColors.ActiveCaption;
+            BS_VerifyFI_CB.Location = new Point(6, 234);
+            BS_VerifyFI_CB.Name = "BS_VerifyFI_CB";
+            BS_VerifyFI_CB.Size = new Size(224, 24);
+            BS_VerifyFI_CB.TabIndex = 43;
+            BS_VerifyFI_CB.Text = "Verify File Integrity after Build";
+            BS_VerifyFI_CB.UseVisualStyleBackColor = true;
+            BS_VerifyFI_CB.CheckedChanged += BS_VerifyFI_CB_CheckedChanged;
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1291,7 +1308,6 @@
         private LinkLabel linkLabel1;
         private Label label5;
         private Label label4;
-        private CheckBox checkBox1;
         private Label ChangesMade_Label;
         private Label label6;
         private Button RemoveMods_Button;
@@ -1352,5 +1368,7 @@
         private PictureBox ExpandedLink_CloseButton;
         private Label label22;
         private LinkLabel ExpandedLinkCopy_LL;
+        private CheckBox checkBox1;
+        private CheckBox BS_VerifyFI_CB;
     }
 }
