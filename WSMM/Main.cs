@@ -33,6 +33,7 @@ namespace WSMM
         public string prevIconPath = string.Empty;
         public string prevPakPath = string.Empty;
         public string prevAutoModPath = string.Empty;
+        public string prevModPath = string.Empty;
 
         //Panel, Picturebox, Label(Name), Label(Error), Label(Version), Label(SupportedVersions), Label(Author), LinkLabel(Remove), LinkLabel(Link), Checkbox
         Panel[] Mod_Panel = new Panel[100];
@@ -510,6 +511,10 @@ namespace WSMM
                     {
                         prevAutoModPath = GetSlice(file, "=", 1);
                     }
+                    else if (file.StartsWith("prevModPath"))
+                    {
+                        prevModPath = GetSlice(file, "=", 1);
+                    }
                 }
 
                 if (LoadedWLPath != "" && LoadedWLPath != string.Empty)
@@ -527,7 +532,7 @@ namespace WSMM
 
         private void SaveSession()
         {
-            string SaveFile = "WL_Path = " + LoadedWLPath + "\nWL_Version = " + LoadedWLVersion + "\nChangesMade = " + ChangesMade.ToString() + "\nprevIconPath = " + prevIconPath + "\nprevPakPath = " + prevPakPath + "\nprevAutoModPath = " + prevAutoModPath;
+            string SaveFile = "WL_Path = " + LoadedWLPath + "\nWL_Version = " + LoadedWLVersion + "\nChangesMade = " + ChangesMade.ToString() + "\nprevIconPath = " + prevIconPath + "\nprevPakPath = " + prevPakPath + "\nprevAutoModPath = " + prevAutoModPath + "\nprevModPath = " + prevModPath;
             File.WriteAllText(Application.StartupPath + @"System\Session.dat", SaveFile);
         }
 
@@ -612,6 +617,11 @@ namespace WSMM
 
         private void AddMod_Button_Click(object sender, EventArgs e)
         {
+            if (prevModPath != string.Empty)
+            {
+                openFileDialog1.InitialDirectory = prevModPath;
+            }
+
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 string[] Mods = openFileDialog1.FileNames;
