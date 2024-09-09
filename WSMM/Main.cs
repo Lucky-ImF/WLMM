@@ -27,7 +27,7 @@ namespace WSMM
         private bool StartingUp = true;
         private bool HasOldChanges = false;
 
-        private string WLMM_Version = "1.0.1";
+        private string WLMM_Version = "1.0.2";
         string BuildLog = string.Empty;
 
         public string prevIconPath = string.Empty;

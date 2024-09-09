@@ -11,8 +11,8 @@
     <Product>Wild Life Mod Manager</Product>
     <Company>Lucky</Company>
     <Copyright>Copyright © Lucky 2024</Copyright>
-    <AssemblyVersion>1.0.1</AssemblyVersion>
-    <FileVersion>1.0.1</FileVersion>
+    <AssemblyVersion>1.0.2</AssemblyVersion>
+    <FileVersion>1.0.2</FileVersion>
     <ApplicationIcon>WLMM_Icon.ico</ApplicationIcon>
     <Description></Description>
   </PropertyGroup>
