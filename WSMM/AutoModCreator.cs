@@ -1768,5 +1768,10 @@ namespace WSMM
             CurrentlyEditing_LL.Text = "New File";
             StopEditing_LL.Hide();
         }
+
+        private void AutoModCreator_ResizeEnd(object sender, EventArgs e)
+        {
+            this.Invalidate();
+        }
     }
 }

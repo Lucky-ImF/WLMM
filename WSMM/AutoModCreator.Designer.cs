@@ -32,7 +32,6 @@
             Close_Button = new PictureBox();
             Separator_1 = new PictureBox();
             TitlePanel = new Panel();
-            ByLuckyLabel = new Label();
             TitleLabel = new Label();
             groupBox1 = new GroupBox();
             Variant = new ComboBox();
@@ -287,17 +286,31 @@
             WriteMod = new Button();
             openFileDialog1 = new OpenFileDialog();
             FurCustomizationGB = new GroupBox();
-            Fur_Damping = new TextBox();
-            label103 = new Label();
+            FurCust_ScrollBox = new Panel();
             Fur_LoadDefaultValues = new Button();
+            Fur_Damping = new TextBox();
+            Fur_ShowHairMesh = new CheckBox();
+            label103 = new Label();
+            Fur_ShowBeardMesh = new CheckBox();
             Fur_HairLengthForceUniformity = new TextBox();
+            groupBox7 = new GroupBox();
+            Fur_PhysicsEnabled_LOD = new CheckBox();
+            Fur_LayerCount_LOD = new TextBox();
+            label102 = new Label();
             Fur_RefHairBias = new TextBox();
+            label92 = new Label();
             label100 = new Label();
+            label93 = new Label();
             label101 = new Label();
+            Fur_LayerCount = new TextBox();
             Fur_MaxForceTorqueFactor = new TextBox();
+            Fur_FurLength = new TextBox();
             Fur_MaxForce = new TextBox();
+            label94 = new Label();
             label98 = new Label();
+            Fur_MinFurLength = new TextBox();
             label99 = new Label();
+            Fur_PhysicsEnabled = new CheckBox();
             groupBox8 = new GroupBox();
             Fur_ConstForce_Z = new TextBox();
             label97 = new Label();
@@ -305,23 +318,10 @@
             label96 = new Label();
             Fur_ConstForce_X = new TextBox();
             label95 = new Label();
-            Fur_Stiffness = new TextBox();
-            Fur_ForceDistribution = new TextBox();
-            label105 = new Label();
             label104 = new Label();
-            Fur_PhysicsEnabled = new CheckBox();
-            Fur_MinFurLength = new TextBox();
-            label94 = new Label();
-            Fur_FurLength = new TextBox();
-            Fur_LayerCount = new TextBox();
-            label93 = new Label();
-            label92 = new Label();
-            groupBox7 = new GroupBox();
-            Fur_PhysicsEnabled_LOD = new CheckBox();
-            Fur_LayerCount_LOD = new TextBox();
-            label102 = new Label();
-            Fur_ShowBeardMesh = new CheckBox();
-            Fur_ShowHairMesh = new CheckBox();
+            Fur_Stiffness = new TextBox();
+            label105 = new Label();
+            Fur_ForceDistribution = new TextBox();
             CharCustomBox = new GroupBox();
             CharCust_Add = new LinkLabel();
             CharCustomFlow = new FlowLayoutPanel();
@@ -350,16 +350,18 @@
             Feet_ExtraPanel.SuspendLayout();
             groupBox6.SuspendLayout();
             FurCustomizationGB.SuspendLayout();
-            groupBox8.SuspendLayout();
+            FurCust_ScrollBox.SuspendLayout();
             groupBox7.SuspendLayout();
+            groupBox8.SuspendLayout();
             CharCustomBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_PB).BeginInit();
             SuspendLayout();
             // 
             // Close_Button
             // 
+            Close_Button.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             Close_Button.Image = Properties.Resources.Close_Icon;
-            Close_Button.Location = new Point(564, 5);
+            Close_Button.Location = new Point(558, 5);
             Close_Button.Name = "Close_Button";
             Close_Button.Size = new Size(52, 50);
             Close_Button.SizeMode = PictureBoxSizeMode.Zoom;
@@ -371,36 +373,26 @@
             // 
             // Separator_1
             // 
+            Separator_1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             Separator_1.BackColor = SystemColors.ActiveCaption;
             Separator_1.Location = new Point(80, 38);
             Separator_1.Name = "Separator_1";
-            Separator_1.Size = new Size(460, 2);
+            Separator_1.Size = new Size(454, 2);
             Separator_1.TabIndex = 6;
             Separator_1.TabStop = false;
             // 
             // TitlePanel
             // 
+            TitlePanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             TitlePanel.BackColor = Color.FromArgb(32, 34, 81);
-            TitlePanel.Controls.Add(ByLuckyLabel);
             TitlePanel.Controls.Add(TitleLabel);
             TitlePanel.Location = new Point(1, 1);
             TitlePanel.Name = "TitlePanel";
-            TitlePanel.Size = new Size(619, 40);
+            TitlePanel.Size = new Size(613, 40);
             TitlePanel.TabIndex = 5;
             TitlePanel.MouseDown += TitlePanel_MouseDown;
             TitlePanel.MouseMove += TitlePanel_MouseMove;
             TitlePanel.MouseUp += TitlePanel_MouseUp;
-            // 
-            // ByLuckyLabel
-            // 
-            ByLuckyLabel.AutoSize = true;
-            ByLuckyLabel.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            ByLuckyLabel.ForeColor = SystemColors.GradientActiveCaption;
-            ByLuckyLabel.Location = new Point(783, 12);
-            ByLuckyLabel.Name = "ByLuckyLabel";
-            ByLuckyLabel.Size = new Size(65, 20);
-            ByLuckyLabel.TabIndex = 1;
-            ByLuckyLabel.Text = "by Lucky";
             // 
             // TitleLabel
             // 
@@ -412,12 +404,14 @@
             TitleLabel.Size = new Size(263, 30);
             TitleLabel.TabIndex = 0;
             TitleLabel.Text = "WLMM - AutoMod Creator";
+            TitleLabel.TextAlign = ContentAlignment.MiddleCenter;
             TitleLabel.MouseDown += TitlePanel_MouseDown;
             TitleLabel.MouseMove += TitlePanel_MouseMove;
             TitleLabel.MouseUp += TitlePanel_MouseUp;
             // 
             // groupBox1
             // 
+            groupBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             groupBox1.Controls.Add(Variant);
             groupBox1.Controls.Add(label66);
             groupBox1.Controls.Add(Character);
@@ -435,19 +429,20 @@
             groupBox1.Margin = new Padding(4, 3, 4, 3);
             groupBox1.Name = "groupBox1";
             groupBox1.Padding = new Padding(4, 3, 4, 3);
-            groupBox1.Size = new Size(607, 160);
+            groupBox1.Size = new Size(601, 160);
             groupBox1.TabIndex = 8;
             groupBox1.TabStop = false;
             groupBox1.Text = "Mod Info";
             // 
             // Variant
             // 
+            Variant.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             Variant.BackColor = Color.FromArgb(75, 68, 138);
             Variant.FlatStyle = FlatStyle.Popup;
             Variant.ForeColor = SystemColors.ActiveCaption;
             Variant.FormattingEnabled = true;
             Variant.Items.AddRange(new object[] { "Add", "Port", "Character Customization", "Fur Customization" });
-            Variant.Location = new Point(321, 124);
+            Variant.Location = new Point(315, 124);
             Variant.Margin = new Padding(4, 3, 4, 3);
             Variant.Name = "Variant";
             Variant.Size = new Size(252, 23);
@@ -457,8 +452,9 @@
             // 
             // label66
             // 
+            label66.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label66.AutoSize = true;
-            label66.Location = new Point(307, 105);
+            label66.Location = new Point(301, 105);
             label66.Margin = new Padding(4, 0, 4, 0);
             label66.Name = "label66";
             label66.Size = new Size(46, 15);
@@ -490,8 +486,9 @@
             // 
             // label3
             // 
+            label3.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label3.AutoSize = true;
-            label3.Location = new Point(307, 60);
+            label3.Location = new Point(301, 60);
             label3.Margin = new Padding(4, 0, 4, 0);
             label3.Name = "label3";
             label3.Size = new Size(76, 15);
@@ -500,9 +497,10 @@
             // 
             // OutfitName
             // 
+            OutfitName.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             OutfitName.BackColor = Color.FromArgb(75, 68, 138);
             OutfitName.ForeColor = SystemColors.ActiveCaption;
-            OutfitName.Location = new Point(321, 78);
+            OutfitName.Location = new Point(315, 78);
             OutfitName.Margin = new Padding(4, 3, 4, 3);
             OutfitName.Name = "OutfitName";
             OutfitName.Size = new Size(252, 23);
@@ -532,8 +530,9 @@
             // 
             // label2
             // 
+            label2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label2.AutoSize = true;
-            label2.Location = new Point(307, 15);
+            label2.Location = new Point(301, 15);
             label2.Margin = new Padding(4, 0, 4, 0);
             label2.Name = "label2";
             label2.Size = new Size(75, 15);
@@ -542,9 +541,10 @@
             // 
             // ModAuthor
             // 
+            ModAuthor.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             ModAuthor.BackColor = Color.FromArgb(75, 68, 138);
             ModAuthor.ForeColor = SystemColors.ActiveCaption;
-            ModAuthor.Location = new Point(321, 34);
+            ModAuthor.Location = new Point(315, 34);
             ModAuthor.Margin = new Padding(4, 3, 4, 3);
             ModAuthor.Name = "ModAuthor";
             ModAuthor.Size = new Size(252, 23);
@@ -574,6 +574,7 @@
             // 
             // tabControl1
             // 
+            tabControl1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             tabControl1.Controls.Add(tabPage1);
             tabControl1.Controls.Add(tabPage2);
             tabControl1.Controls.Add(tabPage3);
@@ -583,11 +584,12 @@
             tabControl1.Margin = new Padding(4, 3, 4, 3);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(611, 728);
+            tabControl1.Size = new Size(605, 728);
             tabControl1.TabIndex = 9;
             // 
             // tabPage1
             // 
+            tabPage1.AutoScroll = true;
             tabPage1.BackColor = Color.FromArgb(32, 34, 81);
             tabPage1.Controls.Add(Head_ExtraPanel);
             tabPage1.Controls.Add(Head_ExtraButton);
@@ -626,7 +628,7 @@
             tabPage1.Margin = new Padding(4, 3, 4, 3);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new Padding(4, 3, 4, 3);
-            tabPage1.Size = new Size(603, 700);
+            tabPage1.Size = new Size(597, 700);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Head";
             // 
@@ -636,7 +638,7 @@
             Head_ExtraPanel.Controls.Add(Head_Dupe);
             Head_ExtraPanel.Controls.Add(label87);
             Head_ExtraPanel.Controls.Add(Head_DupeTo);
-            Head_ExtraPanel.Location = new Point(363, 31);
+            Head_ExtraPanel.Location = new Point(336, 31);
             Head_ExtraPanel.Margin = new Padding(4, 3, 4, 3);
             Head_ExtraPanel.Name = "Head_ExtraPanel";
             Head_ExtraPanel.Size = new Size(233, 105);
@@ -685,7 +687,7 @@
             // 
             Head_ExtraButton.BackColor = Color.FromArgb(75, 68, 138);
             Head_ExtraButton.ForeColor = SystemColors.ActiveCaption;
-            Head_ExtraButton.Location = new Point(550, 3);
+            Head_ExtraButton.Location = new Point(523, 3);
             Head_ExtraButton.Margin = new Padding(4, 3, 4, 3);
             Head_ExtraButton.Name = "Head_ExtraButton";
             Head_ExtraButton.Size = new Size(49, 27);
@@ -1187,6 +1189,7 @@
             // 
             // tabPage2
             // 
+            tabPage2.AutoScroll = true;
             tabPage2.BackColor = Color.FromArgb(32, 34, 81);
             tabPage2.Controls.Add(Chest_ExtraPanel);
             tabPage2.Controls.Add(Chest_ExtraButton);
@@ -1225,7 +1228,7 @@
             tabPage2.Margin = new Padding(4, 3, 4, 3);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new Padding(4, 3, 4, 3);
-            tabPage2.Size = new Size(603, 700);
+            tabPage2.Size = new Size(597, 700);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Chest";
             // 
@@ -1235,7 +1238,7 @@
             Chest_ExtraPanel.Controls.Add(Chest_Dupe);
             Chest_ExtraPanel.Controls.Add(label88);
             Chest_ExtraPanel.Controls.Add(Chest_DupeTo);
-            Chest_ExtraPanel.Location = new Point(363, 31);
+            Chest_ExtraPanel.Location = new Point(336, 31);
             Chest_ExtraPanel.Margin = new Padding(4, 3, 4, 3);
             Chest_ExtraPanel.Name = "Chest_ExtraPanel";
             Chest_ExtraPanel.Size = new Size(233, 105);
@@ -1284,7 +1287,7 @@
             // 
             Chest_ExtraButton.BackColor = Color.FromArgb(75, 68, 138);
             Chest_ExtraButton.ForeColor = SystemColors.ActiveCaption;
-            Chest_ExtraButton.Location = new Point(550, 3);
+            Chest_ExtraButton.Location = new Point(523, 3);
             Chest_ExtraButton.Margin = new Padding(4, 3, 4, 3);
             Chest_ExtraButton.Name = "Chest_ExtraButton";
             Chest_ExtraButton.Size = new Size(49, 27);
@@ -1786,6 +1789,7 @@
             // 
             // tabPage3
             // 
+            tabPage3.AutoScroll = true;
             tabPage3.BackColor = Color.FromArgb(32, 34, 81);
             tabPage3.Controls.Add(Hands_ExtraPanel);
             tabPage3.Controls.Add(Hands_ExtraButton);
@@ -1823,7 +1827,7 @@
             tabPage3.Location = new Point(4, 24);
             tabPage3.Margin = new Padding(4, 3, 4, 3);
             tabPage3.Name = "tabPage3";
-            tabPage3.Size = new Size(603, 700);
+            tabPage3.Size = new Size(597, 700);
             tabPage3.TabIndex = 2;
             tabPage3.Text = "Hands";
             // 
@@ -1833,7 +1837,7 @@
             Hands_ExtraPanel.Controls.Add(Hands_Dupe);
             Hands_ExtraPanel.Controls.Add(label89);
             Hands_ExtraPanel.Controls.Add(Hands_DupeTo);
-            Hands_ExtraPanel.Location = new Point(363, 31);
+            Hands_ExtraPanel.Location = new Point(336, 31);
             Hands_ExtraPanel.Margin = new Padding(4, 3, 4, 3);
             Hands_ExtraPanel.Name = "Hands_ExtraPanel";
             Hands_ExtraPanel.Size = new Size(233, 105);
@@ -1882,7 +1886,7 @@
             // 
             Hands_ExtraButton.BackColor = Color.FromArgb(75, 68, 138);
             Hands_ExtraButton.ForeColor = SystemColors.ActiveCaption;
-            Hands_ExtraButton.Location = new Point(550, 3);
+            Hands_ExtraButton.Location = new Point(523, 3);
             Hands_ExtraButton.Margin = new Padding(4, 3, 4, 3);
             Hands_ExtraButton.Name = "Hands_ExtraButton";
             Hands_ExtraButton.Size = new Size(49, 27);
@@ -2384,6 +2388,7 @@
             // 
             // tabPage4
             // 
+            tabPage4.AutoScroll = true;
             tabPage4.BackColor = Color.FromArgb(32, 34, 81);
             tabPage4.Controls.Add(Legs_ExtraPanel);
             tabPage4.Controls.Add(Legs_ExtraButton);
@@ -2421,7 +2426,7 @@
             tabPage4.Location = new Point(4, 24);
             tabPage4.Margin = new Padding(4, 3, 4, 3);
             tabPage4.Name = "tabPage4";
-            tabPage4.Size = new Size(603, 700);
+            tabPage4.Size = new Size(597, 700);
             tabPage4.TabIndex = 3;
             tabPage4.Text = "Legs";
             // 
@@ -2431,7 +2436,7 @@
             Legs_ExtraPanel.Controls.Add(Legs_Dupe);
             Legs_ExtraPanel.Controls.Add(label90);
             Legs_ExtraPanel.Controls.Add(Legs_DupeTo);
-            Legs_ExtraPanel.Location = new Point(363, 31);
+            Legs_ExtraPanel.Location = new Point(336, 31);
             Legs_ExtraPanel.Margin = new Padding(4, 3, 4, 3);
             Legs_ExtraPanel.Name = "Legs_ExtraPanel";
             Legs_ExtraPanel.Size = new Size(233, 105);
@@ -2480,7 +2485,7 @@
             // 
             Legs_ExtraButton.BackColor = Color.FromArgb(75, 68, 138);
             Legs_ExtraButton.ForeColor = SystemColors.ActiveCaption;
-            Legs_ExtraButton.Location = new Point(550, 3);
+            Legs_ExtraButton.Location = new Point(523, 3);
             Legs_ExtraButton.Margin = new Padding(4, 3, 4, 3);
             Legs_ExtraButton.Name = "Legs_ExtraButton";
             Legs_ExtraButton.Size = new Size(49, 27);
@@ -2982,6 +2987,7 @@
             // 
             // tabPage5
             // 
+            tabPage5.AutoScroll = true;
             tabPage5.BackColor = Color.FromArgb(32, 34, 81);
             tabPage5.Controls.Add(Feet_ExtraPanel);
             tabPage5.Controls.Add(Feet_ExtraButton);
@@ -3019,7 +3025,7 @@
             tabPage5.Location = new Point(4, 24);
             tabPage5.Margin = new Padding(4, 3, 4, 3);
             tabPage5.Name = "tabPage5";
-            tabPage5.Size = new Size(603, 700);
+            tabPage5.Size = new Size(597, 700);
             tabPage5.TabIndex = 4;
             tabPage5.Text = "Feet";
             // 
@@ -3029,7 +3035,7 @@
             Feet_ExtraPanel.Controls.Add(Feet_Dupe);
             Feet_ExtraPanel.Controls.Add(label91);
             Feet_ExtraPanel.Controls.Add(Feet_DupeTo);
-            Feet_ExtraPanel.Location = new Point(363, 31);
+            Feet_ExtraPanel.Location = new Point(336, 31);
             Feet_ExtraPanel.Margin = new Padding(4, 3, 4, 3);
             Feet_ExtraPanel.Name = "Feet_ExtraPanel";
             Feet_ExtraPanel.Size = new Size(233, 105);
@@ -3078,7 +3084,7 @@
             // 
             Feet_ExtraButton.BackColor = Color.FromArgb(75, 68, 138);
             Feet_ExtraButton.ForeColor = SystemColors.ActiveCaption;
-            Feet_ExtraButton.Location = new Point(550, 3);
+            Feet_ExtraButton.Location = new Point(523, 3);
             Feet_ExtraButton.Margin = new Padding(4, 3, 4, 3);
             Feet_ExtraButton.Name = "Feet_ExtraButton";
             Feet_ExtraButton.Size = new Size(49, 27);
@@ -3580,6 +3586,7 @@
             // 
             // LoadMod
             // 
+            LoadMod.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             LoadMod.BackColor = Color.FromArgb(75, 68, 138);
             LoadMod.FlatStyle = FlatStyle.Popup;
             LoadMod.ForeColor = SystemColors.ActiveCaption;
@@ -3594,6 +3601,7 @@
             // 
             // WriteMod
             // 
+            WriteMod.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             WriteMod.BackColor = Color.FromArgb(75, 68, 138);
             WriteMod.FlatStyle = FlatStyle.Popup;
             WriteMod.ForeColor = SystemColors.ActiveCaption;
@@ -3612,65 +3620,54 @@
             // 
             // FurCustomizationGB
             // 
-            FurCustomizationGB.Controls.Add(Fur_Damping);
-            FurCustomizationGB.Controls.Add(label103);
-            FurCustomizationGB.Controls.Add(Fur_LoadDefaultValues);
-            FurCustomizationGB.Controls.Add(Fur_HairLengthForceUniformity);
-            FurCustomizationGB.Controls.Add(Fur_RefHairBias);
-            FurCustomizationGB.Controls.Add(label100);
-            FurCustomizationGB.Controls.Add(label101);
-            FurCustomizationGB.Controls.Add(Fur_MaxForceTorqueFactor);
-            FurCustomizationGB.Controls.Add(Fur_MaxForce);
-            FurCustomizationGB.Controls.Add(label98);
-            FurCustomizationGB.Controls.Add(label99);
-            FurCustomizationGB.Controls.Add(groupBox8);
-            FurCustomizationGB.Controls.Add(Fur_Stiffness);
-            FurCustomizationGB.Controls.Add(Fur_ForceDistribution);
-            FurCustomizationGB.Controls.Add(label105);
-            FurCustomizationGB.Controls.Add(label104);
-            FurCustomizationGB.Controls.Add(Fur_PhysicsEnabled);
-            FurCustomizationGB.Controls.Add(Fur_MinFurLength);
-            FurCustomizationGB.Controls.Add(label94);
-            FurCustomizationGB.Controls.Add(Fur_FurLength);
-            FurCustomizationGB.Controls.Add(Fur_LayerCount);
-            FurCustomizationGB.Controls.Add(label93);
-            FurCustomizationGB.Controls.Add(label92);
-            FurCustomizationGB.Controls.Add(groupBox7);
-            FurCustomizationGB.Controls.Add(Fur_ShowBeardMesh);
-            FurCustomizationGB.Controls.Add(Fur_ShowHairMesh);
+            FurCustomizationGB.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            FurCustomizationGB.Controls.Add(FurCust_ScrollBox);
             FurCustomizationGB.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             FurCustomizationGB.ForeColor = SystemColors.ActiveCaption;
             FurCustomizationGB.Location = new Point(5, 211);
             FurCustomizationGB.Margin = new Padding(4, 3, 4, 3);
             FurCustomizationGB.Name = "FurCustomizationGB";
             FurCustomizationGB.Padding = new Padding(4, 3, 4, 3);
-            FurCustomizationGB.Size = new Size(611, 728);
+            FurCustomizationGB.Size = new Size(604, 728);
             FurCustomizationGB.TabIndex = 36;
             FurCustomizationGB.TabStop = false;
             FurCustomizationGB.Text = "Fur Customization";
             FurCustomizationGB.Visible = false;
             // 
-            // Fur_Damping
+            // FurCust_ScrollBox
             // 
-            Fur_Damping.BackColor = Color.FromArgb(75, 68, 138);
-            Fur_Damping.ForeColor = SystemColors.ActiveCaption;
-            Fur_Damping.Location = new Point(310, 320);
-            Fur_Damping.Margin = new Padding(4, 3, 4, 3);
-            Fur_Damping.Name = "Fur_Damping";
-            Fur_Damping.Size = new Size(104, 24);
-            Fur_Damping.TabIndex = 28;
-            Fur_Damping.Text = "1000.0";
-            Fur_Damping.TextAlign = HorizontalAlignment.Center;
-            // 
-            // label103
-            // 
-            label103.AutoSize = true;
-            label103.Location = new Point(224, 323);
-            label103.Margin = new Padding(4, 0, 4, 0);
-            label103.Name = "label103";
-            label103.Size = new Size(71, 18);
-            label103.TabIndex = 27;
-            label103.Text = "Damping:";
+            FurCust_ScrollBox.AutoScroll = true;
+            FurCust_ScrollBox.Controls.Add(Fur_LoadDefaultValues);
+            FurCust_ScrollBox.Controls.Add(Fur_Damping);
+            FurCust_ScrollBox.Controls.Add(Fur_ShowHairMesh);
+            FurCust_ScrollBox.Controls.Add(label103);
+            FurCust_ScrollBox.Controls.Add(Fur_ShowBeardMesh);
+            FurCust_ScrollBox.Controls.Add(Fur_HairLengthForceUniformity);
+            FurCust_ScrollBox.Controls.Add(groupBox7);
+            FurCust_ScrollBox.Controls.Add(Fur_RefHairBias);
+            FurCust_ScrollBox.Controls.Add(label92);
+            FurCust_ScrollBox.Controls.Add(label100);
+            FurCust_ScrollBox.Controls.Add(label93);
+            FurCust_ScrollBox.Controls.Add(label101);
+            FurCust_ScrollBox.Controls.Add(Fur_LayerCount);
+            FurCust_ScrollBox.Controls.Add(Fur_MaxForceTorqueFactor);
+            FurCust_ScrollBox.Controls.Add(Fur_FurLength);
+            FurCust_ScrollBox.Controls.Add(Fur_MaxForce);
+            FurCust_ScrollBox.Controls.Add(label94);
+            FurCust_ScrollBox.Controls.Add(label98);
+            FurCust_ScrollBox.Controls.Add(Fur_MinFurLength);
+            FurCust_ScrollBox.Controls.Add(label99);
+            FurCust_ScrollBox.Controls.Add(Fur_PhysicsEnabled);
+            FurCust_ScrollBox.Controls.Add(groupBox8);
+            FurCust_ScrollBox.Controls.Add(label104);
+            FurCust_ScrollBox.Controls.Add(Fur_Stiffness);
+            FurCust_ScrollBox.Controls.Add(label105);
+            FurCust_ScrollBox.Controls.Add(Fur_ForceDistribution);
+            FurCust_ScrollBox.Dock = DockStyle.Fill;
+            FurCust_ScrollBox.Location = new Point(4, 20);
+            FurCust_ScrollBox.Name = "FurCust_ScrollBox";
+            FurCust_ScrollBox.Size = new Size(596, 705);
+            FurCust_ScrollBox.TabIndex = 29;
             // 
             // Fur_LoadDefaultValues
             // 
@@ -3678,7 +3675,7 @@
             Fur_LoadDefaultValues.FlatStyle = FlatStyle.Popup;
             Fur_LoadDefaultValues.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             Fur_LoadDefaultValues.ForeColor = SystemColors.ActiveCaption;
-            Fur_LoadDefaultValues.Location = new Point(13, 25);
+            Fur_LoadDefaultValues.Location = new Point(4, 3);
             Fur_LoadDefaultValues.Margin = new Padding(4, 3, 4, 3);
             Fur_LoadDefaultValues.Name = "Fur_LoadDefaultValues";
             Fur_LoadDefaultValues.Size = new Size(169, 27);
@@ -3687,11 +3684,55 @@
             Fur_LoadDefaultValues.UseVisualStyleBackColor = false;
             Fur_LoadDefaultValues.Click += Fur_LoadDefaultValues_Click;
             // 
+            // Fur_Damping
+            // 
+            Fur_Damping.BackColor = Color.FromArgb(75, 68, 138);
+            Fur_Damping.ForeColor = SystemColors.ActiveCaption;
+            Fur_Damping.Location = new Point(304, 309);
+            Fur_Damping.Margin = new Padding(4, 3, 4, 3);
+            Fur_Damping.Name = "Fur_Damping";
+            Fur_Damping.Size = new Size(104, 24);
+            Fur_Damping.TabIndex = 28;
+            Fur_Damping.Text = "1000.0";
+            Fur_Damping.TextAlign = HorizontalAlignment.Center;
+            // 
+            // Fur_ShowHairMesh
+            // 
+            Fur_ShowHairMesh.AutoSize = true;
+            Fur_ShowHairMesh.Location = new Point(221, 10);
+            Fur_ShowHairMesh.Margin = new Padding(4, 3, 4, 3);
+            Fur_ShowHairMesh.Name = "Fur_ShowHairMesh";
+            Fur_ShowHairMesh.Size = new Size(137, 22);
+            Fur_ShowHairMesh.TabIndex = 0;
+            Fur_ShowHairMesh.Text = "Show Hair Mesh";
+            Fur_ShowHairMesh.UseVisualStyleBackColor = true;
+            // 
+            // label103
+            // 
+            label103.AutoSize = true;
+            label103.Location = new Point(218, 312);
+            label103.Margin = new Padding(4, 0, 4, 0);
+            label103.Name = "label103";
+            label103.Size = new Size(71, 18);
+            label103.TabIndex = 27;
+            label103.Text = "Damping:";
+            // 
+            // Fur_ShowBeardMesh
+            // 
+            Fur_ShowBeardMesh.AutoSize = true;
+            Fur_ShowBeardMesh.Location = new Point(221, 42);
+            Fur_ShowBeardMesh.Margin = new Padding(4, 3, 4, 3);
+            Fur_ShowBeardMesh.Name = "Fur_ShowBeardMesh";
+            Fur_ShowBeardMesh.Size = new Size(149, 22);
+            Fur_ShowBeardMesh.TabIndex = 1;
+            Fur_ShowBeardMesh.Text = "Show Beard Mesh";
+            Fur_ShowBeardMesh.UseVisualStyleBackColor = true;
+            // 
             // Fur_HairLengthForceUniformity
             // 
             Fur_HairLengthForceUniformity.BackColor = Color.FromArgb(75, 68, 138);
             Fur_HairLengthForceUniformity.ForeColor = SystemColors.ActiveCaption;
-            Fur_HairLengthForceUniformity.Location = new Point(310, 534);
+            Fur_HairLengthForceUniformity.Location = new Point(304, 523);
             Fur_HairLengthForceUniformity.Margin = new Padding(4, 3, 4, 3);
             Fur_HairLengthForceUniformity.Name = "Fur_HairLengthForceUniformity";
             Fur_HairLengthForceUniformity.Size = new Size(104, 24);
@@ -3699,11 +3740,61 @@
             Fur_HairLengthForceUniformity.Text = "0.75";
             Fur_HairLengthForceUniformity.TextAlign = HorizontalAlignment.Center;
             // 
+            // groupBox7
+            // 
+            groupBox7.Controls.Add(Fur_PhysicsEnabled_LOD);
+            groupBox7.Controls.Add(Fur_LayerCount_LOD);
+            groupBox7.Controls.Add(label102);
+            groupBox7.ForeColor = SystemColors.ActiveCaption;
+            groupBox7.Location = new Point(167, 564);
+            groupBox7.Margin = new Padding(4, 3, 4, 3);
+            groupBox7.Name = "groupBox7";
+            groupBox7.Padding = new Padding(4, 3, 4, 3);
+            groupBox7.Size = new Size(275, 115);
+            groupBox7.TabIndex = 2;
+            groupBox7.TabStop = false;
+            groupBox7.Text = "LOD";
+            // 
+            // Fur_PhysicsEnabled_LOD
+            // 
+            Fur_PhysicsEnabled_LOD.AutoSize = true;
+            Fur_PhysicsEnabled_LOD.ForeColor = SystemColors.ActiveCaption;
+            Fur_PhysicsEnabled_LOD.Location = new Point(69, 73);
+            Fur_PhysicsEnabled_LOD.Margin = new Padding(4, 3, 4, 3);
+            Fur_PhysicsEnabled_LOD.Name = "Fur_PhysicsEnabled_LOD";
+            Fur_PhysicsEnabled_LOD.Size = new Size(136, 22);
+            Fur_PhysicsEnabled_LOD.TabIndex = 13;
+            Fur_PhysicsEnabled_LOD.Text = "Physics Enabled";
+            Fur_PhysicsEnabled_LOD.UseVisualStyleBackColor = true;
+            // 
+            // Fur_LayerCount_LOD
+            // 
+            Fur_LayerCount_LOD.BackColor = Color.FromArgb(75, 68, 138);
+            Fur_LayerCount_LOD.ForeColor = SystemColors.ActiveCaption;
+            Fur_LayerCount_LOD.Location = new Point(143, 33);
+            Fur_LayerCount_LOD.Margin = new Padding(4, 3, 4, 3);
+            Fur_LayerCount_LOD.Name = "Fur_LayerCount_LOD";
+            Fur_LayerCount_LOD.Size = new Size(104, 24);
+            Fur_LayerCount_LOD.TabIndex = 10;
+            Fur_LayerCount_LOD.Text = "20";
+            Fur_LayerCount_LOD.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label102
+            // 
+            label102.AutoSize = true;
+            label102.ForeColor = SystemColors.ActiveCaption;
+            label102.Location = new Point(40, 36);
+            label102.Margin = new Padding(4, 0, 4, 0);
+            label102.Name = "label102";
+            label102.Size = new Size(92, 18);
+            label102.TabIndex = 9;
+            label102.Text = "Layer Count:";
+            // 
             // Fur_RefHairBias
             // 
             Fur_RefHairBias.BackColor = Color.FromArgb(75, 68, 138);
             Fur_RefHairBias.ForeColor = SystemColors.ActiveCaption;
-            Fur_RefHairBias.Location = new Point(310, 500);
+            Fur_RefHairBias.Location = new Point(304, 489);
             Fur_RefHairBias.Margin = new Padding(4, 3, 4, 3);
             Fur_RefHairBias.Name = "Fur_RefHairBias";
             Fur_RefHairBias.Size = new Size(104, 24);
@@ -3711,31 +3802,63 @@
             Fur_RefHairBias.Text = "0.8";
             Fur_RefHairBias.TextAlign = HorizontalAlignment.Center;
             // 
+            // label92
+            // 
+            label92.AutoSize = true;
+            label92.Location = new Point(190, 85);
+            label92.Margin = new Padding(4, 0, 4, 0);
+            label92.Name = "label92";
+            label92.Size = new Size(92, 18);
+            label92.TabIndex = 3;
+            label92.Text = "Layer Count:";
+            // 
             // label100
             // 
             label100.AutoSize = true;
-            label100.Location = new Point(65, 538);
+            label100.Location = new Point(59, 527);
             label100.Margin = new Padding(4, 0, 4, 0);
             label100.Name = "label100";
             label100.Size = new Size(201, 18);
             label100.TabIndex = 23;
             label100.Text = "Hair Length Force Uniformity:";
             // 
+            // label93
+            // 
+            label93.AutoSize = true;
+            label93.Location = new Point(201, 121);
+            label93.Margin = new Padding(4, 0, 4, 0);
+            label93.Name = "label93";
+            label93.Size = new Size(82, 18);
+            label93.TabIndex = 5;
+            label93.Text = "Fur Length:";
+            // 
             // label101
             // 
             label101.AutoSize = true;
-            label101.Location = new Point(132, 503);
+            label101.Location = new Point(126, 492);
             label101.Margin = new Padding(4, 0, 4, 0);
             label101.Name = "label101";
             label101.Size = new Size(144, 18);
             label101.TabIndex = 22;
             label101.Text = "Reference Hair Bias:";
             // 
+            // Fur_LayerCount
+            // 
+            Fur_LayerCount.BackColor = Color.FromArgb(75, 68, 138);
+            Fur_LayerCount.ForeColor = SystemColors.ActiveCaption;
+            Fur_LayerCount.Location = new Point(304, 82);
+            Fur_LayerCount.Margin = new Padding(4, 3, 4, 3);
+            Fur_LayerCount.Name = "Fur_LayerCount";
+            Fur_LayerCount.Size = new Size(104, 24);
+            Fur_LayerCount.TabIndex = 8;
+            Fur_LayerCount.Text = "50";
+            Fur_LayerCount.TextAlign = HorizontalAlignment.Center;
+            // 
             // Fur_MaxForceTorqueFactor
             // 
             Fur_MaxForceTorqueFactor.BackColor = Color.FromArgb(75, 68, 138);
             Fur_MaxForceTorqueFactor.ForeColor = SystemColors.ActiveCaption;
-            Fur_MaxForceTorqueFactor.Location = new Point(310, 465);
+            Fur_MaxForceTorqueFactor.Location = new Point(304, 454);
             Fur_MaxForceTorqueFactor.Margin = new Padding(4, 3, 4, 3);
             Fur_MaxForceTorqueFactor.Name = "Fur_MaxForceTorqueFactor";
             Fur_MaxForceTorqueFactor.Size = new Size(104, 24);
@@ -3743,11 +3866,23 @@
             Fur_MaxForceTorqueFactor.Text = "0.75";
             Fur_MaxForceTorqueFactor.TextAlign = HorizontalAlignment.Center;
             // 
+            // Fur_FurLength
+            // 
+            Fur_FurLength.BackColor = Color.FromArgb(75, 68, 138);
+            Fur_FurLength.ForeColor = SystemColors.ActiveCaption;
+            Fur_FurLength.Location = new Point(304, 117);
+            Fur_FurLength.Margin = new Padding(4, 3, 4, 3);
+            Fur_FurLength.Name = "Fur_FurLength";
+            Fur_FurLength.Size = new Size(104, 24);
+            Fur_FurLength.TabIndex = 9;
+            Fur_FurLength.Text = "1.4";
+            Fur_FurLength.TextAlign = HorizontalAlignment.Center;
+            // 
             // Fur_MaxForce
             // 
             Fur_MaxForce.BackColor = Color.FromArgb(75, 68, 138);
             Fur_MaxForce.ForeColor = SystemColors.ActiveCaption;
-            Fur_MaxForce.Location = new Point(310, 430);
+            Fur_MaxForce.Location = new Point(304, 419);
             Fur_MaxForce.Margin = new Padding(4, 3, 4, 3);
             Fur_MaxForce.Name = "Fur_MaxForce";
             Fur_MaxForce.Size = new Size(104, 24);
@@ -3755,25 +3890,58 @@
             Fur_MaxForce.Text = "10.0";
             Fur_MaxForce.TextAlign = HorizontalAlignment.Center;
             // 
+            // label94
+            // 
+            label94.AutoSize = true;
+            label94.Location = new Point(127, 155);
+            label94.Margin = new Padding(4, 0, 4, 0);
+            label94.Name = "label94";
+            label94.Size = new Size(147, 18);
+            label94.TabIndex = 10;
+            label94.Text = "Minimum Fur Length:";
+            // 
             // label98
             // 
             label98.AutoSize = true;
-            label98.Location = new Point(89, 468);
+            label98.Location = new Point(83, 457);
             label98.Margin = new Padding(4, 0, 4, 0);
             label98.Name = "label98";
             label98.Size = new Size(181, 18);
             label98.TabIndex = 19;
             label98.Text = "Max Force Torque Factor:";
             // 
+            // Fur_MinFurLength
+            // 
+            Fur_MinFurLength.BackColor = Color.FromArgb(75, 68, 138);
+            Fur_MinFurLength.ForeColor = SystemColors.ActiveCaption;
+            Fur_MinFurLength.Location = new Point(304, 152);
+            Fur_MinFurLength.Margin = new Padding(4, 3, 4, 3);
+            Fur_MinFurLength.Name = "Fur_MinFurLength";
+            Fur_MinFurLength.Size = new Size(104, 24);
+            Fur_MinFurLength.TabIndex = 11;
+            Fur_MinFurLength.Text = "0.001";
+            Fur_MinFurLength.TextAlign = HorizontalAlignment.Center;
+            // 
             // label99
             // 
             label99.AutoSize = true;
-            label99.Location = new Point(203, 434);
+            label99.Location = new Point(197, 423);
             label99.Margin = new Padding(4, 0, 4, 0);
             label99.Name = "label99";
             label99.Size = new Size(83, 18);
             label99.TabIndex = 18;
             label99.Text = "Max Force:";
+            // 
+            // Fur_PhysicsEnabled
+            // 
+            Fur_PhysicsEnabled.AutoSize = true;
+            Fur_PhysicsEnabled.Location = new Point(221, 200);
+            Fur_PhysicsEnabled.Margin = new Padding(4, 3, 4, 3);
+            Fur_PhysicsEnabled.Name = "Fur_PhysicsEnabled";
+            Fur_PhysicsEnabled.Size = new Size(136, 22);
+            Fur_PhysicsEnabled.TabIndex = 12;
+            Fur_PhysicsEnabled.Text = "Physics Enabled";
+            Fur_PhysicsEnabled.UseVisualStyleBackColor = true;
             // 
             // groupBox8
             // 
@@ -3784,7 +3952,7 @@
             groupBox8.Controls.Add(Fur_ConstForce_X);
             groupBox8.Controls.Add(label95);
             groupBox8.ForeColor = Color.White;
-            groupBox8.Location = new Point(76, 351);
+            groupBox8.Location = new Point(70, 340);
             groupBox8.Margin = new Padding(4, 3, 4, 3);
             groupBox8.Name = "groupBox8";
             groupBox8.Padding = new Padding(4, 3, 4, 3);
@@ -3859,11 +4027,21 @@
             label95.TabIndex = 16;
             label95.Text = "X:";
             // 
+            // label104
+            // 
+            label104.AutoSize = true;
+            label104.Location = new Point(148, 243);
+            label104.Margin = new Padding(4, 0, 4, 0);
+            label104.Name = "label104";
+            label104.Size = new Size(129, 18);
+            label104.TabIndex = 13;
+            label104.Text = "Force Distribution:";
+            // 
             // Fur_Stiffness
             // 
             Fur_Stiffness.BackColor = Color.FromArgb(75, 68, 138);
             Fur_Stiffness.ForeColor = SystemColors.ActiveCaption;
-            Fur_Stiffness.Location = new Point(310, 285);
+            Fur_Stiffness.Location = new Point(304, 274);
             Fur_Stiffness.Margin = new Padding(4, 3, 4, 3);
             Fur_Stiffness.Name = "Fur_Stiffness";
             Fur_Stiffness.Size = new Size(104, 24);
@@ -3871,11 +4049,21 @@
             Fur_Stiffness.Text = "10.0";
             Fur_Stiffness.TextAlign = HorizontalAlignment.Center;
             // 
+            // label105
+            // 
+            label105.AutoSize = true;
+            label105.Location = new Point(218, 277);
+            label105.Margin = new Padding(4, 0, 4, 0);
+            label105.Name = "label105";
+            label105.Size = new Size(69, 18);
+            label105.TabIndex = 14;
+            label105.Text = "Stiffness:";
+            // 
             // Fur_ForceDistribution
             // 
             Fur_ForceDistribution.BackColor = Color.FromArgb(75, 68, 138);
             Fur_ForceDistribution.ForeColor = SystemColors.ActiveCaption;
-            Fur_ForceDistribution.Location = new Point(310, 250);
+            Fur_ForceDistribution.Location = new Point(304, 239);
             Fur_ForceDistribution.Margin = new Padding(4, 3, 4, 3);
             Fur_ForceDistribution.Name = "Fur_ForceDistribution";
             Fur_ForceDistribution.Size = new Size(104, 24);
@@ -3883,177 +4071,9 @@
             Fur_ForceDistribution.Text = "3.0";
             Fur_ForceDistribution.TextAlign = HorizontalAlignment.Center;
             // 
-            // label105
-            // 
-            label105.AutoSize = true;
-            label105.Location = new Point(224, 288);
-            label105.Margin = new Padding(4, 0, 4, 0);
-            label105.Name = "label105";
-            label105.Size = new Size(69, 18);
-            label105.TabIndex = 14;
-            label105.Text = "Stiffness:";
-            // 
-            // label104
-            // 
-            label104.AutoSize = true;
-            label104.Location = new Point(154, 254);
-            label104.Margin = new Padding(4, 0, 4, 0);
-            label104.Name = "label104";
-            label104.Size = new Size(129, 18);
-            label104.TabIndex = 13;
-            label104.Text = "Force Distribution:";
-            // 
-            // Fur_PhysicsEnabled
-            // 
-            Fur_PhysicsEnabled.AutoSize = true;
-            Fur_PhysicsEnabled.Location = new Point(227, 211);
-            Fur_PhysicsEnabled.Margin = new Padding(4, 3, 4, 3);
-            Fur_PhysicsEnabled.Name = "Fur_PhysicsEnabled";
-            Fur_PhysicsEnabled.Size = new Size(136, 22);
-            Fur_PhysicsEnabled.TabIndex = 12;
-            Fur_PhysicsEnabled.Text = "Physics Enabled";
-            Fur_PhysicsEnabled.UseVisualStyleBackColor = true;
-            // 
-            // Fur_MinFurLength
-            // 
-            Fur_MinFurLength.BackColor = Color.FromArgb(75, 68, 138);
-            Fur_MinFurLength.ForeColor = SystemColors.ActiveCaption;
-            Fur_MinFurLength.Location = new Point(310, 163);
-            Fur_MinFurLength.Margin = new Padding(4, 3, 4, 3);
-            Fur_MinFurLength.Name = "Fur_MinFurLength";
-            Fur_MinFurLength.Size = new Size(104, 24);
-            Fur_MinFurLength.TabIndex = 11;
-            Fur_MinFurLength.Text = "0.001";
-            Fur_MinFurLength.TextAlign = HorizontalAlignment.Center;
-            // 
-            // label94
-            // 
-            label94.AutoSize = true;
-            label94.Location = new Point(133, 166);
-            label94.Margin = new Padding(4, 0, 4, 0);
-            label94.Name = "label94";
-            label94.Size = new Size(147, 18);
-            label94.TabIndex = 10;
-            label94.Text = "Minimum Fur Length:";
-            // 
-            // Fur_FurLength
-            // 
-            Fur_FurLength.BackColor = Color.FromArgb(75, 68, 138);
-            Fur_FurLength.ForeColor = SystemColors.ActiveCaption;
-            Fur_FurLength.Location = new Point(310, 128);
-            Fur_FurLength.Margin = new Padding(4, 3, 4, 3);
-            Fur_FurLength.Name = "Fur_FurLength";
-            Fur_FurLength.Size = new Size(104, 24);
-            Fur_FurLength.TabIndex = 9;
-            Fur_FurLength.Text = "1.4";
-            Fur_FurLength.TextAlign = HorizontalAlignment.Center;
-            // 
-            // Fur_LayerCount
-            // 
-            Fur_LayerCount.BackColor = Color.FromArgb(75, 68, 138);
-            Fur_LayerCount.ForeColor = SystemColors.ActiveCaption;
-            Fur_LayerCount.Location = new Point(310, 93);
-            Fur_LayerCount.Margin = new Padding(4, 3, 4, 3);
-            Fur_LayerCount.Name = "Fur_LayerCount";
-            Fur_LayerCount.Size = new Size(104, 24);
-            Fur_LayerCount.TabIndex = 8;
-            Fur_LayerCount.Text = "50";
-            Fur_LayerCount.TextAlign = HorizontalAlignment.Center;
-            // 
-            // label93
-            // 
-            label93.AutoSize = true;
-            label93.Location = new Point(207, 132);
-            label93.Margin = new Padding(4, 0, 4, 0);
-            label93.Name = "label93";
-            label93.Size = new Size(82, 18);
-            label93.TabIndex = 5;
-            label93.Text = "Fur Length:";
-            // 
-            // label92
-            // 
-            label92.AutoSize = true;
-            label92.Location = new Point(196, 96);
-            label92.Margin = new Padding(4, 0, 4, 0);
-            label92.Name = "label92";
-            label92.Size = new Size(92, 18);
-            label92.TabIndex = 3;
-            label92.Text = "Layer Count:";
-            // 
-            // groupBox7
-            // 
-            groupBox7.Controls.Add(Fur_PhysicsEnabled_LOD);
-            groupBox7.Controls.Add(Fur_LayerCount_LOD);
-            groupBox7.Controls.Add(label102);
-            groupBox7.ForeColor = SystemColors.ActiveCaption;
-            groupBox7.Location = new Point(173, 575);
-            groupBox7.Margin = new Padding(4, 3, 4, 3);
-            groupBox7.Name = "groupBox7";
-            groupBox7.Padding = new Padding(4, 3, 4, 3);
-            groupBox7.Size = new Size(275, 115);
-            groupBox7.TabIndex = 2;
-            groupBox7.TabStop = false;
-            groupBox7.Text = "LOD";
-            // 
-            // Fur_PhysicsEnabled_LOD
-            // 
-            Fur_PhysicsEnabled_LOD.AutoSize = true;
-            Fur_PhysicsEnabled_LOD.ForeColor = SystemColors.ActiveCaption;
-            Fur_PhysicsEnabled_LOD.Location = new Point(69, 73);
-            Fur_PhysicsEnabled_LOD.Margin = new Padding(4, 3, 4, 3);
-            Fur_PhysicsEnabled_LOD.Name = "Fur_PhysicsEnabled_LOD";
-            Fur_PhysicsEnabled_LOD.Size = new Size(136, 22);
-            Fur_PhysicsEnabled_LOD.TabIndex = 13;
-            Fur_PhysicsEnabled_LOD.Text = "Physics Enabled";
-            Fur_PhysicsEnabled_LOD.UseVisualStyleBackColor = true;
-            // 
-            // Fur_LayerCount_LOD
-            // 
-            Fur_LayerCount_LOD.BackColor = Color.FromArgb(75, 68, 138);
-            Fur_LayerCount_LOD.ForeColor = SystemColors.ActiveCaption;
-            Fur_LayerCount_LOD.Location = new Point(143, 33);
-            Fur_LayerCount_LOD.Margin = new Padding(4, 3, 4, 3);
-            Fur_LayerCount_LOD.Name = "Fur_LayerCount_LOD";
-            Fur_LayerCount_LOD.Size = new Size(104, 24);
-            Fur_LayerCount_LOD.TabIndex = 10;
-            Fur_LayerCount_LOD.Text = "20";
-            Fur_LayerCount_LOD.TextAlign = HorizontalAlignment.Center;
-            // 
-            // label102
-            // 
-            label102.AutoSize = true;
-            label102.ForeColor = SystemColors.ActiveCaption;
-            label102.Location = new Point(40, 36);
-            label102.Margin = new Padding(4, 0, 4, 0);
-            label102.Name = "label102";
-            label102.Size = new Size(92, 18);
-            label102.TabIndex = 9;
-            label102.Text = "Layer Count:";
-            // 
-            // Fur_ShowBeardMesh
-            // 
-            Fur_ShowBeardMesh.AutoSize = true;
-            Fur_ShowBeardMesh.Location = new Point(227, 53);
-            Fur_ShowBeardMesh.Margin = new Padding(4, 3, 4, 3);
-            Fur_ShowBeardMesh.Name = "Fur_ShowBeardMesh";
-            Fur_ShowBeardMesh.Size = new Size(149, 22);
-            Fur_ShowBeardMesh.TabIndex = 1;
-            Fur_ShowBeardMesh.Text = "Show Beard Mesh";
-            Fur_ShowBeardMesh.UseVisualStyleBackColor = true;
-            // 
-            // Fur_ShowHairMesh
-            // 
-            Fur_ShowHairMesh.AutoSize = true;
-            Fur_ShowHairMesh.Location = new Point(227, 21);
-            Fur_ShowHairMesh.Margin = new Padding(4, 3, 4, 3);
-            Fur_ShowHairMesh.Name = "Fur_ShowHairMesh";
-            Fur_ShowHairMesh.Size = new Size(137, 22);
-            Fur_ShowHairMesh.TabIndex = 0;
-            Fur_ShowHairMesh.Text = "Show Hair Mesh";
-            Fur_ShowHairMesh.UseVisualStyleBackColor = true;
-            // 
             // CharCustomBox
             // 
+            CharCustomBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             CharCustomBox.Controls.Add(CharCust_Add);
             CharCustomBox.Controls.Add(CharCustomFlow);
             CharCustomBox.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -4062,7 +4082,7 @@
             CharCustomBox.Margin = new Padding(4, 3, 4, 3);
             CharCustomBox.Name = "CharCustomBox";
             CharCustomBox.Padding = new Padding(4, 3, 4, 3);
-            CharCustomBox.Size = new Size(611, 728);
+            CharCustomBox.Size = new Size(606, 728);
             CharCustomBox.TabIndex = 37;
             CharCustomBox.TabStop = false;
             CharCustomBox.Text = "Character Customization";
@@ -4071,6 +4091,7 @@
             // CharCust_Add
             // 
             CharCust_Add.ActiveLinkColor = Color.DeepSkyBlue;
+            CharCust_Add.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             CharCust_Add.AutoSize = true;
             CharCust_Add.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             CharCust_Add.LinkColor = Color.Lime;
@@ -4086,13 +4107,13 @@
             // 
             // CharCustomFlow
             // 
+            CharCustomFlow.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             CharCustomFlow.AutoScroll = true;
-            CharCustomFlow.Dock = DockStyle.Fill;
             CharCustomFlow.ForeColor = SystemColors.ActiveCaption;
             CharCustomFlow.Location = new Point(4, 20);
             CharCustomFlow.Margin = new Padding(4, 3, 4, 3);
             CharCustomFlow.Name = "CharCustomFlow";
-            CharCustomFlow.Size = new Size(603, 705);
+            CharCustomFlow.Size = new Size(596, 705);
             CharCustomFlow.TabIndex = 42;
             // 
             // Icon_PB
@@ -4110,6 +4131,7 @@
             // 
             // label106
             // 
+            label106.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             label106.AutoSize = true;
             label106.ForeColor = SystemColors.ActiveCaption;
             label106.Location = new Point(8, 943);
@@ -4121,12 +4143,13 @@
             // CurrentlyEditing_LL
             // 
             CurrentlyEditing_LL.ActiveLinkColor = Color.DeepSkyBlue;
+            CurrentlyEditing_LL.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             CurrentlyEditing_LL.AutoEllipsis = true;
             CurrentlyEditing_LL.LinkColor = SystemColors.MenuHighlight;
             CurrentlyEditing_LL.Location = new Point(108, 943);
             CurrentlyEditing_LL.Margin = new Padding(4, 0, 4, 0);
             CurrentlyEditing_LL.Name = "CurrentlyEditing_LL";
-            CurrentlyEditing_LL.Size = new Size(486, 15);
+            CurrentlyEditing_LL.Size = new Size(480, 15);
             CurrentlyEditing_LL.TabIndex = 40;
             CurrentlyEditing_LL.TabStop = true;
             CurrentlyEditing_LL.Text = "New File";
@@ -4136,11 +4159,12 @@
             // StopEditing_LL
             // 
             StopEditing_LL.ActiveLinkColor = Color.Red;
+            StopEditing_LL.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             StopEditing_LL.AutoEllipsis = true;
             StopEditing_LL.AutoSize = true;
             StopEditing_LL.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             StopEditing_LL.LinkColor = Color.LightCoral;
-            StopEditing_LL.Location = new Point(598, 939);
+            StopEditing_LL.Location = new Point(592, 939);
             StopEditing_LL.Margin = new Padding(4, 0, 4, 0);
             StopEditing_LL.Name = "StopEditing_LL";
             StopEditing_LL.Size = new Size(19, 21);
@@ -4156,7 +4180,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(32, 34, 81);
-            ClientSize = new Size(621, 997);
+            ClientSize = new Size(615, 997);
             ControlBox = false;
             Controls.Add(StopEditing_LL);
             Controls.Add(CurrentlyEditing_LL);
@@ -4171,12 +4195,13 @@
             Controls.Add(tabControl1);
             Controls.Add(CharCustomBox);
             Controls.Add(FurCustomizationGB);
-            FormBorderStyle = FormBorderStyle.None;
+            DoubleBuffered = true;
+            FormBorderStyle = FormBorderStyle.SizableToolWindow;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "AutoModCreator";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "WLMM - AutoMod Creator";
             Load += AutoModCreator_Load;
+            ResizeEnd += AutoModCreator_ResizeEnd;
             ((System.ComponentModel.ISupportInitialize)Close_Button).EndInit();
             ((System.ComponentModel.ISupportInitialize)Separator_1).EndInit();
             TitlePanel.ResumeLayout(false);
@@ -4215,11 +4240,12 @@
             groupBox6.ResumeLayout(false);
             groupBox6.PerformLayout();
             FurCustomizationGB.ResumeLayout(false);
-            FurCustomizationGB.PerformLayout();
-            groupBox8.ResumeLayout(false);
-            groupBox8.PerformLayout();
+            FurCust_ScrollBox.ResumeLayout(false);
+            FurCust_ScrollBox.PerformLayout();
             groupBox7.ResumeLayout(false);
             groupBox7.PerformLayout();
+            groupBox8.ResumeLayout(false);
+            groupBox8.PerformLayout();
             CharCustomBox.ResumeLayout(false);
             CharCustomBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_PB).EndInit();
@@ -4232,7 +4258,6 @@
         private PictureBox Close_Button;
         private PictureBox Separator_1;
         private Panel TitlePanel;
-        private Label ByLuckyLabel;
         private Label TitleLabel;
         private GroupBox groupBox1;
         private ComboBox Variant;
@@ -4529,5 +4554,6 @@
         private Label label106;
         private LinkLabel CurrentlyEditing_LL;
         private LinkLabel StopEditing_LL;
+        private Panel FurCust_ScrollBox;
     }
 }
