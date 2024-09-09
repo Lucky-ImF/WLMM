@@ -1113,6 +1113,7 @@ namespace WSMM
             });
 
             //Get all .wlmm in Loaded
+            string FileCopyMessage = string.Empty;
             foreach (string file in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded", "*.wlmm"))
             {
                 string ModName = Path.GetFileNameWithoutExtension(file);
@@ -1120,46 +1121,58 @@ namespace WSMM
                 string isEnabled = File.ReadAllText(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\Enabled.dat");
                 if (isEnabled == "Checked")
                 {
-                    //Copy .paks to Game
-                    foreach (string pak in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\Paks", "*.pak"))
+                    try
                     {
-                        BuildLog += "+ + " + Path.GetFileName(pak) + "\n";
-                        File.Copy(pak, LoadedWLPath + @"\WildLifeC\Content\Paks\" + Path.GetFileName(pak), true);
-                        ActiveMods.Add(Path.GetFileName(pak));
-                    }
-
-                    //Copy .txt and .collection to AutoMod
-                    foreach (string AMFile in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\AutoMod", "*.txt"))
-                    {
-                        BuildLog += "+ + " + Path.GetFileName(AMFile) + "\n";
-                        File.Copy(AMFile, Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\AutoMod\" + Path.GetFileName(AMFile), true);
-                        HasAutoMod = true;
-                    }
-                    foreach (string AMFile in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\AutoMod", "*.collection"))
-                    {
-                        BuildLog += "+ + " + Path.GetFileName(AMFile) + "\n";
-                        File.Copy(AMFile, Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\AutoMod\" + Path.GetFileName(AMFile), true);
-                        HasAutoMod = true;
-                    }
-
-                    //Read Integrity.dat
-                    if (BS_VerifyFI_CB.Checked)
-                    {
-                        if (File.Exists(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\Integrity.dat"))
+                        //Copy .paks to Game
+                        foreach (string pak in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\Paks", "*.pak"))
                         {
-                            string[] Integrity = File.ReadAllLines(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\Integrity.dat");
-                            foreach (string hash in Integrity)
+                            BuildLog += "+ + " + Path.GetFileName(pak) + "\n";
+                            File.Copy(pak, LoadedWLPath + @"\WildLifeC\Content\Paks\" + Path.GetFileName(pak), true);
+                            ActiveMods.Add(Path.GetFileName(pak));
+                        }
+
+                        //Copy .txt and .collection to AutoMod
+                        foreach (string AMFile in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\AutoMod", "*.txt"))
+                        {
+                            BuildLog += "+ + " + Path.GetFileName(AMFile) + "\n";
+                            File.Copy(AMFile, Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\AutoMod\" + Path.GetFileName(AMFile), true);
+                            HasAutoMod = true;
+                        }
+                        foreach (string AMFile in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\AutoMod", "*.collection"))
+                        {
+                            BuildLog += "+ + " + Path.GetFileName(AMFile) + "\n";
+                            File.Copy(AMFile, Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\AutoMod\" + Path.GetFileName(AMFile), true);
+                            HasAutoMod = true;
+                        }
+
+                        //Read Integrity.dat
+                        if (BS_VerifyFI_CB.Checked)
+                        {
+                            if (File.Exists(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\Integrity.dat"))
                             {
-                                if (HashDict.ContainsKey(GetSlice(hash, "=", 0)) == false)
+                                string[] Integrity = File.ReadAllLines(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\Integrity.dat");
+                                foreach (string hash in Integrity)
                                 {
-                                    HashDict.Add(GetSlice(hash, "=", 0), GetSlice(hash, "=", 1));
-                                }
-                                else
-                                {
-                                    BuildLog += "+ - " + GetSlice(hash, "=", 0) + " already exists in HashDict.\n";
+                                    if (HashDict.ContainsKey(GetSlice(hash, "=", 0)) == false)
+                                    {
+                                        HashDict.Add(GetSlice(hash, "=", 0), GetSlice(hash, "=", 1));
+                                    }
+                                    else
+                                    {
+                                        BuildLog += "+ - " + GetSlice(hash, "=", 0) + " already exists in HashDict.\n";
+                                    }
                                 }
                             }
                         }
+                    }
+                    catch (Exception ex)
+                    {
+                        FileCopyMessage = ex.Message;
+                        BuildLog += "+ - Failed deploying mod: " + ModName + "\n";
+                        BuildLog += "+ - ex: " + FileCopyMessage + "\n";
+                        MessageBox.Show("Failed deploying mod: " + ModName + "\nCheck build log for detailed info.", "Wild Life Mod Manager");
+                        ResetFromBuilding();
+                        return;
                     }
                 }
                 else
@@ -1179,6 +1192,7 @@ namespace WSMM
             }
 
             //Check what .paks are not in the active mods
+            FileCopyMessage = string.Empty;
             bool KeepAll = false;
             bool RemoveAll = false;
             foreach (string pak in Directory.EnumerateFiles(LoadedWLPath + @"\WildLifeC\Content\Paks", "*.pak"))
@@ -1194,7 +1208,6 @@ namespace WSMM
                 if (Found == false)
                 {
                     BuildLog += "Found mod outside of active mods: " + Path.GetFileName(pak) + "\n";
-                    //DialogResult dialogResult = MessageBox.Show("Mod outside of active mods found: " + Path.GetFileNameWithoutExtension(pak) + "\nDo you want to keep it loaded?", "Wild Life Mod Manager", MessageBoxButtons.YesNo);
 
                     string Result = "Keep";
                     if (RemoveAll == true)
@@ -1236,29 +1249,41 @@ namespace WSMM
                         }
                     }
 
-                    if (Result == "Keep")
+                    try
                     {
-                        //Keep
-                        BuildLog += "+ Keeping\n";
+                        if (Result == "Keep")
+                        {
+                            //Keep
+                            BuildLog += "+ Keeping\n";
+                        }
+                        else if (Result == "KeepAll")
+                        {
+                            //Keep All
+                            KeepAll = true;
+                            BuildLog += "+ Keeping\n";
+                        }
+                        else if (Result == "Remove")
+                        {
+                            //Remove
+                            BuildLog += "- Deleting.\n";
+                            File.Delete(pak);
+                        }
+                        else if (Result == "RemoveAll")
+                        {
+                            //Remove All
+                            BuildLog += "- Deleting.\n";
+                            File.Delete(pak);
+                            RemoveAll = true;
+                        }
                     }
-                    else if (Result == "KeepAll")
+                    catch (Exception ex)
                     {
-                        //Keep All
-                        KeepAll = true;
-                        BuildLog += "+ Keeping\n";
-                    }
-                    else if (Result == "Remove")
-                    {
-                        //Remove
-                        BuildLog += "- Deleting.\n";
-                        File.Delete(pak);
-                    }
-                    else if (Result == "RemoveAll")
-                    {
-                        //Remove All
-                        BuildLog += "- Deleting.\n";
-                        File.Delete(pak);
-                        RemoveAll = true;
+                        FileCopyMessage = ex.Message;
+                        BuildLog += "- Failed removing inactive .pak: " + Path.GetFileName(pak) + "\n";
+                        BuildLog += "- ex: " + FileCopyMessage + "\n";
+                        MessageBox.Show("Failed removing inactive .pak: " + Path.GetFileName(pak) + "\nIs the file in use?", "Wild Life Mod Manager");
+                        ResetFromBuilding();
+                        return;
                     }
                 }
             }
@@ -1373,6 +1398,7 @@ namespace WSMM
                 BuildMods_Button.Enabled = true;
 
                 File.WriteAllText(Application.StartupPath + @"System\LatestBuildLog.txt", BuildLog);
+                BuildLog = string.Empty;
             });
         }
 
@@ -2576,6 +2602,14 @@ namespace WSMM
             if (StartingUp == false)
             {
                 SaveBuildSettings();
+            }
+        }
+
+        private void OpenBuildLog_Button_Click(object sender, EventArgs e)
+        {
+            if (File.Exists(Application.StartupPath + @"System\LatestBuildLog.txt"))
+            {
+                Process.Start("explorer.exe", Application.StartupPath + @"System\LatestBuildLog.txt");
             }
         }
     }

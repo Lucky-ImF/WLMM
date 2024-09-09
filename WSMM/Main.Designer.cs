@@ -56,6 +56,7 @@
             label17 = new Label();
             linkLabel2 = new LinkLabel();
             label6 = new Label();
+            checkBox1 = new CheckBox();
             linkLabel1 = new LinkLabel();
             label5 = new Label();
             label4 = new Label();
@@ -82,6 +83,7 @@
             folderBrowserDialog1 = new FolderBrowserDialog();
             BuildSettings_Button = new Button();
             BuildSettings_Panel = new Panel();
+            BS_VerifyFI_CB = new CheckBox();
             label1 = new Label();
             BS_Mappings = new ComboBox();
             BuildSettingsDTFolder_Button = new Button();
@@ -110,8 +112,7 @@
             ExpandedLink_LL = new LinkLabel();
             ExpandedLink_CloseButton = new PictureBox();
             label22 = new Label();
-            checkBox1 = new CheckBox();
-            BS_VerifyFI_CB = new CheckBox();
+            OpenBuildLog_Button = new Button();
             TitlePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
@@ -501,6 +502,18 @@
             label6.TabIndex = 8;
             label6.Text = "by: Mr.Sergoo";
             // 
+            // checkBox1
+            // 
+            checkBox1.AutoSize = true;
+            checkBox1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            checkBox1.ForeColor = SystemColors.ActiveCaption;
+            checkBox1.Location = new Point(741, 80);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new Size(84, 25);
+            checkBox1.TabIndex = 7;
+            checkBox1.Text = "Enabled";
+            checkBox1.UseVisualStyleBackColor = true;
+            // 
             // linkLabel1
             // 
             linkLabel1.ActiveLinkColor = Color.MistyRose;
@@ -821,6 +834,21 @@
             BuildSettings_Panel.TabIndex = 13;
             BuildSettings_Panel.Visible = false;
             // 
+            // BS_VerifyFI_CB
+            // 
+            BS_VerifyFI_CB.AutoSize = true;
+            BS_VerifyFI_CB.Checked = true;
+            BS_VerifyFI_CB.CheckState = CheckState.Checked;
+            BS_VerifyFI_CB.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BS_VerifyFI_CB.ForeColor = SystemColors.ActiveCaption;
+            BS_VerifyFI_CB.Location = new Point(6, 234);
+            BS_VerifyFI_CB.Name = "BS_VerifyFI_CB";
+            BS_VerifyFI_CB.Size = new Size(224, 24);
+            BS_VerifyFI_CB.TabIndex = 43;
+            BS_VerifyFI_CB.Text = "Verify File Integrity after Build";
+            BS_VerifyFI_CB.UseVisualStyleBackColor = true;
+            BS_VerifyFI_CB.CheckedChanged += BS_VerifyFI_CB_CheckedChanged;
+            // 
             // label1
             // 
             label1.AutoSize = true;
@@ -1070,9 +1098,9 @@
             OpenWLFolder_Button.FlatStyle = FlatStyle.Flat;
             OpenWLFolder_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             OpenWLFolder_Button.ForeColor = SystemColors.ActiveCaption;
-            OpenWLFolder_Button.Location = new Point(939, 226);
+            OpenWLFolder_Button.Location = new Point(926, 271);
             OpenWLFolder_Button.Name = "OpenWLFolder_Button";
-            OpenWLFolder_Button.Size = new Size(148, 26);
+            OpenWLFolder_Button.Size = new Size(176, 26);
             OpenWLFolder_Button.TabIndex = 46;
             OpenWLFolder_Button.Text = "Open Wild Life Folder";
             OpenWLFolder_Button.UseVisualStyleBackColor = false;
@@ -1085,11 +1113,11 @@
             CreateBuildLog_Button.FlatStyle = FlatStyle.Flat;
             CreateBuildLog_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             CreateBuildLog_Button.ForeColor = SystemColors.ActiveCaption;
-            CreateBuildLog_Button.Location = new Point(939, 182);
+            CreateBuildLog_Button.Location = new Point(926, 181);
             CreateBuildLog_Button.Name = "CreateBuildLog_Button";
-            CreateBuildLog_Button.Size = new Size(148, 26);
+            CreateBuildLog_Button.Size = new Size(176, 26);
             CreateBuildLog_Button.TabIndex = 48;
-            CreateBuildLog_Button.Text = "Create Build Log";
+            CreateBuildLog_Button.Text = "Create Sharable Build Log";
             CreateBuildLog_Button.UseVisualStyleBackColor = false;
             CreateBuildLog_Button.Click += CreateBuildLog_Button_Click;
             // 
@@ -1107,9 +1135,9 @@
             MetaDataPatcher_Button.FlatStyle = FlatStyle.Flat;
             MetaDataPatcher_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             MetaDataPatcher_Button.ForeColor = SystemColors.ActiveCaption;
-            MetaDataPatcher_Button.Location = new Point(939, 138);
+            MetaDataPatcher_Button.Location = new Point(926, 136);
             MetaDataPatcher_Button.Name = "MetaDataPatcher_Button";
-            MetaDataPatcher_Button.Size = new Size(148, 26);
+            MetaDataPatcher_Button.Size = new Size(176, 26);
             MetaDataPatcher_Button.TabIndex = 49;
             MetaDataPatcher_Button.Text = "Patch MetaData";
             MetaDataPatcher_Button.UseVisualStyleBackColor = false;
@@ -1187,32 +1215,20 @@
             label22.TabIndex = 2;
             label22.Text = "Link";
             // 
-            // checkBox1
+            // OpenBuildLog_Button
             // 
-            checkBox1.AutoSize = true;
-            checkBox1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            checkBox1.ForeColor = SystemColors.ActiveCaption;
-            checkBox1.Location = new Point(741, 80);
-            checkBox1.Name = "checkBox1";
-            checkBox1.Size = new Size(84, 25);
-            checkBox1.TabIndex = 7;
-            checkBox1.Text = "Enabled";
-            checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // BS_VerifyFI_CB
-            // 
-            BS_VerifyFI_CB.AutoSize = true;
-            BS_VerifyFI_CB.Checked = true;
-            BS_VerifyFI_CB.CheckState = CheckState.Checked;
-            BS_VerifyFI_CB.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            BS_VerifyFI_CB.ForeColor = SystemColors.ActiveCaption;
-            BS_VerifyFI_CB.Location = new Point(6, 234);
-            BS_VerifyFI_CB.Name = "BS_VerifyFI_CB";
-            BS_VerifyFI_CB.Size = new Size(224, 24);
-            BS_VerifyFI_CB.TabIndex = 43;
-            BS_VerifyFI_CB.Text = "Verify File Integrity after Build";
-            BS_VerifyFI_CB.UseVisualStyleBackColor = true;
-            BS_VerifyFI_CB.CheckedChanged += BS_VerifyFI_CB_CheckedChanged;
+            OpenBuildLog_Button.BackColor = Color.FromArgb(75, 68, 138);
+            OpenBuildLog_Button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            OpenBuildLog_Button.FlatStyle = FlatStyle.Flat;
+            OpenBuildLog_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            OpenBuildLog_Button.ForeColor = SystemColors.ActiveCaption;
+            OpenBuildLog_Button.Location = new Point(926, 226);
+            OpenBuildLog_Button.Name = "OpenBuildLog_Button";
+            OpenBuildLog_Button.Size = new Size(176, 26);
+            OpenBuildLog_Button.TabIndex = 51;
+            OpenBuildLog_Button.Text = "Open Latest Build Log";
+            OpenBuildLog_Button.UseVisualStyleBackColor = false;
+            OpenBuildLog_Button.Click += OpenBuildLog_Button_Click;
             // 
             // Main
             // 
@@ -1221,6 +1237,7 @@
             BackColor = Color.FromArgb(32, 34, 81);
             ClientSize = new Size(1134, 761);
             ControlBox = false;
+            Controls.Add(OpenBuildLog_Button);
             Controls.Add(ExpandedLink_Panel);
             Controls.Add(MetaDataPatcher_Button);
             Controls.Add(CreateBuildLog_Button);
@@ -1370,5 +1387,6 @@
         private LinkLabel ExpandedLinkCopy_LL;
         private CheckBox checkBox1;
         private CheckBox BS_VerifyFI_CB;
+        private Button OpenBuildLog_Button;
     }
 }
