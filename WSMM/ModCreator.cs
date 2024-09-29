@@ -534,7 +534,8 @@ namespace WSMM
 
         private void AutoModList_DoubleClick(object sender, EventArgs e)
         {
-            if (AutoModList.SelectedItems[0].Tag.ToString().EndsWith(".txt")) {
+            if (AutoModList.SelectedItems[0].Tag.ToString().EndsWith(".txt"))
+            {
                 AutoModCreator AutoModCreator_Form = new AutoModCreator();
                 AutoModCreator_Form.Show();
                 AutoModCreator_Form.TransferInfo(LoadedWLPath, LoadedWLVersion, this);
@@ -581,6 +582,34 @@ namespace WSMM
 
             Clipboard.SetText(Metadata);
             MessageBox.Show("MetaData copied to clipboard.", "Wild Life Mod Manager");
+        }
+
+        private void CopyMarketplaceData_Button_Click(object sender, EventArgs e)
+        {
+            string SupportedVersions = "";
+            int i;
+            for (i = 0; i <= (SupportedWLVersions_CLB.Items.Count - 1); i++)
+            {
+                if (SupportedWLVersions_CLB.GetItemChecked(i))
+                {
+                    SupportedVersions += SupportedWLVersions_CLB.Items[i].ToString() + "*";
+                }
+            }
+            if (SupportedVersions.Contains("All Versions"))
+            {
+                SupportedVersions = "All Versions";
+            }
+            else
+            {
+                SupportedVersions = SupportedVersions.TrimEnd('*');
+            }
+
+            string Metadata = "ModName:" + ModName_TB.Text + ",ModAuthor:" + ModAuthor_TB.Text +
+                ",ModVersion:" + ModVersion_TB.Text + ",SupportedVersions:" + SupportedVersions +
+                ",ModLink:" + ModURL_TB.Text + ",ModSize:EDIT,Category:EDIT,LastUpdate:EDIT,ModIcon:EDIT,ModDescription:EDIT,DownloadLink:EDIT,Screenshots:EDIT";
+
+            Clipboard.SetText(Metadata);
+            MessageBox.Show("Marketplace Data copied to clipboard.", "Wild Life Mod Manager");
         }
     }
 }

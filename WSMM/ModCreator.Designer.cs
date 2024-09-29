@@ -72,6 +72,7 @@
             LoadMod_Button = new Button();
             openFileDialog3 = new OpenFileDialog();
             Icon_PB = new PictureBox();
+            CopyMarketplaceData_Button = new Button();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             TitlePanel.SuspendLayout();
@@ -300,6 +301,7 @@
             // panel1
             // 
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(CopyMarketplaceData_Button);
             panel1.Controls.Add(CopyMetaData_Button);
             panel1.Controls.Add(ModIconSetDefault_LL);
             panel1.Controls.Add(ModIconBrowse_Button);
@@ -611,6 +613,21 @@
             Icon_PB.MouseMove += TitlePanel_MouseMove;
             Icon_PB.MouseUp += TitlePanel_MouseUp;
             // 
+            // CopyMarketplaceData_Button
+            // 
+            CopyMarketplaceData_Button.BackColor = Color.FromArgb(75, 68, 138);
+            CopyMarketplaceData_Button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            CopyMarketplaceData_Button.FlatStyle = FlatStyle.Flat;
+            CopyMarketplaceData_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            CopyMarketplaceData_Button.ForeColor = SystemColors.ActiveCaption;
+            CopyMarketplaceData_Button.Location = new Point(119, 266);
+            CopyMarketplaceData_Button.Name = "CopyMarketplaceData_Button";
+            CopyMarketplaceData_Button.Size = new Size(202, 27);
+            CopyMarketplaceData_Button.TabIndex = 38;
+            CopyMarketplaceData_Button.Text = "Copy Marketplace Data";
+            CopyMarketplaceData_Button.UseVisualStyleBackColor = false;
+            CopyMarketplaceData_Button.Click += CopyMarketplaceData_Button_Click;
+            // 
             // ModCreator
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -702,5 +719,6 @@
         private PictureBox Icon_PB;
         private LinkLabel ModIconSetDefault_LL;
         private Button CopyMetaData_Button;
+        private Button CopyMarketplaceData_Button;
     }
 }

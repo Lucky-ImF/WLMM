@@ -27,7 +27,7 @@ namespace WSMM
         private bool StartingUp = true;
         private bool HasOldChanges = false;
 
-        private string WLMM_Version = "1.0.2";
+        private string WLMM_Version = "1.0.3";
         string BuildLog = string.Empty;
 
         public string prevIconPath = string.Empty;
@@ -274,6 +274,7 @@ namespace WSMM
             DisableMods_Button.Visible = true;
             RemoveMods_Button.Visible = true;
             AddMod_Button.Visible = true;
+            Marketplace_Button.Enabled = true;
 
             NoGameLoaded_Panel.Visible = false;
             ModFlow_Panel.AllowDrop = true;
@@ -649,7 +650,7 @@ namespace WSMM
             }
         }
 
-        private void AddMods(List<string> Mods)
+        public void AddMods(List<string> Mods)
         {
             foreach (string Mod in Mods)
             {
@@ -2611,6 +2612,13 @@ namespace WSMM
             {
                 Process.Start("explorer.exe", Application.StartupPath + @"System\LatestBuildLog.txt");
             }
+        }
+
+        private void Marketplace_Button_Click(object sender, EventArgs e)
+        {
+            Marketplace Marketplace_Form = new Marketplace();
+            Marketplace_Form.Show();
+            Marketplace_Form.TransferInfo(LoadedWLPath, LoadedWLVersion, this);
         }
     }
 }

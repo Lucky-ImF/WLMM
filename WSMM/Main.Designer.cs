@@ -113,6 +113,7 @@
             ExpandedLink_CloseButton = new PictureBox();
             label22 = new Label();
             OpenBuildLog_Button = new Button();
+            Marketplace_Button = new Button();
             TitlePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
@@ -1098,7 +1099,7 @@
             OpenWLFolder_Button.FlatStyle = FlatStyle.Flat;
             OpenWLFolder_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             OpenWLFolder_Button.ForeColor = SystemColors.ActiveCaption;
-            OpenWLFolder_Button.Location = new Point(926, 271);
+            OpenWLFolder_Button.Location = new Point(926, 319);
             OpenWLFolder_Button.Name = "OpenWLFolder_Button";
             OpenWLFolder_Button.Size = new Size(176, 26);
             OpenWLFolder_Button.TabIndex = 46;
@@ -1113,7 +1114,7 @@
             CreateBuildLog_Button.FlatStyle = FlatStyle.Flat;
             CreateBuildLog_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             CreateBuildLog_Button.ForeColor = SystemColors.ActiveCaption;
-            CreateBuildLog_Button.Location = new Point(926, 181);
+            CreateBuildLog_Button.Location = new Point(926, 229);
             CreateBuildLog_Button.Name = "CreateBuildLog_Button";
             CreateBuildLog_Button.Size = new Size(176, 26);
             CreateBuildLog_Button.TabIndex = 48;
@@ -1135,7 +1136,7 @@
             MetaDataPatcher_Button.FlatStyle = FlatStyle.Flat;
             MetaDataPatcher_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             MetaDataPatcher_Button.ForeColor = SystemColors.ActiveCaption;
-            MetaDataPatcher_Button.Location = new Point(926, 136);
+            MetaDataPatcher_Button.Location = new Point(926, 184);
             MetaDataPatcher_Button.Name = "MetaDataPatcher_Button";
             MetaDataPatcher_Button.Size = new Size(176, 26);
             MetaDataPatcher_Button.TabIndex = 49;
@@ -1222,13 +1223,29 @@
             OpenBuildLog_Button.FlatStyle = FlatStyle.Flat;
             OpenBuildLog_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             OpenBuildLog_Button.ForeColor = SystemColors.ActiveCaption;
-            OpenBuildLog_Button.Location = new Point(926, 226);
+            OpenBuildLog_Button.Location = new Point(926, 274);
             OpenBuildLog_Button.Name = "OpenBuildLog_Button";
             OpenBuildLog_Button.Size = new Size(176, 26);
             OpenBuildLog_Button.TabIndex = 51;
             OpenBuildLog_Button.Text = "Open Latest Build Log";
             OpenBuildLog_Button.UseVisualStyleBackColor = false;
             OpenBuildLog_Button.Click += OpenBuildLog_Button_Click;
+            // 
+            // Marketplace_Button
+            // 
+            Marketplace_Button.BackColor = Color.FromArgb(75, 68, 138);
+            Marketplace_Button.Enabled = false;
+            Marketplace_Button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            Marketplace_Button.FlatStyle = FlatStyle.Flat;
+            Marketplace_Button.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Marketplace_Button.ForeColor = SystemColors.ActiveCaption;
+            Marketplace_Button.Location = new Point(907, 126);
+            Marketplace_Button.Name = "Marketplace_Button";
+            Marketplace_Button.Size = new Size(213, 45);
+            Marketplace_Button.TabIndex = 52;
+            Marketplace_Button.Text = "Marketplace";
+            Marketplace_Button.UseVisualStyleBackColor = false;
+            Marketplace_Button.Click += Marketplace_Button_Click;
             // 
             // Main
             // 
@@ -1237,6 +1254,7 @@
             BackColor = Color.FromArgb(32, 34, 81);
             ClientSize = new Size(1134, 761);
             ControlBox = false;
+            Controls.Add(Marketplace_Button);
             Controls.Add(OpenBuildLog_Button);
             Controls.Add(ExpandedLink_Panel);
             Controls.Add(MetaDataPatcher_Button);
@@ -1388,5 +1406,6 @@
         private CheckBox checkBox1;
         private CheckBox BS_VerifyFI_CB;
         private Button OpenBuildLog_Button;
+        private Button Marketplace_Button;
     }
 }
