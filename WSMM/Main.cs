@@ -647,6 +647,7 @@ namespace WSMM
                     // Start thread
                     backgroundThread.Start();
                 }
+                prevModPath = Path.GetDirectoryName(openFileDialog1.FileName);
             }
         }
 
