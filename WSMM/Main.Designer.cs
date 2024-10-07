@@ -114,6 +114,9 @@
             label22 = new Label();
             OpenBuildLog_Button = new Button();
             Marketplace_Button = new Button();
+            DTDownload_Panel = new Panel();
+            DTDownload_Progress = new ProgressBar();
+            label20 = new Label();
             TitlePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
@@ -135,6 +138,7 @@
             ((System.ComponentModel.ISupportInitialize)BugReport_CloseButton).BeginInit();
             ExpandedLink_Panel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)ExpandedLink_CloseButton).BeginInit();
+            DTDownload_Panel.SuspendLayout();
             SuspendLayout();
             // 
             // TitlePanel
@@ -1247,6 +1251,36 @@
             Marketplace_Button.UseVisualStyleBackColor = false;
             Marketplace_Button.Click += Marketplace_Button_Click;
             // 
+            // DTDownload_Panel
+            // 
+            DTDownload_Panel.BackColor = Color.FromArgb(75, 68, 138);
+            DTDownload_Panel.BorderStyle = BorderStyle.FixedSingle;
+            DTDownload_Panel.Controls.Add(DTDownload_Progress);
+            DTDownload_Panel.Controls.Add(label20);
+            DTDownload_Panel.Location = new Point(365, 345);
+            DTDownload_Panel.Name = "DTDownload_Panel";
+            DTDownload_Panel.Size = new Size(405, 71);
+            DTDownload_Panel.TabIndex = 53;
+            DTDownload_Panel.Visible = false;
+            // 
+            // DTDownload_Progress
+            // 
+            DTDownload_Progress.Location = new Point(8, 44);
+            DTDownload_Progress.Name = "DTDownload_Progress";
+            DTDownload_Progress.Size = new Size(386, 13);
+            DTDownload_Progress.TabIndex = 4;
+            // 
+            // label20
+            // 
+            label20.AutoSize = true;
+            label20.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label20.ForeColor = SystemColors.ActiveCaption;
+            label20.Location = new Point(73, 5);
+            label20.Name = "label20";
+            label20.Size = new Size(258, 30);
+            label20.TabIndex = 2;
+            label20.Text = "Downloading DataTables...";
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1254,6 +1288,7 @@
             BackColor = Color.FromArgb(32, 34, 81);
             ClientSize = new Size(1134, 761);
             ControlBox = false;
+            Controls.Add(DTDownload_Panel);
             Controls.Add(Marketplace_Button);
             Controls.Add(OpenBuildLog_Button);
             Controls.Add(ExpandedLink_Panel);
@@ -1316,6 +1351,8 @@
             ExpandedLink_Panel.ResumeLayout(false);
             ExpandedLink_Panel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)ExpandedLink_CloseButton).EndInit();
+            DTDownload_Panel.ResumeLayout(false);
+            DTDownload_Panel.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1407,5 +1444,8 @@
         private CheckBox BS_VerifyFI_CB;
         private Button OpenBuildLog_Button;
         private Button Marketplace_Button;
+        private Panel DTDownload_Panel;
+        private Label label20;
+        private ProgressBar DTDownload_Progress;
     }
 }

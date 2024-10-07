@@ -12,6 +12,9 @@ using UAssetAPI.UnrealTypes;
 using UAssetAPI.Unversioned;
 using System.Net;
 using System.Security.Cryptography;
+using CG.Web.MegaApiClient;
+using static System.Windows.Forms.LinkLabel;
+using System.Xml.Linq;
 
 namespace WSMM
 {
@@ -27,7 +30,8 @@ namespace WSMM
         private bool StartingUp = true;
         private bool HasOldChanges = false;
 
-        private string WLMM_Version = "1.0.3";
+        private string WLMM_Version = "1.0.4";
+        private string Datatable_Version = string.Empty;
         string BuildLog = string.Empty;
 
         public string prevIconPath = string.Empty;
@@ -95,6 +99,31 @@ namespace WSMM
         protected override void OnPaint(PaintEventArgs e)
         {
             ControlPaint.DrawBorder(e.Graphics, ClientRectangle, Color.Black, ButtonBorderStyle.Solid);
+        }
+
+        public static void CopyDirectory(string sourceDirectory, string targetDirectory)
+        {
+            DirectoryInfo diSource = new DirectoryInfo(sourceDirectory);
+            DirectoryInfo diTarget = new DirectoryInfo(targetDirectory);
+
+            CopyAll(diSource, diTarget);
+        }
+
+        public static void CopyAll(DirectoryInfo source, DirectoryInfo target)
+        {
+            Directory.CreateDirectory(target.FullName);
+
+            foreach (FileInfo fi in source.GetFiles())
+            {
+                fi.CopyTo(Path.Combine(target.FullName, fi.Name), true);
+            }
+
+            foreach (DirectoryInfo diSourceSubDir in source.GetDirectories())
+            {
+                DirectoryInfo nextTargetSubDir =
+                    target.CreateSubdirectory(diSourceSubDir.Name);
+                CopyAll(diSourceSubDir, nextTargetSubDir);
+            }
         }
 
         private void ModCreator_Button_Click(object sender, EventArgs e)
@@ -305,6 +334,8 @@ namespace WSMM
             this.Text = "Wild Life Mod Manager - v." + WLMM_Version;
             TitleLabel.Text = "Wild Life Mod Manager - v." + WLMM_Version;
 
+            LoadDatatableVersion();
+
             //Version Check
             CheckForUpdate();
 
@@ -343,12 +374,22 @@ namespace WSMM
             }
         }
 
+        private void LoadDatatableVersion()
+        {
+            if (File.Exists(Application.StartupPath + @"System\DatatableVersion.ini"))
+            {
+                Datatable_Version = File.ReadAllText(Application.StartupPath + @"System\DatatableVersion.ini");
+            }
+        }
+
         private void CheckForUpdate()
         {
             try
             {
                 string ThisVersion = WLMM_Version;
                 string VersionInfo = "";
+                string DTVersion = "";
+                string DTLink = "";
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://pastebin.com/raw/qskfNxrz");
                 request.Method = "GET";
                 request.AllowAutoRedirect = false;
@@ -376,11 +417,36 @@ namespace WSMM
                     UpdateLink.Show();
                     WildSanctum_Link.Tag = TempArray[2].Trim('\n');
                     WLMMPost_Link.Tag = TempArray[3].Trim('\n');
+                    DTVersion = TempArray[4].Trim('\n');
+                    DTLink = TempArray[5].Trim('\n');
                 }
                 else
                 {
                     WildSanctum_Link.Tag = TempArray[2].Trim('\n');
                     WLMMPost_Link.Tag = TempArray[3].Trim('\n');
+                    DTVersion = TempArray[4].Trim('\n');
+                    DTLink = TempArray[5].Trim('\n');
+                }
+
+                if (Datatable_Version == string.Empty)
+                {
+                    // No Datatables
+                    DialogResult dialogResult = MessageBox.Show("No DataTables found.\nDownload now?", "Wild Life Mod Manager", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    if (dialogResult == DialogResult.Yes)
+                    {
+                        DTDownload_Panel.Show();
+                        DownloadDatatables(DTLink, DTVersion);
+                    }
+                }
+                else if (DTVersion != Datatable_Version)
+                {
+                    // Datatables outdated
+                    DialogResult dialogResult = MessageBox.Show("New DataTables found.\nUpdate now?", "Wild Life Mod Manager", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                    if (dialogResult == DialogResult.Yes)
+                    {
+                        DTDownload_Panel.Show();
+                        DownloadDatatables(DTLink, DTVersion);
+                    }
                 }
             }
             catch (Exception)
@@ -388,6 +454,82 @@ namespace WSMM
                 UpdateLink.Text = "Unable to check for new version.";
                 UpdateLink.LinkColor = Color.LightCoral;
                 UpdateLink.VisitedLinkColor = Color.LightCoral;
+            }
+        }
+
+        async void DownloadDatatables(string url, string version)
+        {
+            DTDownload_Progress.Value = 0;
+            var client = new MegaApiClient();
+            client.LoginAnonymous();
+
+            try
+            {
+                if (Directory.Exists(Application.StartupPath + @"Temp") == false)
+                {
+                    Directory.CreateDirectory(Application.StartupPath + @"Temp");
+                }
+
+                Uri fileLink = new Uri(url);
+                INode node = client.GetNodeFromLink(fileLink);
+
+                if (File.Exists(Application.StartupPath + @"Temp\" + node.Name))
+                {
+                    File.Delete(Application.StartupPath + @"Temp\" + node.Name);
+                }
+
+                IProgress<double> progressHandler = new Progress<double>(x =>
+                {
+                    DTDownload_Progress.Value = ((int)x);
+                }
+                );
+
+                await client.DownloadFileAsync(fileLink, Application.StartupPath + @"Temp\" + node.Name, progressHandler);
+
+                client.Logout();
+
+                if (Directory.Exists(Application.StartupPath + @"Temp\" + Path.GetFileNameWithoutExtension(node.Name)))
+                {
+                    Directory.Delete(Application.StartupPath + @"Temp\" + Path.GetFileNameWithoutExtension(node.Name), true);
+                }
+                ZipFile.ExtractToDirectory(Application.StartupPath + @"Temp\" + node.Name, Application.StartupPath + @"Temp\" + Path.GetFileNameWithoutExtension(node.Name), true);
+
+                // Replace System\SupportedVersions.ini
+                File.Copy(Application.StartupPath + @"Temp\" + Path.GetFileNameWithoutExtension(node.Name) + @"\System\SupportedVersions.ini", Application.StartupPath + @"System\SupportedVersions.ini", true);
+                // Copy/Replace Mappings
+                foreach (string mapping in Directory.EnumerateFiles(Application.StartupPath + @"Temp\" + Path.GetFileNameWithoutExtension(node.Name) + @"\Mappings", "*.usmap"))
+                {
+                    File.Copy(mapping, Application.StartupPath + @"Mappings\" + Path.GetFileName(mapping), true);
+                }
+                // Copy/Replace DataTables
+                foreach (string DTS in Directory.EnumerateDirectories(Application.StartupPath + @"Temp\" + Path.GetFileNameWithoutExtension(node.Name) + @"\DataTables", "*"))
+                {
+                    CopyDirectory(DTS, Application.StartupPath + @"DataTables\" + Path.GetFileName(DTS));
+                }
+                // Remove Temp Files
+                Directory.Delete(Application.StartupPath + @"Temp", true);
+                // Update DatatableVersion.ini
+                File.WriteAllText(Application.StartupPath + @"System\DatatableVersion.ini", version);
+
+                LoadSupportedVersions();
+
+                DTDownload_Panel.Hide();
+                MessageBox.Show("DataTables updated!", "Wild Life Mod Manager", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                if (client.IsLoggedIn)
+                {
+                    client.Logout();
+                }
+
+                if (Directory.Exists(Application.StartupPath + @"Temp"))
+                {
+                    Directory.Delete(Application.StartupPath + @"Temp", true);
+                }
+
+                DTDownload_Panel.Hide();
+                MessageBox.Show(ex.Message, "WLMM Download Error\n" + ex.Message);
             }
         }
 
@@ -575,15 +717,22 @@ namespace WSMM
             }
             else
             {
-                BS_BaseClothesOutfitFile.Text = BS_BaseClothesOutfitFile.Items[0].ToString();
-                BS_BaseGameCharacterOutfitFile.Text = BS_BaseGameCharacterOutfitFile.Items[0].ToString();
-                BS_BaseGameCharacterCustomizationFile.Text = BS_BaseGameCharacterCustomizationFile.Items[0].ToString();
-                foreach (string M in BS_Mappings.Items)
+                try
                 {
-                    if (M.Contains(LoadedWLVersion))
+                    BS_BaseClothesOutfitFile.Text = BS_BaseClothesOutfitFile.Items[0].ToString();
+                    BS_BaseGameCharacterOutfitFile.Text = BS_BaseGameCharacterOutfitFile.Items[0].ToString();
+                    BS_BaseGameCharacterCustomizationFile.Text = BS_BaseGameCharacterCustomizationFile.Items[0].ToString();
+                    foreach (string M in BS_Mappings.Items)
                     {
-                        BS_Mappings.Text = M;
+                        if (M.Contains(LoadedWLVersion))
+                        {
+                            BS_Mappings.Text = M;
+                        }
                     }
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("DataTable error.", "Wild Life Mod Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
