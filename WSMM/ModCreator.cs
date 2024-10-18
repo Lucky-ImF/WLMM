@@ -501,7 +501,7 @@ namespace WSMM
                             string TrimmedS = s.Trim();
                             for (int i = 0; i <= (SupportedWLVersions_CLB.Items.Count - 1); i++)
                             {
-                                if (SupportedWLVersions_CLB.GetItemText(i) == TrimmedS)
+                                if (SupportedWLVersions_CLB.Items[i].ToString() == TrimmedS)
                                 {
                                     SupportedWLVersions_CLB.SetItemChecked(i, true);
                                 }

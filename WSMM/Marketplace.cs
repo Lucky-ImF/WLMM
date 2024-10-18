@@ -49,6 +49,8 @@ namespace WSMM
             LoadedWLVersion = Version;
             LoadedWLPath = Path;
             Main_Form = MainForm;
+
+            GetMarketplaceMods();
         }
 
         private string GetSlice(string Txt, string Delimiter, int slice)
@@ -100,7 +102,7 @@ namespace WSMM
 
         private void Marketplace_Load(object sender, EventArgs e)
         {
-            GetMarketplaceMods();
+            //GetMarketplaceMods();
         }
 
         private void RefreshMods_Button_Click(object sender, EventArgs e)

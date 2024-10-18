@@ -570,6 +570,11 @@ namespace WSMM
 
         private void LoadDataTables()
         {
+            BS_BaseClothesOutfitFile.Items.Clear();
+            BS_BaseGameCharacterOutfitFile.Items.Clear();
+            BS_BaseGameCharacterCustomizationFile.Items.Clear();
+            BS_Mappings.Items.Clear();
+
             try
             {
                 foreach (string file in Directory.EnumerateFiles(Application.StartupPath + @"DataTables\" + LoadedWLVersion, "DT_ClothesOutfit_*.json"))

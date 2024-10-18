@@ -35,8 +35,6 @@
             TitleLabel = new Label();
             Separator_1 = new PictureBox();
             ModMain_Panel = new Panel();
-            ApplyFilter_Button = new Button();
-            Filter_CB = new ComboBox();
             ModPanel_Panel = new Panel();
             ModVersion_Label = new Label();
             ModDescription_TB = new TextBox();
@@ -63,6 +61,8 @@
             label5 = new Label();
             label3 = new Label();
             pictureBox2 = new PictureBox();
+            ApplyFilter_Button = new Button();
+            Filter_CB = new ComboBox();
             RefreshDelay = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)Icon_PB).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
@@ -149,34 +149,6 @@
             ModMain_Panel.Name = "ModMain_Panel";
             ModMain_Panel.Size = new Size(742, 667);
             ModMain_Panel.TabIndex = 13;
-            // 
-            // ApplyFilter_Button
-            // 
-            ApplyFilter_Button.BackColor = Color.FromArgb(75, 68, 138);
-            ApplyFilter_Button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            ApplyFilter_Button.FlatStyle = FlatStyle.Flat;
-            ApplyFilter_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            ApplyFilter_Button.ForeColor = SystemColors.ActiveCaption;
-            ApplyFilter_Button.Location = new Point(466, 4);
-            ApplyFilter_Button.Name = "ApplyFilter_Button";
-            ApplyFilter_Button.Size = new Size(115, 26);
-            ApplyFilter_Button.TabIndex = 16;
-            ApplyFilter_Button.Text = "Apply Filter";
-            ApplyFilter_Button.UseVisualStyleBackColor = false;
-            ApplyFilter_Button.Click += ApplyFilter_Button_Click;
-            // 
-            // Filter_CB
-            // 
-            Filter_CB.BackColor = Color.FromArgb(75, 68, 138);
-            Filter_CB.FlatStyle = FlatStyle.Flat;
-            Filter_CB.ForeColor = SystemColors.ActiveCaption;
-            Filter_CB.FormattingEnabled = true;
-            Filter_CB.Items.AddRange(new object[] { "All", "Outfit", "Hair", "Skin", "Pubic Hair", "Eyes", "Eyeliner", "Eyeshadow", "Lipstick", "Tanlines", "Fur", "Audio", "Other" });
-            Filter_CB.Location = new Point(587, 6);
-            Filter_CB.Name = "Filter_CB";
-            Filter_CB.Size = new Size(145, 23);
-            Filter_CB.TabIndex = 15;
-            Filter_CB.Text = "All";
             // 
             // ModPanel_Panel
             // 
@@ -507,6 +479,34 @@
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox2.TabIndex = 2;
             pictureBox2.TabStop = false;
+            // 
+            // ApplyFilter_Button
+            // 
+            ApplyFilter_Button.BackColor = Color.FromArgb(75, 68, 138);
+            ApplyFilter_Button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            ApplyFilter_Button.FlatStyle = FlatStyle.Flat;
+            ApplyFilter_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            ApplyFilter_Button.ForeColor = SystemColors.ActiveCaption;
+            ApplyFilter_Button.Location = new Point(466, 4);
+            ApplyFilter_Button.Name = "ApplyFilter_Button";
+            ApplyFilter_Button.Size = new Size(115, 26);
+            ApplyFilter_Button.TabIndex = 16;
+            ApplyFilter_Button.Text = "Apply Filter";
+            ApplyFilter_Button.UseVisualStyleBackColor = false;
+            ApplyFilter_Button.Click += ApplyFilter_Button_Click;
+            // 
+            // Filter_CB
+            // 
+            Filter_CB.BackColor = Color.FromArgb(75, 68, 138);
+            Filter_CB.FlatStyle = FlatStyle.Flat;
+            Filter_CB.ForeColor = SystemColors.ActiveCaption;
+            Filter_CB.FormattingEnabled = true;
+            Filter_CB.Items.AddRange(new object[] { "All", "Outfit", "Hair", "Skin", "Pubic Hair", "Eyes", "Eyeliner", "Eyeshadow", "Lipstick", "Tanlines", "Fur", "Audio", "Other" });
+            Filter_CB.Location = new Point(587, 6);
+            Filter_CB.Name = "Filter_CB";
+            Filter_CB.Size = new Size(145, 23);
+            Filter_CB.TabIndex = 15;
+            Filter_CB.Text = "All";
             // 
             // RefreshDelay
             // 

@@ -130,6 +130,9 @@ namespace WSMM
                 ZipFile.CreateFromDirectory(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp", WLMMPath_TB.Text);
 
                 MessageBox.Show("Mod successfully patched.", "Wild Life Mod Manager");
+
+                WLMMCurrentMetaData_TB.Text = PatchMetaData_TB.Text;
+                PatchMetaData_TB.Text = "";
             }
         }
 
