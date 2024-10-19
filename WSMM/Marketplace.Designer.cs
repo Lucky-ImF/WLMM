@@ -58,6 +58,7 @@
             RefreshMods_Button = new Button();
             ModFlow_Panel = new FlowLayoutPanel();
             panel1 = new Panel();
+            label1 = new Label();
             linkLabel1 = new LinkLabel();
             label6 = new Label();
             label5 = new Label();
@@ -139,13 +140,13 @@
             // ModMain_Panel
             // 
             ModMain_Panel.BorderStyle = BorderStyle.Fixed3D;
-            ModMain_Panel.Controls.Add(Search_TB);
             ModMain_Panel.Controls.Add(ModPanel_Panel);
             ModMain_Panel.Controls.Add(LastUpdate_Label);
             ModMain_Panel.Controls.Add(NoModsFound_Label);
             ModMain_Panel.Controls.Add(RefreshMods_Button);
             ModMain_Panel.Controls.Add(ModFlow_Panel);
             ModMain_Panel.Controls.Add(Filter_CB);
+            ModMain_Panel.Controls.Add(Search_TB);
             ModMain_Panel.Location = new Point(4, 47);
             ModMain_Panel.Name = "ModMain_Panel";
             ModMain_Panel.Size = new Size(742, 667);
@@ -183,7 +184,7 @@
             ModPanel_Panel.Controls.Add(ModName_Label);
             ModPanel_Panel.Controls.Add(DownloadMod_Button);
             ModPanel_Panel.Controls.Add(ModLink_LL);
-            ModPanel_Panel.Location = new Point(23, 81);
+            ModPanel_Panel.Location = new Point(23, 10);
             ModPanel_Panel.Name = "ModPanel_Panel";
             ModPanel_Panel.Size = new Size(691, 619);
             ModPanel_Panel.TabIndex = 14;
@@ -426,6 +427,7 @@
             // panel1
             // 
             panel1.BorderStyle = BorderStyle.Fixed3D;
+            panel1.Controls.Add(label1);
             panel1.Controls.Add(linkLabel1);
             panel1.Controls.Add(label6);
             panel1.Controls.Add(label5);
@@ -437,6 +439,17 @@
             panel1.Size = new Size(708, 95);
             panel1.TabIndex = 0;
             panel1.Visible = false;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label1.ForeColor = Color.OliveDrab;
+            label1.Location = new Point(579, 63);
+            label1.Name = "label1";
+            label1.Size = new Size(107, 17);
+            label1.TabIndex = 10;
+            label1.Text = "Update Available";
             // 
             // linkLabel1
             // 
@@ -587,5 +600,6 @@
         private System.Windows.Forms.Timer RefreshDelay;
         private ComboBox Filter_CB;
         private TextBox Search_TB;
+        private Label label1;
     }
 }

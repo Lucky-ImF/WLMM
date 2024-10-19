@@ -2826,5 +2826,17 @@ namespace WSMM
             }
             SelectWLVersionUEV_TB.Text = GetUEVersion(SelectWLVersion_CB.Text);
         }
+
+        public string GetActiveModByName(string ModName)
+        {
+            foreach (int ModID in Mod_Entries)
+            {
+                if (ModName == Mod_NameLabel[ModID].Text)
+                {
+                    return Mod_VersionLabel[ModID].Text;
+                }
+            }
+            return string.Empty;
+        }
     }
 }

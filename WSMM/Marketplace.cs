@@ -31,6 +31,7 @@ namespace WSMM
         Label[] Mod_VersionLabel = new Label[100];
         Label[] Mod_SupportedVersionsLabel = new Label[100];
         Label[] Mod_AuthorLabel = new Label[100];
+        Label[] Mod_InfoLabel = new Label[100];
         string[] Mod_Category = new string[100];
 
         List<int> Mod_Entries = new List<int>();
@@ -331,12 +332,36 @@ namespace WSMM
             Mod_SupportedVersionsLabel[EntryID].Text = SupportedVersions;
             Mod_SupportedVersionsLabel[EntryID].AutoSize = true;
             Mod_SupportedVersionsLabel[EntryID].Location = new Point(90, 35);
+            //Label[] Mod_InfoLabel = new Label[50];
+            Mod_InfoLabel[EntryID] = new Label();
+            Mod_InfoLabel[EntryID].BackColor = System.Drawing.Color.FromArgb(32, 34, 81);
+            Mod_InfoLabel[EntryID].ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            Mod_InfoLabel[EntryID].Font = new Font(Mod_NameLabel[EntryID].Font.FontFamily, 10);
+            // Check if this mod is in active mods
+            string ActiveModVersion = Main_Form.GetActiveModByName(ModName);
+            if (ActiveModVersion == ModVersion)
+            {
+                Mod_InfoLabel[EntryID].Text = "Downloaded";
+            }
+            else if (ActiveModVersion != ModVersion && ActiveModVersion != string.Empty)
+            {
+                Mod_InfoLabel[EntryID].Text = "Update Available";
+                Mod_InfoLabel[EntryID].ForeColor = Color.OliveDrab;
+            }
+            else
+            {
+                Mod_InfoLabel[EntryID].Text = "";
+                Mod_InfoLabel[EntryID].Visible = false;
+            }
+            Mod_InfoLabel[EntryID].AutoSize = true;
+            Mod_InfoLabel[EntryID].Location = new Point(579, 63);
 
             Mod_Panel[EntryID].Controls.Add(Mod_Icon[EntryID]);
             Mod_Panel[EntryID].Controls.Add(Mod_NameLabel[EntryID]);
             Mod_Panel[EntryID].Controls.Add(Mod_VersionLabel[EntryID]);
             Mod_Panel[EntryID].Controls.Add(Mod_SupportedVersionsLabel[EntryID]);
             Mod_Panel[EntryID].Controls.Add(Mod_AuthorLabel[EntryID]);
+            Mod_Panel[EntryID].Controls.Add(Mod_InfoLabel[EntryID]);
 
             Mod_Category[EntryID] = Category;
 
@@ -448,7 +473,7 @@ namespace WSMM
             ModName_Label.Text = ModName;
             ModAuthor_Label.Text = ModAuthor;
             ModVersion_Label.Text = ModVersion;
-            SupportedVersions_Label.Text = SupportedVersions;
+            SupportedVersions_Label.Text = SupportedVersions.Replace("*", ", ");
             ModLink_LL.Text = ModURL;
             ModDescription_TB.Text = ModDescription;
             Screenshot.ImageLocation = ModIcon;
@@ -475,6 +500,17 @@ namespace WSMM
                     LoadedModScreenshots.Add(s);
                     NextScreenshot_Button.Enabled = true;
                 }
+            }
+
+            // Check if this mod is in active mods
+            string ActiveModVersion = Main_Form.GetActiveModByName(ModName);
+            if (ActiveModVersion == ModVersion)
+            {
+                DownloadMod_Button.Text = "Repair";
+            }
+            else if (ActiveModVersion != ModVersion && ActiveModVersion != string.Empty)
+            {
+                DownloadMod_Button.Text = "Update";
             }
         }
 
@@ -536,6 +572,8 @@ namespace WSMM
                 DownloadProgress_PB.Value = 0;
                 CloseModPanel_Button.Enabled = true;
                 Close_Button.Enabled = true;
+
+                LoadMarketplaceMods();
             }
             catch (Exception ex)
             {
@@ -551,6 +589,7 @@ namespace WSMM
                 client.Logout();
 
                 MessageBox.Show(ex.Message, "WLMM Download Error");
+                LoadMarketplaceMods();
             }
         }
 
