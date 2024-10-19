@@ -29,12 +29,14 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Marketplace));
             Icon_PB = new PictureBox();
             Close_Button = new PictureBox();
             TitlePanel = new Panel();
             TitleLabel = new Label();
             Separator_1 = new PictureBox();
             ModMain_Panel = new Panel();
+            Search_TB = new TextBox();
             ModPanel_Panel = new Panel();
             ModVersion_Label = new Label();
             ModDescription_TB = new TextBox();
@@ -61,7 +63,6 @@
             label5 = new Label();
             label3 = new Label();
             pictureBox2 = new PictureBox();
-            ApplyFilter_Button = new Button();
             Filter_CB = new ComboBox();
             RefreshDelay = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)Icon_PB).BeginInit();
@@ -138,17 +139,31 @@
             // ModMain_Panel
             // 
             ModMain_Panel.BorderStyle = BorderStyle.Fixed3D;
+            ModMain_Panel.Controls.Add(Search_TB);
             ModMain_Panel.Controls.Add(ModPanel_Panel);
             ModMain_Panel.Controls.Add(LastUpdate_Label);
             ModMain_Panel.Controls.Add(NoModsFound_Label);
             ModMain_Panel.Controls.Add(RefreshMods_Button);
             ModMain_Panel.Controls.Add(ModFlow_Panel);
-            ModMain_Panel.Controls.Add(ApplyFilter_Button);
             ModMain_Panel.Controls.Add(Filter_CB);
             ModMain_Panel.Location = new Point(4, 47);
             ModMain_Panel.Name = "ModMain_Panel";
             ModMain_Panel.Size = new Size(742, 667);
             ModMain_Panel.TabIndex = 13;
+            // 
+            // Search_TB
+            // 
+            Search_TB.BackColor = Color.FromArgb(75, 68, 138);
+            Search_TB.BorderStyle = BorderStyle.FixedSingle;
+            Search_TB.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Search_TB.ForeColor = SystemColors.ActiveCaption;
+            Search_TB.Location = new Point(415, 6);
+            Search_TB.Name = "Search_TB";
+            Search_TB.PlaceholderText = "Search";
+            Search_TB.Size = new Size(166, 23);
+            Search_TB.TabIndex = 18;
+            Search_TB.TextAlign = HorizontalAlignment.Center;
+            Search_TB.TextChanged += Search_TB_TextChanged;
             // 
             // ModPanel_Panel
             // 
@@ -168,7 +183,7 @@
             ModPanel_Panel.Controls.Add(ModName_Label);
             ModPanel_Panel.Controls.Add(DownloadMod_Button);
             ModPanel_Panel.Controls.Add(ModLink_LL);
-            ModPanel_Panel.Location = new Point(23, 16);
+            ModPanel_Panel.Location = new Point(23, 81);
             ModPanel_Panel.Name = "ModPanel_Panel";
             ModPanel_Panel.Size = new Size(691, 619);
             ModPanel_Panel.TabIndex = 14;
@@ -480,21 +495,6 @@
             pictureBox2.TabIndex = 2;
             pictureBox2.TabStop = false;
             // 
-            // ApplyFilter_Button
-            // 
-            ApplyFilter_Button.BackColor = Color.FromArgb(75, 68, 138);
-            ApplyFilter_Button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            ApplyFilter_Button.FlatStyle = FlatStyle.Flat;
-            ApplyFilter_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            ApplyFilter_Button.ForeColor = SystemColors.ActiveCaption;
-            ApplyFilter_Button.Location = new Point(466, 4);
-            ApplyFilter_Button.Name = "ApplyFilter_Button";
-            ApplyFilter_Button.Size = new Size(115, 26);
-            ApplyFilter_Button.TabIndex = 16;
-            ApplyFilter_Button.Text = "Apply Filter";
-            ApplyFilter_Button.UseVisualStyleBackColor = false;
-            ApplyFilter_Button.Click += ApplyFilter_Button_Click;
-            // 
             // Filter_CB
             // 
             Filter_CB.BackColor = Color.FromArgb(75, 68, 138);
@@ -507,6 +507,7 @@
             Filter_CB.Size = new Size(145, 23);
             Filter_CB.TabIndex = 15;
             Filter_CB.Text = "All";
+            Filter_CB.TextChanged += Filter_CB_TextChanged;
             // 
             // RefreshDelay
             // 
@@ -526,6 +527,7 @@
             Controls.Add(Close_Button);
             Controls.Add(TitlePanel);
             FormBorderStyle = FormBorderStyle.None;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Marketplace";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Marketplace";
@@ -583,7 +585,7 @@
         private PictureBox CloseModPanel_Button;
         private Label ModVersion_Label;
         private System.Windows.Forms.Timer RefreshDelay;
-        private Button ApplyFilter_Button;
         private ComboBox Filter_CB;
+        private TextBox Search_TB;
     }
 }

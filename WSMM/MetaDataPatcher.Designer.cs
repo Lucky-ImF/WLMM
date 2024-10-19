@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MetaDataPatcher));
             Icon_PB = new PictureBox();
             Close_Button = new PictureBox();
             Separator_1 = new PictureBox();
@@ -260,6 +261,7 @@
             Controls.Add(Separator_1);
             Controls.Add(TitlePanel);
             FormBorderStyle = FormBorderStyle.None;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "MetaDataPatcher";
             Text = "MetaDataPatcher";
             Load += MetaDataPatcher_Load;

@@ -31,6 +31,7 @@ namespace WSMM
         Label[] Mod_VersionLabel = new Label[100];
         Label[] Mod_SupportedVersionsLabel = new Label[100];
         Label[] Mod_AuthorLabel = new Label[100];
+        string[] Mod_Category = new string[100];
 
         List<int> Mod_Entries = new List<int>();
         int Mod_CurrentEntryID = 0;
@@ -194,6 +195,8 @@ namespace WSMM
             {
                 NoModsFound_Label.Hide();
             }
+
+            ApplyFilter();
         }
 
         private void CreateModEntry(string ModString)
@@ -275,14 +278,6 @@ namespace WSMM
                 return;
             }
 
-            if (Filter_CB.Text != "All")
-            {
-                if (Category.Contains(Filter_CB.Text) == false)
-                {
-                    return;
-                }
-            }
-
             int EntryID = Mod_CurrentEntryID;
             //Panel[] Mod_Panel = new Panel[50];
             Mod_Panel[EntryID] = new Panel();
@@ -342,6 +337,17 @@ namespace WSMM
             Mod_Panel[EntryID].Controls.Add(Mod_VersionLabel[EntryID]);
             Mod_Panel[EntryID].Controls.Add(Mod_SupportedVersionsLabel[EntryID]);
             Mod_Panel[EntryID].Controls.Add(Mod_AuthorLabel[EntryID]);
+
+            Mod_Category[EntryID] = Category;
+
+            // Filter
+            //if (Filter_CB.Text != "All")
+            //{
+            //    if (Category.Contains(Filter_CB.Text) == false)
+            //    {
+            //        return;
+            //    }
+            //}
 
             ModFlow_Panel.Invoke((System.Windows.Forms.MethodInvoker)delegate
             {
@@ -583,9 +589,34 @@ namespace WSMM
             NextScreenshot_Button.Enabled = true;
         }
 
-        private void ApplyFilter_Button_Click(object sender, EventArgs e)
+        private void Filter_CB_TextChanged(object sender, EventArgs e)
         {
-            LoadMarketplaceMods();
+            //LoadMarketplaceMods();
+            ApplyFilter();
+        }
+
+        private void ApplyFilter()
+        {
+            foreach (int ModID in Mod_Entries)
+            {
+                if (Mod_Category[ModID].Contains(Filter_CB.Text) && Mod_NameLabel[ModID].Text.ToLower().Contains(Search_TB.Text.ToLower()))
+                {
+                    Mod_Panel[ModID].Show();
+                }
+                else if(Filter_CB.Text == "All" && Mod_NameLabel[ModID].Text.ToLower().Contains(Search_TB.Text.ToLower()))
+                {
+                    Mod_Panel[ModID].Show();
+                }
+                else
+                {
+                    Mod_Panel[ModID].Hide();
+                }
+            }
+        }
+
+        private void Search_TB_TextChanged(object sender, EventArgs e)
+        {
+            ApplyFilter();
         }
     }
 }
