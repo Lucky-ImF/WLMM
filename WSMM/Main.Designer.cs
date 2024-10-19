@@ -85,7 +85,7 @@
             folderBrowserDialog1 = new FolderBrowserDialog();
             BuildSettings_Button = new Button();
             BuildSettings_Panel = new Panel();
-            checkBox2 = new CheckBox();
+            BS_AllowOutdated_CB = new CheckBox();
             BS_VerifyFI_CB = new CheckBox();
             label1 = new Label();
             BS_Mappings = new ComboBox();
@@ -854,7 +854,7 @@
             // BuildSettings_Panel
             // 
             BuildSettings_Panel.BorderStyle = BorderStyle.FixedSingle;
-            BuildSettings_Panel.Controls.Add(checkBox2);
+            BuildSettings_Panel.Controls.Add(BS_AllowOutdated_CB);
             BuildSettings_Panel.Controls.Add(BS_VerifyFI_CB);
             BuildSettings_Panel.Controls.Add(label1);
             BuildSettings_Panel.Controls.Add(BS_Mappings);
@@ -871,18 +871,18 @@
             BuildSettings_Panel.TabIndex = 13;
             BuildSettings_Panel.Visible = false;
             // 
-            // checkBox2
+            // BS_AllowOutdated_CB
             // 
-            checkBox2.AutoSize = true;
-            checkBox2.Enabled = false;
-            checkBox2.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            checkBox2.ForeColor = Color.Firebrick;
-            checkBox2.Location = new Point(5, 261);
-            checkBox2.Name = "checkBox2";
-            checkBox2.Size = new Size(227, 24);
-            checkBox2.TabIndex = 44;
-            checkBox2.Text = "Allow loading outdated mods";
-            checkBox2.UseVisualStyleBackColor = true;
+            BS_AllowOutdated_CB.AutoSize = true;
+            BS_AllowOutdated_CB.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BS_AllowOutdated_CB.ForeColor = Color.Firebrick;
+            BS_AllowOutdated_CB.Location = new Point(5, 261);
+            BS_AllowOutdated_CB.Name = "BS_AllowOutdated_CB";
+            BS_AllowOutdated_CB.Size = new Size(227, 24);
+            BS_AllowOutdated_CB.TabIndex = 44;
+            BS_AllowOutdated_CB.Text = "Allow loading outdated mods";
+            BS_AllowOutdated_CB.UseVisualStyleBackColor = true;
+            BS_AllowOutdated_CB.CheckedChanged += BS_AllowOutdated_CB_CheckedChanged;
             // 
             // BS_VerifyFI_CB
             // 
@@ -1493,7 +1493,7 @@
         private Label label20;
         private ProgressBar DTDownload_Progress;
         private TextBox SelectWLVersionUEV_TB;
-        private CheckBox checkBox2;
+        private CheckBox BS_AllowOutdated_CB;
         private Label label21;
     }
 }

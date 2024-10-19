@@ -16,6 +16,7 @@ using CG.Web.MegaApiClient;
 using static System.Windows.Forms.LinkLabel;
 using System.Xml.Linq;
 using System;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WSMM
 {
@@ -2837,6 +2838,27 @@ namespace WSMM
                 }
             }
             return string.Empty;
+        }
+
+        private void BS_AllowOutdated_CB_CheckedChanged(object sender, EventArgs e)
+        {
+            foreach (int ModID in Mod_Entries)
+            {
+                if (BS_AllowOutdated_CB.Checked == true)
+                {
+                    if (Mod_EnabledCB[ModID].Enabled == false)
+                    {
+                        Mod_EnabledCB[ModID].Enabled = true;
+                    }
+                }
+                else
+                {
+                    if (Mod_ErrorLabel[ModID].Text == "Version Mismatch")
+                    {
+                        Mod_EnabledCB[ModID].Enabled = false;
+                    }
+                }
+            }
         }
     }
 }
