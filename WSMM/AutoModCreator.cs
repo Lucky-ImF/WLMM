@@ -19,6 +19,7 @@ namespace WSMM
         const string quote = "\"";
 
         private string LoadedWLVersion = string.Empty;
+        private string LoadedUEVersion = string.Empty;
         private string LoadedWLPath = string.Empty;
 
         private bool mouseDown = false;
@@ -52,10 +53,11 @@ namespace WSMM
             InitializeComponent();
         }
 
-        public void TransferInfo(string Path, string Version, ModCreator MCF)
+        public void TransferInfo(string Path, string Version, string UEV, ModCreator MCF)
         {
             LoadedWLVersion = Version;
             LoadedWLPath = Path;
+            LoadedUEVersion = UEV;
             ModCreator_Form = MCF;
 
             LoadBaseInfo();

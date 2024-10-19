@@ -17,6 +17,7 @@ namespace WSMM
     public partial class Marketplace : Form
     {
         private string LoadedWLVersion = string.Empty;
+        private string LoadedUEVersion = string.Empty;
         private string LoadedWLPath = string.Empty;
 
         private bool mouseDown = false;
@@ -44,10 +45,11 @@ namespace WSMM
             InitializeComponent();
         }
 
-        public void TransferInfo(string Path, string Version, Main MainForm)
+        public void TransferInfo(string Path, string Version, string UEV, Main MainForm)
         {
             LoadedWLVersion = Version;
             LoadedWLPath = Path;
+            LoadedUEVersion = UEV;
             Main_Form = MainForm;
 
             GetMarketplaceMods();
@@ -357,7 +359,7 @@ namespace WSMM
 
         private bool isVersionValid(string Supported)
         {
-            if (Supported.Contains(LoadedWLVersion) || Supported.Contains("All Versions"))
+            if (Supported.Contains(LoadedWLVersion) || Supported.Contains("All Versions") || Supported.Contains(LoadedUEVersion))
             {
                 return true;
             }

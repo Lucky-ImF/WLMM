@@ -20,13 +20,15 @@ namespace WSMM
         private Point lastLocation;
 
         private string LoadedWLVersion = string.Empty;
+        private string LoadedUEVersion = string.Empty;
         private string LoadedWLPath = string.Empty;
         private Main ParentForm = null;
 
-        public void TransferInfo(string Path, string Version, Main main)
+        public void TransferInfo(string Path, string Version, string UEV, Main main)
         {
             LoadedWLVersion = Version;
             LoadedWLPath = Path;
+            LoadedUEVersion = UEV;
             ParentForm = main;
         }
 
@@ -92,9 +94,16 @@ namespace WSMM
 
         private void LoadSupportedVersions()
         {
+            SupportedWLVersions_CLB.Items.Clear();
+            if (File.Exists(Application.StartupPath + @"System\EngineVersions.ini"))
+            {
+                foreach (string line in File.ReadLines(Application.StartupPath + @"System\EngineVersions.ini"))
+                {
+                    SupportedWLVersions_CLB.Items.Add(GetSlice(line, "#", 0));
+                }
+            }
             if (File.Exists(Application.StartupPath + @"System\SupportedVersions.ini"))
             {
-                SupportedWLVersions_CLB.Items.Clear();
                 SupportedWLVersions_CLB.Items.AddRange(File.ReadAllLines(Application.StartupPath + @"System\SupportedVersions.ini"));
             }
         }
@@ -203,7 +212,7 @@ namespace WSMM
         {
             AutoModCreator AutoModCreator_Form = new AutoModCreator();
             AutoModCreator_Form.Show();
-            AutoModCreator_Form.TransferInfo(LoadedWLPath, LoadedWLVersion, this);
+            AutoModCreator_Form.TransferInfo(LoadedWLPath, LoadedWLVersion, LoadedUEVersion, this);
         }
 
         private void BuildMods_Button_Click(object sender, EventArgs e)
@@ -538,7 +547,7 @@ namespace WSMM
             {
                 AutoModCreator AutoModCreator_Form = new AutoModCreator();
                 AutoModCreator_Form.Show();
-                AutoModCreator_Form.TransferInfo(LoadedWLPath, LoadedWLVersion, this);
+                AutoModCreator_Form.TransferInfo(LoadedWLPath, LoadedWLVersion, LoadedUEVersion, this);
                 AutoModCreator_Form.LoadAutoMod(AutoModList.SelectedItems[0].Tag.ToString());
             }
         }

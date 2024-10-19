@@ -15,6 +15,7 @@ namespace WSMM
     public partial class MetaDataPatcher : Form
     {
         private string LoadedWLVersion = string.Empty;
+        private string LoadedUEVersion = string.Empty;
         private string LoadedWLPath = string.Empty;
 
         private bool mouseDown = false;
@@ -25,10 +26,11 @@ namespace WSMM
             InitializeComponent();
         }
 
-        public void TransferInfo(string Path, string Version)
+        public void TransferInfo(string Path, string Version, string UEV)
         {
             LoadedWLVersion = Version;
             LoadedWLPath = Path;
+            LoadedUEVersion = UEV;
         }
 
         private void TitlePanel_MouseDown(object sender, MouseEventArgs e)

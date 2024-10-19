@@ -15,6 +15,7 @@ using System.Security.Cryptography;
 using CG.Web.MegaApiClient;
 using static System.Windows.Forms.LinkLabel;
 using System.Xml.Linq;
+using System;
 
 namespace WSMM
 {
@@ -24,13 +25,14 @@ namespace WSMM
         private Point lastLocation;
 
         private string LoadedWLVersion = string.Empty;
+        private string LoadedUEVersion = string.Empty;
         private string LoadedWLPath = string.Empty;
 
         private int ChangesMade = 0;
         private bool StartingUp = true;
         private bool HasOldChanges = false;
 
-        private string WLMM_Version = "1.0.4";
+        private string WLMM_Version = "1.0.5";
         private string Datatable_Version = string.Empty;
         string BuildLog = string.Empty;
 
@@ -130,7 +132,7 @@ namespace WSMM
         {
             ModCreator ModCreator_Form = new ModCreator();
             ModCreator_Form.Show();
-            ModCreator_Form.TransferInfo(LoadedWLPath, LoadedWLVersion, this);
+            ModCreator_Form.TransferInfo(LoadedWLPath, LoadedWLVersion, LoadedUEVersion, this);
         }
 
         private void Mod_RemoveButtonClick(object sender, EventArgs e)
@@ -147,6 +149,7 @@ namespace WSMM
             SelectWLVersion_Panel.Show();
             SelectWLVersionPath_TB.Text = "None";
             SelectWLVersion_CB.Text = "Please specify version...";
+            SelectWLVersionUEV_TB.Text = "None";
         }
 
         private void SelectWLVersion_CloseButton_MouseEnter(object sender, EventArgs e)
@@ -276,16 +279,23 @@ namespace WSMM
                 Mod_CurrentEntryID = 0;
                 NoModsFound_Label.Show();
 
-                LoadGameVersion(Path.GetDirectoryName(SelectWLVersionPath_TB.Text), SelectWLVersion_CB.Text);
+                LoadGameVersion(Path.GetDirectoryName(SelectWLVersionPath_TB.Text), SelectWLVersion_CB.Text, SelectWLVersionUEV_TB.Text);
             }
         }
 
-        private void LoadGameVersion(string Path, string Version)
+        private void LoadGameVersion(string Path, string Version, string UEV)
         {
             LoadedWLPath = Path;
             LoadedWLVersion = Version;
+            LoadedUEVersion = UEV;
 
-            WLVersionLoaded_Label.Text = LoadedWLVersion;
+            // Check UE version if empty
+            if (LoadedUEVersion == string.Empty)
+            {
+                LoadedUEVersion = GetUEVersion(LoadedWLVersion);
+            }
+
+            WLVersionLoaded_Label.Text = LoadedWLVersion + " - " + LoadedUEVersion;
             LoadDataTables();
             LoadMappings();
 
@@ -496,6 +506,10 @@ namespace WSMM
 
                 // Replace System\SupportedVersions.ini
                 File.Copy(Application.StartupPath + @"Temp\" + Path.GetFileNameWithoutExtension(node.Name) + @"\System\SupportedVersions.ini", Application.StartupPath + @"System\SupportedVersions.ini", true);
+
+                // Replace System\EngineVersions.ini
+                File.Copy(Application.StartupPath + @"Temp\" + Path.GetFileNameWithoutExtension(node.Name) + @"\System\EngineVersions.ini", Application.StartupPath + @"System\EngineVersions.ini", true);
+
                 // Copy/Replace Mappings
                 foreach (string mapping in Directory.EnumerateFiles(Application.StartupPath + @"Temp\" + Path.GetFileNameWithoutExtension(node.Name) + @"\Mappings", "*.usmap"))
                 {
@@ -638,6 +652,10 @@ namespace WSMM
                     {
                         LoadedWLVersion = GetSlice(file, "=", 1);
                     }
+                    else if (file.StartsWith("UE_Version"))
+                    {
+                        LoadedUEVersion = GetSlice(file, "=", 1);
+                    }
                     else if (file.StartsWith("ChangesMade"))
                     {
                         ChangesMade = int.Parse(GetSlice(file, "=", 1));
@@ -669,7 +687,7 @@ namespace WSMM
                 {
                     if (LoadedWLVersion != "" && LoadedWLVersion != string.Empty)
                     {
-                        LoadGameVersion(LoadedWLPath, LoadedWLVersion);
+                        LoadGameVersion(LoadedWLPath, LoadedWLVersion, LoadedUEVersion);
 
                         //Load Mods in Loaded
                         LoadMods();
@@ -680,7 +698,7 @@ namespace WSMM
 
         private void SaveSession()
         {
-            string SaveFile = "WL_Path = " + LoadedWLPath + "\nWL_Version = " + LoadedWLVersion + "\nChangesMade = " + ChangesMade.ToString() + "\nprevIconPath = " + prevIconPath + "\nprevPakPath = " + prevPakPath + "\nprevAutoModPath = " + prevAutoModPath + "\nprevModPath = " + prevModPath;
+            string SaveFile = "WL_Path = " + LoadedWLPath + "\nWL_Version = " + LoadedWLVersion + "\nUE_Version = " + LoadedUEVersion + "\nChangesMade = " + ChangesMade.ToString() + "\nprevIconPath = " + prevIconPath + "\nprevPakPath = " + prevPakPath + "\nprevAutoModPath = " + prevAutoModPath + "\nprevModPath = " + prevModPath;
             File.WriteAllText(Application.StartupPath + @"System\Session.dat", SaveFile);
         }
 
@@ -1097,7 +1115,7 @@ namespace WSMM
 
         private bool isVersionValid(string Supported)
         {
-            if (Supported.Contains(LoadedWLVersion) || Supported.Contains("All Versions"))
+            if (Supported.Contains(LoadedWLVersion) || Supported.Contains("All Versions") || Supported.Contains(LoadedUEVersion))
             {
                 return true;
             }
@@ -2711,7 +2729,7 @@ namespace WSMM
         {
             MetaDataPatcher MetaDataPatcher_Form = new MetaDataPatcher();
             MetaDataPatcher_Form.Show();
-            MetaDataPatcher_Form.TransferInfo(LoadedWLPath, LoadedWLVersion);
+            MetaDataPatcher_Form.TransferInfo(LoadedWLPath, LoadedWLVersion, LoadedUEVersion);
         }
 
         private void ExpandedLink_CloseButton_MouseEnter(object sender, EventArgs e)
@@ -2773,7 +2791,40 @@ namespace WSMM
         {
             Marketplace Marketplace_Form = new Marketplace();
             Marketplace_Form.Show();
-            Marketplace_Form.TransferInfo(LoadedWLPath, LoadedWLVersion, this);
+            Marketplace_Form.TransferInfo(LoadedWLPath, LoadedWLVersion, LoadedUEVersion, this);
+        }
+
+        private string GetUEVersion(string version)
+        {
+            if (File.Exists(Application.StartupPath + @"System\EngineVersions.ini"))
+            {
+                foreach (string line in File.ReadLines(Application.StartupPath + @"System\EngineVersions.ini"))
+                {
+                    string[] versions = GetSlice(line, "#", 1).Split("*");
+                    if (versions.Length > 0)
+                    {
+                        foreach (string vers in versions)
+                        {
+                            if (version == vers)
+                            {
+                                return GetSlice(line, "#", 0);
+                            }
+                        }
+                    }
+                }
+            }
+            return "None";
+        }
+
+        private void SelectWLVersion_CB_TextChanged(object sender, EventArgs e)
+        {
+            // Check Engine version
+            if (SelectWLVersion_CB.Text == "All Versions")
+            {
+                SelectWLVersionUEV_TB.Text = "All";
+                return;
+            }
+            SelectWLVersionUEV_TB.Text = GetUEVersion(SelectWLVersion_CB.Text);
         }
     }
 }

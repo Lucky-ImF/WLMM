@@ -72,6 +72,8 @@
             BuildModProgress_PB = new ProgressBar();
             ProgressTitle_Label = new Label();
             SelectWLVersion_Panel = new Panel();
+            label21 = new Label();
+            SelectWLVersionUEV_TB = new TextBox();
             SelectWLVersionConfirm_Button = new Button();
             SelectWLVersion_CloseButton = new PictureBox();
             label13 = new Label();
@@ -83,6 +85,7 @@
             folderBrowserDialog1 = new FolderBrowserDialog();
             BuildSettings_Button = new Button();
             BuildSettings_Panel = new Panel();
+            checkBox2 = new CheckBox();
             BS_VerifyFI_CB = new CheckBox();
             label1 = new Label();
             BS_Mappings = new ComboBox();
@@ -685,6 +688,8 @@
             // 
             SelectWLVersion_Panel.BackColor = Color.FromArgb(75, 68, 138);
             SelectWLVersion_Panel.BorderStyle = BorderStyle.FixedSingle;
+            SelectWLVersion_Panel.Controls.Add(label21);
+            SelectWLVersion_Panel.Controls.Add(SelectWLVersionUEV_TB);
             SelectWLVersion_Panel.Controls.Add(SelectWLVersionConfirm_Button);
             SelectWLVersion_Panel.Controls.Add(SelectWLVersion_CloseButton);
             SelectWLVersion_Panel.Controls.Add(label13);
@@ -698,6 +703,31 @@
             SelectWLVersion_Panel.Size = new Size(503, 198);
             SelectWLVersion_Panel.TabIndex = 11;
             SelectWLVersion_Panel.Visible = false;
+            // 
+            // label21
+            // 
+            label21.AutoSize = true;
+            label21.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label21.ForeColor = SystemColors.ActiveCaption;
+            label21.Location = new Point(409, 105);
+            label21.Name = "label21";
+            label21.Size = new Size(74, 17);
+            label21.TabIndex = 37;
+            label21.Text = "UE Version:";
+            // 
+            // SelectWLVersionUEV_TB
+            // 
+            SelectWLVersionUEV_TB.BackColor = Color.FromArgb(32, 34, 81);
+            SelectWLVersionUEV_TB.BorderStyle = BorderStyle.FixedSingle;
+            SelectWLVersionUEV_TB.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            SelectWLVersionUEV_TB.ForeColor = SystemColors.ActiveCaption;
+            SelectWLVersionUEV_TB.Location = new Point(411, 124);
+            SelectWLVersionUEV_TB.Name = "SelectWLVersionUEV_TB";
+            SelectWLVersionUEV_TB.ReadOnly = true;
+            SelectWLVersionUEV_TB.Size = new Size(79, 23);
+            SelectWLVersionUEV_TB.TabIndex = 36;
+            SelectWLVersionUEV_TB.Text = "None";
+            SelectWLVersionUEV_TB.TextAlign = HorizontalAlignment.Center;
             // 
             // SelectWLVersionConfirm_Button
             // 
@@ -747,9 +777,10 @@
             SelectWLVersion_CB.Items.AddRange(new object[] { "2024.08.22_Shipping_Full_Build_1" });
             SelectWLVersion_CB.Location = new Point(13, 124);
             SelectWLVersion_CB.Name = "SelectWLVersion_CB";
-            SelectWLVersion_CB.Size = new Size(477, 23);
+            SelectWLVersion_CB.Size = new Size(392, 23);
             SelectWLVersion_CB.TabIndex = 32;
             SelectWLVersion_CB.Text = "Please specify version...";
+            SelectWLVersion_CB.TextChanged += SelectWLVersion_CB_TextChanged;
             // 
             // SelectWLVersionBrowse_Button
             // 
@@ -823,6 +854,7 @@
             // BuildSettings_Panel
             // 
             BuildSettings_Panel.BorderStyle = BorderStyle.FixedSingle;
+            BuildSettings_Panel.Controls.Add(checkBox2);
             BuildSettings_Panel.Controls.Add(BS_VerifyFI_CB);
             BuildSettings_Panel.Controls.Add(label1);
             BuildSettings_Panel.Controls.Add(BS_Mappings);
@@ -833,11 +865,24 @@
             BuildSettings_Panel.Controls.Add(BS_BaseGameCharacterOutfitFile);
             BuildSettings_Panel.Controls.Add(label14);
             BuildSettings_Panel.Controls.Add(BS_BaseClothesOutfitFile);
-            BuildSettings_Panel.Location = new Point(898, 371);
+            BuildSettings_Panel.Location = new Point(898, 342);
             BuildSettings_Panel.Name = "BuildSettings_Panel";
-            BuildSettings_Panel.Size = new Size(231, 264);
+            BuildSettings_Panel.Size = new Size(231, 293);
             BuildSettings_Panel.TabIndex = 13;
             BuildSettings_Panel.Visible = false;
+            // 
+            // checkBox2
+            // 
+            checkBox2.AutoSize = true;
+            checkBox2.Enabled = false;
+            checkBox2.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            checkBox2.ForeColor = Color.Firebrick;
+            checkBox2.Location = new Point(5, 261);
+            checkBox2.Name = "checkBox2";
+            checkBox2.Size = new Size(227, 24);
+            checkBox2.TabIndex = 44;
+            checkBox2.Text = "Allow loading outdated mods";
+            checkBox2.UseVisualStyleBackColor = true;
             // 
             // BS_VerifyFI_CB
             // 
@@ -1288,6 +1333,7 @@
             BackColor = Color.FromArgb(32, 34, 81);
             ClientSize = new Size(1134, 761);
             ControlBox = false;
+            Controls.Add(SelectWLVersion_Panel);
             Controls.Add(DTDownload_Panel);
             Controls.Add(Marketplace_Button);
             Controls.Add(OpenBuildLog_Button);
@@ -1300,7 +1346,6 @@
             Controls.Add(RefreshBuildSettings_Button);
             Controls.Add(BuildSettings_Panel);
             Controls.Add(BuildSettings_Button);
-            Controls.Add(SelectWLVersion_Panel);
             Controls.Add(ProgressPanel);
             Controls.Add(ModCreator_Button);
             Controls.Add(ChangesMade_Label);
@@ -1447,5 +1492,8 @@
         private Panel DTDownload_Panel;
         private Label label20;
         private ProgressBar DTDownload_Progress;
+        private TextBox SelectWLVersionUEV_TB;
+        private CheckBox checkBox2;
+        private Label label21;
     }
 }
