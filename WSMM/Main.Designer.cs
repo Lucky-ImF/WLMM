@@ -120,6 +120,7 @@
             DTDownload_Panel = new Panel();
             DTDownload_Progress = new ProgressBar();
             label20 = new Label();
+            MarketplaceEditor_Button = new Button();
             TitlePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
@@ -1148,7 +1149,7 @@
             OpenWLFolder_Button.FlatStyle = FlatStyle.Flat;
             OpenWLFolder_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             OpenWLFolder_Button.ForeColor = SystemColors.ActiveCaption;
-            OpenWLFolder_Button.Location = new Point(926, 319);
+            OpenWLFolder_Button.Location = new Point(926, 348);
             OpenWLFolder_Button.Name = "OpenWLFolder_Button";
             OpenWLFolder_Button.Size = new Size(176, 26);
             OpenWLFolder_Button.TabIndex = 46;
@@ -1163,7 +1164,7 @@
             CreateBuildLog_Button.FlatStyle = FlatStyle.Flat;
             CreateBuildLog_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             CreateBuildLog_Button.ForeColor = SystemColors.ActiveCaption;
-            CreateBuildLog_Button.Location = new Point(926, 229);
+            CreateBuildLog_Button.Location = new Point(926, 266);
             CreateBuildLog_Button.Name = "CreateBuildLog_Button";
             CreateBuildLog_Button.Size = new Size(176, 26);
             CreateBuildLog_Button.TabIndex = 48;
@@ -1272,7 +1273,7 @@
             OpenBuildLog_Button.FlatStyle = FlatStyle.Flat;
             OpenBuildLog_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             OpenBuildLog_Button.ForeColor = SystemColors.ActiveCaption;
-            OpenBuildLog_Button.Location = new Point(926, 274);
+            OpenBuildLog_Button.Location = new Point(926, 307);
             OpenBuildLog_Button.Name = "OpenBuildLog_Button";
             OpenBuildLog_Button.Size = new Size(176, 26);
             OpenBuildLog_Button.TabIndex = 51;
@@ -1326,6 +1327,22 @@
             label20.TabIndex = 2;
             label20.Text = "Downloading DataTables...";
             // 
+            // MarketplaceEditor_Button
+            // 
+            MarketplaceEditor_Button.BackColor = Color.FromArgb(75, 68, 138);
+            MarketplaceEditor_Button.Enabled = false;
+            MarketplaceEditor_Button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            MarketplaceEditor_Button.FlatStyle = FlatStyle.Flat;
+            MarketplaceEditor_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            MarketplaceEditor_Button.ForeColor = SystemColors.ActiveCaption;
+            MarketplaceEditor_Button.Location = new Point(926, 225);
+            MarketplaceEditor_Button.Name = "MarketplaceEditor_Button";
+            MarketplaceEditor_Button.Size = new Size(176, 26);
+            MarketplaceEditor_Button.TabIndex = 54;
+            MarketplaceEditor_Button.Text = "Marketplace Editor";
+            MarketplaceEditor_Button.UseVisualStyleBackColor = false;
+            MarketplaceEditor_Button.Click += MarketplaceEditor_Button_Click;
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1333,6 +1350,7 @@
             BackColor = Color.FromArgb(32, 34, 81);
             ClientSize = new Size(1134, 761);
             ControlBox = false;
+            Controls.Add(MarketplaceEditor_Button);
             Controls.Add(SelectWLVersion_Panel);
             Controls.Add(DTDownload_Panel);
             Controls.Add(Marketplace_Button);
@@ -1495,5 +1513,6 @@
         private TextBox SelectWLVersionUEV_TB;
         private CheckBox BS_AllowOutdated_CB;
         private Label label21;
+        private Button MarketplaceEditor_Button;
     }
 }

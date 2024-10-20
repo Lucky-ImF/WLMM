@@ -48,6 +48,7 @@
             AutoModList = new ListView();
             CreateAutoMod_Button = new Button();
             panel1 = new Panel();
+            CopyMarketplaceData_Button = new Button();
             CopyMetaData_Button = new Button();
             ModIconSetDefault_LL = new LinkLabel();
             ModIconBrowse_Button = new Button();
@@ -72,7 +73,6 @@
             LoadMod_Button = new Button();
             openFileDialog3 = new OpenFileDialog();
             Icon_PB = new PictureBox();
-            CopyMarketplaceData_Button = new Button();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             TitlePanel.SuspendLayout();
@@ -322,6 +322,22 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(570, 303);
             panel1.TabIndex = 14;
+            // 
+            // CopyMarketplaceData_Button
+            // 
+            CopyMarketplaceData_Button.BackColor = Color.FromArgb(75, 68, 138);
+            CopyMarketplaceData_Button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            CopyMarketplaceData_Button.FlatStyle = FlatStyle.Flat;
+            CopyMarketplaceData_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            CopyMarketplaceData_Button.ForeColor = SystemColors.ActiveCaption;
+            CopyMarketplaceData_Button.Location = new Point(119, 266);
+            CopyMarketplaceData_Button.Name = "CopyMarketplaceData_Button";
+            CopyMarketplaceData_Button.Size = new Size(202, 27);
+            CopyMarketplaceData_Button.TabIndex = 38;
+            CopyMarketplaceData_Button.Text = "Copy Marketplace Data";
+            CopyMarketplaceData_Button.UseVisualStyleBackColor = false;
+            CopyMarketplaceData_Button.Visible = false;
+            CopyMarketplaceData_Button.Click += CopyMarketplaceData_Button_Click;
             // 
             // CopyMetaData_Button
             // 
@@ -612,21 +628,6 @@
             Icon_PB.MouseDown += TitlePanel_MouseDown;
             Icon_PB.MouseMove += TitlePanel_MouseMove;
             Icon_PB.MouseUp += TitlePanel_MouseUp;
-            // 
-            // CopyMarketplaceData_Button
-            // 
-            CopyMarketplaceData_Button.BackColor = Color.FromArgb(75, 68, 138);
-            CopyMarketplaceData_Button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            CopyMarketplaceData_Button.FlatStyle = FlatStyle.Flat;
-            CopyMarketplaceData_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            CopyMarketplaceData_Button.ForeColor = SystemColors.ActiveCaption;
-            CopyMarketplaceData_Button.Location = new Point(119, 266);
-            CopyMarketplaceData_Button.Name = "CopyMarketplaceData_Button";
-            CopyMarketplaceData_Button.Size = new Size(202, 27);
-            CopyMarketplaceData_Button.TabIndex = 38;
-            CopyMarketplaceData_Button.Text = "Copy Marketplace Data";
-            CopyMarketplaceData_Button.UseVisualStyleBackColor = false;
-            CopyMarketplaceData_Button.Click += CopyMarketplaceData_Button_Click;
             // 
             // ModCreator
             // 

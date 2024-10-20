@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CG.Web.MegaApiClient;
+using System.IO.Compression;
 
 namespace WSMM
 {
@@ -336,16 +337,16 @@ namespace WSMM
             Mod_InfoLabel[EntryID] = new Label();
             Mod_InfoLabel[EntryID].BackColor = System.Drawing.Color.FromArgb(32, 34, 81);
             Mod_InfoLabel[EntryID].ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            Mod_InfoLabel[EntryID].Font = new Font(Mod_NameLabel[EntryID].Font.FontFamily, 10);
+            Mod_InfoLabel[EntryID].Font = new Font(Mod_NameLabel[EntryID].Font.FontFamily, 12);
             // Check if this mod is in active mods
             string ActiveModVersion = Main_Form.GetActiveModByName(ModName);
             if (ActiveModVersion == ModVersion)
             {
-                Mod_InfoLabel[EntryID].Text = "Downloaded";
+                Mod_InfoLabel[EntryID].Text = "[Downloaded]";
             }
             else if (ActiveModVersion != ModVersion && ActiveModVersion != string.Empty)
             {
-                Mod_InfoLabel[EntryID].Text = "Update Available";
+                Mod_InfoLabel[EntryID].Text = "[Update Available]";
                 Mod_InfoLabel[EntryID].ForeColor = Color.OliveDrab;
             }
             else
@@ -354,7 +355,8 @@ namespace WSMM
                 Mod_InfoLabel[EntryID].Visible = false;
             }
             Mod_InfoLabel[EntryID].AutoSize = true;
-            Mod_InfoLabel[EntryID].Location = new Point(579, 63);
+            LabelSize = g.MeasureString(Mod_InfoLabel[EntryID].Text, Mod_InfoLabel[EntryID].Font);
+            Mod_InfoLabel[EntryID].Location = new Point(Mod_Panel[EntryID].Size.Width - ((int)LabelSize.Width) - 10, 63);
 
             Mod_Panel[EntryID].Controls.Add(Mod_Icon[EntryID]);
             Mod_Panel[EntryID].Controls.Add(Mod_NameLabel[EntryID]);

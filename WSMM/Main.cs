@@ -33,7 +33,7 @@ namespace WSMM
         private bool StartingUp = true;
         private bool HasOldChanges = false;
 
-        private string WLMM_Version = "1.0.5";
+        private string WLMM_Version = "1.1.0";
         private string Datatable_Version = string.Empty;
         string BuildLog = string.Empty;
 
@@ -315,6 +315,7 @@ namespace WSMM
             RemoveMods_Button.Visible = true;
             AddMod_Button.Visible = true;
             Marketplace_Button.Enabled = true;
+            MarketplaceEditor_Button.Enabled= true;
 
             NoGameLoaded_Panel.Visible = false;
             ModFlow_Panel.AllowDrop = true;
@@ -2859,6 +2860,13 @@ namespace WSMM
                     }
                 }
             }
+        }
+
+        private void MarketplaceEditor_Button_Click(object sender, EventArgs e)
+        {
+            MarketplaceEditor MarketplaceEditor_Form = new MarketplaceEditor();
+            MarketplaceEditor_Form.Show();
+            MarketplaceEditor_Form.TransferInfo(LoadedWLPath, LoadedWLVersion, LoadedUEVersion);
         }
     }
 }
