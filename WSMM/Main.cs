@@ -499,7 +499,10 @@ namespace WSMM
 
                 await client.DownloadFileAsync(fileLink, Application.StartupPath + @"Temp\" + node.Name, progressHandler);
 
-                client.Logout();
+                if (client.IsLoggedIn)
+                {
+                    client.Logout();
+                }
 
                 if (Directory.Exists(Application.StartupPath + @"Temp\" + Path.GetFileNameWithoutExtension(node.Name)))
                 {
@@ -930,6 +933,10 @@ namespace WSMM
                     NoModsFound_Label.Hide();
                 });
             }
+
+            // Conflict Check
+            ConflictCheck();
+
             if (Mod_CurrentEntryID >= 101)
             {
                 MessageBox.Show("Mod limit reached.");
@@ -1007,15 +1014,6 @@ namespace WSMM
             Mod_NameLabel[EntryID].Text = ModName;
             Mod_NameLabel[EntryID].AutoSize = true;
             Mod_NameLabel[EntryID].Location = new Point(117, 4);
-            //Label[] Mod_ErrorLabel = new Label[50];
-            Mod_ErrorLabel[EntryID] = new Label();
-            Mod_ErrorLabel[EntryID].BackColor = System.Drawing.Color.FromArgb(32, 34, 81);
-            Mod_ErrorLabel[EntryID].ForeColor = System.Drawing.Color.LightCoral;
-            Mod_ErrorLabel[EntryID].Font = new Font(Mod_NameLabel[EntryID].Font.FontFamily, 12);
-            Mod_ErrorLabel[EntryID].Text = string.Empty;
-            Mod_ErrorLabel[EntryID].Visible = false;
-            Mod_ErrorLabel[EntryID].AutoSize = true;
-            Mod_ErrorLabel[EntryID].Location = new Point(533, 11);
             //Label[] Mod_VersionLabel = new Label[50];
             Mod_VersionLabel[EntryID] = new Label();
             Mod_VersionLabel[EntryID].BackColor = System.Drawing.Color.FromArgb(32, 34, 81);
@@ -1026,6 +1024,17 @@ namespace WSMM
             Graphics g = CreateGraphics();
             SizeF LabelSize = g.MeasureString(Mod_VersionLabel[EntryID].Text, Mod_VersionLabel[EntryID].Font);
             Mod_VersionLabel[EntryID].Location = new Point(Mod_Panel[EntryID].Size.Width - ((int)LabelSize.Width) - 20, 4);
+            //Label[] Mod_ErrorLabel = new Label[50];
+            Mod_ErrorLabel[EntryID] = new Label();
+            Mod_ErrorLabel[EntryID].BackColor = System.Drawing.Color.FromArgb(32, 34, 81);
+            Mod_ErrorLabel[EntryID].ForeColor = System.Drawing.Color.LightCoral;
+            Mod_ErrorLabel[EntryID].Font = new Font(Mod_NameLabel[EntryID].Font.FontFamily, 12);
+            Mod_ErrorLabel[EntryID].Text = string.Empty;
+            Mod_ErrorLabel[EntryID].Visible = false;
+            Mod_ErrorLabel[EntryID].AutoSize = true;
+            //Mod_ErrorLabel[EntryID].Location = new Point(533, 11);
+            LabelSize = g.MeasureString(Mod_ErrorLabel[EntryID].Text, Mod_ErrorLabel[EntryID].Font);
+            Mod_ErrorLabel[EntryID].Location = new Point(Mod_VersionLabel[EntryID].Left - ((int)LabelSize.Width) - 10, 11);
             //Label[] Mod_ContainsLabel = new Label[50];
             Mod_ContainsLabel[EntryID] = new Label();
             Mod_ContainsLabel[EntryID].BackColor = System.Drawing.Color.FromArgb(32, 34, 81);
@@ -1194,6 +1203,7 @@ namespace WSMM
                     NoModsFound_Label.Show();
                 }
                 AddChange();
+                ConflictCheck();
             }
         }
 
@@ -2954,6 +2964,66 @@ namespace WSMM
                 // Start thread
                 backgroundThread.Start();
             }
+        }
+
+        private void ConflictCheck()
+        {
+            foreach (int ModID_X in Mod_Entries)
+            {
+                bool ConflictFound = false;
+                foreach (int ModID_Y in Mod_Entries)
+                {
+                    if (ModID_X != ModID_Y)
+                    {
+                        foreach (string pak_X in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + Mod_NameLabel[ModID_X].Text + @"\Paks", "*.pak"))
+                        {
+                            foreach (string pak_Y in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + Mod_NameLabel[ModID_Y].Text + @"\Paks", "*.pak"))
+                            {
+                                if (Path.GetFileName(pak_X) == Path.GetFileName(pak_Y))
+                                {
+                                    // Conflict Found
+                                    ConflictFound = true;
+                                    Mod_ErrorLabel[ModID_X].Invoke((System.Windows.Forms.MethodInvoker)delegate
+                                    {
+                                        Mod_ErrorLabel[ModID_X].Text = "Conflicting with: " + Mod_NameLabel[ModID_Y].Text;
+                                        Mod_ErrorLabel[ModID_X].ForeColor = Color.Gold;
+                                        Mod_ErrorLabel[ModID_X].Visible = true;
+                                        Graphics g = CreateGraphics();
+                                        SizeF LabelSize = g.MeasureString(Mod_ErrorLabel[ModID_X].Text, Mod_ErrorLabel[ModID_X].Font);
+                                        Mod_ErrorLabel[ModID_X].Location = new Point(Mod_VersionLabel[ModID_X].Left - ((int)LabelSize.Width) - 5, 11);
+                                    });
+                                    break;
+                                }
+                            }
+                            if (ConflictFound == true)
+                            {
+                                break;
+                            }
+                        }
+                    }
+                    if (ConflictFound == true)
+                    {
+                        break;
+                    }
+                }
+                if (ConflictFound == false)
+                {
+                    Mod_ErrorLabel[ModID_X].Invoke((System.Windows.Forms.MethodInvoker)delegate
+                    {
+                        Mod_ErrorLabel[ModID_X].Visible = false;
+                    });
+                }
+            }
+        }
+
+        private void TransferAllMods_RB_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TransferCompatMods_RB_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

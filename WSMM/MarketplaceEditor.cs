@@ -184,7 +184,6 @@ namespace WSMM
                             }
                         }
                     }
-
                 }
 
                 // Calculate mod size
@@ -197,7 +196,7 @@ namespace WSMM
                     len = len / 1024;
                 }
                 string result = String.Format("{0:0.##} {1}", len, sizes[order]);
-                ModSize_TB.Text = result;
+                ModSize_TB.Text = result.Replace(",", ".");
 
                 // Last Update Day
                 LastUpdate_TB.Text = DateTime.Now.Year + "-" + DateTime.Now.Month + "-" + DateTime.Now.Day;

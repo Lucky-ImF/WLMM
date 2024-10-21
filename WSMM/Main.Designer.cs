@@ -122,6 +122,8 @@
             label20 = new Label();
             MarketplaceEditor_Button = new Button();
             TransferMods_Panel = new Panel();
+            TransferCompatMods_RB = new RadioButton();
+            TransferAllMods_RB = new RadioButton();
             label25 = new Label();
             TransferModsList_LB = new ListBox();
             label23 = new Label();
@@ -565,7 +567,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label4.ForeColor = Color.LightCoral;
+            label4.ForeColor = Color.Gold;
             label4.Location = new Point(533, 11);
             label4.Name = "label4";
             label4.Size = new Size(134, 21);
@@ -1360,6 +1362,8 @@
             // 
             TransferMods_Panel.BackColor = Color.FromArgb(75, 68, 138);
             TransferMods_Panel.BorderStyle = BorderStyle.FixedSingle;
+            TransferMods_Panel.Controls.Add(TransferCompatMods_RB);
+            TransferMods_Panel.Controls.Add(TransferAllMods_RB);
             TransferMods_Panel.Controls.Add(label25);
             TransferMods_Panel.Controls.Add(TransferModsList_LB);
             TransferMods_Panel.Controls.Add(label23);
@@ -1371,9 +1375,35 @@
             TransferMods_Panel.Controls.Add(label26);
             TransferMods_Panel.Location = new Point(316, 281);
             TransferMods_Panel.Name = "TransferMods_Panel";
-            TransferMods_Panel.Size = new Size(503, 270);
+            TransferMods_Panel.Size = new Size(503, 290);
             TransferMods_Panel.TabIndex = 55;
             TransferMods_Panel.Visible = false;
+            // 
+            // TransferCompatMods_RB
+            // 
+            TransferCompatMods_RB.AutoSize = true;
+            TransferCompatMods_RB.ForeColor = SystemColors.ActiveCaption;
+            TransferCompatMods_RB.Location = new Point(237, 220);
+            TransferCompatMods_RB.Name = "TransferCompatMods_RB";
+            TransferCompatMods_RB.Size = new Size(171, 19);
+            TransferCompatMods_RB.TabIndex = 41;
+            TransferCompatMods_RB.Text = "Transfer COMPATIBLE mods";
+            TransferCompatMods_RB.UseVisualStyleBackColor = true;
+            TransferCompatMods_RB.CheckedChanged += TransferCompatMods_RB_CheckedChanged;
+            // 
+            // TransferAllMods_RB
+            // 
+            TransferAllMods_RB.AutoSize = true;
+            TransferAllMods_RB.Checked = true;
+            TransferAllMods_RB.ForeColor = SystemColors.ActiveCaption;
+            TransferAllMods_RB.Location = new Point(92, 220);
+            TransferAllMods_RB.Name = "TransferAllMods_RB";
+            TransferAllMods_RB.Size = new Size(122, 19);
+            TransferAllMods_RB.TabIndex = 40;
+            TransferAllMods_RB.TabStop = true;
+            TransferAllMods_RB.Text = "Transfer ALL mods";
+            TransferAllMods_RB.UseVisualStyleBackColor = true;
+            TransferAllMods_RB.CheckedChanged += TransferAllMods_RB_CheckedChanged;
             // 
             // label25
             // 
@@ -1432,7 +1462,7 @@
             TransferMods_Button.FlatStyle = FlatStyle.Flat;
             TransferMods_Button.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             TransferMods_Button.ForeColor = SystemColors.ActiveCaption;
-            TransferMods_Button.Location = new Point(186, 220);
+            TransferMods_Button.Location = new Point(186, 251);
             TransferMods_Button.Name = "TransferMods_Button";
             TransferMods_Button.Size = new Size(128, 30);
             TransferMods_Button.TabIndex = 35;
@@ -1692,5 +1722,7 @@
         private Label label26;
         private Label label25;
         private Button TransferModsOpen_Button;
+        private RadioButton TransferCompatMods_RB;
+        private RadioButton TransferAllMods_RB;
     }
 }

@@ -588,7 +588,10 @@ namespace WSMM
                 CloseModPanel_Button.Enabled = true;
                 Close_Button.Enabled = true;
 
-                client.Logout();
+                if (client.IsLoggedIn)
+                {
+                    client.Logout();
+                }
 
                 MessageBox.Show(ex.Message, "WLMM Download Error");
                 LoadMarketplaceMods();
