@@ -315,7 +315,8 @@ namespace WSMM
             RemoveMods_Button.Visible = true;
             AddMod_Button.Visible = true;
             Marketplace_Button.Enabled = true;
-            MarketplaceEditor_Button.Enabled= true;
+            MarketplaceEditor_Button.Enabled = true;
+            TransferModsOpen_Button.Enabled = true;
 
             NoGameLoaded_Panel.Visible = false;
             ModFlow_Panel.AllowDrop = true;
@@ -2867,6 +2868,86 @@ namespace WSMM
             MarketplaceEditor MarketplaceEditor_Form = new MarketplaceEditor();
             MarketplaceEditor_Form.Show();
             MarketplaceEditor_Form.TransferInfo(LoadedWLPath, LoadedWLVersion, LoadedUEVersion);
+        }
+
+        private void TransferModsClose_Button_Click(object sender, EventArgs e)
+        {
+            TransferMods_Panel.Hide();
+            TransferModsFromUEV_TB.Text = "None";
+            TransferModsFrom_CB.Text = "Please specify version...";
+            TransferModsList_LB.Items.Clear();
+            TransferMods_Button.Enabled = false;
+        }
+
+        private void TransferModsClose_Button_MouseEnter(object sender, EventArgs e)
+        {
+            TransferModsClose_Button.Image = Properties.Resources.Close_Icon_Hover;
+        }
+
+        private void TransferModsClose_Button_MouseLeave(object sender, EventArgs e)
+        {
+            TransferModsClose_Button.Image = Properties.Resources.Close_Icon;
+        }
+
+        private void TransferModsOpen_Button_Click(object sender, EventArgs e)
+        {
+            TransferMods_Panel.Show();
+
+            // Load existing versions
+            TransferModsFrom_CB.Items.Clear();
+            foreach (string Vers in Directory.EnumerateDirectories(Application.StartupPath + @"Mods", "*"))
+            {
+                if (Path.GetFileName(Vers) != LoadedWLVersion)
+                {
+                    TransferModsFrom_CB.Items.Add(Path.GetFileName(Vers));
+                }
+            }
+        }
+
+        private void TransferModsFrom_CB_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            TransferModsFromUEV_TB.Text = GetUEVersion(TransferModsFrom_CB.Text);
+            TransferModsList_LB.Items.Clear();
+            TransferMods_Button.Enabled = false;
+            // Load all Loaded .wlmm's
+            foreach (string Wlmm in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + TransferModsFrom_CB.Text + @"\Loaded", "*.wlmm"))
+            {
+                TransferModsList_LB.Items.Add(Path.GetFileNameWithoutExtension(Wlmm));
+            }
+            if (TransferModsList_LB.Items.Count > 0)
+            {
+                TransferMods_Button.Enabled = true;
+            }
+        }
+
+        private void TransferMods_Button_Click(object sender, EventArgs e)
+        {
+            // Add all loaded wlmm's to active
+            List<string> ValidMods = new List<string>();
+            foreach (string Wlmm in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + TransferModsFrom_CB.Text + @"\Loaded", "*.wlmm"))
+            {
+                ValidMods.Add(Wlmm);
+            }
+
+            TransferMods_Panel.Hide();
+            TransferModsFromUEV_TB.Text = "None";
+            TransferModsFrom_CB.Text = "Please specify version...";
+            TransferModsList_LB.Items.Clear();
+            TransferMods_Button.Enabled = false;
+
+            if (ValidMods.Count > 0)
+            {
+                ProgressPanel.Show();
+                ProgressTitle_Label.Text = "Loading Mods...";
+                ProgressInfo_Label.Text = "Initializing...";
+                BuildModProgress_PB.Value = 0;
+                BuildModProgress_PB.Maximum = ValidMods.Count;
+
+                // Create a thread and call a background method
+                Thread backgroundThread = new Thread(() => AddMods(ValidMods));
+                // Start thread
+                backgroundThread.Start();
+            }
         }
     }
 }

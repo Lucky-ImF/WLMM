@@ -121,6 +121,17 @@
             DTDownload_Progress = new ProgressBar();
             label20 = new Label();
             MarketplaceEditor_Button = new Button();
+            TransferMods_Panel = new Panel();
+            label25 = new Label();
+            TransferModsList_LB = new ListBox();
+            label23 = new Label();
+            TransferModsFromUEV_TB = new TextBox();
+            TransferMods_Button = new Button();
+            TransferModsClose_Button = new PictureBox();
+            label24 = new Label();
+            TransferModsFrom_CB = new ComboBox();
+            label26 = new Label();
+            TransferModsOpen_Button = new Button();
             TitlePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
@@ -143,6 +154,8 @@
             ExpandedLink_Panel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)ExpandedLink_CloseButton).BeginInit();
             DTDownload_Panel.SuspendLayout();
+            TransferMods_Panel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)TransferModsClose_Button).BeginInit();
             SuspendLayout();
             // 
             // TitlePanel
@@ -866,7 +879,7 @@
             BuildSettings_Panel.Controls.Add(BS_BaseGameCharacterOutfitFile);
             BuildSettings_Panel.Controls.Add(label14);
             BuildSettings_Panel.Controls.Add(BS_BaseClothesOutfitFile);
-            BuildSettings_Panel.Location = new Point(898, 342);
+            BuildSettings_Panel.Location = new Point(898, 343);
             BuildSettings_Panel.Name = "BuildSettings_Panel";
             BuildSettings_Panel.Size = new Size(231, 293);
             BuildSettings_Panel.TabIndex = 13;
@@ -1149,7 +1162,7 @@
             OpenWLFolder_Button.FlatStyle = FlatStyle.Flat;
             OpenWLFolder_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             OpenWLFolder_Button.ForeColor = SystemColors.ActiveCaption;
-            OpenWLFolder_Button.Location = new Point(926, 348);
+            OpenWLFolder_Button.Location = new Point(926, 379);
             OpenWLFolder_Button.Name = "OpenWLFolder_Button";
             OpenWLFolder_Button.Size = new Size(176, 26);
             OpenWLFolder_Button.TabIndex = 46;
@@ -1164,7 +1177,7 @@
             CreateBuildLog_Button.FlatStyle = FlatStyle.Flat;
             CreateBuildLog_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             CreateBuildLog_Button.ForeColor = SystemColors.ActiveCaption;
-            CreateBuildLog_Button.Location = new Point(926, 266);
+            CreateBuildLog_Button.Location = new Point(926, 301);
             CreateBuildLog_Button.Name = "CreateBuildLog_Button";
             CreateBuildLog_Button.Size = new Size(176, 26);
             CreateBuildLog_Button.TabIndex = 48;
@@ -1273,7 +1286,7 @@
             OpenBuildLog_Button.FlatStyle = FlatStyle.Flat;
             OpenBuildLog_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             OpenBuildLog_Button.ForeColor = SystemColors.ActiveCaption;
-            OpenBuildLog_Button.Location = new Point(926, 307);
+            OpenBuildLog_Button.Location = new Point(926, 340);
             OpenBuildLog_Button.Name = "OpenBuildLog_Button";
             OpenBuildLog_Button.Size = new Size(176, 26);
             OpenBuildLog_Button.TabIndex = 51;
@@ -1335,13 +1348,162 @@
             MarketplaceEditor_Button.FlatStyle = FlatStyle.Flat;
             MarketplaceEditor_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             MarketplaceEditor_Button.ForeColor = SystemColors.ActiveCaption;
-            MarketplaceEditor_Button.Location = new Point(926, 225);
+            MarketplaceEditor_Button.Location = new Point(926, 262);
             MarketplaceEditor_Button.Name = "MarketplaceEditor_Button";
             MarketplaceEditor_Button.Size = new Size(176, 26);
             MarketplaceEditor_Button.TabIndex = 54;
             MarketplaceEditor_Button.Text = "Marketplace Editor";
             MarketplaceEditor_Button.UseVisualStyleBackColor = false;
             MarketplaceEditor_Button.Click += MarketplaceEditor_Button_Click;
+            // 
+            // TransferMods_Panel
+            // 
+            TransferMods_Panel.BackColor = Color.FromArgb(75, 68, 138);
+            TransferMods_Panel.BorderStyle = BorderStyle.FixedSingle;
+            TransferMods_Panel.Controls.Add(label25);
+            TransferMods_Panel.Controls.Add(TransferModsList_LB);
+            TransferMods_Panel.Controls.Add(label23);
+            TransferMods_Panel.Controls.Add(TransferModsFromUEV_TB);
+            TransferMods_Panel.Controls.Add(TransferMods_Button);
+            TransferMods_Panel.Controls.Add(TransferModsClose_Button);
+            TransferMods_Panel.Controls.Add(label24);
+            TransferMods_Panel.Controls.Add(TransferModsFrom_CB);
+            TransferMods_Panel.Controls.Add(label26);
+            TransferMods_Panel.Location = new Point(316, 281);
+            TransferMods_Panel.Name = "TransferMods_Panel";
+            TransferMods_Panel.Size = new Size(503, 270);
+            TransferMods_Panel.TabIndex = 55;
+            TransferMods_Panel.Visible = false;
+            // 
+            // label25
+            // 
+            label25.AutoSize = true;
+            label25.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label25.ForeColor = SystemColors.ActiveCaption;
+            label25.Location = new Point(13, 96);
+            label25.Name = "label25";
+            label25.Size = new Size(142, 17);
+            label25.TabIndex = 39;
+            label25.Text = "Mods that will transfer:";
+            // 
+            // TransferModsList_LB
+            // 
+            TransferModsList_LB.BackColor = Color.FromArgb(32, 34, 81);
+            TransferModsList_LB.ForeColor = SystemColors.ActiveCaption;
+            TransferModsList_LB.FormattingEnabled = true;
+            TransferModsList_LB.ItemHeight = 15;
+            TransferModsList_LB.Location = new Point(13, 116);
+            TransferModsList_LB.Name = "TransferModsList_LB";
+            TransferModsList_LB.ScrollAlwaysVisible = true;
+            TransferModsList_LB.SelectionMode = SelectionMode.None;
+            TransferModsList_LB.Size = new Size(477, 94);
+            TransferModsList_LB.TabIndex = 38;
+            // 
+            // label23
+            // 
+            label23.AutoSize = true;
+            label23.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label23.ForeColor = SystemColors.ActiveCaption;
+            label23.Location = new Point(409, 48);
+            label23.Name = "label23";
+            label23.Size = new Size(74, 17);
+            label23.TabIndex = 37;
+            label23.Text = "UE Version:";
+            // 
+            // TransferModsFromUEV_TB
+            // 
+            TransferModsFromUEV_TB.BackColor = Color.FromArgb(32, 34, 81);
+            TransferModsFromUEV_TB.BorderStyle = BorderStyle.FixedSingle;
+            TransferModsFromUEV_TB.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            TransferModsFromUEV_TB.ForeColor = SystemColors.ActiveCaption;
+            TransferModsFromUEV_TB.Location = new Point(411, 67);
+            TransferModsFromUEV_TB.Name = "TransferModsFromUEV_TB";
+            TransferModsFromUEV_TB.ReadOnly = true;
+            TransferModsFromUEV_TB.Size = new Size(79, 23);
+            TransferModsFromUEV_TB.TabIndex = 36;
+            TransferModsFromUEV_TB.Text = "None";
+            TransferModsFromUEV_TB.TextAlign = HorizontalAlignment.Center;
+            // 
+            // TransferMods_Button
+            // 
+            TransferMods_Button.BackColor = Color.FromArgb(75, 68, 138);
+            TransferMods_Button.Enabled = false;
+            TransferMods_Button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            TransferMods_Button.FlatStyle = FlatStyle.Flat;
+            TransferMods_Button.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            TransferMods_Button.ForeColor = SystemColors.ActiveCaption;
+            TransferMods_Button.Location = new Point(186, 220);
+            TransferMods_Button.Name = "TransferMods_Button";
+            TransferMods_Button.Size = new Size(128, 30);
+            TransferMods_Button.TabIndex = 35;
+            TransferMods_Button.Text = "Transfer Mods";
+            TransferMods_Button.UseVisualStyleBackColor = false;
+            TransferMods_Button.Click += TransferMods_Button_Click;
+            // 
+            // TransferModsClose_Button
+            // 
+            TransferModsClose_Button.Image = Properties.Resources.Close_Icon;
+            TransferModsClose_Button.Location = new Point(460, 4);
+            TransferModsClose_Button.Name = "TransferModsClose_Button";
+            TransferModsClose_Button.Size = new Size(37, 39);
+            TransferModsClose_Button.SizeMode = PictureBoxSizeMode.Zoom;
+            TransferModsClose_Button.TabIndex = 34;
+            TransferModsClose_Button.TabStop = false;
+            TransferModsClose_Button.Click += TransferModsClose_Button_Click;
+            TransferModsClose_Button.MouseEnter += TransferModsClose_Button_MouseEnter;
+            TransferModsClose_Button.MouseLeave += TransferModsClose_Button_MouseLeave;
+            // 
+            // label24
+            // 
+            label24.AutoSize = true;
+            label24.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label24.ForeColor = SystemColors.ActiveCaption;
+            label24.Location = new Point(13, 47);
+            label24.Name = "label24";
+            label24.Size = new Size(90, 17);
+            label24.TabIndex = 33;
+            label24.Text = "Transfer from:";
+            // 
+            // TransferModsFrom_CB
+            // 
+            TransferModsFrom_CB.BackColor = Color.FromArgb(32, 34, 81);
+            TransferModsFrom_CB.FlatStyle = FlatStyle.Flat;
+            TransferModsFrom_CB.ForeColor = SystemColors.ActiveCaption;
+            TransferModsFrom_CB.FormattingEnabled = true;
+            TransferModsFrom_CB.Items.AddRange(new object[] { "2024.08.22_Shipping_Full_Build_1" });
+            TransferModsFrom_CB.Location = new Point(13, 67);
+            TransferModsFrom_CB.Name = "TransferModsFrom_CB";
+            TransferModsFrom_CB.Size = new Size(392, 23);
+            TransferModsFrom_CB.TabIndex = 32;
+            TransferModsFrom_CB.Text = "Please specify version...";
+            TransferModsFrom_CB.SelectedIndexChanged += TransferModsFrom_CB_SelectedIndexChanged;
+            // 
+            // label26
+            // 
+            label26.AutoSize = true;
+            label26.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label26.ForeColor = SystemColors.ActiveCaption;
+            label26.Location = new Point(178, 4);
+            label26.Name = "label26";
+            label26.Size = new Size(144, 30);
+            label26.TabIndex = 2;
+            label26.Text = "Transfer Mods";
+            // 
+            // TransferModsOpen_Button
+            // 
+            TransferModsOpen_Button.BackColor = Color.FromArgb(75, 68, 138);
+            TransferModsOpen_Button.Enabled = false;
+            TransferModsOpen_Button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            TransferModsOpen_Button.FlatStyle = FlatStyle.Flat;
+            TransferModsOpen_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            TransferModsOpen_Button.ForeColor = SystemColors.ActiveCaption;
+            TransferModsOpen_Button.Location = new Point(926, 223);
+            TransferModsOpen_Button.Name = "TransferModsOpen_Button";
+            TransferModsOpen_Button.Size = new Size(176, 26);
+            TransferModsOpen_Button.TabIndex = 56;
+            TransferModsOpen_Button.Text = "Transfer Mods";
+            TransferModsOpen_Button.UseVisualStyleBackColor = false;
+            TransferModsOpen_Button.Click += TransferModsOpen_Button_Click;
             // 
             // Main
             // 
@@ -1350,13 +1512,15 @@
             BackColor = Color.FromArgb(32, 34, 81);
             ClientSize = new Size(1134, 761);
             ControlBox = false;
+            Controls.Add(TransferMods_Panel);
+            Controls.Add(ExpandedLink_Panel);
+            Controls.Add(TransferModsOpen_Button);
             Controls.Add(BuildSettings_Panel);
             Controls.Add(MarketplaceEditor_Button);
             Controls.Add(SelectWLVersion_Panel);
             Controls.Add(DTDownload_Panel);
             Controls.Add(Marketplace_Button);
             Controls.Add(OpenBuildLog_Button);
-            Controls.Add(ExpandedLink_Panel);
             Controls.Add(MetaDataPatcher_Button);
             Controls.Add(CreateBuildLog_Button);
             Controls.Add(OpenWLFolder_Button);
@@ -1416,6 +1580,9 @@
             ((System.ComponentModel.ISupportInitialize)ExpandedLink_CloseButton).EndInit();
             DTDownload_Panel.ResumeLayout(false);
             DTDownload_Panel.PerformLayout();
+            TransferMods_Panel.ResumeLayout(false);
+            TransferMods_Panel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)TransferModsClose_Button).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1514,5 +1681,16 @@
         private CheckBox BS_AllowOutdated_CB;
         private Label label21;
         private Button MarketplaceEditor_Button;
+        private Panel TransferMods_Panel;
+        private ListBox TransferModsList_LB;
+        private Label label23;
+        private TextBox TransferModsFromUEV_TB;
+        private Button TransferMods_Button;
+        private PictureBox TransferModsClose_Button;
+        private Label label24;
+        private ComboBox TransferModsFrom_CB;
+        private Label label26;
+        private Label label25;
+        private Button TransferModsOpen_Button;
     }
 }
