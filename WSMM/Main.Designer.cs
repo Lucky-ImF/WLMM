@@ -1382,6 +1382,7 @@
             // TransferCompatMods_RB
             // 
             TransferCompatMods_RB.AutoSize = true;
+            TransferCompatMods_RB.Enabled = false;
             TransferCompatMods_RB.ForeColor = SystemColors.ActiveCaption;
             TransferCompatMods_RB.Location = new Point(237, 220);
             TransferCompatMods_RB.Name = "TransferCompatMods_RB";
@@ -1395,6 +1396,7 @@
             // 
             TransferAllMods_RB.AutoSize = true;
             TransferAllMods_RB.Checked = true;
+            TransferAllMods_RB.Enabled = false;
             TransferAllMods_RB.ForeColor = SystemColors.ActiveCaption;
             TransferAllMods_RB.Location = new Point(92, 220);
             TransferAllMods_RB.Name = "TransferAllMods_RB";
@@ -1462,7 +1464,7 @@
             TransferMods_Button.FlatStyle = FlatStyle.Flat;
             TransferMods_Button.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             TransferMods_Button.ForeColor = SystemColors.ActiveCaption;
-            TransferMods_Button.Location = new Point(186, 251);
+            TransferMods_Button.Location = new Point(186, 249);
             TransferMods_Button.Name = "TransferMods_Button";
             TransferMods_Button.Size = new Size(128, 30);
             TransferMods_Button.TabIndex = 35;

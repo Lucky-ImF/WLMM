@@ -2893,6 +2893,8 @@ namespace WSMM
             TransferModsFrom_CB.Text = "Please specify version...";
             TransferModsList_LB.Items.Clear();
             TransferMods_Button.Enabled = false;
+            TransferAllMods_RB.Enabled = false;
+            TransferCompatMods_RB.Enabled = false;
         }
 
         private void TransferModsClose_Button_MouseEnter(object sender, EventArgs e)
@@ -2933,6 +2935,8 @@ namespace WSMM
             if (TransferModsList_LB.Items.Count > 0)
             {
                 TransferMods_Button.Enabled = true;
+                TransferAllMods_RB.Enabled = true;
+                TransferCompatMods_RB.Enabled = true;
             }
         }
 
@@ -2950,6 +2954,8 @@ namespace WSMM
             TransferModsFrom_CB.Text = "Please specify version...";
             TransferModsList_LB.Items.Clear();
             TransferMods_Button.Enabled = false;
+            TransferAllMods_RB.Enabled = false;
+            TransferCompatMods_RB.Enabled = false;
 
             if (ValidMods.Count > 0)
             {
@@ -3018,12 +3024,60 @@ namespace WSMM
 
         private void TransferAllMods_RB_CheckedChanged(object sender, EventArgs e)
         {
-
+            if (TransferAllMods_RB.Checked == true)
+            {
+                TransferModsList_LB.Items.Clear();
+                TransferMods_Button.Enabled = false;
+                // Load all Loaded .wlmm's
+                foreach (string Wlmm in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + TransferModsFrom_CB.Text + @"\Loaded", "*.wlmm"))
+                {
+                    TransferModsList_LB.Items.Add(Path.GetFileNameWithoutExtension(Wlmm));
+                }
+                if (TransferModsList_LB.Items.Count > 0)
+                {
+                    TransferMods_Button.Enabled = true;
+                }
+                else
+                {
+                    TransferModsList_LB.Enabled = false;
+                }
+            }
         }
 
         private void TransferCompatMods_RB_CheckedChanged(object sender, EventArgs e)
         {
-
+            if (TransferCompatMods_RB.Checked == true)
+            {
+                TransferModsList_LB.Items.Clear();
+                TransferMods_Button.Enabled = false;
+                // Load all Loaded .wlmm's
+                foreach (string Wlmm in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + TransferModsFrom_CB.Text + @"\Loaded", "*.wlmm"))
+                {
+                    //Read MetaData
+                    string SupVers = string.Empty;
+                    string[] MetaData = File.ReadAllLines(Application.StartupPath + @"Mods\" + TransferModsFrom_CB.Text + @"\Loaded\" + Path.GetFileNameWithoutExtension(Wlmm) + @"\Metadata.dat");
+                    foreach (string meta in MetaData)
+                    {
+                        if (meta.StartsWith("SupportedWLVersions"))
+                        {
+                            SupVers = GetSlice(meta, "=", 1);
+                            if (isVersionValid(SupVers))
+                            {
+                                TransferModsList_LB.Items.Add(Path.GetFileNameWithoutExtension(Wlmm));
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (TransferModsList_LB.Items.Count > 0)
+                {
+                    TransferMods_Button.Enabled = true;
+                }
+                else
+                {
+                    TransferModsList_LB.Enabled = false;
+                }
+            }
         }
     }
 }
