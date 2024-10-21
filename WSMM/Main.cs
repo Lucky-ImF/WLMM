@@ -508,10 +508,16 @@ namespace WSMM
                 ZipFile.ExtractToDirectory(Application.StartupPath + @"Temp\" + node.Name, Application.StartupPath + @"Temp\" + Path.GetFileNameWithoutExtension(node.Name), true);
 
                 // Replace System\SupportedVersions.ini
-                File.Copy(Application.StartupPath + @"Temp\" + Path.GetFileNameWithoutExtension(node.Name) + @"\System\SupportedVersions.ini", Application.StartupPath + @"System\SupportedVersions.ini", true);
+                if (File.Exists(Application.StartupPath + @"Temp\" + Path.GetFileNameWithoutExtension(node.Name) + @"\System\SupportedVersions.ini"))
+                {
+                    File.Copy(Application.StartupPath + @"Temp\" + Path.GetFileNameWithoutExtension(node.Name) + @"\System\SupportedVersions.ini", Application.StartupPath + @"System\SupportedVersions.ini", true);
+                }
 
                 // Replace System\EngineVersions.ini
-                File.Copy(Application.StartupPath + @"Temp\" + Path.GetFileNameWithoutExtension(node.Name) + @"\System\EngineVersions.ini", Application.StartupPath + @"System\EngineVersions.ini", true);
+                if (File.Exists(Application.StartupPath + @"Temp\" + Path.GetFileNameWithoutExtension(node.Name) + @"\System\EngineVersions.ini"))
+                {
+                    File.Copy(Application.StartupPath + @"Temp\" + Path.GetFileNameWithoutExtension(node.Name) + @"\System\EngineVersions.ini", Application.StartupPath + @"System\EngineVersions.ini", true);
+                }
 
                 // Copy/Replace Mappings
                 foreach (string mapping in Directory.EnumerateFiles(Application.StartupPath + @"Temp\" + Path.GetFileNameWithoutExtension(node.Name) + @"\Mappings", "*.usmap"))

@@ -285,13 +285,13 @@ namespace WSMM
             Mod_Panel[EntryID] = new Panel();
             Mod_Panel[EntryID].Size = new System.Drawing.Size(708, 95);
             Mod_Panel[EntryID].BackColor = System.Drawing.Color.FromArgb(32, 34, 81);
-            Mod_Panel[EntryID].BorderStyle = BorderStyle.Fixed3D;
+            Mod_Panel[EntryID].BorderStyle = BorderStyle.FixedSingle;
             //PictureBox[] Mod_Icon = new PictureBox[50];
             Mod_Icon[EntryID] = new PictureBox();
             Mod_Icon[EntryID].Size = new System.Drawing.Size(80, 80);
             Mod_Icon[EntryID].Location = new Point(3, 5);
             Mod_Icon[EntryID].BackColor = System.Drawing.Color.FromArgb(32, 34, 81);
-            Mod_Icon[EntryID].BorderStyle = BorderStyle.FixedSingle;
+            Mod_Icon[EntryID].BorderStyle = BorderStyle.None;
             Mod_Icon[EntryID].SizeMode = PictureBoxSizeMode.Zoom;
             Mod_Icon[EntryID].ImageLocation = ModIcon;
 
