@@ -118,23 +118,30 @@ namespace WSMM
 
         private void ApplyPatch_Button_Click(object sender, EventArgs e)
         {
-            if (File.Exists(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\Metadata.dat") && PatchMetaData_TB.Text != "")
+            if (PatchMetaData_TB.Text.Contains("ModName = ") && PatchMetaData_TB.Text.Contains("ModAuthor = ") && PatchMetaData_TB.Text.Contains("ModVersion = ") && PatchMetaData_TB.Text.Contains("SupportedWLVersions = ") && PatchMetaData_TB.Text.Contains("ModURL = "))
             {
-                //Write Metadata.dat
-                File.WriteAllText(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\Metadata.dat", PatchMetaData_TB.Text);
-
-                //Delete original
-                if (File.Exists(WLMMPath_TB.Text))
+                if (File.Exists(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\Metadata.dat") && PatchMetaData_TB.Text != "")
                 {
-                    File.Delete(WLMMPath_TB.Text);
+                    //Write Metadata.dat
+                    File.WriteAllText(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\Metadata.dat", PatchMetaData_TB.Text);
+
+                    //Delete original
+                    if (File.Exists(WLMMPath_TB.Text))
+                    {
+                        File.Delete(WLMMPath_TB.Text);
+                    }
+                    //Zip up
+                    ZipFile.CreateFromDirectory(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp", WLMMPath_TB.Text);
+
+                    MessageBox.Show("Mod successfully patched.", "Wild Life Mod Manager", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    WLMMCurrentMetaData_TB.Text = PatchMetaData_TB.Text;
+                    PatchMetaData_TB.Text = "";
                 }
-                //Zip up
-                ZipFile.CreateFromDirectory(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp", WLMMPath_TB.Text);
-
-                MessageBox.Show("Mod successfully patched.", "Wild Life Mod Manager");
-
-                WLMMCurrentMetaData_TB.Text = PatchMetaData_TB.Text;
-                PatchMetaData_TB.Text = "";
+            }
+            else
+            {
+                MessageBox.Show("Metadata invalid.", "Wild Life Mod Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

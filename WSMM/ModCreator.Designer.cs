@@ -73,6 +73,7 @@
             LoadMod_Button = new Button();
             openFileDialog3 = new OpenFileDialog();
             Icon_PB = new PictureBox();
+            toolTip1 = new ToolTip(components);
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             TitlePanel.SuspendLayout();
@@ -629,6 +630,13 @@
             Icon_PB.MouseMove += TitlePanel_MouseMove;
             Icon_PB.MouseUp += TitlePanel_MouseUp;
             // 
+            // toolTip1
+            // 
+            toolTip1.AutoPopDelay = 3000;
+            toolTip1.InitialDelay = 500;
+            toolTip1.IsBalloon = true;
+            toolTip1.ReshowDelay = 100;
+            // 
             // ModCreator
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -721,5 +729,6 @@
         private LinkLabel ModIconSetDefault_LL;
         private Button CopyMetaData_Button;
         private Button CopyMarketplaceData_Button;
+        private ToolTip toolTip1;
     }
 }

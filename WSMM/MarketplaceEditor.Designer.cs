@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MarketplaceEditor));
             Icon_PB = new PictureBox();
             Close_Button = new PictureBox();
@@ -72,6 +73,7 @@
             linkLabel2 = new LinkLabel();
             CopyData_Button = new Button();
             openFileDialog1 = new OpenFileDialog();
+            toolTip1 = new ToolTip(components);
             ((System.ComponentModel.ISupportInitialize)Icon_PB).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
@@ -635,6 +637,13 @@
             openFileDialog1.FileName = "openFileDialog1";
             openFileDialog1.Filter = ".wlmm files (*.wlmm)|*.wlmm";
             // 
+            // toolTip1
+            // 
+            toolTip1.AutoPopDelay = 3000;
+            toolTip1.InitialDelay = 500;
+            toolTip1.IsBalloon = true;
+            toolTip1.ReshowDelay = 100;
+            // 
             // MarketplaceEditor
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -714,5 +723,6 @@
         private TextBox ModDescription_TB;
         private Button CopyData_Button;
         private OpenFileDialog openFileDialog1;
+        private ToolTip toolTip1;
     }
 }

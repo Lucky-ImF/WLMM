@@ -8,6 +8,7 @@ using System.Drawing;
 using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -217,10 +218,86 @@ namespace WSMM
 
         private void BuildMods_Button_Click(object sender, EventArgs e)
         {
-            // Create a thread and call a background method
-            Thread backgroundThread = new Thread(new ThreadStart(BuildMod));
-            // Start thread
-            backgroundThread.Start();
+            bool ModValid = true;
+            string CharPool = @"=,\/:*?""<>|";
+            // Validate Textfields
+            if (ModName_TB.Text != "")
+            {
+                foreach (char c in CharPool)
+                {
+                    if (ModName_TB.Text.Contains(c))
+                    {
+                        ModValid = false;
+                        toolTip1.Show(@"Mod Name is empty or invalid character found =,\/:*?""<>|", ModName_TB, 3000);
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                ModValid = false;
+                toolTip1.Show(@"Mod Name is empty or invalid character found =,\/:*?""<>|", ModName_TB, 3000);
+            }
+
+            if (ModAuthor_TB.Text != "")
+            {
+                foreach (char c in CharPool)
+                {
+                    if (ModAuthor_TB.Text.Contains(c))
+                    {
+                        ModValid = false;
+                        toolTip1.Show(@"Mod Author is empty or invalid character found =,\/:*?""<>|", ModAuthor_TB, 3000);
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                ModValid = false;
+                toolTip1.Show(@"Mod Author is empty or invalid character found =,\/:*?""<>|", ModAuthor_TB, 3000);
+            }
+
+            if (ModVersion_TB.Text != "")
+            {
+                foreach (char c in CharPool)
+                {
+                    if (ModVersion_TB.Text.Contains(c))
+                    {
+                        ModValid = false;
+                        toolTip1.Show(@"Mod Version is empty or invalid character found =,\/:*?""<>|", ModVersion_TB, 3000);
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                ModValid = false;
+                toolTip1.Show(@"Mod Version is empty or invalid character found =,\/:*?""<>|", ModVersion_TB, 3000);
+            }
+
+            if (ModURL_TB.Text == "")
+            {
+                ModURL_TB.Text = "None";
+            }
+
+            if (ModIconPath_TB.Text == "")
+            {
+                ModIconPath_TB.Text = "Default";
+            }
+
+            if (SupportedWLVersions_CLB.CheckedItems.Count == 0)
+            {
+                ModValid = false;
+                toolTip1.Show("No supported version selected.", SupportedWLVersions_CLB, 3000);
+            }
+
+            if (ModValid)
+            {
+                // Create a thread and call a background method
+                Thread backgroundThread = new Thread(new ThreadStart(BuildMod));
+                // Start thread
+                backgroundThread.Start();
+            }
         }
 
         private void PakList_DragEnter(object sender, DragEventArgs e)
@@ -567,30 +644,106 @@ namespace WSMM
 
         private void CopyMetaData_Button_Click(object sender, EventArgs e)
         {
-            string SupportedVersions = "";
-            int i;
-            for (i = 0; i <= (SupportedWLVersions_CLB.Items.Count - 1); i++)
+            bool ModValid = true;
+            string CharPool = @"=,\/:*?""<>|";
+            // Validate Textfields
+            if (ModName_TB.Text != "")
             {
-                if (SupportedWLVersions_CLB.GetItemChecked(i))
+                foreach (char c in CharPool)
                 {
-                    SupportedVersions += SupportedWLVersions_CLB.Items[i].ToString() + ",";
+                    if (ModName_TB.Text.Contains(c))
+                    {
+                        ModValid = false;
+                        toolTip1.Show(@"Mod Name is empty or invalid character found =,\/:*?""<>|", ModName_TB, 3000);
+                        break;
+                    }
                 }
-            }
-            if (SupportedVersions.Contains("All Versions"))
-            {
-                SupportedVersions = "All Versions";
             }
             else
             {
-                SupportedVersions = SupportedVersions.TrimEnd(',');
+                ModValid = false;
+                toolTip1.Show(@"Mod Name is empty or invalid character found =,\/:*?""<>|", ModName_TB, 3000);
             }
 
-            string Metadata = "ModName = " + ModName_TB.Text + "\r\nModAuthor = " + ModAuthor_TB.Text +
-                "\r\nModVersion = " + ModVersion_TB.Text + "\r\nSupportedWLVersions = " + SupportedVersions +
-                "\r\nModURL = " + ModURL_TB.Text;
+            if (ModAuthor_TB.Text != "")
+            {
+                foreach (char c in CharPool)
+                {
+                    if (ModAuthor_TB.Text.Contains(c))
+                    {
+                        ModValid = false;
+                        toolTip1.Show(@"Mod Author is empty or invalid character found =,\/:*?""<>|", ModAuthor_TB, 3000);
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                ModValid = false;
+                toolTip1.Show(@"Mod Author is empty or invalid character found =,\/:*?""<>|", ModAuthor_TB, 3000);
+            }
 
-            Clipboard.SetText(Metadata);
-            MessageBox.Show("MetaData copied to clipboard.", "Wild Life Mod Manager");
+            if (ModVersion_TB.Text != "")
+            {
+                foreach (char c in CharPool)
+                {
+                    if (ModVersion_TB.Text.Contains(c))
+                    {
+                        ModValid = false;
+                        toolTip1.Show(@"Mod Version is empty or invalid character found =,\/:*?""<>|", ModVersion_TB, 3000);
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                ModValid = false;
+                toolTip1.Show(@"Mod Version is empty or invalid character found =,\/:*?""<>|", ModVersion_TB, 3000);
+            }
+
+            if (ModURL_TB.Text == "")
+            {
+                ModURL_TB.Text = "None";
+            }
+
+            if (ModIconPath_TB.Text == "")
+            {
+                ModIconPath_TB.Text = "Default";
+            }
+
+            if (SupportedWLVersions_CLB.CheckedItems.Count == 0)
+            {
+                ModValid = false;
+                toolTip1.Show("No supported version selected.", SupportedWLVersions_CLB, 3000);
+            }
+
+            if (ModValid)
+            {
+                string SupportedVersions = "";
+                int i;
+                for (i = 0; i <= (SupportedWLVersions_CLB.Items.Count - 1); i++)
+                {
+                    if (SupportedWLVersions_CLB.GetItemChecked(i))
+                    {
+                        SupportedVersions += SupportedWLVersions_CLB.Items[i].ToString() + ",";
+                    }
+                }
+                if (SupportedVersions.Contains("All Versions"))
+                {
+                    SupportedVersions = "All Versions";
+                }
+                else
+                {
+                    SupportedVersions = SupportedVersions.TrimEnd(',');
+                }
+
+                string Metadata = "ModName = " + ModName_TB.Text + "\r\nModAuthor = " + ModAuthor_TB.Text +
+                    "\r\nModVersion = " + ModVersion_TB.Text + "\r\nSupportedWLVersions = " + SupportedVersions +
+                    "\r\nModURL = " + ModURL_TB.Text;
+
+                Clipboard.SetText(Metadata);
+                MessageBox.Show("MetaData copied to clipboard.", "Wild Life Mod Manager", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void CopyMarketplaceData_Button_Click(object sender, EventArgs e)

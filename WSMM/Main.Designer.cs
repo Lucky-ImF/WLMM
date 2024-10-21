@@ -1350,6 +1350,7 @@
             BackColor = Color.FromArgb(32, 34, 81);
             ClientSize = new Size(1134, 761);
             ControlBox = false;
+            Controls.Add(BuildSettings_Panel);
             Controls.Add(MarketplaceEditor_Button);
             Controls.Add(SelectWLVersion_Panel);
             Controls.Add(DTDownload_Panel);
@@ -1362,7 +1363,6 @@
             Controls.Add(BugReport_Panel);
             Controls.Add(Icon_PB);
             Controls.Add(RefreshBuildSettings_Button);
-            Controls.Add(BuildSettings_Panel);
             Controls.Add(BuildSettings_Button);
             Controls.Add(ProgressPanel);
             Controls.Add(ModCreator_Button);

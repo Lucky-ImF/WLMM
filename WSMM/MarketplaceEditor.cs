@@ -215,10 +215,24 @@ namespace WSMM
 
         private void ScreenshotAdd_Button_Click(object sender, EventArgs e)
         {
+            ScreenshotAdd_TB.ForeColor = SystemColors.ActiveCaption;
             ScreenshotAdd_TB.Text = ScreenshotAdd_TB.Text.ToLower();
             if (ScreenshotAdd_TB.Text.EndsWith(".jpg") || ScreenshotAdd_TB.Text.EndsWith(".jpeg") || ScreenshotAdd_TB.Text.EndsWith(".png"))
             {
-                Screenshots_LB.Items.Add(ScreenshotAdd_TB.Text);
+                if (ScreenshotAdd_TB.Text.StartsWith("https://") || ScreenshotAdd_TB.Text.StartsWith("http://"))
+                {
+                    Screenshots_LB.Items.Add(ScreenshotAdd_TB.Text);
+                }
+                else
+                {
+                    ScreenshotAdd_TB.ForeColor = Color.LightCoral;
+                    toolTip1.Show("Not a valid URL.", ScreenshotAdd_TB, 3000);
+                }
+            }
+            else
+            {
+                ScreenshotAdd_TB.ForeColor = Color.LightCoral;
+                toolTip1.Show("Filetype not supported. Must be .jpg, .jpeg or .png.", ScreenshotAdd_TB, 3000);
             }
         }
 
@@ -235,30 +249,40 @@ namespace WSMM
             {
                 ModValid = false;
                 Categories_CLB.ForeColor = Color.LightCoral;
+                toolTip1.Show("Atleast 1 category must be selected.", Categories_CLB, 3000);
             }
 
             // Check Mod Icon ends with valid extension
             if (ModIconURL_TB.Text.EndsWith(".jpg") || ModIconURL_TB.Text.EndsWith(".jpeg") || ModIconURL_TB.Text.EndsWith(".png"))
             {
+                if (ModIconURL_TB.Text.StartsWith("https://") == false && ModIconURL_TB.Text.StartsWith("http://") == false)
+                {
+                    ModValid = false;
+                    ModIconURL_TB.ForeColor = Color.LightCoral;
+                    toolTip1.Show("Not a valid URL.", ModIconURL_TB, 3000);
+                }
             }
             else 
             { 
                 ModValid = false;
                 ModIconURL_TB.ForeColor = Color.LightCoral;
+                toolTip1.Show("Filetype not supported. Must be .jpg, .jpeg or .png.", ModIconURL_TB, 3000);
             }
 
             // Check Mod Description more than 0 lenght
-            if (ModDescription_TB.Text.Length <= 0)
+            if (ModDescription_TB.Text.Length <= 0 && ModDescription_TB.Text.Contains(":") == false && ModDescription_TB.Text.Contains(",") == false && ModDescription_TB.Text.Contains("*") == false)
             {
                 ModValid = false;
                 ModDescription_TB.ForeColor = Color.LightCoral;
+                toolTip1.Show("Description can't contain : , *", ModDescription_TB, 3000);
             }
 
             // Check Download Link is Mega.nz
-            if (ModDLURL_TB.Text.Contains("https://mega.nz/") == false)
+            if (ModDLURL_TB.Text.StartsWith("https://mega.nz/") == false)
             {
                 ModValid = false;
                 ModDLURL_TB.ForeColor = Color.LightCoral;
+                toolTip1.Show("Not a valid Mega.nz URL.", ModDLURL_TB, 3000);
             }
 
             // Write Data
