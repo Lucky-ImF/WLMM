@@ -134,6 +134,7 @@
             TransferModsFrom_CB = new ComboBox();
             label26 = new Label();
             TransferModsOpen_Button = new Button();
+            linkLabel3 = new LinkLabel();
             TitlePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
@@ -472,6 +473,7 @@
             // panel1
             // 
             panel1.BorderStyle = BorderStyle.Fixed3D;
+            panel1.Controls.Add(linkLabel3);
             panel1.Controls.Add(label17);
             panel1.Controls.Add(linkLabel2);
             panel1.Controls.Add(label6);
@@ -1537,6 +1539,20 @@
             TransferModsOpen_Button.UseVisualStyleBackColor = false;
             TransferModsOpen_Button.Click += TransferModsOpen_Button_Click;
             // 
+            // linkLabel3
+            // 
+            linkLabel3.ActiveLinkColor = Color.MistyRose;
+            linkLabel3.AutoSize = true;
+            linkLabel3.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            linkLabel3.LinkColor = SystemColors.Highlight;
+            linkLabel3.Location = new Point(191, 80);
+            linkLabel3.Name = "linkLabel3";
+            linkLabel3.Size = new Size(58, 21);
+            linkLabel3.TabIndex = 11;
+            linkLabel3.TabStop = true;
+            linkLabel3.Text = "Reload";
+            linkLabel3.VisitedLinkColor = Color.LightCoral;
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1726,5 +1742,6 @@
         private Button TransferModsOpen_Button;
         private RadioButton TransferCompatMods_RB;
         private RadioButton TransferAllMods_RB;
+        private LinkLabel linkLabel3;
     }
 }

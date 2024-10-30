@@ -25,6 +25,8 @@ namespace WSMM
         private string LoadedWLPath = string.Empty;
         private Main ParentForm = null;
 
+        string CurrentlyEditing_Path = string.Empty;
+
         public void TransferInfo(string Path, string Version, string UEV, Main main)
         {
             LoadedWLVersion = Version;
@@ -474,11 +476,26 @@ namespace WSMM
                 BuildModProgress_PB.Value = 4;
             });
 
-            if (File.Exists(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Mod Creator\" + ModName_TB.Text + ".wlmm"))
+            if (CurrentlyEditing_Path == string.Empty)
             {
-                File.Delete(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Mod Creator\" + ModName_TB.Text + ".wlmm");
+                if (File.Exists(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Mod Creator\" + ModName_TB.Text + ".wlmm"))
+                {
+                    File.Delete(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Mod Creator\" + ModName_TB.Text + ".wlmm");
+                }
+                ZipFile.CreateFromDirectory(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Staging", Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Mod Creator\" + ModName_TB.Text + ".wlmm");
             }
-            ZipFile.CreateFromDirectory(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Staging", Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Mod Creator\" + ModName_TB.Text + ".wlmm");
+            else
+            {
+                if (File.Exists(CurrentlyEditing_Path))
+                {
+                    File.Delete(CurrentlyEditing_Path);
+                }
+                ZipFile.CreateFromDirectory(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Staging", CurrentlyEditing_Path);
+
+                // If this path is in Active Mods, reload that mod.
+                ParentForm.ReloadAffectedMod(CurrentlyEditing_Path);
+            }
+            
 
             BuildMods_Button.Invoke((System.Windows.Forms.MethodInvoker)delegate
             {
@@ -510,7 +527,14 @@ namespace WSMM
             //enabled.dat
             PakList.Items.Clear();
             AutoModList.Items.Clear();
-            openFileDialog3.InitialDirectory = Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Mod Creator";
+            if (ParentForm.prevModPath == string.Empty)
+            {
+                openFileDialog3.InitialDirectory = Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Mod Creator";
+            }
+            else
+            {
+                openFileDialog3.InitialDirectory = ParentForm.prevModPath;
+            }
             if (openFileDialog3.ShowDialog() == DialogResult.OK)
             {
                 if (Directory.Exists(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp"))
@@ -521,7 +545,9 @@ namespace WSMM
                 //Directory.Delete(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Staging", true);
                 //Directory.CreateDirectory(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Staging");
                 ZipFile.ExtractToDirectory(openFileDialog3.FileName, Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp");
-
+                CurrentlyEditing_Path = openFileDialog3.FileName;
+                CurrentlyEditing_LL.Text = openFileDialog3.FileName;
+                StopEditing_LL.Show();
                 foreach (string pak in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\Paks", "*.pak"))
                 {
                     PakList.Items.Add(Path.GetFileName(pak), 0);
@@ -746,32 +772,31 @@ namespace WSMM
             }
         }
 
-        private void CopyMarketplaceData_Button_Click(object sender, EventArgs e)
+        private void CurrentlyEditing_LL_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            string SupportedVersions = "";
-            int i;
-            for (i = 0; i <= (SupportedWLVersions_CLB.Items.Count - 1); i++)
+            if (CurrentlyEditing_Path == string.Empty)
             {
-                if (SupportedWLVersions_CLB.GetItemChecked(i))
-                {
-                    SupportedVersions += SupportedWLVersions_CLB.Items[i].ToString() + "*";
-                }
-            }
-            if (SupportedVersions.Contains("All Versions"))
-            {
-                SupportedVersions = "All Versions";
+                Process.Start("explorer.exe", Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Mod Creator");
             }
             else
             {
-                SupportedVersions = SupportedVersions.TrimEnd('*');
+                string Dir = Path.GetDirectoryName(CurrentlyEditing_Path);
+                if (Directory.Exists(Dir))
+                {
+                    Process.Start("explorer.exe", Dir);
+                }
+                else
+                {
+                    MessageBox.Show("Directory for the file was not found.", "Wild Life Mod Manager");
+                }
             }
+        }
 
-            string Metadata = "ModName:" + ModName_TB.Text + ",ModAuthor:" + ModAuthor_TB.Text +
-                ",ModVersion:" + ModVersion_TB.Text + ",SupportedVersions:" + SupportedVersions +
-                ",ModLink:" + ModURL_TB.Text + ",ModSize:EDIT,Category:EDIT,LastUpdate:EDIT,ModIcon:EDIT,ModDescription:EDIT,DownloadLink:EDIT,Screenshots:EDIT";
-
-            Clipboard.SetText(Metadata);
-            MessageBox.Show("Marketplace Data copied to clipboard.", "Wild Life Mod Manager");
+        private void StopEditing_LL_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            CurrentlyEditing_Path = string.Empty;
+            CurrentlyEditing_LL.Text = "New Mod";
+            StopEditing_LL.Hide();
         }
     }
 }
