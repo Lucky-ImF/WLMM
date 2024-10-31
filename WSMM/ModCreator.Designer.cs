@@ -48,6 +48,11 @@
             AutoModList = new ListView();
             CreateAutoMod_Button = new Button();
             panel1 = new Panel();
+            AffectedCharacterSetWithAutoMod_LL = new LinkLabel();
+            label11 = new Label();
+            AffectedCharacters_CLB = new CheckedListBox();
+            label10 = new Label();
+            Categories_CLB = new CheckedListBox();
             CopyMetaData_Button = new Button();
             ModIconSetDefault_LL = new LinkLabel();
             ModIconBrowse_Button = new Button();
@@ -76,11 +81,6 @@
             StopEditing_LL = new LinkLabel();
             CurrentlyEditing_LL = new LinkLabel();
             label106 = new Label();
-            label10 = new Label();
-            Categories_CLB = new CheckedListBox();
-            label11 = new Label();
-            AffectedCharacters_CLB = new CheckedListBox();
-            AffectedCharacterSetWithAutoMod_LL = new LinkLabel();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             TitlePanel.SuspendLayout();
@@ -334,6 +334,70 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(570, 403);
             panel1.TabIndex = 14;
+            // 
+            // AffectedCharacterSetWithAutoMod_LL
+            // 
+            AffectedCharacterSetWithAutoMod_LL.ActiveLinkColor = SystemColors.MenuHighlight;
+            AffectedCharacterSetWithAutoMod_LL.AutoSize = true;
+            AffectedCharacterSetWithAutoMod_LL.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            AffectedCharacterSetWithAutoMod_LL.LinkColor = SystemColors.MenuHighlight;
+            AffectedCharacterSetWithAutoMod_LL.Location = new Point(451, 185);
+            AffectedCharacterSetWithAutoMod_LL.Margin = new Padding(4, 0, 4, 0);
+            AffectedCharacterSetWithAutoMod_LL.Name = "AffectedCharacterSetWithAutoMod_LL";
+            AffectedCharacterSetWithAutoMod_LL.Size = new Size(109, 16);
+            AffectedCharacterSetWithAutoMod_LL.TabIndex = 44;
+            AffectedCharacterSetWithAutoMod_LL.TabStop = true;
+            AffectedCharacterSetWithAutoMod_LL.Tag = "null";
+            AffectedCharacterSetWithAutoMod_LL.Text = "Set with AutoMod";
+            AffectedCharacterSetWithAutoMod_LL.VisitedLinkColor = SystemColors.MenuHighlight;
+            AffectedCharacterSetWithAutoMod_LL.LinkClicked += AffectedCharacterSetWithAutoMod_LL_LinkClicked;
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label11.ForeColor = SystemColors.ActiveCaption;
+            label11.Location = new Point(365, 184);
+            label11.Name = "label11";
+            label11.Size = new Size(70, 17);
+            label11.TabIndex = 43;
+            label11.Text = "Characters";
+            // 
+            // AffectedCharacters_CLB
+            // 
+            AffectedCharacters_CLB.BackColor = Color.FromArgb(75, 68, 138);
+            AffectedCharacters_CLB.BorderStyle = BorderStyle.FixedSingle;
+            AffectedCharacters_CLB.ForeColor = SystemColors.ActiveCaption;
+            AffectedCharacters_CLB.FormattingEnabled = true;
+            AffectedCharacters_CLB.Location = new Point(287, 204);
+            AffectedCharacters_CLB.Name = "AffectedCharacters_CLB";
+            AffectedCharacters_CLB.ScrollAlwaysVisible = true;
+            AffectedCharacters_CLB.Size = new Size(269, 74);
+            AffectedCharacters_CLB.TabIndex = 42;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label10.ForeColor = SystemColors.ActiveCaption;
+            label10.Location = new Point(108, 184);
+            label10.Name = "label10";
+            label10.Size = new Size(71, 17);
+            label10.TabIndex = 41;
+            label10.Text = "Categories";
+            // 
+            // Categories_CLB
+            // 
+            Categories_CLB.BackColor = Color.FromArgb(75, 68, 138);
+            Categories_CLB.BorderStyle = BorderStyle.FixedSingle;
+            Categories_CLB.ForeColor = SystemColors.ActiveCaption;
+            Categories_CLB.FormattingEnabled = true;
+            Categories_CLB.Items.AddRange(new object[] { "Outfit", "Hair", "Skin", "Pubic Hair", "Eyes", "Eyeliner", "Eyeshadow", "Lipstick", "Tanlines", "Fur", "Audio", "Other" });
+            Categories_CLB.Location = new Point(12, 204);
+            Categories_CLB.Name = "Categories_CLB";
+            Categories_CLB.ScrollAlwaysVisible = true;
+            Categories_CLB.Size = new Size(269, 74);
+            Categories_CLB.TabIndex = 40;
             // 
             // CopyMetaData_Button
             // 
@@ -676,69 +740,6 @@
             label106.Size = new Size(102, 15);
             label106.TabIndex = 42;
             label106.Text = "Currently Editing: ";
-            // 
-            // label10
-            // 
-            label10.AutoSize = true;
-            label10.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label10.ForeColor = SystemColors.ActiveCaption;
-            label10.Location = new Point(108, 184);
-            label10.Name = "label10";
-            label10.Size = new Size(71, 17);
-            label10.TabIndex = 41;
-            label10.Text = "Categories";
-            // 
-            // Categories_CLB
-            // 
-            Categories_CLB.BackColor = Color.FromArgb(75, 68, 138);
-            Categories_CLB.BorderStyle = BorderStyle.FixedSingle;
-            Categories_CLB.ForeColor = SystemColors.ActiveCaption;
-            Categories_CLB.FormattingEnabled = true;
-            Categories_CLB.Items.AddRange(new object[] { "Outfit", "Hair", "Skin", "Pubic Hair", "Eyes", "Eyeliner", "Eyeshadow", "Lipstick", "Tanlines", "Fur", "Audio", "Other" });
-            Categories_CLB.Location = new Point(12, 204);
-            Categories_CLB.Name = "Categories_CLB";
-            Categories_CLB.ScrollAlwaysVisible = true;
-            Categories_CLB.Size = new Size(269, 74);
-            Categories_CLB.TabIndex = 40;
-            // 
-            // label11
-            // 
-            label11.AutoSize = true;
-            label11.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label11.ForeColor = SystemColors.ActiveCaption;
-            label11.Location = new Point(365, 184);
-            label11.Name = "label11";
-            label11.Size = new Size(70, 17);
-            label11.TabIndex = 43;
-            label11.Text = "Characters";
-            // 
-            // AffectedCharacters_CLB
-            // 
-            AffectedCharacters_CLB.BackColor = Color.FromArgb(75, 68, 138);
-            AffectedCharacters_CLB.BorderStyle = BorderStyle.FixedSingle;
-            AffectedCharacters_CLB.ForeColor = SystemColors.ActiveCaption;
-            AffectedCharacters_CLB.FormattingEnabled = true;
-            AffectedCharacters_CLB.Location = new Point(287, 204);
-            AffectedCharacters_CLB.Name = "AffectedCharacters_CLB";
-            AffectedCharacters_CLB.ScrollAlwaysVisible = true;
-            AffectedCharacters_CLB.Size = new Size(269, 74);
-            AffectedCharacters_CLB.TabIndex = 42;
-            // 
-            // AffectedCharacterSetWithAutoMod_LL
-            // 
-            AffectedCharacterSetWithAutoMod_LL.ActiveLinkColor = SystemColors.MenuHighlight;
-            AffectedCharacterSetWithAutoMod_LL.AutoSize = true;
-            AffectedCharacterSetWithAutoMod_LL.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            AffectedCharacterSetWithAutoMod_LL.LinkColor = SystemColors.MenuHighlight;
-            AffectedCharacterSetWithAutoMod_LL.Location = new Point(451, 185);
-            AffectedCharacterSetWithAutoMod_LL.Margin = new Padding(4, 0, 4, 0);
-            AffectedCharacterSetWithAutoMod_LL.Name = "AffectedCharacterSetWithAutoMod_LL";
-            AffectedCharacterSetWithAutoMod_LL.Size = new Size(109, 16);
-            AffectedCharacterSetWithAutoMod_LL.TabIndex = 44;
-            AffectedCharacterSetWithAutoMod_LL.TabStop = true;
-            AffectedCharacterSetWithAutoMod_LL.Tag = "null";
-            AffectedCharacterSetWithAutoMod_LL.Text = "Set with AutoMod";
-            AffectedCharacterSetWithAutoMod_LL.VisitedLinkColor = SystemColors.MenuHighlight;
             // 
             // ModCreator
             // 

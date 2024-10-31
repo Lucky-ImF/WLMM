@@ -33,6 +33,9 @@ namespace WSMM
             LoadedWLPath = Path;
             LoadedUEVersion = UEV;
             ParentForm = main;
+
+            LoadSupportedVersions();
+            LoadCharacters();
         }
 
         public ModCreator()
@@ -89,8 +92,6 @@ namespace WSMM
 
         private void ModCreator_Load(object sender, EventArgs e)
         {
-            LoadSupportedVersions();
-
             ModIconPath_TB.Text = "Default";
             ModIcon_Preview.ImageLocation = Application.StartupPath + @"System\Default_Icon.png";
         }
@@ -108,6 +109,26 @@ namespace WSMM
             if (File.Exists(Application.StartupPath + @"System\SupportedVersions.ini"))
             {
                 SupportedWLVersions_CLB.Items.AddRange(File.ReadAllLines(Application.StartupPath + @"System\SupportedVersions.ini"));
+            }
+        }
+
+        private void LoadCharacters()
+        {
+            AffectedCharacters_CLB.Items.Clear();
+            AffectedCharacters_CLB.Items.Add("All");
+            if (File.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\Characters.txt"))
+            {
+                AffectedCharacters_CLB.Items.AddRange(File.ReadAllLines(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\Characters.txt"));
+            }
+            if (File.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\Characters.txt"))
+            {
+                foreach (string line in File.ReadLines(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\CustomizerCharacters.txt"))
+                {
+                    if (AffectedCharacters_CLB.Items.Contains(line) == false)
+                    {
+                        AffectedCharacters_CLB.Items.Add(line);
+                    }
+                }
             }
         }
 
@@ -293,6 +314,18 @@ namespace WSMM
                 toolTip1.Show("No supported version selected.", SupportedWLVersions_CLB, 3000);
             }
 
+            if (Categories_CLB.CheckedItems.Count == 0)
+            {
+                ModValid = false;
+                toolTip1.Show("No Categories selected.", Categories_CLB, 3000);
+            }
+
+            if (AffectedCharacters_CLB.CheckedItems.Count == 0)
+            {
+                ModValid = false;
+                toolTip1.Show("No Characters selected.", AffectedCharacters_CLB, 3000);
+            }
+
             if (ModValid)
             {
                 // Create a thread and call a background method
@@ -457,9 +490,34 @@ namespace WSMM
                 SupportedVersions = SupportedVersions.TrimEnd(',');
             }
 
+            // Categories
+            string Categories = "";
+            i = 0;
+            for (i = 0; i <= (Categories_CLB.Items.Count - 1); i++)
+            {
+                if (Categories_CLB.GetItemChecked(i))
+                {
+                    Categories += Categories_CLB.Items[i].ToString() + ",";
+                }
+            }
+            Categories = Categories.TrimEnd(',');
+
+            // Characters
+            string Characters = "";
+            i = 0;
+            for (i = 0; i <= (AffectedCharacters_CLB.Items.Count - 1); i++)
+            {
+                if (AffectedCharacters_CLB.GetItemChecked(i))
+                {
+                    Characters += AffectedCharacters_CLB.Items[i].ToString() + ",";
+                }
+            }
+            Characters = Characters.TrimEnd(',');
+
             string Metadata = "ModName = " + ModName_TB.Text + "\nModAuthor = " + ModAuthor_TB.Text +
                 "\nModVersion = " + ModVersion_TB.Text + "\nSupportedWLVersions = " + SupportedVersions +
-                "\nModURL = " + ModURL_TB.Text;
+                "\nModURL = " + ModURL_TB.Text + "\nCategories = " + Categories +
+                "\nCharacters = " + Characters;
             File.WriteAllText(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Staging\Metadata.dat", Metadata);
             File.WriteAllText(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Staging\Enabled.dat", "Checked");
             if (ModIconPath_TB.Text != "Default")
@@ -496,7 +554,7 @@ namespace WSMM
                 Thread.Sleep(500); // Let the compression fully finish.
                 ParentForm.ReloadAffectedMod(CurrentlyEditing_Path);
             }
-            
+
 
             BuildMods_Button.Invoke((System.Windows.Forms.MethodInvoker)delegate
             {
@@ -573,6 +631,8 @@ namespace WSMM
             //Name Author Versions Version URL Icon
             //Read MetaData
             string SupVers = string.Empty;
+            string Categories = string.Empty;
+            string Characters = string.Empty;
             string[] MetaData = File.ReadAllLines(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\Metadata.dat");
             foreach (string meta in MetaData)
             {
@@ -596,12 +656,30 @@ namespace WSMM
                 {
                     ModURL_TB.Text = GetSlice(meta, "=", 1);
                 }
+                else if (meta.StartsWith("Categories"))
+                {
+                    Categories = GetSlice(meta, "=", 1);
+                }
+                else if (meta.StartsWith("Characters"))
+                {
+                    Characters = GetSlice(meta, "=", 1);
+                }
             }
 
             //Clear Supported Versions
             for (int i = 0; i <= (SupportedWLVersions_CLB.Items.Count - 1); i++)
             {
                 SupportedWLVersions_CLB.SetItemChecked(i, false);
+            }
+            //Clear Characters
+            for (int i = 0; i <= (AffectedCharacters_CLB.Items.Count - 1); i++)
+            {
+                AffectedCharacters_CLB.SetItemChecked(i, false);
+            }
+            //Clear Categories
+            for (int i = 0; i <= (Categories_CLB.Items.Count - 1); i++)
+            {
+                Categories_CLB.SetItemChecked(i, false);
             }
 
             if (SupVers.Contains("All Versions"))
@@ -635,8 +713,62 @@ namespace WSMM
                         }
                     }
                 }
-
             }
+
+            // Characters
+            if (Characters.Contains(","))
+            {
+                string[] SplitChars = Characters.Split(",");
+                foreach (string s in SplitChars)
+                {
+                    string TrimmedS = s.Trim();
+                    for (int i = 0; i <= (AffectedCharacters_CLB.Items.Count - 1); i++)
+                    {
+                        if (AffectedCharacters_CLB.Items[i].ToString() == TrimmedS)
+                        {
+                            AffectedCharacters_CLB.SetItemChecked(i, true);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i <= (AffectedCharacters_CLB.Items.Count - 1); i++)
+                {
+                    if (AffectedCharacters_CLB.Items[i].ToString() == Characters)
+                    {
+                        AffectedCharacters_CLB.SetItemChecked(i, true);
+                    }
+                }
+            }
+
+            // Categories
+            if (Categories.Contains(","))
+            {
+                string[] SplitCats = Categories.Split(",");
+                foreach (string s in SplitCats)
+                {
+                    string TrimmedS = s.Trim();
+                    for (int i = 0; i <= (Categories_CLB.Items.Count - 1); i++)
+                    {
+                        if (Categories_CLB.Items[i].ToString() == TrimmedS)
+                        {
+                            Categories_CLB.SetItemChecked(i, true);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i <= (Categories_CLB.Items.Count - 1); i++)
+                {
+                    if (Categories_CLB.Items[i].ToString() == Categories)
+                    {
+                        Categories_CLB.SetItemChecked(i, true);
+                    }
+                }
+            }
+
             if (File.Exists(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\Icon.png"))
             {
                 ModIconPath_TB.Text = Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\Icon.png";
@@ -747,6 +879,18 @@ namespace WSMM
                 toolTip1.Show("No supported version selected.", SupportedWLVersions_CLB, 3000);
             }
 
+            if (Categories_CLB.CheckedItems.Count == 0)
+            {
+                ModValid = false;
+                toolTip1.Show("No Categories selected.", Categories_CLB, 3000);
+            }
+
+            if (AffectedCharacters_CLB.CheckedItems.Count == 0)
+            {
+                ModValid = false;
+                toolTip1.Show("No Characters selected.", AffectedCharacters_CLB, 3000);
+            }
+
             if (ModValid)
             {
                 string SupportedVersions = "";
@@ -767,9 +911,34 @@ namespace WSMM
                     SupportedVersions = SupportedVersions.TrimEnd(',');
                 }
 
+                // Categories
+                string Categories = "";
+                i = 0;
+                for (i = 0; i <= (Categories_CLB.Items.Count - 1); i++)
+                {
+                    if (Categories_CLB.GetItemChecked(i))
+                    {
+                        Categories += Categories_CLB.Items[i].ToString() + ",";
+                    }
+                }
+                Categories = Categories.TrimEnd(',');
+
+                // Characters
+                string Characters = "";
+                i = 0;
+                for (i = 0; i <= (AffectedCharacters_CLB.Items.Count - 1); i++)
+                {
+                    if (AffectedCharacters_CLB.GetItemChecked(i))
+                    {
+                        Characters += AffectedCharacters_CLB.Items[i].ToString() + ",";
+                    }
+                }
+                Characters = Characters.TrimEnd(',');
+
                 string Metadata = "ModName = " + ModName_TB.Text + "\r\nModAuthor = " + ModAuthor_TB.Text +
                     "\r\nModVersion = " + ModVersion_TB.Text + "\r\nSupportedWLVersions = " + SupportedVersions +
-                    "\r\nModURL = " + ModURL_TB.Text;
+                    "\r\nModURL = " + ModURL_TB.Text + "\r\nCategories = " + Categories +
+                    "\r\nCharacters = " + Characters;
 
                 Clipboard.SetText(Metadata);
                 MessageBox.Show("MetaData copied to clipboard.", "Wild Life Mod Manager", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -801,6 +970,39 @@ namespace WSMM
             CurrentlyEditing_Path = string.Empty;
             CurrentlyEditing_LL.Text = "New Mod";
             StopEditing_LL.Hide();
+        }
+
+        private void AffectedCharacterSetWithAutoMod_LL_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            //Clear Characters
+            for (int i = 0; i <= (AffectedCharacters_CLB.Items.Count - 1); i++)
+            {
+                AffectedCharacters_CLB.SetItemChecked(i, false);
+            }
+
+            int CharactersAdded = 0;
+            foreach (ListViewItem AMEntry in AutoModList.Items)
+            {
+                string[] contents;
+                contents = File.ReadAllLines(AMEntry.Tag.ToString());
+
+                foreach (string line in contents)
+                {
+                    if (GetSlice(line, ":", 0) == "Character") 
+                    { 
+                        string Character = GetSlice(line, ":", 1);
+                        for (int i = 0; i <= (AffectedCharacters_CLB.Items.Count - 1); i++)
+                        {
+                            if (AffectedCharacters_CLB.Items[i].ToString() == Character)
+                            {
+                                AffectedCharacters_CLB.SetItemChecked(i, true);
+                                CharactersAdded++;
+                            }
+                        }
+                    }
+                }
+            }
+            MessageBox.Show("Characters added: " + CharactersAdded.ToString(), "Wild Life Mod Manager");
         }
     }
 }

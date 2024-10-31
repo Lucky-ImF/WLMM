@@ -118,7 +118,7 @@ namespace WSMM
 
         private void ApplyPatch_Button_Click(object sender, EventArgs e)
         {
-            if (PatchMetaData_TB.Text.Contains("ModName = ") && PatchMetaData_TB.Text.Contains("ModAuthor = ") && PatchMetaData_TB.Text.Contains("ModVersion = ") && PatchMetaData_TB.Text.Contains("SupportedWLVersions = ") && PatchMetaData_TB.Text.Contains("ModURL = "))
+            if (PatchMetaData_TB.Text.Contains("ModName = ") && PatchMetaData_TB.Text.Contains("ModAuthor = ") && PatchMetaData_TB.Text.Contains("ModVersion = ") && PatchMetaData_TB.Text.Contains("SupportedWLVersions = ") && PatchMetaData_TB.Text.Contains("ModURL = ") && PatchMetaData_TB.Text.Contains("Categories = ") && PatchMetaData_TB.Text.Contains("Characters = "))
             {
                 if (File.Exists(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\Metadata.dat") && PatchMetaData_TB.Text != "")
                 {

@@ -53,6 +53,7 @@
             EnableMods_Button = new Button();
             ModFlow_Panel = new FlowLayoutPanel();
             panel1 = new Panel();
+            linkLabel4 = new LinkLabel();
             linkLabel3 = new LinkLabel();
             label17 = new Label();
             linkLabel2 = new LinkLabel();
@@ -135,7 +136,7 @@
             TransferModsFrom_CB = new ComboBox();
             label26 = new Label();
             TransferModsOpen_Button = new Button();
-            linkLabel4 = new LinkLabel();
+            label27 = new Label();
             TitlePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
@@ -474,6 +475,7 @@
             // panel1
             // 
             panel1.BorderStyle = BorderStyle.Fixed3D;
+            panel1.Controls.Add(label27);
             panel1.Controls.Add(linkLabel4);
             panel1.Controls.Add(linkLabel3);
             panel1.Controls.Add(label17);
@@ -492,6 +494,20 @@
             panel1.Size = new Size(840, 115);
             panel1.TabIndex = 0;
             panel1.Visible = false;
+            // 
+            // linkLabel4
+            // 
+            linkLabel4.ActiveLinkColor = Color.MistyRose;
+            linkLabel4.AutoSize = true;
+            linkLabel4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            linkLabel4.LinkColor = SystemColors.Highlight;
+            linkLabel4.Location = new Point(255, 80);
+            linkLabel4.Name = "linkLabel4";
+            linkLabel4.Size = new Size(36, 21);
+            linkLabel4.TabIndex = 12;
+            linkLabel4.TabStop = true;
+            linkLabel4.Text = "Edit";
+            linkLabel4.VisitedLinkColor = Color.LightCoral;
             // 
             // linkLabel3
             // 
@@ -1555,19 +1571,16 @@
             TransferModsOpen_Button.UseVisualStyleBackColor = false;
             TransferModsOpen_Button.Click += TransferModsOpen_Button_Click;
             // 
-            // linkLabel4
+            // label27
             // 
-            linkLabel4.ActiveLinkColor = Color.MistyRose;
-            linkLabel4.AutoSize = true;
-            linkLabel4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            linkLabel4.LinkColor = SystemColors.Highlight;
-            linkLabel4.Location = new Point(255, 80);
-            linkLabel4.Name = "linkLabel4";
-            linkLabel4.Size = new Size(36, 21);
-            linkLabel4.TabIndex = 12;
-            linkLabel4.TabStop = true;
-            linkLabel4.Text = "Edit";
-            linkLabel4.VisitedLinkColor = Color.LightCoral;
+            label27.AutoSize = true;
+            label27.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label27.ForeColor = SystemColors.GradientActiveCaption;
+            label27.Location = new Point(117, 54);
+            label27.Name = "label27";
+            label27.Size = new Size(76, 17);
+            label27.TabIndex = 13;
+            label27.Text = "Maya,Tanya";
             // 
             // Main
             // 
@@ -1760,5 +1773,6 @@
         private RadioButton TransferAllMods_RB;
         private LinkLabel linkLabel3;
         private LinkLabel linkLabel4;
+        private Label label27;
     }
 }

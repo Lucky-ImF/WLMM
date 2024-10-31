@@ -49,6 +49,7 @@ namespace WSMM
         Label[] Mod_ErrorLabel = new Label[100];
         Label[] Mod_VersionLabel = new Label[100];
         Label[] Mod_SupportedVersionsLabel = new Label[100];
+        Label[] Mod_CharactersLabel = new Label[100];
         Label[] Mod_ContainsLabel = new Label[100];
         Label[] Mod_AuthorLabel = new Label[100];
         LinkLabel[] Mod_RemoveButton = new LinkLabel[100];
@@ -57,6 +58,7 @@ namespace WSMM
         LinkLabel[] Mod_LinkButton = new LinkLabel[100];
         CheckBox[] Mod_EnabledCB = new CheckBox[100];
         string[] Mod_WLMMPath = new string[100];
+        string[] Mod_Categories = new string[100];
 
         List<int> Mod_Entries = new List<int>();
         int Mod_CurrentEntryID = 0;
@@ -269,6 +271,7 @@ namespace WSMM
                     Mod_ErrorLabel[EntryID].Dispose();
                     Mod_VersionLabel[EntryID].Dispose();
                     Mod_SupportedVersionsLabel[EntryID].Dispose();
+                    Mod_CharactersLabel[EntryID].Dispose();
                     Mod_ContainsLabel[EntryID].Dispose();
                     Mod_AuthorLabel[EntryID].Dispose();
                     Mod_RemoveButton[EntryID].Dispose();
@@ -278,6 +281,7 @@ namespace WSMM
                     Mod_EnabledCB[EntryID].Dispose();
                     Mod_Panel[EntryID].Dispose();
                     Mod_WLMMPath[EntryID] = string.Empty;
+                    Mod_Categories[EntryID] = string.Empty;
 
                     AddChange();
                 }
@@ -952,6 +956,8 @@ namespace WSMM
             string ModVersion = string.Empty;
             string SupportedVersions = string.Empty;
             string ModURL = string.Empty;
+            string Categories = string.Empty;
+            string Characters = string.Empty;
             int PakCount = 0;
             int AutoModCount = 0;
 
@@ -970,10 +976,20 @@ namespace WSMM
                 else if (meta.StartsWith("SupportedWLVersions"))
                 {
                     SupportedVersions = GetSlice(meta, "=", 1);
+                    SupportedVersions = SupportedVersions.Replace(",", ", ");
                 }
                 else if (meta.StartsWith("ModURL"))
                 {
                     ModURL = GetSlice(meta, "=", 1);
+                }
+                else if (meta.StartsWith("Categories"))
+                {
+                    Categories = GetSlice(meta, "=", 1);
+                }
+                else if (meta.StartsWith("Characters"))
+                {
+                    Characters = GetSlice(meta, "=", 1);
+                    Characters = Characters.Replace(",", ", ");
                 }
             }
 
@@ -986,6 +1002,7 @@ namespace WSMM
 
             int EntryID = Mod_CurrentEntryID;
 
+            Mod_Categories[EntryID] = Categories;
             //Read WLMM.dat
             if (File.Exists(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\WLMM.dat"))
             {
@@ -1153,12 +1170,21 @@ namespace WSMM
                 Mod_EnabledCB[EntryID].Enabled = false;
                 Mod_EnabledCB[EntryID].Checked = false;
             }
+            //Label[] Mod_CharactersLabel = new Label[50];
+            Mod_CharactersLabel[EntryID] = new Label();
+            Mod_CharactersLabel[EntryID].BackColor = System.Drawing.Color.FromArgb(32, 34, 81);
+            Mod_CharactersLabel[EntryID].ForeColor = System.Drawing.SystemColors.GradientActiveCaption;
+            Mod_CharactersLabel[EntryID].Font = new Font(Mod_NameLabel[EntryID].Font.FontFamily, 10);
+            Mod_CharactersLabel[EntryID].Text = Characters;
+            Mod_CharactersLabel[EntryID].AutoSize = true;
+            Mod_CharactersLabel[EntryID].Location = new Point(117, 54);
 
             Mod_Panel[EntryID].Controls.Add(Mod_Icon[EntryID]);
             Mod_Panel[EntryID].Controls.Add(Mod_NameLabel[EntryID]);
             Mod_Panel[EntryID].Controls.Add(Mod_ErrorLabel[EntryID]);
             Mod_Panel[EntryID].Controls.Add(Mod_VersionLabel[EntryID]);
             Mod_Panel[EntryID].Controls.Add(Mod_SupportedVersionsLabel[EntryID]);
+            Mod_Panel[EntryID].Controls.Add(Mod_CharactersLabel[EntryID]);
             Mod_Panel[EntryID].Controls.Add(Mod_ContainsLabel[EntryID]);
             Mod_Panel[EntryID].Controls.Add(Mod_AuthorLabel[EntryID]);
             Mod_Panel[EntryID].Controls.Add(Mod_RemoveButton[EntryID]);
@@ -1236,6 +1262,7 @@ namespace WSMM
                 Mod_ErrorLabel[EntryID].Dispose();
                 Mod_VersionLabel[EntryID].Dispose();
                 Mod_SupportedVersionsLabel[EntryID].Dispose();
+                Mod_CharactersLabel[EntryID].Dispose();
                 Mod_ContainsLabel[EntryID].Dispose();
                 Mod_AuthorLabel[EntryID].Dispose();
                 Mod_RemoveButton[EntryID].Dispose();
@@ -1245,6 +1272,7 @@ namespace WSMM
                 Mod_EnabledCB[EntryID].Dispose();
                 Mod_Panel[EntryID].Dispose();
                 Mod_WLMMPath[EntryID] = string.Empty;
+                Mod_Categories[EntryID] = string.Empty;
 
                 Mod_Entries.Remove(EntryID);
 
@@ -1313,6 +1341,7 @@ namespace WSMM
                     Mod_ErrorLabel[EntryID].Dispose();
                     Mod_VersionLabel[EntryID].Dispose();
                     Mod_SupportedVersionsLabel[EntryID].Dispose();
+                    Mod_CharactersLabel[EntryID].Dispose();
                     Mod_ContainsLabel[EntryID].Dispose();
                     Mod_AuthorLabel[EntryID].Dispose();
                     Mod_RemoveButton[EntryID].Dispose();
@@ -1322,6 +1351,7 @@ namespace WSMM
                     Mod_EnabledCB[EntryID].Dispose();
                     Mod_Panel[EntryID].Dispose();
                     Mod_WLMMPath[EntryID] = string.Empty;
+                    Mod_Categories[EntryID] = string.Empty;
 
                     AddChange();
                 }
