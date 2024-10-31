@@ -493,6 +493,7 @@ namespace WSMM
                 ZipFile.CreateFromDirectory(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Staging", CurrentlyEditing_Path);
 
                 // If this path is in Active Mods, reload that mod.
+                Thread.Sleep(500); // Let the compression fully finish.
                 ParentForm.ReloadAffectedMod(CurrentlyEditing_Path);
             }
             
@@ -537,110 +538,113 @@ namespace WSMM
             }
             if (openFileDialog3.ShowDialog() == DialogResult.OK)
             {
-                if (Directory.Exists(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp"))
-                {
-                    Directory.Delete(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp", true);
-                }
-                Directory.CreateDirectory(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp");
-                //Directory.Delete(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Staging", true);
-                //Directory.CreateDirectory(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Staging");
-                ZipFile.ExtractToDirectory(openFileDialog3.FileName, Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp");
-                CurrentlyEditing_Path = openFileDialog3.FileName;
-                CurrentlyEditing_LL.Text = openFileDialog3.FileName;
-                StopEditing_LL.Show();
-                foreach (string pak in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\Paks", "*.pak"))
-                {
-                    PakList.Items.Add(Path.GetFileName(pak), 0);
-                    PakList.Items[PakList.Items.Count - 1].Tag = pak;
-                }
+                LoadMod(openFileDialog3.FileName);
+            }
+        }
 
-                foreach (string AMs in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\AutoMod", "*.txt"))
-                {
-                    AutoModList.Items.Add(Path.GetFileName(AMs), 1);
-                    AutoModList.Items[AutoModList.Items.Count - 1].Tag = AMs;
-                }
-                foreach (string AMs in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\AutoMod", "*.collection"))
-                {
-                    AutoModList.Items.Add(Path.GetFileName(AMs), 2);
-                    AutoModList.Items[AutoModList.Items.Count - 1].Tag = AMs;
-                }
+        public void LoadMod(string ModPath)
+        {
+            if (Directory.Exists(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp"))
+            {
+                Directory.Delete(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp", true);
+            }
+            Directory.CreateDirectory(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp");
+            ZipFile.ExtractToDirectory(ModPath, Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp");
+            CurrentlyEditing_Path = ModPath;
+            CurrentlyEditing_LL.Text = ModPath;
+            StopEditing_LL.Show();
+            foreach (string pak in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\Paks", "*.pak"))
+            {
+                PakList.Items.Add(Path.GetFileName(pak), 0);
+                PakList.Items[PakList.Items.Count - 1].Tag = pak;
+            }
 
-                //Name Author Versions Version URL Icon
-                //Read MetaData
-                string SupVers = string.Empty;
-                string[] MetaData = File.ReadAllLines(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\Metadata.dat");
-                foreach (string meta in MetaData)
-                {
-                    if (meta.StartsWith("ModAuthor"))
-                    {
-                        ModAuthor_TB.Text = GetSlice(meta, "=", 1);
-                    }
-                    else if (meta.StartsWith("ModName"))
-                    {
-                        ModName_TB.Text = GetSlice(meta, "=", 1);
-                    }
-                    else if (meta.StartsWith("ModVersion"))
-                    {
-                        ModVersion_TB.Text = GetSlice(meta, "=", 1);
-                    }
-                    else if (meta.StartsWith("SupportedWLVersions"))
-                    {
-                        SupVers = GetSlice(meta, "=", 1);
-                    }
-                    else if (meta.StartsWith("ModURL"))
-                    {
-                        ModURL_TB.Text = GetSlice(meta, "=", 1);
-                    }
-                }
+            foreach (string AMs in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\AutoMod", "*.txt"))
+            {
+                AutoModList.Items.Add(Path.GetFileName(AMs), 1);
+                AutoModList.Items[AutoModList.Items.Count - 1].Tag = AMs;
+            }
+            foreach (string AMs in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\AutoMod", "*.collection"))
+            {
+                AutoModList.Items.Add(Path.GetFileName(AMs), 2);
+                AutoModList.Items[AutoModList.Items.Count - 1].Tag = AMs;
+            }
 
-                //Clear Supported Versions
-                for (int i = 0; i <= (SupportedWLVersions_CLB.Items.Count - 1); i++)
+            //Name Author Versions Version URL Icon
+            //Read MetaData
+            string SupVers = string.Empty;
+            string[] MetaData = File.ReadAllLines(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\Metadata.dat");
+            foreach (string meta in MetaData)
+            {
+                if (meta.StartsWith("ModAuthor"))
                 {
-                    SupportedWLVersions_CLB.SetItemChecked(i, false);
+                    ModAuthor_TB.Text = GetSlice(meta, "=", 1);
                 }
+                else if (meta.StartsWith("ModName"))
+                {
+                    ModName_TB.Text = GetSlice(meta, "=", 1);
+                }
+                else if (meta.StartsWith("ModVersion"))
+                {
+                    ModVersion_TB.Text = GetSlice(meta, "=", 1);
+                }
+                else if (meta.StartsWith("SupportedWLVersions"))
+                {
+                    SupVers = GetSlice(meta, "=", 1);
+                }
+                else if (meta.StartsWith("ModURL"))
+                {
+                    ModURL_TB.Text = GetSlice(meta, "=", 1);
+                }
+            }
 
-                if (SupVers.Contains("All Versions"))
+            //Clear Supported Versions
+            for (int i = 0; i <= (SupportedWLVersions_CLB.Items.Count - 1); i++)
+            {
+                SupportedWLVersions_CLB.SetItemChecked(i, false);
+            }
+
+            if (SupVers.Contains("All Versions"))
+            {
+                SupportedWLVersions_CLB.SetItemChecked(SupportedWLVersions_CLB.Items.Count - 1, true);
+            }
+            else
+            {
+                if (SupVers.Contains(","))
                 {
-                    SupportedWLVersions_CLB.SetItemChecked(SupportedWLVersions_CLB.Items.Count - 1, true);
-                }
-                else
-                {
-                    if (SupVers.Contains(","))
+                    string[] SplitSupVers = SupVers.Split(",");
+                    foreach (string s in SplitSupVers)
                     {
-                        string[] SplitSupVers = SupVers.Split(",");
-                        foreach (string s in SplitSupVers)
-                        {
-                            string TrimmedS = s.Trim();
-                            for (int i = 0; i <= (SupportedWLVersions_CLB.Items.Count - 1); i++)
-                            {
-                                if (SupportedWLVersions_CLB.Items[i].ToString() == TrimmedS)
-                                {
-                                    SupportedWLVersions_CLB.SetItemChecked(i, true);
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
+                        string TrimmedS = s.Trim();
                         for (int i = 0; i <= (SupportedWLVersions_CLB.Items.Count - 1); i++)
                         {
-                            if (SupportedWLVersions_CLB.Items[i].ToString() == SupVers)
+                            if (SupportedWLVersions_CLB.Items[i].ToString() == TrimmedS)
                             {
                                 SupportedWLVersions_CLB.SetItemChecked(i, true);
                             }
                         }
                     }
-
-                }
-                if (File.Exists(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\Icon.png"))
-                {
-                    ModIconPath_TB.Text = Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\Icon.png";
-                    ModIcon_Preview.ImageLocation = ModIconPath_TB.Text;
                 }
                 else
                 {
-                    ModIconPath_TB.Text = "Default";
+                    for (int i = 0; i <= (SupportedWLVersions_CLB.Items.Count - 1); i++)
+                    {
+                        if (SupportedWLVersions_CLB.Items[i].ToString() == SupVers)
+                        {
+                            SupportedWLVersions_CLB.SetItemChecked(i, true);
+                        }
+                    }
                 }
+
+            }
+            if (File.Exists(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\Icon.png"))
+            {
+                ModIconPath_TB.Text = Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\Icon.png";
+                ModIcon_Preview.ImageLocation = ModIconPath_TB.Text;
+            }
+            else
+            {
+                ModIconPath_TB.Text = "Default";
             }
         }
 

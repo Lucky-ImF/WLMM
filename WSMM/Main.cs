@@ -53,6 +53,7 @@ namespace WSMM
         Label[] Mod_AuthorLabel = new Label[100];
         LinkLabel[] Mod_RemoveButton = new LinkLabel[100];
         LinkLabel[] Mod_ReloadButton = new LinkLabel[100];
+        LinkLabel[] Mod_EditButton = new LinkLabel[100];
         LinkLabel[] Mod_LinkButton = new LinkLabel[100];
         CheckBox[] Mod_EnabledCB = new CheckBox[100];
         string[] Mod_WLMMPath = new string[100];
@@ -272,6 +273,7 @@ namespace WSMM
                     Mod_AuthorLabel[EntryID].Dispose();
                     Mod_RemoveButton[EntryID].Dispose();
                     Mod_ReloadButton[EntryID].Dispose();
+                    Mod_EditButton[EntryID].Dispose();
                     Mod_LinkButton[EntryID].Dispose();
                     Mod_EnabledCB[EntryID].Dispose();
                     Mod_Panel[EntryID].Dispose();
@@ -783,7 +785,6 @@ namespace WSMM
             File.WriteAllText(Application.StartupPath + @"System\" + LoadedWLVersion + @"_BuildSettings.ini", SaveFile);
         }
 
-
         private string GetSlice(string Txt, string Delimiter, int slice)
         {
             string[] TempArray = Txt.Split(Delimiter);
@@ -843,13 +844,6 @@ namespace WSMM
         {
             foreach (string Mod in Mods)
             {
-                //Copy .wlmm to Loaded
-                //ProgressInfo_Label.Invoke((System.Windows.Forms.MethodInvoker)delegate
-                //{
-                //    ProgressInfo_Label.Text = "Copying " + Path.GetFileName(Mod) + "...";
-                //    ProgressInfo_Label.Left = ProgressPanel.Width / 2 - ProgressInfo_Label.Width / 2;
-                //});
-                //File.Copy(Mod, Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + Path.GetFileName(Mod), true);
                 //Unzip to Loaded\Mod Name
                 ProgressInfo_Label.Invoke((System.Windows.Forms.MethodInvoker)delegate
                 {
@@ -901,43 +895,6 @@ namespace WSMM
                 Mod_Entries.Clear();
                 Mod_CurrentEntryID = 0;
             });
-
-            //Get all .wlmm in Loaded
-            //foreach (string file in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded", "*.wlmm"))
-            //{
-            //    string ModName = Path.GetFileNameWithoutExtension(file);
-
-            //    //Create Integrity.dat if missing
-            //    if (File.Exists(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\Integrity.dat") == false)
-            //    {
-            //        //Calculate hash for each .pak
-            //        string Hashes = string.Empty;
-            //        foreach (string pak in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\Paks", "*.pak"))
-            //        {
-            //            this.Invoke((System.Windows.Forms.MethodInvoker)delegate
-            //            {
-            //                ProgressPanel.Show();
-            //                ProgressTitle_Label.Text = "Patching...";
-            //                ProgressInfo_Label.Text = "Calculating MD5 hash for " + Path.GetFileName(pak) + "...";
-            //                ProgressInfo_Label.Left = ProgressPanel.Width / 2 - ProgressInfo_Label.Width / 2;
-            //            });
-            //            string Md5Hash = CalculateMD5(pak);
-            //            Hashes += Path.GetFileName(pak) + " = " + Md5Hash + "\n";
-            //        }
-            //        Hashes = Hashes.Trim();
-            //        File.WriteAllText(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\Integrity.dat", Hashes);
-            //        ProgressPanel.Invoke((System.Windows.Forms.MethodInvoker)delegate
-            //        {
-            //            ProgressPanel.Hide();
-            //        });
-            //    }
-
-            //    CreateModEntry(ModName);
-            //    NoModsFound_Label.Invoke((System.Windows.Forms.MethodInvoker)delegate
-            //    {
-            //        NoModsFound_Label.Hide();
-            //    });
-            //}
 
             // Get all folders in Loaded
             foreach (string ModPath in Directory.EnumerateDirectories(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded", "*"))
@@ -1090,7 +1047,7 @@ namespace WSMM
             Mod_ContainsLabel[EntryID].Font = new Font(Mod_NameLabel[EntryID].Font.FontFamily, 10);
             Mod_ContainsLabel[EntryID].Text = "| Paks: " + PakCount.ToString() + " | AutoMod: " + AutoModCount.ToString() + " |";
             Mod_ContainsLabel[EntryID].AutoSize = true;
-            Mod_ContainsLabel[EntryID].Location = new Point(294, 83);
+            Mod_ContainsLabel[EntryID].Location = new Point(334, 83);
             //Label[] Mod_AuthorLabel = new Label[50];
             Mod_AuthorLabel[EntryID] = new Label();
             Mod_AuthorLabel[EntryID].BackColor = System.Drawing.Color.FromArgb(32, 34, 81);
@@ -1129,13 +1086,32 @@ namespace WSMM
             {
                 Mod_ReloadButton[EntryID].Enabled = false;
             }
+            //LinkLabel[] Mod_EditButton = new LinkLabel[50];
+            Mod_EditButton[EntryID] = new LinkLabel();
+            Mod_EditButton[EntryID].Text = "Edit";
+            Mod_EditButton[EntryID].LinkColor = System.Drawing.SystemColors.Highlight;
+            Mod_EditButton[EntryID].VisitedLinkColor = System.Drawing.SystemColors.Highlight;
+            Mod_EditButton[EntryID].ActiveLinkColor = System.Drawing.SystemColors.ActiveCaption;
+            Mod_EditButton[EntryID].Location = new System.Drawing.Point(255, 80);
+            Mod_EditButton[EntryID].Tag = EntryID;
+            Mod_EditButton[EntryID].Click += Mod_EditButton_Click;
+            Mod_EditButton[EntryID].AutoSize = true;
+            Mod_EditButton[EntryID].Font = new Font(Mod_EditButton[EntryID].Font.FontFamily, 12);
+            if (Mod_WLMMPath[EntryID] != string.Empty && File.Exists(Mod_WLMMPath[EntryID]))
+            {
+                Mod_EditButton[EntryID].Enabled = true;
+            }
+            else
+            {
+                Mod_EditButton[EntryID].Enabled = false;
+            }
             //LinkLabel[] Mod_LinkButton = new LinkLabel[50];
             Mod_LinkButton[EntryID] = new LinkLabel();
             Mod_LinkButton[EntryID].Text = "Link";
             Mod_LinkButton[EntryID].LinkColor = System.Drawing.SystemColors.Highlight;
             Mod_LinkButton[EntryID].VisitedLinkColor = System.Drawing.SystemColors.Highlight;
             Mod_LinkButton[EntryID].ActiveLinkColor = System.Drawing.SystemColors.ActiveCaption;
-            Mod_LinkButton[EntryID].Location = new System.Drawing.Point(503, 80);
+            Mod_LinkButton[EntryID].Location = new System.Drawing.Point(517, 80);
             Mod_LinkButton[EntryID].Tag = ModURL;
             Mod_LinkButton[EntryID].Click += Mod_LinkButton_Click;
             Mod_LinkButton[EntryID].AutoSize = true;
@@ -1187,6 +1163,7 @@ namespace WSMM
             Mod_Panel[EntryID].Controls.Add(Mod_AuthorLabel[EntryID]);
             Mod_Panel[EntryID].Controls.Add(Mod_RemoveButton[EntryID]);
             Mod_Panel[EntryID].Controls.Add(Mod_ReloadButton[EntryID]);
+            Mod_Panel[EntryID].Controls.Add(Mod_EditButton[EntryID]);
             Mod_Panel[EntryID].Controls.Add(Mod_LinkButton[EntryID]);
             Mod_Panel[EntryID].Controls.Add(Mod_EnabledCB[EntryID]);
 
@@ -1263,6 +1240,7 @@ namespace WSMM
                 Mod_AuthorLabel[EntryID].Dispose();
                 Mod_RemoveButton[EntryID].Dispose();
                 Mod_ReloadButton[EntryID].Dispose();
+                Mod_EditButton[EntryID].Dispose();
                 Mod_LinkButton[EntryID].Dispose();
                 Mod_EnabledCB[EntryID].Dispose();
                 Mod_Panel[EntryID].Dispose();
@@ -1297,6 +1275,17 @@ namespace WSMM
             AddMods(ValidMods);
         }
 
+        private void Mod_EditButton_Click(object sender, EventArgs e)
+        {
+            LinkLabel Casted = sender as LinkLabel;
+            int EntryID = int.Parse(Casted.Tag.ToString());
+
+            ModCreator ModCreator_Form = new ModCreator();
+            ModCreator_Form.Show();
+            ModCreator_Form.TransferInfo(LoadedWLPath, LoadedWLVersion, LoadedUEVersion, this);
+            ModCreator_Form.LoadMod(Mod_WLMMPath[EntryID]);
+        }
+
         private void ModEnabledCB_CheckStateChanged(object sender, EventArgs e)
         {
             CheckBox Casted = sender as CheckBox;
@@ -1328,6 +1317,7 @@ namespace WSMM
                     Mod_AuthorLabel[EntryID].Dispose();
                     Mod_RemoveButton[EntryID].Dispose();
                     Mod_ReloadButton[EntryID].Dispose();
+                    Mod_EditButton[EntryID].Dispose();
                     Mod_LinkButton[EntryID].Dispose();
                     Mod_EnabledCB[EntryID].Dispose();
                     Mod_Panel[EntryID].Dispose();
@@ -1473,78 +1463,6 @@ namespace WSMM
                     BuildModProgress_PB.Value++;
                 });
             }
-
-            //Get all .wlmm in Loaded
-            //foreach (string file in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded", "*.wlmm"))
-            //{
-            //    string ModName = Path.GetFileNameWithoutExtension(file);
-            //    BuildLog += "+ " + ModName + "\n";
-            //    string isEnabled = File.ReadAllText(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\Enabled.dat");
-            //    if (isEnabled == "Checked")
-            //    {
-            //        try
-            //        {
-            //            //Copy .paks to Game
-            //            foreach (string pak in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\Paks", "*.pak"))
-            //            {
-            //                BuildLog += "+ + " + Path.GetFileName(pak) + "\n";
-            //                File.Copy(pak, LoadedWLPath + @"\WildLifeC\Content\Paks\" + Path.GetFileName(pak), true);
-            //                ActiveMods.Add(Path.GetFileName(pak));
-            //            }
-
-            //            //Copy .txt and .collection to AutoMod
-            //            foreach (string AMFile in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\AutoMod", "*.txt"))
-            //            {
-            //                BuildLog += "+ + " + Path.GetFileName(AMFile) + "\n";
-            //                File.Copy(AMFile, Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\AutoMod\" + Path.GetFileName(AMFile), true);
-            //                HasAutoMod = true;
-            //            }
-            //            foreach (string AMFile in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\AutoMod", "*.collection"))
-            //            {
-            //                BuildLog += "+ + " + Path.GetFileName(AMFile) + "\n";
-            //                File.Copy(AMFile, Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\AutoMod\" + Path.GetFileName(AMFile), true);
-            //                HasAutoMod = true;
-            //            }
-
-            //            //Read Integrity.dat
-            //            if (BS_VerifyFI_CB.Checked)
-            //            {
-            //                if (File.Exists(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\Integrity.dat"))
-            //                {
-            //                    string[] Integrity = File.ReadAllLines(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\Integrity.dat");
-            //                    foreach (string hash in Integrity)
-            //                    {
-            //                        if (HashDict.ContainsKey(GetSlice(hash, "=", 0)) == false)
-            //                        {
-            //                            HashDict.Add(GetSlice(hash, "=", 0), GetSlice(hash, "=", 1));
-            //                        }
-            //                        else
-            //                        {
-            //                            BuildLog += "+ - " + GetSlice(hash, "=", 0) + " already exists in HashDict.\n";
-            //                        }
-            //                    }
-            //                }
-            //            }
-            //        }
-            //        catch (Exception ex)
-            //        {
-            //            FileCopyMessage = ex.Message;
-            //            BuildLog += "+ - Failed deploying mod: " + ModName + "\n";
-            //            BuildLog += "+ - ex: " + FileCopyMessage + "\n";
-            //            MessageBox.Show("Failed deploying mod: " + ModName + "\nCheck build log for detailed info.", "Wild Life Mod Manager");
-            //            ResetFromBuilding();
-            //            return;
-            //        }
-            //    }
-            //    else
-            //    {
-            //        BuildLog += "+ - Disabled\n";
-            //    }
-            //    BuildModProgress_PB.Invoke((System.Windows.Forms.MethodInvoker)delegate
-            //    {
-            //        BuildModProgress_PB.Value++;
-            //    });
-            //}
 
             //Check for files in AutoMod folder
             if (HasAutoMod)
@@ -3095,12 +3013,7 @@ namespace WSMM
             TransferModsFromUEV_TB.Text = GetUEVersion(TransferModsFrom_CB.Text);
             TransferModsList_LB.Items.Clear();
             TransferMods_Button.Enabled = false;
-            // Load all Loaded .wlmm's
-            //foreach (string Wlmm in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + TransferModsFrom_CB.Text + @"\Loaded", "*.wlmm"))
-            //{
-            //    TransferModsList_LB.Items.Add(Path.GetFileNameWithoutExtension(Wlmm));
-            //}
-            
+
             // Load all folders in Loaded
             foreach (string ModPath in Directory.EnumerateDirectories(Application.StartupPath + @"Mods\" + TransferModsFrom_CB.Text + @"\Loaded", "*"))
             {
@@ -3120,10 +3033,7 @@ namespace WSMM
         {
             // Add all loaded wlmm's to active
             List<string> ValidMods = new List<string>();
-            //foreach (string Wlmm in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + TransferModsFrom_CB.Text + @"\Loaded", "*.wlmm"))
-            //{
-            //    ValidMods.Add(Wlmm);
-            //}
+
             foreach (string ModPath in Directory.EnumerateDirectories(Application.StartupPath + @"Mods\" + TransferModsFrom_CB.Text + @"\Loaded", "*"))
             {
                 string ModName = Path.GetFileName(ModPath);
@@ -3141,17 +3051,6 @@ namespace WSMM
 
             if (ValidMods.Count > 0)
             {
-                //ProgressPanel.Show();
-                //ProgressTitle_Label.Text = "Loading Mods...";
-                //ProgressInfo_Label.Text = "Initializing...";
-                //BuildModProgress_PB.Value = 0;
-                //BuildModProgress_PB.Maximum = ValidMods.Count;
-
-                //// Create a thread and call a background method
-                //Thread backgroundThread = new Thread(() => AddMods(ValidMods));
-                //// Start thread
-                //backgroundThread.Start();
-
                 foreach (string ModPath in ValidMods)
                 {
                     CopyDirectory(ModPath, Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + Path.GetFileName(ModPath));
@@ -3215,11 +3114,7 @@ namespace WSMM
             {
                 TransferModsList_LB.Items.Clear();
                 TransferMods_Button.Enabled = false;
-                // Load all Loaded .wlmm's
-                //foreach (string Wlmm in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + TransferModsFrom_CB.Text + @"\Loaded", "*.wlmm"))
-                //{
-                //    TransferModsList_LB.Items.Add(Path.GetFileNameWithoutExtension(Wlmm));
-                //}
+
                 // Load all folders in Loaded
                 foreach (string ModPath in Directory.EnumerateDirectories(Application.StartupPath + @"Mods\" + TransferModsFrom_CB.Text + @"\Loaded", "*"))
                 {
@@ -3244,25 +3139,7 @@ namespace WSMM
             {
                 TransferModsList_LB.Items.Clear();
                 TransferMods_Button.Enabled = false;
-                // Load all Loaded .wlmm's
-                //foreach (string Wlmm in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + TransferModsFrom_CB.Text + @"\Loaded", "*.wlmm"))
-                //{
-                //    //Read MetaData
-                //    string SupVers = string.Empty;
-                //    string[] MetaData = File.ReadAllLines(Application.StartupPath + @"Mods\" + TransferModsFrom_CB.Text + @"\Loaded\" + Path.GetFileNameWithoutExtension(Wlmm) + @"\Metadata.dat");
-                //    foreach (string meta in MetaData)
-                //    {
-                //        if (meta.StartsWith("SupportedWLVersions"))
-                //        {
-                //            SupVers = GetSlice(meta, "=", 1);
-                //            if (isVersionValid(SupVers))
-                //            {
-                //                TransferModsList_LB.Items.Add(Path.GetFileNameWithoutExtension(Wlmm));
-                //                break;
-                //            }
-                //        }
-                //    }
-                //}
+
                 // Load all folders in Loaded
                 foreach (string ModPath in Directory.EnumerateDirectories(Application.StartupPath + @"Mods\" + TransferModsFrom_CB.Text + @"\Loaded", "*"))
                 {

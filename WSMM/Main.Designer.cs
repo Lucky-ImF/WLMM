@@ -53,6 +53,7 @@
             EnableMods_Button = new Button();
             ModFlow_Panel = new FlowLayoutPanel();
             panel1 = new Panel();
+            linkLabel3 = new LinkLabel();
             label17 = new Label();
             linkLabel2 = new LinkLabel();
             label6 = new Label();
@@ -134,7 +135,7 @@
             TransferModsFrom_CB = new ComboBox();
             label26 = new Label();
             TransferModsOpen_Button = new Button();
-            linkLabel3 = new LinkLabel();
+            linkLabel4 = new LinkLabel();
             TitlePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
@@ -473,6 +474,7 @@
             // panel1
             // 
             panel1.BorderStyle = BorderStyle.Fixed3D;
+            panel1.Controls.Add(linkLabel4);
             panel1.Controls.Add(linkLabel3);
             panel1.Controls.Add(label17);
             panel1.Controls.Add(linkLabel2);
@@ -491,12 +493,26 @@
             panel1.TabIndex = 0;
             panel1.Visible = false;
             // 
+            // linkLabel3
+            // 
+            linkLabel3.ActiveLinkColor = Color.MistyRose;
+            linkLabel3.AutoSize = true;
+            linkLabel3.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            linkLabel3.LinkColor = SystemColors.Highlight;
+            linkLabel3.Location = new Point(191, 80);
+            linkLabel3.Name = "linkLabel3";
+            linkLabel3.Size = new Size(58, 21);
+            linkLabel3.TabIndex = 11;
+            linkLabel3.TabStop = true;
+            linkLabel3.Text = "Reload";
+            linkLabel3.VisitedLinkColor = Color.LightCoral;
+            // 
             // label17
             // 
             label17.AutoSize = true;
             label17.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label17.ForeColor = SystemColors.GradientActiveCaption;
-            label17.Location = new Point(294, 83);
+            label17.Location = new Point(334, 83);
             label17.Name = "label17";
             label17.Size = new Size(142, 17);
             label17.TabIndex = 10;
@@ -508,7 +524,7 @@
             linkLabel2.AutoSize = true;
             linkLabel2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             linkLabel2.LinkColor = SystemColors.Highlight;
-            linkLabel2.Location = new Point(503, 80);
+            linkLabel2.Location = new Point(517, 80);
             linkLabel2.Name = "linkLabel2";
             linkLabel2.Size = new Size(39, 21);
             linkLabel2.TabIndex = 9;
@@ -1539,19 +1555,19 @@
             TransferModsOpen_Button.UseVisualStyleBackColor = false;
             TransferModsOpen_Button.Click += TransferModsOpen_Button_Click;
             // 
-            // linkLabel3
+            // linkLabel4
             // 
-            linkLabel3.ActiveLinkColor = Color.MistyRose;
-            linkLabel3.AutoSize = true;
-            linkLabel3.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            linkLabel3.LinkColor = SystemColors.Highlight;
-            linkLabel3.Location = new Point(191, 80);
-            linkLabel3.Name = "linkLabel3";
-            linkLabel3.Size = new Size(58, 21);
-            linkLabel3.TabIndex = 11;
-            linkLabel3.TabStop = true;
-            linkLabel3.Text = "Reload";
-            linkLabel3.VisitedLinkColor = Color.LightCoral;
+            linkLabel4.ActiveLinkColor = Color.MistyRose;
+            linkLabel4.AutoSize = true;
+            linkLabel4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            linkLabel4.LinkColor = SystemColors.Highlight;
+            linkLabel4.Location = new Point(255, 80);
+            linkLabel4.Name = "linkLabel4";
+            linkLabel4.Size = new Size(36, 21);
+            linkLabel4.TabIndex = 12;
+            linkLabel4.TabStop = true;
+            linkLabel4.Text = "Edit";
+            linkLabel4.VisitedLinkColor = Color.LightCoral;
             // 
             // Main
             // 
@@ -1743,5 +1759,6 @@
         private RadioButton TransferCompatMods_RB;
         private RadioButton TransferAllMods_RB;
         private LinkLabel linkLabel3;
+        private LinkLabel linkLabel4;
     }
 }
