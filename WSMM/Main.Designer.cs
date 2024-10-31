@@ -53,6 +53,7 @@
             EnableMods_Button = new Button();
             ModFlow_Panel = new FlowLayoutPanel();
             panel1 = new Panel();
+            label27 = new Label();
             linkLabel4 = new LinkLabel();
             linkLabel3 = new LinkLabel();
             label17 = new Label();
@@ -65,6 +66,7 @@
             label3 = new Label();
             pictureBox2 = new PictureBox();
             label2 = new Label();
+            button1 = new Button();
             BuildMods_Button = new Button();
             pictureBox1 = new PictureBox();
             ChangesMade_Label = new Label();
@@ -136,7 +138,6 @@
             TransferModsFrom_CB = new ComboBox();
             label26 = new Label();
             TransferModsOpen_Button = new Button();
-            label27 = new Label();
             TitlePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
@@ -465,6 +466,7 @@
             // 
             ModFlow_Panel.AutoScroll = true;
             ModFlow_Panel.Controls.Add(panel1);
+            ModFlow_Panel.Controls.Add(button1);
             ModFlow_Panel.Location = new Point(3, 35);
             ModFlow_Panel.Name = "ModFlow_Panel";
             ModFlow_Panel.Size = new Size(870, 625);
@@ -494,6 +496,17 @@
             panel1.Size = new Size(840, 115);
             panel1.TabIndex = 0;
             panel1.Visible = false;
+            // 
+            // label27
+            // 
+            label27.AutoSize = true;
+            label27.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label27.ForeColor = SystemColors.GradientActiveCaption;
+            label27.Location = new Point(117, 54);
+            label27.Name = "label27";
+            label27.Size = new Size(76, 17);
+            label27.TabIndex = 13;
+            label27.Text = "Maya,Tanya";
             // 
             // linkLabel4
             // 
@@ -639,6 +652,24 @@
             label2.Size = new Size(280, 30);
             label2.TabIndex = 1;
             label2.Text = "Dirty Body - Skin Mod UE 5.4";
+            // 
+            // button1
+            // 
+            button1.BackColor = Color.FromArgb(75, 68, 138);
+            button1.Enabled = false;
+            button1.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            button1.FlatStyle = FlatStyle.Flat;
+            button1.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button1.ForeColor = SystemColors.ActiveCaption;
+            button1.Image = Properties.Resources.ArrowSmall_R;
+            button1.ImageAlign = ContentAlignment.MiddleLeft;
+            button1.Location = new Point(3, 124);
+            button1.Name = "button1";
+            button1.Size = new Size(840, 37);
+            button1.TabIndex = 50;
+            button1.Text = "Outfit";
+            button1.TextImageRelation = TextImageRelation.ImageBeforeText;
+            button1.UseVisualStyleBackColor = false;
             // 
             // BuildMods_Button
             // 
@@ -1571,17 +1602,6 @@
             TransferModsOpen_Button.UseVisualStyleBackColor = false;
             TransferModsOpen_Button.Click += TransferModsOpen_Button_Click;
             // 
-            // label27
-            // 
-            label27.AutoSize = true;
-            label27.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label27.ForeColor = SystemColors.GradientActiveCaption;
-            label27.Location = new Point(117, 54);
-            label27.Name = "label27";
-            label27.Size = new Size(76, 17);
-            label27.TabIndex = 13;
-            label27.Text = "Maya,Tanya";
-            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1774,5 +1794,6 @@
         private LinkLabel linkLabel3;
         private LinkLabel linkLabel4;
         private Label label27;
+        private Button button1;
     }
 }

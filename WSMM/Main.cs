@@ -63,6 +63,12 @@ namespace WSMM
         List<int> Mod_Entries = new List<int>();
         int Mod_CurrentEntryID = 0;
 
+        System.Windows.Forms.Button[] Cat_Button = new System.Windows.Forms.Button[20];
+        FlowLayoutPanel[] Cat_Flow = new FlowLayoutPanel[20];
+        int Cat_CurrentEntryID = 0;
+        List<int> Cat_Entries = new List<int>();
+        
+
         public Main()
         {
             InitializeComponent();
@@ -890,6 +896,45 @@ namespace WSMM
             LoadMods();
         }
 
+        private FlowLayoutPanel GetCategoryFlow(string category)
+        {
+            int FoundID = 0;
+            foreach (int i in Cat_Entries)
+            {
+                if (Cat_Flow[i].Tag.ToString() == category)
+                {
+                    FoundID = i;
+                    break;
+                }
+            }
+            return Cat_Flow[FoundID];
+        }
+
+        private void CheckCategories()
+        {
+            foreach (int i in Cat_Entries)
+            {
+                if (Cat_Flow[i].Controls.Count == 0)
+                {
+                    this.Invoke((System.Windows.Forms.MethodInvoker)delegate
+                    {
+                        Cat_Flow[i].Hide();
+                        Cat_Button[i].Hide();
+                        Cat_Button[i].Image = Properties.Resources.ArrowSmall_R;
+                    });
+                }
+                else
+                {
+                    this.Invoke((System.Windows.Forms.MethodInvoker)delegate
+                    {
+                        Cat_Flow[i].Show();
+                        Cat_Button[i].Show();
+                        Cat_Button[i].Image = Properties.Resources.ArrowSmall_D;
+                    });
+                }
+            }
+        }
+
         private void LoadMods()
         {
             //Clear ModFlow
@@ -898,7 +943,55 @@ namespace WSMM
                 ModFlow_Panel.Controls.Clear();
                 Mod_Entries.Clear();
                 Mod_CurrentEntryID = 0;
+                Cat_CurrentEntryID = 0;
+                Cat_Entries.Clear();
             });
+
+            List<string> Cats = new List<string>();
+            Cats.Add("Outfit");
+            Cats.Add("Hair");
+            Cats.Add("Skin");
+            Cats.Add("Pubic Hair");
+            Cats.Add("Eyes");
+            Cats.Add("Eyeliner");
+            Cats.Add("Eyeshadow");
+            Cats.Add("Lipstick");
+            Cats.Add("Tanlines");
+            Cats.Add("Fur");
+            Cats.Add("Audio");
+            Cats.Add("Other");
+
+            // Create Categories
+            foreach (string cat in Cats)
+            {
+                Cat_Button[Cat_CurrentEntryID] = new System.Windows.Forms.Button();
+                Cat_Button[Cat_CurrentEntryID].Text = cat;
+                Cat_Button[Cat_CurrentEntryID].Size = new System.Drawing.Size(840, 37);
+                Cat_Button[Cat_CurrentEntryID].BackColor = Color.FromArgb(75, 68, 138);
+                Cat_Button[Cat_CurrentEntryID].FlatStyle = FlatStyle.Flat;
+                Cat_Button[Cat_CurrentEntryID].ForeColor = SystemColors.ActiveCaption;
+                Cat_Button[Cat_CurrentEntryID].Font = new Font(Cat_Button[Cat_CurrentEntryID].Font.FontFamily, 14, FontStyle.Bold);
+                Cat_Button[Cat_CurrentEntryID].ImageAlign = ContentAlignment.MiddleLeft;
+                Cat_Button[Cat_CurrentEntryID].Image = Properties.Resources.ArrowSmall_R;
+                Cat_Button[Cat_CurrentEntryID].TextImageRelation = TextImageRelation.ImageBeforeText;
+                Cat_Button[Cat_CurrentEntryID].Tag = Cat_CurrentEntryID;
+                Cat_Button[Cat_CurrentEntryID].Click += Cat_Button_Click;
+
+                Cat_Flow[Cat_CurrentEntryID] = new FlowLayoutPanel();
+                Cat_Flow[Cat_CurrentEntryID].AutoSize = true;
+                Cat_Flow[Cat_CurrentEntryID].Tag = cat;
+                Cat_Flow[Cat_CurrentEntryID].Visible = false;
+
+                ModFlow_Panel.Invoke((System.Windows.Forms.MethodInvoker)delegate
+                {
+                    ModFlow_Panel.Controls.Add(Cat_Button[Cat_CurrentEntryID]);
+                    ModFlow_Panel.Controls.Add(Cat_Flow[Cat_CurrentEntryID]);
+                });
+
+                Cat_Entries.Add(Cat_CurrentEntryID);
+                Cat_CurrentEntryID++;
+            }
+
 
             // Get all folders in Loaded
             foreach (string ModPath in Directory.EnumerateDirectories(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded", "*"))
@@ -940,10 +1033,17 @@ namespace WSMM
             // Conflict Check
             ConflictCheck();
 
+            CheckCategories();
+
             if (Mod_CurrentEntryID >= 101)
             {
                 MessageBox.Show("Mod limit reached.");
             }
+        }
+
+        private void Main_Click(object? sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void CreateModEntry(string ModName)
@@ -957,6 +1057,7 @@ namespace WSMM
             string SupportedVersions = string.Empty;
             string ModURL = string.Empty;
             string Categories = string.Empty;
+            string FirstCategory = string.Empty;
             string Characters = string.Empty;
             int PakCount = 0;
             int AutoModCount = 0;
@@ -1003,6 +1104,14 @@ namespace WSMM
             int EntryID = Mod_CurrentEntryID;
 
             Mod_Categories[EntryID] = Categories;
+            if (Categories.Contains(","))
+            {
+                FirstCategory = GetSlice(Categories, ",", 0);
+            }
+            else
+            {
+                FirstCategory = Categories;
+            }
             //Read WLMM.dat
             if (File.Exists(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\WLMM.dat"))
             {
@@ -1193,9 +1302,15 @@ namespace WSMM
             Mod_Panel[EntryID].Controls.Add(Mod_LinkButton[EntryID]);
             Mod_Panel[EntryID].Controls.Add(Mod_EnabledCB[EntryID]);
 
+            if (FirstCategory == string.Empty)
+            {
+                FirstCategory = "Other";
+            }
+
             ModFlow_Panel.Invoke((System.Windows.Forms.MethodInvoker)delegate
             {
-                ModFlow_Panel.Controls.Add(Mod_Panel[EntryID]);
+                //ModFlow_Panel.Controls.Add(Mod_Panel[EntryID]);
+                GetCategoryFlow(FirstCategory).Controls.Add(Mod_Panel[EntryID]);
                 Mod_Entries.Add(EntryID);
                 Mod_CurrentEntryID += 1;
                 AddChange();
@@ -1320,6 +1435,23 @@ namespace WSMM
             int EntryID = int.Parse(Casted.Tag.ToString());
             File.WriteAllText(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + Mod_NameLabel[EntryID].Text + @"\Enabled.dat", Casted.CheckState.ToString());
             AddChange();
+        }
+
+        private void Cat_Button_Click(object sender, EventArgs e)
+        {
+            System.Windows.Forms.Button Casted = sender as System.Windows.Forms.Button;
+            int EntryID = int.Parse(Casted.Tag.ToString());
+            
+            if (Cat_Flow[EntryID].Visible == false)
+            {
+                Cat_Flow[EntryID].Show();
+                Cat_Button[EntryID].Image = Properties.Resources.ArrowSmall_D;
+            }
+            else
+            {
+                Cat_Flow[EntryID].Hide();
+                Cat_Button[EntryID].Image = Properties.Resources.ArrowSmall_R;
+            }
         }
 
         private void RemoveMods_Button_Click(object sender, EventArgs e)

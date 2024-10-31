@@ -63,6 +63,26 @@ namespace WSMM.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ArrowSmall_D {
+            get {
+                object obj = ResourceManager.GetObject("ArrowSmall_D", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ArrowSmall_R {
+            get {
+                object obj = ResourceManager.GetObject("ArrowSmall_R", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap AutoMod_Icon {
             get {
                 object obj = ResourceManager.GetObject("AutoMod_Icon", resourceCulture);
