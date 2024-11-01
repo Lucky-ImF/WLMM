@@ -318,7 +318,7 @@ namespace WSMM
             Mod_VersionLabel[EntryID].Text = ModVersion;
             Mod_VersionLabel[EntryID].AutoSize = false;
             Mod_VersionLabel[EntryID].Size = new Size(81, 28);
-            Mod_VersionLabel[EntryID].TextAlign = ContentAlignment.MiddleRight; 
+            Mod_VersionLabel[EntryID].TextAlign = ContentAlignment.MiddleRight;
             Graphics g = CreateGraphics();
             SizeF LabelSize = g.MeasureString(Mod_VersionLabel[EntryID].Text, Mod_VersionLabel[EntryID].Font);
             Mod_VersionLabel[EntryID].Location = new Point(177, 283);
@@ -496,8 +496,8 @@ namespace WSMM
             //ModVersion_Label.Left = ModPanel_Panel.Width / 2 - ModVersion_Label.Width / 2;
             //SupportedVersions_Label.Left = ModPanel_Panel.Width / 2 - SupportedVersions_Label.Width / 2;
             //ModLink_LL.Left = ModPanel_Panel.Width / 2 - ModLink_LL.Width / 2;
-            //ModLastUpdate_Label.Left = ModPanel_Panel.Width / 2 - LastUpdate_Label.Width / 2;
-            //ModFileSize_Label.Left = ModPanel_Panel.Width / 2 - ModFileSize_Label.Width / 2;
+            ModLastUpdate_Label.Left = ModPanel_Panel.Width / 2 - LastUpdate_Label.Width / 2;
+            ModFileSize_Label.Left = ModPanel_Panel.Width / 2 - ModFileSize_Label.Width / 2;
 
             LoadedModScreenshots.Clear();
             LoadedModScreenshots.Add(ModIcon);
@@ -654,7 +654,7 @@ namespace WSMM
                 {
                     Mod_Panel[ModID].Show();
                 }
-                else if(Filter_CB.Text == "All" && Mod_NameLabel[ModID].Text.ToLower().Contains(Search_TB.Text.ToLower()))
+                else if (Filter_CB.Text == "All" && Mod_NameLabel[ModID].Text.ToLower().Contains(Search_TB.Text.ToLower()))
                 {
                     Mod_Panel[ModID].Show();
                 }
@@ -668,6 +668,21 @@ namespace WSMM
         private void Search_TB_TextChanged(object sender, EventArgs e)
         {
             ApplyFilter();
+        }
+
+        private void Screenshot_Click(object sender, EventArgs e)
+        {
+            Process.Start("explorer", Screenshot.ImageLocation);
+        }
+
+        private void Screenshot_MouseEnter(object sender, EventArgs e)
+        {
+            Screenshot_HoverLabel.Show();
+        }
+
+        private void Screenshot_MouseLeave(object sender, EventArgs e)
+        {
+            Screenshot_HoverLabel.Hide();
         }
     }
 }

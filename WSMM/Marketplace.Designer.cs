@@ -37,6 +37,7 @@
             Separator_1 = new PictureBox();
             ModMain_Panel = new Panel();
             ModPanel_Panel = new Panel();
+            Screenshot_HoverLabel = new Label();
             CloseModPanel_Button = new PictureBox();
             Characters_Label = new Label();
             Categories_Label = new Label();
@@ -156,6 +157,7 @@
             // ModPanel_Panel
             // 
             ModPanel_Panel.BorderStyle = BorderStyle.Fixed3D;
+            ModPanel_Panel.Controls.Add(Screenshot_HoverLabel);
             ModPanel_Panel.Controls.Add(CloseModPanel_Button);
             ModPanel_Panel.Controls.Add(Characters_Label);
             ModPanel_Panel.Controls.Add(Categories_Label);
@@ -178,6 +180,18 @@
             ModPanel_Panel.Size = new Size(586, 609);
             ModPanel_Panel.TabIndex = 14;
             ModPanel_Panel.Visible = false;
+            // 
+            // Screenshot_HoverLabel
+            // 
+            Screenshot_HoverLabel.AutoSize = true;
+            Screenshot_HoverLabel.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Screenshot_HoverLabel.ForeColor = SystemColors.ActiveCaption;
+            Screenshot_HoverLabel.Location = new Point(162, 475);
+            Screenshot_HoverLabel.Name = "Screenshot_HoverLabel";
+            Screenshot_HoverLabel.Size = new Size(258, 21);
+            Screenshot_HoverLabel.TabIndex = 29;
+            Screenshot_HoverLabel.Text = "Click to open image in web browser";
+            Screenshot_HoverLabel.Visible = false;
             // 
             // CloseModPanel_Button
             // 
@@ -343,6 +357,7 @@
             // Screenshot
             // 
             Screenshot.BorderStyle = BorderStyle.FixedSingle;
+            Screenshot.Cursor = Cursors.SizeAll;
             Screenshot.ImageLocation = "";
             Screenshot.Location = new Point(78, 228);
             Screenshot.Name = "Screenshot";
@@ -350,6 +365,9 @@
             Screenshot.SizeMode = PictureBoxSizeMode.Zoom;
             Screenshot.TabIndex = 13;
             Screenshot.TabStop = false;
+            Screenshot.Click += Screenshot_Click;
+            Screenshot.MouseEnter += Screenshot_MouseEnter;
+            Screenshot.MouseLeave += Screenshot_MouseLeave;
             // 
             // ModName_Label
             // 
@@ -622,5 +640,6 @@
         private Label label1;
         private Label Characters_Label;
         private Label Categories_Label;
+        private Label Screenshot_HoverLabel;
     }
 }
