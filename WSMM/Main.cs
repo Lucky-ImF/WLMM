@@ -67,7 +67,8 @@ namespace WSMM
         FlowLayoutPanel[] Cat_Flow = new FlowLayoutPanel[20];
         int Cat_CurrentEntryID = 0;
         List<int> Cat_Entries = new List<int>();
-        
+
+        List<string> Categories_List = new List<string>();
 
         public Main()
         {
@@ -315,6 +316,7 @@ namespace WSMM
             WLVersionLoaded_Label.Text = LoadedWLVersion + " - " + LoadedUEVersion;
             LoadDataTables();
             LoadMappings();
+            LoadCategories();
 
             LoadBuildSettings();
 
@@ -354,6 +356,19 @@ namespace WSMM
                 Directory.CreateDirectory(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Mod Creator\AutoMod");
                 Directory.CreateDirectory(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded");
                 Directory.CreateDirectory(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\AutoMod");
+            }
+        }
+
+        private void LoadCategories()
+        {
+            Categories_List.Clear();
+            if (File.Exists(Application.StartupPath + @"System\Categories.ini"))
+            {
+                Categories_List.AddRange(File.ReadAllLines(Application.StartupPath + @"System\Categories.ini"));
+            }
+            else
+            {
+                Categories_List.Add("Other");
             }
         }
 
@@ -538,6 +553,12 @@ namespace WSMM
                     File.Copy(Application.StartupPath + @"Temp\" + Path.GetFileNameWithoutExtension(node.Name) + @"\System\EngineVersions.ini", Application.StartupPath + @"System\EngineVersions.ini", true);
                 }
 
+                // Replace System\Categories.ini
+                if (File.Exists(Application.StartupPath + @"Temp\" + Path.GetFileNameWithoutExtension(node.Name) + @"\System\Categories.ini"))
+                {
+                    File.Copy(Application.StartupPath + @"Temp\" + Path.GetFileNameWithoutExtension(node.Name) + @"\System\Categories.ini", Application.StartupPath + @"System\Categories.ini", true);
+                }
+
                 // Copy/Replace Mappings
                 foreach (string mapping in Directory.EnumerateFiles(Application.StartupPath + @"Temp\" + Path.GetFileNameWithoutExtension(node.Name) + @"\Mappings", "*.usmap"))
                 {
@@ -554,6 +575,7 @@ namespace WSMM
                 File.WriteAllText(Application.StartupPath + @"System\DatatableVersion.ini", version);
 
                 LoadSupportedVersions();
+                LoadCategories();
 
                 DTDownload_Panel.Hide();
                 MessageBox.Show("DataTables updated!", "Wild Life Mod Manager", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -947,22 +969,8 @@ namespace WSMM
                 Cat_Entries.Clear();
             });
 
-            List<string> Cats = new List<string>();
-            Cats.Add("Outfit");
-            Cats.Add("Hair");
-            Cats.Add("Skin");
-            Cats.Add("Pubic Hair");
-            Cats.Add("Eyes");
-            Cats.Add("Eyeliner");
-            Cats.Add("Eyeshadow");
-            Cats.Add("Lipstick");
-            Cats.Add("Tanlines");
-            Cats.Add("Fur");
-            Cats.Add("Audio");
-            Cats.Add("Other");
-
             // Create Categories
-            foreach (string cat in Cats)
+            foreach (string cat in Categories_List)
             {
                 Cat_Button[Cat_CurrentEntryID] = new System.Windows.Forms.Button();
                 Cat_Button[Cat_CurrentEntryID].Text = cat;

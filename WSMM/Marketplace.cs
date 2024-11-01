@@ -283,13 +283,13 @@ namespace WSMM
             int EntryID = Mod_CurrentEntryID;
             //Panel[] Mod_Panel = new Panel[50];
             Mod_Panel[EntryID] = new Panel();
-            Mod_Panel[EntryID].Size = new System.Drawing.Size(708, 95);
+            Mod_Panel[EntryID].Size = new System.Drawing.Size(265, 315);
             Mod_Panel[EntryID].BackColor = System.Drawing.Color.FromArgb(32, 34, 81);
             Mod_Panel[EntryID].BorderStyle = BorderStyle.FixedSingle;
             //PictureBox[] Mod_Icon = new PictureBox[50];
             Mod_Icon[EntryID] = new PictureBox();
-            Mod_Icon[EntryID].Size = new System.Drawing.Size(80, 80);
-            Mod_Icon[EntryID].Location = new Point(3, 5);
+            Mod_Icon[EntryID].Size = new System.Drawing.Size(256, 230);
+            Mod_Icon[EntryID].Location = new Point(2, 2);
             Mod_Icon[EntryID].BackColor = System.Drawing.Color.FromArgb(32, 34, 81);
             Mod_Icon[EntryID].BorderStyle = BorderStyle.None;
             Mod_Icon[EntryID].SizeMode = PictureBoxSizeMode.Zoom;
@@ -303,8 +303,11 @@ namespace WSMM
             Mod_NameLabel[EntryID].ActiveLinkColor = System.Drawing.SystemColors.Highlight;
             Mod_NameLabel[EntryID].Font = new Font(Mod_NameLabel[EntryID].Font.FontFamily, 16);
             Mod_NameLabel[EntryID].Text = ModName;
-            Mod_NameLabel[EntryID].AutoSize = true;
-            Mod_NameLabel[EntryID].Location = new Point(90, 2);
+            Mod_NameLabel[EntryID].AutoSize = false;
+            Mod_NameLabel[EntryID].AutoEllipsis = true;
+            Mod_NameLabel[EntryID].TextAlign = ContentAlignment.MiddleCenter;
+            Mod_NameLabel[EntryID].Location = new Point(2, 232);
+            Mod_NameLabel[EntryID].Size = new Size(256, 30);
             Mod_NameLabel[EntryID].Tag = ModString;
             Mod_NameLabel[EntryID].Click += Mod_NameLabel_Click;
             //Label[] Mod_VersionLabel = new Label[50];
@@ -313,26 +316,31 @@ namespace WSMM
             Mod_VersionLabel[EntryID].ForeColor = System.Drawing.SystemColors.ActiveCaption;
             Mod_VersionLabel[EntryID].Font = new Font(Mod_NameLabel[EntryID].Font.FontFamily, 16);
             Mod_VersionLabel[EntryID].Text = ModVersion;
-            Mod_VersionLabel[EntryID].AutoSize = true;
+            Mod_VersionLabel[EntryID].AutoSize = false;
+            Mod_VersionLabel[EntryID].Size = new Size(81, 28);
+            Mod_VersionLabel[EntryID].TextAlign = ContentAlignment.MiddleRight; 
             Graphics g = CreateGraphics();
             SizeF LabelSize = g.MeasureString(Mod_VersionLabel[EntryID].Text, Mod_VersionLabel[EntryID].Font);
-            Mod_VersionLabel[EntryID].Location = new Point(Mod_Panel[EntryID].Size.Width - ((int)LabelSize.Width) - 20, 4);
+            Mod_VersionLabel[EntryID].Location = new Point(177, 283);
             //Label[] Mod_AuthorLabel = new Label[50];
             Mod_AuthorLabel[EntryID] = new Label();
             Mod_AuthorLabel[EntryID].BackColor = System.Drawing.Color.FromArgb(32, 34, 81);
             Mod_AuthorLabel[EntryID].ForeColor = System.Drawing.SystemColors.ActiveCaption;
             Mod_AuthorLabel[EntryID].Font = new Font(Mod_NameLabel[EntryID].Font.FontFamily, 12);
             Mod_AuthorLabel[EntryID].Text = "By: " + ModAuthor;
-            Mod_AuthorLabel[EntryID].AutoSize = true;
-            Mod_AuthorLabel[EntryID].Location = new Point(90, 63);
+            Mod_AuthorLabel[EntryID].AutoSize = false;
+            Mod_AuthorLabel[EntryID].AutoEllipsis = true;
+            Mod_AuthorLabel[EntryID].TextAlign = ContentAlignment.MiddleCenter;
+            Mod_AuthorLabel[EntryID].Size = new Size(256, 21);
+            Mod_AuthorLabel[EntryID].Location = new Point(2, 262);
             //Label[] Mod_SupportedVersionsLabel = new Label[50];
-            Mod_SupportedVersionsLabel[EntryID] = new Label();
-            Mod_SupportedVersionsLabel[EntryID].BackColor = System.Drawing.Color.FromArgb(32, 34, 81);
-            Mod_SupportedVersionsLabel[EntryID].ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            Mod_SupportedVersionsLabel[EntryID].Font = new Font(Mod_NameLabel[EntryID].Font.FontFamily, 10);
-            Mod_SupportedVersionsLabel[EntryID].Text = SupportedVersions;
-            Mod_SupportedVersionsLabel[EntryID].AutoSize = true;
-            Mod_SupportedVersionsLabel[EntryID].Location = new Point(90, 35);
+            //Mod_SupportedVersionsLabel[EntryID] = new Label();
+            //Mod_SupportedVersionsLabel[EntryID].BackColor = System.Drawing.Color.FromArgb(32, 34, 81);
+            //Mod_SupportedVersionsLabel[EntryID].ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            //Mod_SupportedVersionsLabel[EntryID].Font = new Font(Mod_NameLabel[EntryID].Font.FontFamily, 10);
+            //Mod_SupportedVersionsLabel[EntryID].Text = SupportedVersions;
+            //Mod_SupportedVersionsLabel[EntryID].AutoSize = true;
+            //Mod_SupportedVersionsLabel[EntryID].Location = new Point(90, 35);
             //Label[] Mod_InfoLabel = new Label[50];
             Mod_InfoLabel[EntryID] = new Label();
             Mod_InfoLabel[EntryID].BackColor = System.Drawing.Color.FromArgb(32, 34, 81);
@@ -356,25 +364,17 @@ namespace WSMM
             }
             Mod_InfoLabel[EntryID].AutoSize = true;
             LabelSize = g.MeasureString(Mod_InfoLabel[EntryID].Text, Mod_InfoLabel[EntryID].Font);
-            Mod_InfoLabel[EntryID].Location = new Point(Mod_Panel[EntryID].Size.Width - ((int)LabelSize.Width) - 10, 63);
+            Mod_InfoLabel[EntryID].Location = new Point(Mod_Panel[EntryID].Size.Width / 2 - ((int)LabelSize.Width / 2), 3);
 
             Mod_Panel[EntryID].Controls.Add(Mod_Icon[EntryID]);
             Mod_Panel[EntryID].Controls.Add(Mod_NameLabel[EntryID]);
             Mod_Panel[EntryID].Controls.Add(Mod_VersionLabel[EntryID]);
-            Mod_Panel[EntryID].Controls.Add(Mod_SupportedVersionsLabel[EntryID]);
+            //Mod_Panel[EntryID].Controls.Add(Mod_SupportedVersionsLabel[EntryID]);
             Mod_Panel[EntryID].Controls.Add(Mod_AuthorLabel[EntryID]);
             Mod_Panel[EntryID].Controls.Add(Mod_InfoLabel[EntryID]);
+            Mod_InfoLabel[EntryID].BringToFront();
 
             Mod_Category[EntryID] = Category;
-
-            // Filter
-            //if (Filter_CB.Text != "All")
-            //{
-            //    if (Category.Contains(Filter_CB.Text) == false)
-            //    {
-            //        return;
-            //    }
-            //}
 
             ModFlow_Panel.Invoke((System.Windows.Forms.MethodInvoker)delegate
             {
@@ -413,6 +413,7 @@ namespace WSMM
             string ModIcon = string.Empty;
             string ModSize = string.Empty;
             string Category = string.Empty;
+            string Characters = string.Empty;
             string LastUpdate = string.Empty;
             string ModDescription = string.Empty;
             string ModDownloadLink = string.Empty;
@@ -470,12 +471,18 @@ namespace WSMM
                 {
                     ModScreenshots = meta.Replace(GetSlice(meta, ":", 0) + ":", "");
                 }
+                else if (meta.StartsWith("Characters"))
+                {
+                    Characters = meta.Replace(GetSlice(meta, ":", 0) + ":", "");
+                }
             }
 
             ModName_Label.Text = ModName;
             ModAuthor_Label.Text = ModAuthor;
             ModVersion_Label.Text = ModVersion;
             SupportedVersions_Label.Text = SupportedVersions.Replace("*", ", ");
+            Characters_Label.Text = Characters.Replace("*", ", ");
+            Categories_Label.Text = Category.Replace("*", ", ");
             ModLink_LL.Text = ModURL;
             ModDescription_TB.Text = ModDescription;
             Screenshot.ImageLocation = ModIcon;
@@ -484,13 +491,13 @@ namespace WSMM
             DownloadMod_Button.Tag = ModDownloadLink;
             DownloadMod_Button.Text = "Download";
 
-            ModName_Label.Left = ModPanel_Panel.Width / 2 - ModName_Label.Width / 2;
-            ModAuthor_Label.Left = ModPanel_Panel.Width / 2 - ModAuthor_Label.Width / 2;
-            ModVersion_Label.Left = ModPanel_Panel.Width / 2 - ModVersion_Label.Width / 2;
-            SupportedVersions_Label.Left = ModPanel_Panel.Width / 2 - SupportedVersions_Label.Width / 2;
-            ModLink_LL.Left = ModPanel_Panel.Width / 2 - ModLink_LL.Width / 2;
-            ModLastUpdate_Label.Left = ModPanel_Panel.Width / 2 - LastUpdate_Label.Width / 2;
-            ModFileSize_Label.Left = ModPanel_Panel.Width / 2 - ModFileSize_Label.Width / 2;
+            //ModName_Label.Left = ModPanel_Panel.Width / 2 - ModName_Label.Width / 2;
+            //ModAuthor_Label.Left = ModPanel_Panel.Width / 2 - ModAuthor_Label.Width / 2;
+            //ModVersion_Label.Left = ModPanel_Panel.Width / 2 - ModVersion_Label.Width / 2;
+            //SupportedVersions_Label.Left = ModPanel_Panel.Width / 2 - SupportedVersions_Label.Width / 2;
+            //ModLink_LL.Left = ModPanel_Panel.Width / 2 - ModLink_LL.Width / 2;
+            //ModLastUpdate_Label.Left = ModPanel_Panel.Width / 2 - LastUpdate_Label.Width / 2;
+            //ModFileSize_Label.Left = ModPanel_Panel.Width / 2 - ModFileSize_Label.Width / 2;
 
             LoadedModScreenshots.Clear();
             LoadedModScreenshots.Add(ModIcon);

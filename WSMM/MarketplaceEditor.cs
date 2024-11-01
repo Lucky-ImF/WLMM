@@ -38,6 +38,8 @@ namespace WSMM
             LoadedUEVersion = UEV;
 
             LoadSupportedVersions();
+            LoadCategories();
+            LoadCharacters();
         }
 
         private string GetSlice(string Txt, string Delimiter, int slice)
@@ -64,6 +66,39 @@ namespace WSMM
             if (File.Exists(Application.StartupPath + @"System\SupportedVersions.ini"))
             {
                 SupportedWLVersions_CLB.Items.AddRange(File.ReadAllLines(Application.StartupPath + @"System\SupportedVersions.ini"));
+            }
+        }
+
+        private void LoadCategories()
+        {
+            Categories_CLB.Items.Clear();
+            if (File.Exists(Application.StartupPath + @"System\Categories.ini"))
+            {
+                Categories_CLB.Items.AddRange(File.ReadAllLines(Application.StartupPath + @"System\Categories.ini"));
+            }
+            else
+            {
+                Categories_CLB.Items.Add("Other");
+            }
+        }
+
+        private void LoadCharacters()
+        {
+            AffectedCharacters_CLB.Items.Clear();
+            AffectedCharacters_CLB.Items.Add("All");
+            if (File.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\Characters.txt"))
+            {
+                AffectedCharacters_CLB.Items.AddRange(File.ReadAllLines(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\Characters.txt"));
+            }
+            if (File.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\Characters.txt"))
+            {
+                foreach (string line in File.ReadLines(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\CustomizerCharacters.txt"))
+                {
+                    if (AffectedCharacters_CLB.Items.Contains(line) == false)
+                    {
+                        AffectedCharacters_CLB.Items.Add(line);
+                    }
+                }
             }
         }
 
@@ -122,6 +157,8 @@ namespace WSMM
 
                 //Read MetaData
                 string SupVers = string.Empty;
+                string Categories = string.Empty;
+                string Characters = string.Empty;
                 string[] MetaData = File.ReadAllLines(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\Metadata.dat");
                 foreach (string meta in MetaData)
                 {
@@ -145,12 +182,30 @@ namespace WSMM
                     {
                         ModURL_TB.Text = GetSlice(meta, "=", 1);
                     }
+                    else if (meta.StartsWith("Categories"))
+                    {
+                        Categories = GetSlice(meta, "=", 1);
+                    }
+                    else if (meta.StartsWith("Characters"))
+                    {
+                        Characters = GetSlice(meta, "=", 1);
+                    }
                 }
 
                 //Clear Supported Versions
                 for (int i = 0; i <= (SupportedWLVersions_CLB.Items.Count - 1); i++)
                 {
                     SupportedWLVersions_CLB.SetItemChecked(i, false);
+                }
+                //Clear Characters
+                for (int i = 0; i <= (AffectedCharacters_CLB.Items.Count - 1); i++)
+                {
+                    AffectedCharacters_CLB.SetItemChecked(i, false);
+                }
+                //Clear Categories
+                for (int i = 0; i <= (Categories_CLB.Items.Count - 1); i++)
+                {
+                    Categories_CLB.SetItemChecked(i, false);
                 }
 
                 if (SupVers.Contains("All Versions"))
@@ -182,6 +237,60 @@ namespace WSMM
                             {
                                 SupportedWLVersions_CLB.SetItemChecked(i, true);
                             }
+                        }
+                    }
+                }
+
+                // Characters
+                if (Characters.Contains(","))
+                {
+                    string[] SplitChars = Characters.Split(",");
+                    foreach (string s in SplitChars)
+                    {
+                        string TrimmedS = s.Trim();
+                        for (int i = 0; i <= (AffectedCharacters_CLB.Items.Count - 1); i++)
+                        {
+                            if (AffectedCharacters_CLB.Items[i].ToString() == TrimmedS)
+                            {
+                                AffectedCharacters_CLB.SetItemChecked(i, true);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i <= (AffectedCharacters_CLB.Items.Count - 1); i++)
+                    {
+                        if (AffectedCharacters_CLB.Items[i].ToString() == Characters)
+                        {
+                            AffectedCharacters_CLB.SetItemChecked(i, true);
+                        }
+                    }
+                }
+
+                // Categories
+                if (Categories.Contains(","))
+                {
+                    string[] SplitCats = Categories.Split(",");
+                    foreach (string s in SplitCats)
+                    {
+                        string TrimmedS = s.Trim();
+                        for (int i = 0; i <= (Categories_CLB.Items.Count - 1); i++)
+                        {
+                            if (Categories_CLB.Items[i].ToString() == TrimmedS)
+                            {
+                                Categories_CLB.SetItemChecked(i, true);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i <= (Categories_CLB.Items.Count - 1); i++)
+                    {
+                        if (Categories_CLB.Items[i].ToString() == Categories)
+                        {
+                            Categories_CLB.SetItemChecked(i, true);
                         }
                     }
                 }
@@ -238,6 +347,7 @@ namespace WSMM
         private void CopyData_Button_Click(object sender, EventArgs e)
         {
             Categories_CLB.ForeColor = SystemColors.ActiveCaption;
+            AffectedCharacters_CLB.ForeColor = SystemColors.ActiveCaption;
             ModIconURL_TB.ForeColor = SystemColors.ActiveCaption;
             ModDescription_TB.ForeColor = SystemColors.ActiveCaption;
             ModDLURL_TB.ForeColor = SystemColors.ActiveCaption;
@@ -249,6 +359,13 @@ namespace WSMM
                 ModValid = false;
                 Categories_CLB.ForeColor = Color.LightCoral;
                 toolTip1.Show("Atleast 1 category must be selected.", Categories_CLB, 3000);
+            }
+
+            if (AffectedCharacters_CLB.CheckedItems.Count == 0)
+            {
+                ModValid = false;
+                AffectedCharacters_CLB.ForeColor = Color.LightCoral;
+                toolTip1.Show("Atleast 1 character must be selected.", AffectedCharacters_CLB, 3000);
             }
 
             // Check Mod Icon ends with valid extension
@@ -316,6 +433,17 @@ namespace WSMM
                 }
                 Categories = Categories.TrimEnd('*');
 
+                string Characters = "";
+                i = 0;
+                for (i = 0; i <= (AffectedCharacters_CLB.Items.Count - 1); i++)
+                {
+                    if (AffectedCharacters_CLB.GetItemChecked(i))
+                    {
+                        Characters += AffectedCharacters_CLB.Items[i].ToString() + "*";
+                    }
+                }
+                Characters = Characters.TrimEnd('*');
+
                 string Screenshots = "";
                 i = 0;
                 for (i = 0; i <= (Screenshots_LB.Items.Count - 1); i++)
@@ -327,6 +455,7 @@ namespace WSMM
                 string Metadata = "ModName:" + ModName_TB.Text + ",ModAuthor:" + ModAuthor_TB.Text +
                     ",ModVersion:" + ModVersion_TB.Text + ",SupportedVersions:" + SupportedVersions +
                     ",ModLink:" + ModURL_TB.Text + ",ModSize:" + ModSize_TB.Text + ",Category:" + Categories +
+                    ",Characters:" + Characters +
                     ",LastUpdate:" + LastUpdate_TB.Text + ",ModIcon:" + ModIconURL_TB.Text +
                     ",ModDescription:" + ModDescription_TB.Text + ",DownloadLink:" + ModDLURL_TB.Text;
 

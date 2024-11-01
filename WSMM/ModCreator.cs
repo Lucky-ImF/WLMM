@@ -36,6 +36,7 @@ namespace WSMM
 
             LoadSupportedVersions();
             LoadCharacters();
+            LoadCategories();
         }
 
         public ModCreator()
@@ -109,6 +110,19 @@ namespace WSMM
             if (File.Exists(Application.StartupPath + @"System\SupportedVersions.ini"))
             {
                 SupportedWLVersions_CLB.Items.AddRange(File.ReadAllLines(Application.StartupPath + @"System\SupportedVersions.ini"));
+            }
+        }
+
+        private void LoadCategories()
+        {
+            Categories_CLB.Items.Clear();
+            if (File.Exists(Application.StartupPath + @"System\Categories.ini"))
+            {
+                Categories_CLB.Items.AddRange(File.ReadAllLines(Application.StartupPath + @"System\Categories.ini"));
+            }
+            else
+            {
+                Categories_CLB.Items.Add("Other");
             }
         }
 

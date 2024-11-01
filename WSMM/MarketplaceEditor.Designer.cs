@@ -37,6 +37,8 @@
             ByLuckyLabel = new Label();
             TitleLabel = new Label();
             panel1 = new Panel();
+            label14 = new Label();
+            AffectedCharacters_CLB = new CheckedListBox();
             label13 = new Label();
             LastUpdate_TB = new TextBox();
             label12 = new Label();
@@ -47,6 +49,8 @@
             label7 = new Label();
             ModVersion_TB = new TextBox();
             label6 = new Label();
+            label1 = new Label();
+            Categories_CLB = new CheckedListBox();
             SupportedWLVersions_CLB = new CheckedListBox();
             label5 = new Label();
             ModAuthor_TB = new TextBox();
@@ -68,8 +72,6 @@
             ScreenshotAdd_TB = new TextBox();
             label2 = new Label();
             Screenshots_LB = new ListBox();
-            label1 = new Label();
-            Categories_CLB = new CheckedListBox();
             linkLabel2 = new LinkLabel();
             CopyData_Button = new Button();
             openFileDialog1 = new OpenFileDialog();
@@ -159,6 +161,8 @@
             // panel1
             // 
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(label14);
+            panel1.Controls.Add(AffectedCharacters_CLB);
             panel1.Controls.Add(label13);
             panel1.Controls.Add(LastUpdate_TB);
             panel1.Controls.Add(label12);
@@ -169,22 +173,48 @@
             panel1.Controls.Add(label7);
             panel1.Controls.Add(ModVersion_TB);
             panel1.Controls.Add(label6);
+            panel1.Controls.Add(label1);
+            panel1.Controls.Add(Categories_CLB);
             panel1.Controls.Add(SupportedWLVersions_CLB);
             panel1.Controls.Add(label5);
             panel1.Controls.Add(ModAuthor_TB);
             panel1.Controls.Add(label4);
             panel1.Controls.Add(ModName_TB);
-            panel1.Location = new Point(48, 160);
+            panel1.Location = new Point(48, 147);
             panel1.Name = "panel1";
-            panel1.Size = new Size(570, 256);
+            panel1.Size = new Size(570, 332);
             panel1.TabIndex = 15;
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label14.ForeColor = SystemColors.ActiveCaption;
+            label14.Location = new Point(386, 229);
+            label14.Name = "label14";
+            label14.Size = new Size(70, 17);
+            label14.TabIndex = 43;
+            label14.Text = "Characters";
+            // 
+            // AffectedCharacters_CLB
+            // 
+            AffectedCharacters_CLB.BackColor = Color.FromArgb(75, 68, 138);
+            AffectedCharacters_CLB.BorderStyle = BorderStyle.FixedSingle;
+            AffectedCharacters_CLB.ForeColor = SystemColors.ActiveCaption;
+            AffectedCharacters_CLB.FormattingEnabled = true;
+            AffectedCharacters_CLB.Location = new Point(287, 249);
+            AffectedCharacters_CLB.Name = "AffectedCharacters_CLB";
+            AffectedCharacters_CLB.ScrollAlwaysVisible = true;
+            AffectedCharacters_CLB.SelectionMode = SelectionMode.None;
+            AffectedCharacters_CLB.Size = new Size(269, 74);
+            AffectedCharacters_CLB.TabIndex = 42;
             // 
             // label13
             // 
             label13.AutoSize = true;
             label13.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label13.ForeColor = SystemColors.ActiveCaption;
-            label13.Location = new Point(390, 195);
+            label13.Location = new Point(390, 181);
             label13.Name = "label13";
             label13.Size = new Size(78, 17);
             label13.TabIndex = 41;
@@ -197,7 +227,7 @@
             LastUpdate_TB.Enabled = false;
             LastUpdate_TB.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             LastUpdate_TB.ForeColor = SystemColors.ActiveCaption;
-            LastUpdate_TB.Location = new Point(287, 215);
+            LastUpdate_TB.Location = new Point(287, 201);
             LastUpdate_TB.Name = "LastUpdate_TB";
             LastUpdate_TB.Size = new Size(269, 27);
             LastUpdate_TB.TabIndex = 40;
@@ -208,7 +238,7 @@
             label12.AutoSize = true;
             label12.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label12.ForeColor = SystemColors.ActiveCaption;
-            label12.Location = new Point(115, 195);
+            label12.Location = new Point(115, 181);
             label12.Name = "label12";
             label12.Size = new Size(63, 17);
             label12.TabIndex = 39;
@@ -221,7 +251,7 @@
             ModSize_TB.Enabled = false;
             ModSize_TB.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             ModSize_TB.ForeColor = SystemColors.ActiveCaption;
-            ModSize_TB.Location = new Point(12, 215);
+            ModSize_TB.Location = new Point(12, 201);
             ModSize_TB.Name = "ModSize_TB";
             ModSize_TB.Size = new Size(269, 27);
             ModSize_TB.TabIndex = 38;
@@ -234,7 +264,7 @@
             ModIconSetDefault_LL.AutoSize = true;
             ModIconSetDefault_LL.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             ModIconSetDefault_LL.LinkColor = SystemColors.MenuHighlight;
-            ModIconSetDefault_LL.Location = new Point(365, 353);
+            ModIconSetDefault_LL.Location = new Point(365, 429);
             ModIconSetDefault_LL.Margin = new Padding(4, 0, 4, 0);
             ModIconSetDefault_LL.Name = "ModIconSetDefault_LL";
             ModIconSetDefault_LL.Size = new Size(86, 16);
@@ -249,7 +279,7 @@
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label8.ForeColor = SystemColors.ActiveCaption;
-            label8.Location = new Point(253, 142);
+            label8.Location = new Point(253, 132);
             label8.Name = "label8";
             label8.Size = new Size(63, 17);
             label8.TabIndex = 24;
@@ -262,7 +292,7 @@
             ModURL_TB.Enabled = false;
             ModURL_TB.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             ModURL_TB.ForeColor = SystemColors.ActiveCaption;
-            ModURL_TB.Location = new Point(12, 162);
+            ModURL_TB.Location = new Point(12, 152);
             ModURL_TB.Name = "ModURL_TB";
             ModURL_TB.Size = new Size(544, 27);
             ModURL_TB.TabIndex = 23;
@@ -273,7 +303,7 @@
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label7.ForeColor = SystemColors.ActiveCaption;
-            label7.Location = new Point(380, 61);
+            label7.Location = new Point(380, 55);
             label7.Name = "label7";
             label7.Size = new Size(83, 17);
             label7.TabIndex = 22;
@@ -286,7 +316,7 @@
             ModVersion_TB.Enabled = false;
             ModVersion_TB.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             ModVersion_TB.ForeColor = SystemColors.ActiveCaption;
-            ModVersion_TB.Location = new Point(287, 81);
+            ModVersion_TB.Location = new Point(287, 75);
             ModVersion_TB.Name = "ModVersion_TB";
             ModVersion_TB.Size = new Size(269, 27);
             ModVersion_TB.TabIndex = 21;
@@ -297,11 +327,36 @@
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label6.ForeColor = SystemColors.ActiveCaption;
-            label6.Location = new Point(84, 61);
+            label6.Location = new Point(84, 55);
             label6.Name = "label6";
             label6.Size = new Size(123, 17);
             label6.TabIndex = 20;
             label6.Text = "Supported Versions";
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label1.ForeColor = SystemColors.ActiveCaption;
+            label1.Location = new Point(112, 229);
+            label1.Name = "label1";
+            label1.Size = new Size(71, 17);
+            label1.TabIndex = 39;
+            label1.Text = "Categories";
+            // 
+            // Categories_CLB
+            // 
+            Categories_CLB.BackColor = Color.FromArgb(75, 68, 138);
+            Categories_CLB.BorderStyle = BorderStyle.FixedSingle;
+            Categories_CLB.ForeColor = SystemColors.ActiveCaption;
+            Categories_CLB.FormattingEnabled = true;
+            Categories_CLB.Items.AddRange(new object[] { "Outfit", "Hair", "Skin", "Pubic Hair", "Eyes", "Eyeliner", "Eyeshadow", "Lipstick", "Tanlines", "Fur", "Audio", "Other" });
+            Categories_CLB.Location = new Point(13, 249);
+            Categories_CLB.Name = "Categories_CLB";
+            Categories_CLB.ScrollAlwaysVisible = true;
+            Categories_CLB.SelectionMode = SelectionMode.None;
+            Categories_CLB.Size = new Size(269, 74);
+            Categories_CLB.TabIndex = 38;
             // 
             // SupportedWLVersions_CLB
             // 
@@ -309,7 +364,7 @@
             SupportedWLVersions_CLB.BorderStyle = BorderStyle.FixedSingle;
             SupportedWLVersions_CLB.ForeColor = SystemColors.ActiveCaption;
             SupportedWLVersions_CLB.FormattingEnabled = true;
-            SupportedWLVersions_CLB.Location = new Point(12, 81);
+            SupportedWLVersions_CLB.Location = new Point(12, 75);
             SupportedWLVersions_CLB.Name = "SupportedWLVersions_CLB";
             SupportedWLVersions_CLB.ScrollAlwaysVisible = true;
             SupportedWLVersions_CLB.SelectionMode = SelectionMode.None;
@@ -321,7 +376,7 @@
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label5.ForeColor = SystemColors.ActiveCaption;
-            label5.Location = new Point(383, 7);
+            label5.Location = new Point(383, 5);
             label5.Name = "label5";
             label5.Size = new Size(79, 17);
             label5.TabIndex = 18;
@@ -334,7 +389,7 @@
             ModAuthor_TB.Enabled = false;
             ModAuthor_TB.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             ModAuthor_TB.ForeColor = SystemColors.ActiveCaption;
-            ModAuthor_TB.Location = new Point(287, 27);
+            ModAuthor_TB.Location = new Point(287, 25);
             ModAuthor_TB.Name = "ModAuthor_TB";
             ModAuthor_TB.Size = new Size(269, 27);
             ModAuthor_TB.TabIndex = 17;
@@ -345,7 +400,7 @@
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label4.ForeColor = SystemColors.ActiveCaption;
-            label4.Location = new Point(112, 7);
+            label4.Location = new Point(112, 5);
             label4.Name = "label4";
             label4.Size = new Size(75, 17);
             label4.TabIndex = 16;
@@ -358,7 +413,7 @@
             ModName_TB.Enabled = false;
             ModName_TB.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             ModName_TB.ForeColor = SystemColors.ActiveCaption;
-            ModName_TB.Location = new Point(12, 27);
+            ModName_TB.Location = new Point(12, 25);
             ModName_TB.Name = "ModName_TB";
             ModName_TB.Size = new Size(269, 27);
             ModName_TB.TabIndex = 0;
@@ -446,12 +501,10 @@
             panel3.Controls.Add(ScreenshotAdd_TB);
             panel3.Controls.Add(label2);
             panel3.Controls.Add(Screenshots_LB);
-            panel3.Controls.Add(label1);
-            panel3.Controls.Add(Categories_CLB);
             panel3.Controls.Add(linkLabel2);
-            panel3.Location = new Point(48, 428);
+            panel3.Location = new Point(48, 486);
             panel3.Name = "panel3";
-            panel3.Size = new Size(570, 334);
+            panel3.Size = new Size(570, 288);
             panel3.TabIndex = 17;
             // 
             // label11
@@ -459,7 +512,7 @@
             label11.AutoSize = true;
             label11.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label11.ForeColor = SystemColors.ActiveCaption;
-            label11.Location = new Point(231, 246);
+            label11.Location = new Point(231, 210);
             label11.Name = "label11";
             label11.Size = new Size(106, 17);
             label11.TabIndex = 49;
@@ -471,10 +524,10 @@
             ModDescription_TB.BorderStyle = BorderStyle.FixedSingle;
             ModDescription_TB.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             ModDescription_TB.ForeColor = SystemColors.ActiveCaption;
-            ModDescription_TB.Location = new Point(12, 266);
+            ModDescription_TB.Location = new Point(12, 230);
             ModDescription_TB.Multiline = true;
             ModDescription_TB.Name = "ModDescription_TB";
-            ModDescription_TB.Size = new Size(544, 55);
+            ModDescription_TB.Size = new Size(544, 49);
             ModDescription_TB.TabIndex = 48;
             ModDescription_TB.Text = "No Description Provided.";
             ModDescription_TB.TextAlign = HorizontalAlignment.Center;
@@ -484,7 +537,7 @@
             label10.AutoSize = true;
             label10.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label10.ForeColor = SystemColors.ActiveCaption;
-            label10.Location = new Point(147, 196);
+            label10.Location = new Point(147, 160);
             label10.Name = "label10";
             label10.Size = new Size(274, 17);
             label10.TabIndex = 47;
@@ -496,7 +549,7 @@
             ModDLURL_TB.BorderStyle = BorderStyle.FixedSingle;
             ModDLURL_TB.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             ModDLURL_TB.ForeColor = SystemColors.ActiveCaption;
-            ModDLURL_TB.Location = new Point(12, 216);
+            ModDLURL_TB.Location = new Point(12, 180);
             ModDLURL_TB.Name = "ModDLURL_TB";
             ModDLURL_TB.Size = new Size(544, 27);
             ModDLURL_TB.TabIndex = 46;
@@ -507,7 +560,7 @@
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label3.ForeColor = SystemColors.ActiveCaption;
-            label3.Location = new Point(126, 146);
+            label3.Location = new Point(138, 110);
             label3.Name = "label3";
             label3.Size = new Size(292, 17);
             label3.TabIndex = 45;
@@ -519,7 +572,7 @@
             ModIconURL_TB.BorderStyle = BorderStyle.FixedSingle;
             ModIconURL_TB.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             ModIconURL_TB.ForeColor = SystemColors.ActiveCaption;
-            ModIconURL_TB.Location = new Point(12, 166);
+            ModIconURL_TB.Location = new Point(12, 130);
             ModIconURL_TB.Name = "ModIconURL_TB";
             ModIconURL_TB.Size = new Size(544, 27);
             ModIconURL_TB.TabIndex = 44;
@@ -532,7 +585,7 @@
             ScreenshotAdd_Button.FlatStyle = FlatStyle.Flat;
             ScreenshotAdd_Button.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             ScreenshotAdd_Button.ForeColor = SystemColors.ActiveCaption;
-            ScreenshotAdd_Button.Location = new Point(517, 28);
+            ScreenshotAdd_Button.Location = new Point(517, 22);
             ScreenshotAdd_Button.Name = "ScreenshotAdd_Button";
             ScreenshotAdd_Button.Size = new Size(39, 27);
             ScreenshotAdd_Button.TabIndex = 43;
@@ -546,9 +599,9 @@
             ScreenshotAdd_TB.BorderStyle = BorderStyle.FixedSingle;
             ScreenshotAdd_TB.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             ScreenshotAdd_TB.ForeColor = SystemColors.ActiveCaption;
-            ScreenshotAdd_TB.Location = new Point(287, 28);
+            ScreenshotAdd_TB.Location = new Point(13, 22);
             ScreenshotAdd_TB.Name = "ScreenshotAdd_TB";
-            ScreenshotAdd_TB.Size = new Size(224, 27);
+            ScreenshotAdd_TB.Size = new Size(498, 27);
             ScreenshotAdd_TB.TabIndex = 42;
             ScreenshotAdd_TB.TextAlign = HorizontalAlignment.Center;
             // 
@@ -557,7 +610,7 @@
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label2.ForeColor = SystemColors.ActiveCaption;
-            label2.Location = new Point(284, 8);
+            label2.Location = new Point(145, 2);
             label2.Name = "label2";
             label2.Size = new Size(279, 17);
             label2.TabIndex = 41;
@@ -569,36 +622,12 @@
             Screenshots_LB.ForeColor = SystemColors.ActiveCaption;
             Screenshots_LB.FormattingEnabled = true;
             Screenshots_LB.ItemHeight = 15;
-            Screenshots_LB.Location = new Point(287, 58);
+            Screenshots_LB.Location = new Point(13, 55);
             Screenshots_LB.Name = "Screenshots_LB";
             Screenshots_LB.ScrollAlwaysVisible = true;
-            Screenshots_LB.Size = new Size(269, 79);
+            Screenshots_LB.Size = new Size(543, 49);
             Screenshots_LB.TabIndex = 40;
             Screenshots_LB.SelectedIndexChanged += Screenshots_LB_SelectedIndexChanged;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.ForeColor = SystemColors.ActiveCaption;
-            label1.Location = new Point(111, 8);
-            label1.Name = "label1";
-            label1.Size = new Size(71, 17);
-            label1.TabIndex = 39;
-            label1.Text = "Categories";
-            // 
-            // Categories_CLB
-            // 
-            Categories_CLB.BackColor = Color.FromArgb(75, 68, 138);
-            Categories_CLB.BorderStyle = BorderStyle.FixedSingle;
-            Categories_CLB.ForeColor = SystemColors.ActiveCaption;
-            Categories_CLB.FormattingEnabled = true;
-            Categories_CLB.Items.AddRange(new object[] { "Outfit", "Hair", "Skin", "Pubic Hair", "Eyes", "Eyeliner", "Eyeshadow", "Lipstick", "Tanlines", "Fur", "Audio", "Other" });
-            Categories_CLB.Location = new Point(12, 28);
-            Categories_CLB.Name = "Categories_CLB";
-            Categories_CLB.ScrollAlwaysVisible = true;
-            Categories_CLB.Size = new Size(269, 110);
-            Categories_CLB.TabIndex = 38;
             // 
             // linkLabel2
             // 
@@ -607,7 +636,7 @@
             linkLabel2.AutoSize = true;
             linkLabel2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             linkLabel2.LinkColor = SystemColors.MenuHighlight;
-            linkLabel2.Location = new Point(365, 531);
+            linkLabel2.Location = new Point(365, 485);
             linkLabel2.Margin = new Padding(4, 0, 4, 0);
             linkLabel2.Name = "linkLabel2";
             linkLabel2.Size = new Size(86, 16);
@@ -624,7 +653,7 @@
             CopyData_Button.FlatStyle = FlatStyle.Flat;
             CopyData_Button.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             CopyData_Button.ForeColor = SystemColors.ActiveCaption;
-            CopyData_Button.Location = new Point(48, 775);
+            CopyData_Button.Location = new Point(48, 783);
             CopyData_Button.Name = "CopyData_Button";
             CopyData_Button.Size = new Size(570, 45);
             CopyData_Button.TabIndex = 18;
@@ -724,5 +753,7 @@
         private Button CopyData_Button;
         private OpenFileDialog openFileDialog1;
         private ToolTip toolTip1;
+        private Label label14;
+        private CheckedListBox AffectedCharacters_CLB;
     }
 }
