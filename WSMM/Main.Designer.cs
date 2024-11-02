@@ -39,6 +39,7 @@
             LoadGame_Button = new Button();
             WLVersionLoaded_Label = new Label();
             ModMain_Panel = new Panel();
+            ReloadMods_Button = new Button();
             DragNDrop_Panel = new Panel();
             pictureBox3 = new PictureBox();
             label8 = new Label();
@@ -295,6 +296,7 @@
             // ModMain_Panel
             // 
             ModMain_Panel.BorderStyle = BorderStyle.Fixed3D;
+            ModMain_Panel.Controls.Add(ReloadMods_Button);
             ModMain_Panel.Controls.Add(DragNDrop_Panel);
             ModMain_Panel.Controls.Add(NoModsFound_Label);
             ModMain_Panel.Controls.Add(NoGameLoaded_Panel);
@@ -307,6 +309,21 @@
             ModMain_Panel.Name = "ModMain_Panel";
             ModMain_Panel.Size = new Size(880, 667);
             ModMain_Panel.TabIndex = 3;
+            // 
+            // ReloadMods_Button
+            // 
+            ReloadMods_Button.BackColor = Color.FromArgb(75, 68, 138);
+            ReloadMods_Button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            ReloadMods_Button.FlatStyle = FlatStyle.Flat;
+            ReloadMods_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            ReloadMods_Button.ForeColor = SystemColors.GradientInactiveCaption;
+            ReloadMods_Button.Location = new Point(6, 5);
+            ReloadMods_Button.Name = "ReloadMods_Button";
+            ReloadMods_Button.Size = new Size(105, 26);
+            ReloadMods_Button.TabIndex = 12;
+            ReloadMods_Button.Text = "Reload";
+            ReloadMods_Button.UseVisualStyleBackColor = false;
+            ReloadMods_Button.Click += ReloadMods_Button_Click;
             // 
             // DragNDrop_Panel
             // 
@@ -437,7 +454,7 @@
             DisableMods_Button.FlatStyle = FlatStyle.Flat;
             DisableMods_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             DisableMods_Button.ForeColor = Color.LightCoral;
-            DisableMods_Button.Location = new Point(125, 5);
+            DisableMods_Button.Location = new Point(249, 5);
             DisableMods_Button.Name = "DisableMods_Button";
             DisableMods_Button.Size = new Size(115, 26);
             DisableMods_Button.TabIndex = 4;
@@ -453,7 +470,7 @@
             EnableMods_Button.FlatStyle = FlatStyle.Flat;
             EnableMods_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             EnableMods_Button.ForeColor = SystemColors.ActiveCaption;
-            EnableMods_Button.Location = new Point(4, 5);
+            EnableMods_Button.Location = new Point(128, 5);
             EnableMods_Button.Name = "EnableMods_Button";
             EnableMods_Button.Size = new Size(115, 26);
             EnableMods_Button.TabIndex = 3;
@@ -1795,5 +1812,6 @@
         private LinkLabel linkLabel4;
         private Label label27;
         private Button button1;
+        private Button ReloadMods_Button;
     }
 }

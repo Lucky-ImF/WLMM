@@ -292,9 +292,18 @@ namespace WSMM
 
                     AddChange();
                 }
-
                 Mod_Entries.Clear();
                 Mod_CurrentEntryID = 0;
+
+                //Clear Cats
+                foreach (int EntryID in Cat_Entries)
+                {
+                    Cat_Button[EntryID].Dispose();
+                    Cat_Flow[EntryID].Dispose();
+                }
+                Cat_Entries.Clear();
+                Cat_CurrentEntryID = 0;
+                
                 NoModsFound_Label.Show();
 
                 LoadGameVersion(Path.GetDirectoryName(SelectWLVersionPath_TB.Text), SelectWLVersion_CB.Text, SelectWLVersionUEV_TB.Text);
@@ -1449,7 +1458,7 @@ namespace WSMM
         {
             System.Windows.Forms.Button Casted = sender as System.Windows.Forms.Button;
             int EntryID = int.Parse(Casted.Tag.ToString());
-            
+
             if (Cat_Flow[EntryID].Visible == false)
             {
                 Cat_Flow[EntryID].Show();
@@ -1497,6 +1506,16 @@ namespace WSMM
                 }
                 Mod_Entries.Clear();
                 Mod_CurrentEntryID = 0;
+
+                //Clear Cats
+                foreach (int EntryID in Cat_Entries)
+                {
+                    Cat_Button[EntryID].Dispose();
+                    Cat_Flow[EntryID].Dispose();
+                }
+                Cat_Entries.Clear();
+                Cat_CurrentEntryID = 0;
+
                 NoModsFound_Label.Show();
             }
         }
@@ -1552,7 +1571,7 @@ namespace WSMM
             {
                 Directory.CreateDirectory(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\AutoMod");
             }
-            
+
             BuildLog += "Copying .paks and AutoMod files...\n";
             ProgressInfo_Label.Invoke((System.Windows.Forms.MethodInvoker)delegate
             {
@@ -3215,6 +3234,7 @@ namespace WSMM
             TransferModsFromUEV_TB.Text = "None";
             TransferModsFrom_CB.Text = "Please specify version...";
             TransferModsList_LB.Items.Clear();
+            TransferAllMods_RB.Checked = true;
             TransferMods_Button.Enabled = false;
             TransferAllMods_RB.Enabled = false;
             TransferCompatMods_RB.Enabled = false;
@@ -3226,6 +3246,8 @@ namespace WSMM
                     CopyDirectory(ModPath, Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + Path.GetFileName(ModPath));
                 }
             }
+
+            LoadMods();
         }
 
         private void ConflictCheck()
@@ -3286,19 +3308,22 @@ namespace WSMM
                 TransferMods_Button.Enabled = false;
 
                 // Load all folders in Loaded
-                foreach (string ModPath in Directory.EnumerateDirectories(Application.StartupPath + @"Mods\" + TransferModsFrom_CB.Text + @"\Loaded", "*"))
+                if (Directory.Exists(Application.StartupPath + @"Mods\" + TransferModsFrom_CB.Text + @"\Loaded"))
                 {
-                    string ModName = Path.GetFileName(ModPath);
-                    if (ModName == "AutoMod") { continue; }
-                    TransferModsList_LB.Items.Add(Path.GetFileNameWithoutExtension(ModName));
-                }
-                if (TransferModsList_LB.Items.Count > 0)
-                {
-                    TransferMods_Button.Enabled = true;
-                }
-                else
-                {
-                    TransferModsList_LB.Enabled = false;
+                    foreach (string ModPath in Directory.EnumerateDirectories(Application.StartupPath + @"Mods\" + TransferModsFrom_CB.Text + @"\Loaded", "*"))
+                    {
+                        string ModName = Path.GetFileName(ModPath);
+                        if (ModName == "AutoMod") { continue; }
+                        TransferModsList_LB.Items.Add(Path.GetFileNameWithoutExtension(ModName));
+                    }
+                    if (TransferModsList_LB.Items.Count > 0)
+                    {
+                        TransferMods_Button.Enabled = true;
+                    }
+                    else
+                    {
+                        TransferModsList_LB.Enabled = false;
+                    }
                 }
             }
         }
@@ -3311,33 +3336,36 @@ namespace WSMM
                 TransferMods_Button.Enabled = false;
 
                 // Load all folders in Loaded
-                foreach (string ModPath in Directory.EnumerateDirectories(Application.StartupPath + @"Mods\" + TransferModsFrom_CB.Text + @"\Loaded", "*"))
+                if (Directory.Exists(Application.StartupPath + @"Mods\" + TransferModsFrom_CB.Text + @"\Loaded"))
                 {
-                    string ModName = Path.GetFileName(ModPath);
-                    if (ModName == "AutoMod") { continue; }
-                    //Read MetaData
-                    string SupVers = string.Empty;
-                    string[] MetaData = File.ReadAllLines(Application.StartupPath + @"Mods\" + TransferModsFrom_CB.Text + @"\Loaded\" + ModName + @"\Metadata.dat");
-                    foreach (string meta in MetaData)
+                    foreach (string ModPath in Directory.EnumerateDirectories(Application.StartupPath + @"Mods\" + TransferModsFrom_CB.Text + @"\Loaded", "*"))
                     {
-                        if (meta.StartsWith("SupportedWLVersions"))
+                        string ModName = Path.GetFileName(ModPath);
+                        if (ModName == "AutoMod") { continue; }
+                        //Read MetaData
+                        string SupVers = string.Empty;
+                        string[] MetaData = File.ReadAllLines(Application.StartupPath + @"Mods\" + TransferModsFrom_CB.Text + @"\Loaded\" + ModName + @"\Metadata.dat");
+                        foreach (string meta in MetaData)
                         {
-                            SupVers = GetSlice(meta, "=", 1);
-                            if (isVersionValid(SupVers))
+                            if (meta.StartsWith("SupportedWLVersions"))
                             {
-                                TransferModsList_LB.Items.Add(ModName);
-                                break;
+                                SupVers = GetSlice(meta, "=", 1);
+                                if (isVersionValid(SupVers))
+                                {
+                                    TransferModsList_LB.Items.Add(ModName);
+                                    break;
+                                }
                             }
                         }
                     }
-                }
-                if (TransferModsList_LB.Items.Count > 0)
-                {
-                    TransferMods_Button.Enabled = true;
-                }
-                else
-                {
-                    TransferModsList_LB.Enabled = false;
+                    if (TransferModsList_LB.Items.Count > 0)
+                    {
+                        TransferMods_Button.Enabled = true;
+                    }
+                    else
+                    {
+                        TransferModsList_LB.Enabled = false;
+                    }
                 }
             }
         }
@@ -3369,6 +3397,11 @@ namespace WSMM
             {
                 AddMods(ValidMods);
             }
+        }
+
+        private void ReloadMods_Button_Click(object sender, EventArgs e)
+        {
+            LoadMods();
         }
     }
 }
