@@ -324,10 +324,9 @@ namespace WSMM
         private void ScreenshotAdd_Button_Click(object sender, EventArgs e)
         {
             ScreenshotAdd_TB.ForeColor = SystemColors.ActiveCaption;
-            ScreenshotAdd_TB.Text = ScreenshotAdd_TB.Text.ToLower();
-            if (ScreenshotAdd_TB.Text.EndsWith(".jpg") || ScreenshotAdd_TB.Text.EndsWith(".jpeg") || ScreenshotAdd_TB.Text.EndsWith(".png"))
+            if (ScreenshotAdd_TB.Text.ToLower().EndsWith(".jpg") || ScreenshotAdd_TB.Text.ToLower().EndsWith(".jpeg") || ScreenshotAdd_TB.Text.ToLower().EndsWith(".png"))
             {
-                if (ScreenshotAdd_TB.Text.StartsWith("https://") || ScreenshotAdd_TB.Text.StartsWith("http://"))
+                if (ScreenshotAdd_TB.Text.ToLower().StartsWith("https://") || ScreenshotAdd_TB.Text.ToLower().StartsWith("http://"))
                 {
                     Screenshots_LB.Items.Add(ScreenshotAdd_TB.Text);
                 }
