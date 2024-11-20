@@ -33,7 +33,7 @@ namespace WSMM
         private bool StartingUp = true;
         private bool HasOldChanges = false;
 
-        private string WLMM_Version = "1.1.1";
+        private string WLMM_Version = "1.1.2";
         private string Datatable_Version = string.Empty;
         string BuildLog = string.Empty;
 
@@ -3370,7 +3370,7 @@ namespace WSMM
             }
         }
 
-        public void ReloadAffectedMod(string WLMMPath)
+        public void ReloadAffectedMod(string WLMMPath, string NewPath)
         {
             List<string> ValidMods = new List<string>();
             ValidMods.Add(WLMMPath);
@@ -3388,6 +3388,8 @@ namespace WSMM
                     {
                         // Match, reload
                         FoundMatch = true;
+                        ValidMods.Clear();
+                        ValidMods.Add(NewPath);
                         break;
                     }
                 }
@@ -3395,7 +3397,15 @@ namespace WSMM
 
             if (FoundMatch)
             {
-                AddMods(ValidMods);
+                if (WLMMPath != NewPath)
+                {
+                    Directory.Delete(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + Path.GetFileNameWithoutExtension(WLMMPath), true);
+                    AddMods(ValidMods);
+                }
+                else
+                {
+                    AddMods(ValidMods);
+                }
             }
         }
 

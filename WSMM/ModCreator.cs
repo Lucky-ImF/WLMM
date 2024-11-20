@@ -562,11 +562,11 @@ namespace WSMM
                 {
                     File.Delete(CurrentlyEditing_Path);
                 }
-                ZipFile.CreateFromDirectory(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Staging", CurrentlyEditing_Path);
+                ZipFile.CreateFromDirectory(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Staging", Path.GetDirectoryName(CurrentlyEditing_Path) + @"\" + ModName_TB.Text + ".wlmm");
 
                 // If this path is in Active Mods, reload that mod.
                 Thread.Sleep(500); // Let the compression fully finish.
-                ParentForm.ReloadAffectedMod(CurrentlyEditing_Path);
+                ParentForm.ReloadAffectedMod(CurrentlyEditing_Path, Path.GetDirectoryName(CurrentlyEditing_Path) + @"\" + ModName_TB.Text + ".wlmm");
             }
 
 

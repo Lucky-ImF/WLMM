@@ -368,9 +368,9 @@ namespace WSMM
             }
 
             // Check Mod Icon ends with valid extension
-            if (ModIconURL_TB.Text.EndsWith(".jpg") || ModIconURL_TB.Text.EndsWith(".jpeg") || ModIconURL_TB.Text.EndsWith(".png"))
+            if (ModIconURL_TB.Text.ToLower().EndsWith(".jpg") || ModIconURL_TB.Text.ToLower().EndsWith(".jpeg") || ModIconURL_TB.Text.ToLower().EndsWith(".png"))
             {
-                if (ModIconURL_TB.Text.StartsWith("https://") == false && ModIconURL_TB.Text.StartsWith("http://") == false)
+                if (ModIconURL_TB.Text.ToLower().StartsWith("https://") == false && ModIconURL_TB.Text.ToLower().StartsWith("http://") == false)
                 {
                     ModValid = false;
                     ModIconURL_TB.ForeColor = Color.LightCoral;
