@@ -1433,6 +1433,7 @@ namespace WSMM
             int EntryID = int.Parse(Casted.Tag.ToString());
             List<string> ValidMods = new List<string>();
             ValidMods.Add(Mod_WLMMPath[EntryID]);
+            Directory.Delete(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + Path.GetFileNameWithoutExtension(Mod_WLMMPath[EntryID]), true);
             AddMods(ValidMods);
         }
 
@@ -3402,15 +3403,8 @@ namespace WSMM
 
             if (FoundMatch)
             {
-                if (WLMMPath != NewPath)
-                {
-                    Directory.Delete(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + Path.GetFileNameWithoutExtension(WLMMPath), true);
-                    AddMods(ValidMods);
-                }
-                else
-                {
-                    AddMods(ValidMods);
-                }
+                Directory.Delete(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + Path.GetFileNameWithoutExtension(WLMMPath), true);
+                AddMods(ValidMods);
             }
         }
 
