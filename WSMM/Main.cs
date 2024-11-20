@@ -1655,7 +1655,7 @@ namespace WSMM
             }
 
             //Check for files in AutoMod folder
-            if (HasAutoMod)
+            if (HasAutoMod || BS_AlwaysRunAM_CB.Checked == true)
             {
                 ActiveMods.Add("AutoMod_P.pak");
             }
@@ -1757,9 +1757,13 @@ namespace WSMM
                 }
             }
 
-            if (HasAutoMod)
+            if (HasAutoMod || BS_AlwaysRunAM_CB.Checked == true)
             {
                 BuildLog += "AutoMod Process...\n";
+                if (BS_AlwaysRunAM_CB.Checked == true)
+                {
+                    BuildLog += "(AutoMod Process Forced)\n";
+                }
                 BuildLog += "+ Generating .JSON files...\n";
                 //AutoMod Process
                 //Generate .json files //2

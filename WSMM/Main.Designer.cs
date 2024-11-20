@@ -139,6 +139,7 @@
             TransferModsFrom_CB = new ComboBox();
             label26 = new Label();
             TransferModsOpen_Button = new Button();
+            BS_AlwaysRunAM_CB = new CheckBox();
             TitlePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
@@ -952,6 +953,7 @@
             // BuildSettings_Panel
             // 
             BuildSettings_Panel.BorderStyle = BorderStyle.FixedSingle;
+            BuildSettings_Panel.Controls.Add(BS_AlwaysRunAM_CB);
             BuildSettings_Panel.Controls.Add(BS_AllowOutdated_CB);
             BuildSettings_Panel.Controls.Add(BS_VerifyFI_CB);
             BuildSettings_Panel.Controls.Add(label1);
@@ -963,9 +965,9 @@
             BuildSettings_Panel.Controls.Add(BS_BaseGameCharacterOutfitFile);
             BuildSettings_Panel.Controls.Add(label14);
             BuildSettings_Panel.Controls.Add(BS_BaseClothesOutfitFile);
-            BuildSettings_Panel.Location = new Point(898, 343);
+            BuildSettings_Panel.Location = new Point(898, 322);
             BuildSettings_Panel.Name = "BuildSettings_Panel";
-            BuildSettings_Panel.Size = new Size(231, 293);
+            BuildSettings_Panel.Size = new Size(231, 314);
             BuildSettings_Panel.TabIndex = 13;
             BuildSettings_Panel.Visible = false;
             // 
@@ -974,7 +976,7 @@
             BS_AllowOutdated_CB.AutoSize = true;
             BS_AllowOutdated_CB.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             BS_AllowOutdated_CB.ForeColor = Color.Firebrick;
-            BS_AllowOutdated_CB.Location = new Point(5, 261);
+            BS_AllowOutdated_CB.Location = new Point(5, 283);
             BS_AllowOutdated_CB.Name = "BS_AllowOutdated_CB";
             BS_AllowOutdated_CB.Size = new Size(227, 24);
             BS_AllowOutdated_CB.TabIndex = 44;
@@ -989,7 +991,7 @@
             BS_VerifyFI_CB.CheckState = CheckState.Checked;
             BS_VerifyFI_CB.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             BS_VerifyFI_CB.ForeColor = SystemColors.ActiveCaption;
-            BS_VerifyFI_CB.Location = new Point(6, 234);
+            BS_VerifyFI_CB.Location = new Point(5, 234);
             BS_VerifyFI_CB.Name = "BS_VerifyFI_CB";
             BS_VerifyFI_CB.Size = new Size(224, 24);
             BS_VerifyFI_CB.TabIndex = 43;
@@ -1619,6 +1621,18 @@
             TransferModsOpen_Button.UseVisualStyleBackColor = false;
             TransferModsOpen_Button.Click += TransferModsOpen_Button_Click;
             // 
+            // BS_AlwaysRunAM_CB
+            // 
+            BS_AlwaysRunAM_CB.AutoSize = true;
+            BS_AlwaysRunAM_CB.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BS_AlwaysRunAM_CB.ForeColor = SystemColors.ActiveCaption;
+            BS_AlwaysRunAM_CB.Location = new Point(5, 258);
+            BS_AlwaysRunAM_CB.Name = "BS_AlwaysRunAM_CB";
+            BS_AlwaysRunAM_CB.Size = new Size(220, 24);
+            BS_AlwaysRunAM_CB.TabIndex = 45;
+            BS_AlwaysRunAM_CB.Text = "Always run AutoMod process";
+            BS_AlwaysRunAM_CB.UseVisualStyleBackColor = true;
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1813,5 +1827,6 @@
         private Label label27;
         private Button button1;
         private Button ReloadMods_Button;
+        private CheckBox BS_AlwaysRunAM_CB;
     }
 }
