@@ -710,6 +710,7 @@
             StopEditing_LL.TabIndex = 44;
             StopEditing_LL.TabStop = true;
             StopEditing_LL.Text = "X";
+            toolTip1.SetToolTip(StopEditing_LL, "Stop Editing");
             StopEditing_LL.Visible = false;
             StopEditing_LL.VisitedLinkColor = Color.LightCoral;
             StopEditing_LL.LinkClicked += StopEditing_LL_LinkClicked;
@@ -727,6 +728,7 @@
             CurrentlyEditing_LL.TabIndex = 43;
             CurrentlyEditing_LL.TabStop = true;
             CurrentlyEditing_LL.Text = "New Mod";
+            toolTip1.SetToolTip(CurrentlyEditing_LL, "Click to navigate to this file.");
             CurrentlyEditing_LL.VisitedLinkColor = SystemColors.MenuHighlight;
             CurrentlyEditing_LL.LinkClicked += CurrentlyEditing_LL_LinkClicked;
             // 

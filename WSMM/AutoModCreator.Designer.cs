@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AutoModCreator));
             Close_Button = new PictureBox();
             Separator_1 = new PictureBox();
@@ -329,6 +330,7 @@
             label106 = new Label();
             CurrentlyEditing_LL = new LinkLabel();
             StopEditing_LL = new LinkLabel();
+            toolTip1 = new ToolTip(components);
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             TitlePanel.SuspendLayout();
@@ -4153,6 +4155,7 @@
             CurrentlyEditing_LL.TabIndex = 40;
             CurrentlyEditing_LL.TabStop = true;
             CurrentlyEditing_LL.Text = "New File";
+            toolTip1.SetToolTip(CurrentlyEditing_LL, "Click to navigate to this file.");
             CurrentlyEditing_LL.VisitedLinkColor = SystemColors.MenuHighlight;
             CurrentlyEditing_LL.LinkClicked += CurrentlyEditing_LL_LinkClicked;
             // 
@@ -4171,9 +4174,17 @@
             StopEditing_LL.TabIndex = 41;
             StopEditing_LL.TabStop = true;
             StopEditing_LL.Text = "X";
+            toolTip1.SetToolTip(StopEditing_LL, "Stop Editing");
             StopEditing_LL.Visible = false;
             StopEditing_LL.VisitedLinkColor = Color.LightCoral;
             StopEditing_LL.LinkClicked += StopEditing_LL_LinkClicked;
+            // 
+            // toolTip1
+            // 
+            toolTip1.AutoPopDelay = 3000;
+            toolTip1.InitialDelay = 500;
+            toolTip1.IsBalloon = true;
+            toolTip1.ReshowDelay = 100;
             // 
             // AutoModCreator
             // 
@@ -4555,5 +4566,6 @@
         private LinkLabel CurrentlyEditing_LL;
         private LinkLabel StopEditing_LL;
         private Panel FurCust_ScrollBox;
+        private ToolTip toolTip1;
     }
 }

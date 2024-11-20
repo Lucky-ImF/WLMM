@@ -785,6 +785,7 @@ namespace WSMM
 
             CurrentlyEditing_Path = ModPath;
             CurrentlyEditing_LL.Text = ModPath;
+            WriteMod.Text = "Edit Mod File";
             StopEditing_LL.Show();
 
             string[] contents;
@@ -927,7 +928,7 @@ namespace WSMM
             }
         }
 
-        private void CreateCustCharEntry(int Dupe = 99, string setTarget = "Hair", string setPath = "None", string setName = "None")
+        private void CreateCustCharEntry(int Dupe = 99, string setTarget = "Hair", string setPath = "/Game/Textures/...", string setName = "None")
         {
             int EntryID = CharCust_CurrentEntryID;
 
@@ -1768,6 +1769,7 @@ namespace WSMM
         {
             CurrentlyEditing_Path = string.Empty;
             CurrentlyEditing_LL.Text = "New File";
+            WriteMod.Text = "Write Mod File";
             StopEditing_LL.Hide();
         }
 

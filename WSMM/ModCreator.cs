@@ -205,6 +205,7 @@ namespace WSMM
 
             AutoModList.Items.Add(Path.GetFileName(AMPath), 1);
             AutoModList.Items[AutoModList.Items.Count - 1].Tag = AMPath;
+            AutoModList.Items[AutoModList.Items.Count - 1].ToolTipText = "Double Click to load file in AutoMod Creator.";
         }
 
         private void AddAutoMod_Button_Click(object sender, EventArgs e)
@@ -223,11 +224,13 @@ namespace WSMM
                     {
                         AutoModList.Items.Add(Path.GetFileName(AMs), 1);
                         AutoModList.Items[AutoModList.Items.Count - 1].Tag = AMs;
+                        AutoModList.Items[AutoModList.Items.Count - 1].ToolTipText = "Double Click to load file in AutoMod Creator.";
                     }
                     else if (Path.GetExtension(AMs) == ".collection")
                     {
                         AutoModList.Items.Add(Path.GetFileName(AMs), 2);
                         AutoModList.Items[AutoModList.Items.Count - 1].Tag = AMs;
+                        AutoModList.Items[AutoModList.Items.Count - 1].ToolTipText = "You currently can't edit .collection files.";
                     }
                     else
                     {
@@ -624,6 +627,7 @@ namespace WSMM
             ZipFile.ExtractToDirectory(ModPath, Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp");
             CurrentlyEditing_Path = ModPath;
             CurrentlyEditing_LL.Text = ModPath;
+            BuildMods_Button.Text = "Edit Mod";
             StopEditing_LL.Show();
             foreach (string pak in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\Paks", "*.pak"))
             {
@@ -635,11 +639,13 @@ namespace WSMM
             {
                 AutoModList.Items.Add(Path.GetFileName(AMs), 1);
                 AutoModList.Items[AutoModList.Items.Count - 1].Tag = AMs;
+                AutoModList.Items[AutoModList.Items.Count - 1].ToolTipText = "Double Click to load file in AutoMod Creator.";
             }
             foreach (string AMs in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\AutoMod", "*.collection"))
             {
                 AutoModList.Items.Add(Path.GetFileName(AMs), 2);
                 AutoModList.Items[AutoModList.Items.Count - 1].Tag = AMs;
+                AutoModList.Items[AutoModList.Items.Count - 1].ToolTipText = "You currently can't edit .collection files.";
             }
 
             //Name Author Versions Version URL Icon
@@ -984,6 +990,7 @@ namespace WSMM
             CurrentlyEditing_Path = string.Empty;
             CurrentlyEditing_LL.Text = "New Mod";
             StopEditing_LL.Hide();
+            BuildMods_Button.Text = "Create Mod";
         }
 
         private void AffectedCharacterSetWithAutoMod_LL_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
