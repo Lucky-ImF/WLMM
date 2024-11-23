@@ -303,7 +303,7 @@ namespace WSMM
                 }
                 Cat_Entries.Clear();
                 Cat_CurrentEntryID = 0;
-                
+
                 NoModsFound_Label.Show();
 
                 LoadGameVersion(Path.GetDirectoryName(SelectWLVersionPath_TB.Text), SelectWLVersion_CB.Text, SelectWLVersionUEV_TB.Text);
@@ -386,6 +386,8 @@ namespace WSMM
             //Set title
             this.Text = "Wild Life Mod Manager - v." + WLMM_Version;
             TitleLabel.Text = "Wild Life Mod Manager - v." + WLMM_Version;
+
+            CreateMissingFolders();
 
             LoadDatatableVersion();
 
@@ -3411,6 +3413,26 @@ namespace WSMM
         private void ReloadMods_Button_Click(object sender, EventArgs e)
         {
             LoadMods();
+        }
+
+        private void CreateMissingFolders()
+        {
+            if (Directory.Exists(Application.StartupPath + @"DataTables") == false)
+            {
+                Directory.CreateDirectory(Application.StartupPath + @"DataTables");
+            }
+            if (Directory.Exists(Application.StartupPath + @"Mappings") == false)
+            {
+                Directory.CreateDirectory(Application.StartupPath + @"Mappings");
+            }
+            if (Directory.Exists(Application.StartupPath + @"Mods") == false)
+            {
+                Directory.CreateDirectory(Application.StartupPath + @"Mods");
+            }
+            if (Directory.Exists(Application.StartupPath + @"System") == false)
+            {
+                Directory.CreateDirectory(Application.StartupPath + @"System");
+            }
         }
     }
 }

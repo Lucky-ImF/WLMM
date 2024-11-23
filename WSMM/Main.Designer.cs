@@ -90,6 +90,7 @@
             folderBrowserDialog1 = new FolderBrowserDialog();
             BuildSettings_Button = new Button();
             BuildSettings_Panel = new Panel();
+            BS_AlwaysRunAM_CB = new CheckBox();
             BS_AllowOutdated_CB = new CheckBox();
             BS_VerifyFI_CB = new CheckBox();
             label1 = new Label();
@@ -139,7 +140,6 @@
             TransferModsFrom_CB = new ComboBox();
             label26 = new Label();
             TransferModsOpen_Button = new Button();
-            BS_AlwaysRunAM_CB = new CheckBox();
             TitlePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
@@ -971,6 +971,18 @@
             BuildSettings_Panel.TabIndex = 13;
             BuildSettings_Panel.Visible = false;
             // 
+            // BS_AlwaysRunAM_CB
+            // 
+            BS_AlwaysRunAM_CB.AutoSize = true;
+            BS_AlwaysRunAM_CB.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BS_AlwaysRunAM_CB.ForeColor = SystemColors.ActiveCaption;
+            BS_AlwaysRunAM_CB.Location = new Point(5, 258);
+            BS_AlwaysRunAM_CB.Name = "BS_AlwaysRunAM_CB";
+            BS_AlwaysRunAM_CB.Size = new Size(220, 24);
+            BS_AlwaysRunAM_CB.TabIndex = 45;
+            BS_AlwaysRunAM_CB.Text = "Always run AutoMod process";
+            BS_AlwaysRunAM_CB.UseVisualStyleBackColor = true;
+            // 
             // BS_AllowOutdated_CB
             // 
             BS_AllowOutdated_CB.AutoSize = true;
@@ -1621,18 +1633,6 @@
             TransferModsOpen_Button.UseVisualStyleBackColor = false;
             TransferModsOpen_Button.Click += TransferModsOpen_Button_Click;
             // 
-            // BS_AlwaysRunAM_CB
-            // 
-            BS_AlwaysRunAM_CB.AutoSize = true;
-            BS_AlwaysRunAM_CB.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            BS_AlwaysRunAM_CB.ForeColor = SystemColors.ActiveCaption;
-            BS_AlwaysRunAM_CB.Location = new Point(5, 258);
-            BS_AlwaysRunAM_CB.Name = "BS_AlwaysRunAM_CB";
-            BS_AlwaysRunAM_CB.Size = new Size(220, 24);
-            BS_AlwaysRunAM_CB.TabIndex = 45;
-            BS_AlwaysRunAM_CB.Text = "Always run AutoMod process";
-            BS_AlwaysRunAM_CB.UseVisualStyleBackColor = true;
-            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1640,8 +1640,9 @@
             BackColor = Color.FromArgb(32, 34, 81);
             ClientSize = new Size(1134, 761);
             ControlBox = false;
-            Controls.Add(TransferMods_Panel);
+            Controls.Add(BugReport_Panel);
             Controls.Add(ExpandedLink_Panel);
+            Controls.Add(TransferMods_Panel);
             Controls.Add(TransferModsOpen_Button);
             Controls.Add(BuildSettings_Panel);
             Controls.Add(MarketplaceEditor_Button);
@@ -1652,7 +1653,6 @@
             Controls.Add(MetaDataPatcher_Button);
             Controls.Add(CreateBuildLog_Button);
             Controls.Add(OpenWLFolder_Button);
-            Controls.Add(BugReport_Panel);
             Controls.Add(Icon_PB);
             Controls.Add(RefreshBuildSettings_Button);
             Controls.Add(BuildSettings_Button);
