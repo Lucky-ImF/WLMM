@@ -81,6 +81,7 @@
             StopEditing_LL = new LinkLabel();
             CurrentlyEditing_LL = new LinkLabel();
             label106 = new Label();
+            AffectedCharacters_Sort_LL = new LinkLabel();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             TitlePanel.SuspendLayout();
@@ -309,6 +310,7 @@
             // panel1
             // 
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(AffectedCharacters_Sort_LL);
             panel1.Controls.Add(AffectedCharacterSetWithAutoMod_LL);
             panel1.Controls.Add(label11);
             panel1.Controls.Add(AffectedCharacters_CLB);
@@ -743,6 +745,24 @@
             label106.TabIndex = 42;
             label106.Text = "Currently Editing: ";
             // 
+            // AffectedCharacters_Sort_LL
+            // 
+            AffectedCharacters_Sort_LL.ActiveLinkColor = SystemColors.MenuHighlight;
+            AffectedCharacters_Sort_LL.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            AffectedCharacters_Sort_LL.LinkColor = SystemColors.MenuHighlight;
+            AffectedCharacters_Sort_LL.Location = new Point(287, 185);
+            AffectedCharacters_Sort_LL.Margin = new Padding(4, 0, 4, 0);
+            AffectedCharacters_Sort_LL.Name = "AffectedCharacters_Sort_LL";
+            AffectedCharacters_Sort_LL.Size = new Size(71, 16);
+            AffectedCharacters_Sort_LL.TabIndex = 45;
+            AffectedCharacters_Sort_LL.TabStop = true;
+            AffectedCharacters_Sort_LL.Tag = "null";
+            AffectedCharacters_Sort_LL.Text = "ABC";
+            AffectedCharacters_Sort_LL.TextAlign = ContentAlignment.TopCenter;
+            toolTip1.SetToolTip(AffectedCharacters_Sort_LL, "Sort alphabetically.");
+            AffectedCharacters_Sort_LL.VisitedLinkColor = SystemColors.MenuHighlight;
+            AffectedCharacters_Sort_LL.LinkClicked += AffectedCharacters_Sort_LL_LinkClicked;
+            // 
             // ModCreator
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -846,5 +866,6 @@
         private CheckedListBox AffectedCharacters_CLB;
         private Label label10;
         private CheckedListBox Categories_CLB;
+        private LinkLabel AffectedCharacters_Sort_LL;
     }
 }

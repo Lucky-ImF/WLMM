@@ -1009,8 +1009,8 @@ namespace WSMM
 
                 foreach (string line in contents)
                 {
-                    if (GetSlice(line, ":", 0) == "Character") 
-                    { 
+                    if (GetSlice(line, ":", 0) == "Character")
+                    {
                         string Character = GetSlice(line, ":", 1);
                         for (int i = 0; i <= (AffectedCharacters_CLB.Items.Count - 1); i++)
                         {
@@ -1024,6 +1024,23 @@ namespace WSMM
                 }
             }
             MessageBox.Show("Characters added: " + CharactersAdded.ToString(), "Wild Life Mod Manager");
+        }
+
+        private void AffectedCharacters_Sort_LL_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (AffectedCharacters_Sort_LL.Text == "ABC")
+            {
+                AffectedCharacters_CLB.Sorted = true;
+                AffectedCharacters_Sort_LL.Text = "Default";
+                toolTip1.SetToolTip(AffectedCharacters_Sort_LL, "Reset sorting to default.");
+            }
+            else
+            {
+                AffectedCharacters_CLB.Sorted = false;
+                LoadCharacters();
+                AffectedCharacters_Sort_LL.Text = "ABC";
+                toolTip1.SetToolTip(AffectedCharacters_Sort_LL, "Sort alphabetically.");
+            }
         }
     }
 }
