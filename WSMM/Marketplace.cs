@@ -294,6 +294,9 @@ namespace WSMM
             Mod_Icon[EntryID].BorderStyle = BorderStyle.None;
             Mod_Icon[EntryID].SizeMode = PictureBoxSizeMode.Zoom;
             Mod_Icon[EntryID].ImageLocation = ModIcon;
+            Mod_Icon[EntryID].Tag = ModString;
+            Mod_Icon[EntryID].Click += Mod_Icon_Click;
+            Mod_Icon[EntryID].Cursor = Cursors.Hand;
 
             //Label[] Mod_NameLabel = new Label[50];
             Mod_NameLabel[EntryID] = new LinkLabel();
@@ -387,6 +390,12 @@ namespace WSMM
         private void Mod_NameLabel_Click(object sender, EventArgs e)
         {
             LinkLabel Casted = sender as LinkLabel;
+            OpenMod(Casted.Tag.ToString());
+        }
+
+        private void Mod_Icon_Click(object sender, EventArgs e)
+        {
+            PictureBox Casted = sender as PictureBox;
             OpenMod(Casted.Tag.ToString());
         }
 
