@@ -893,7 +893,6 @@ namespace WSMM
                 ProgressInfo_Label.Invoke((System.Windows.Forms.MethodInvoker)delegate
                 {
                     ProgressInfo_Label.Text = "Unpacking " + Path.GetFileName(Mod) + "...";
-                    ProgressInfo_Label.Left = ProgressPanel.Width / 2 - ProgressInfo_Label.Width / 2;
                 });
                 if (Directory.Exists(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + Path.GetFileNameWithoutExtension(Mod)))
                 {
@@ -909,7 +908,6 @@ namespace WSMM
                     ProgressInfo_Label.Invoke((System.Windows.Forms.MethodInvoker)delegate
                     {
                         ProgressInfo_Label.Text = "Calculating MD5 hash for " + Path.GetFileName(file) + "...";
-                        ProgressInfo_Label.Left = ProgressPanel.Width / 2 - ProgressInfo_Label.Width / 2;
                     });
                     string Md5Hash = CalculateMD5(file);
                     Hashes += Path.GetFileName(file) + " = " + Md5Hash + "\n";
@@ -1031,7 +1029,6 @@ namespace WSMM
                             ProgressPanel.Show();
                             ProgressTitle_Label.Text = "Patching...";
                             ProgressInfo_Label.Text = "Calculating MD5 hash for " + Path.GetFileName(pak) + "...";
-                            ProgressInfo_Label.Left = ProgressPanel.Width / 2 - ProgressInfo_Label.Width / 2;
                         });
                         string Md5Hash = CalculateMD5(pak);
                         Hashes += Path.GetFileName(pak) + " = " + Md5Hash + "\n";
@@ -1637,7 +1634,6 @@ namespace WSMM
             ProgressInfo_Label.Invoke((System.Windows.Forms.MethodInvoker)delegate
             {
                 ProgressInfo_Label.Text = "Copying .pak files to Wild Life..."; //1
-                ProgressInfo_Label.Left = ProgressPanel.Width / 2 - ProgressInfo_Label.Width / 2;
             });
 
             // Get all folders in Loaded
@@ -1936,7 +1932,6 @@ namespace WSMM
                 ProgressInfo_Label.Invoke((System.Windows.Forms.MethodInvoker)delegate
                 {
                     ProgressInfo_Label.Text = "Verifying file integrity...";
-                    ProgressInfo_Label.Left = ProgressPanel.Width / 2 - ProgressInfo_Label.Width / 2;
                 });
                 BuildLog += "Verifying file integrity...\n";
                 foreach (string pak in Directory.EnumerateFiles(LoadedWLPath + @"\WildLifeC\Content\Paks", "*.pak"))
@@ -2093,7 +2088,6 @@ namespace WSMM
                 ProgressInfo_Label.Invoke((System.Windows.Forms.MethodInvoker)delegate
                 {
                     ProgressInfo_Label.Text = "Generating .JSON...";
-                    ProgressInfo_Label.Left = ProgressPanel.Width / 2 - ProgressInfo_Label.Width / 2;
                 });
 
                 //Check for furmask entries
@@ -2880,7 +2874,6 @@ namespace WSMM
             ProgressInfo_Label.Invoke((System.Windows.Forms.MethodInvoker)delegate
             {
                 ProgressInfo_Label.Text = "Serializing .uassets...";
-                ProgressInfo_Label.Left = ProgressPanel.Width / 2 - ProgressInfo_Label.Width / 2;
             });
 
             Usmap mappings = new Usmap(Application.StartupPath + @"Mappings\" + LoadedWLVersion + ".usmap");
@@ -2963,7 +2956,6 @@ namespace WSMM
             ProgressInfo_Label.Invoke((System.Windows.Forms.MethodInvoker)delegate
             {
                 ProgressInfo_Label.Text = "Packaging AutoMod_P.pak...";
-                ProgressInfo_Label.Left = ProgressPanel.Width / 2 - ProgressInfo_Label.Width / 2;
             });
 
             try
@@ -3642,6 +3634,8 @@ namespace WSMM
                 Mod_ContainsLabel[SelectedModID].ActiveLinkColor = Color.Green;
                 Mod_ContainsLabel[SelectedModID].Text = "| Paks: " + LoadEdit_Paks_CLB.CheckedItems.Count.ToString() + "(" + LoadEdit_Paks_CLB.Items.Count.ToString() + ") | AutoMod: " + LoadEdit_AutoMod_CLB.CheckedItems.Count.ToString() + "(" + LoadEdit_AutoMod_CLB.Items.Count.ToString() + ") |";
                 LoadEdit_Panel.Hide();
+
+                AddChange();
             }
             else
             {
@@ -3654,6 +3648,7 @@ namespace WSMM
                 Mod_ContainsLabel[SelectedModID].ActiveLinkColor = System.Drawing.SystemColors.Highlight;
                 Mod_ContainsLabel[SelectedModID].Text = "| Paks: " + LoadEdit_Paks_CLB.CheckedItems.Count.ToString() + " | AutoMod: " + LoadEdit_AutoMod_CLB.CheckedItems.Count.ToString() + " |";
                 LoadEdit_Panel.Hide();
+                AddChange();
             }
         }
     }

@@ -48,6 +48,7 @@
             AutoModList = new ListView();
             CreateAutoMod_Button = new Button();
             panel1 = new Panel();
+            AffectedCharacters_Sort_LL = new LinkLabel();
             AffectedCharacterSetWithAutoMod_LL = new LinkLabel();
             label11 = new Label();
             AffectedCharacters_CLB = new CheckedListBox();
@@ -81,7 +82,6 @@
             StopEditing_LL = new LinkLabel();
             CurrentlyEditing_LL = new LinkLabel();
             label106 = new Label();
-            AffectedCharacters_Sort_LL = new LinkLabel();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             TitlePanel.SuspendLayout();
@@ -336,6 +336,24 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(570, 403);
             panel1.TabIndex = 14;
+            // 
+            // AffectedCharacters_Sort_LL
+            // 
+            AffectedCharacters_Sort_LL.ActiveLinkColor = SystemColors.MenuHighlight;
+            AffectedCharacters_Sort_LL.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            AffectedCharacters_Sort_LL.LinkColor = SystemColors.MenuHighlight;
+            AffectedCharacters_Sort_LL.Location = new Point(287, 185);
+            AffectedCharacters_Sort_LL.Margin = new Padding(4, 0, 4, 0);
+            AffectedCharacters_Sort_LL.Name = "AffectedCharacters_Sort_LL";
+            AffectedCharacters_Sort_LL.Size = new Size(71, 16);
+            AffectedCharacters_Sort_LL.TabIndex = 45;
+            AffectedCharacters_Sort_LL.TabStop = true;
+            AffectedCharacters_Sort_LL.Tag = "null";
+            AffectedCharacters_Sort_LL.Text = "ABC";
+            AffectedCharacters_Sort_LL.TextAlign = ContentAlignment.TopCenter;
+            toolTip1.SetToolTip(AffectedCharacters_Sort_LL, "Sort alphabetically.");
+            AffectedCharacters_Sort_LL.VisitedLinkColor = SystemColors.MenuHighlight;
+            AffectedCharacters_Sort_LL.LinkClicked += AffectedCharacters_Sort_LL_LinkClicked;
             // 
             // AffectedCharacterSetWithAutoMod_LL
             // 
@@ -623,14 +641,14 @@
             // 
             // ProgressInfo_Label
             // 
-            ProgressInfo_Label.AutoSize = true;
             ProgressInfo_Label.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             ProgressInfo_Label.ForeColor = SystemColors.ActiveCaption;
-            ProgressInfo_Label.Location = new Point(279, 802);
+            ProgressInfo_Label.Location = new Point(60, 802);
             ProgressInfo_Label.Name = "ProgressInfo_Label";
-            ProgressInfo_Label.Size = new Size(90, 21);
+            ProgressInfo_Label.Size = new Size(541, 21);
             ProgressInfo_Label.TabIndex = 17;
             ProgressInfo_Label.Text = "Initializing...";
+            ProgressInfo_Label.TextAlign = ContentAlignment.TopCenter;
             ProgressInfo_Label.Visible = false;
             // 
             // BuildModProgress_PB
@@ -744,24 +762,6 @@
             label106.Size = new Size(102, 15);
             label106.TabIndex = 42;
             label106.Text = "Currently Editing: ";
-            // 
-            // AffectedCharacters_Sort_LL
-            // 
-            AffectedCharacters_Sort_LL.ActiveLinkColor = SystemColors.MenuHighlight;
-            AffectedCharacters_Sort_LL.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            AffectedCharacters_Sort_LL.LinkColor = SystemColors.MenuHighlight;
-            AffectedCharacters_Sort_LL.Location = new Point(287, 185);
-            AffectedCharacters_Sort_LL.Margin = new Padding(4, 0, 4, 0);
-            AffectedCharacters_Sort_LL.Name = "AffectedCharacters_Sort_LL";
-            AffectedCharacters_Sort_LL.Size = new Size(71, 16);
-            AffectedCharacters_Sort_LL.TabIndex = 45;
-            AffectedCharacters_Sort_LL.TabStop = true;
-            AffectedCharacters_Sort_LL.Tag = "null";
-            AffectedCharacters_Sort_LL.Text = "ABC";
-            AffectedCharacters_Sort_LL.TextAlign = ContentAlignment.TopCenter;
-            toolTip1.SetToolTip(AffectedCharacters_Sort_LL, "Sort alphabetically.");
-            AffectedCharacters_Sort_LL.VisitedLinkColor = SystemColors.MenuHighlight;
-            AffectedCharacters_Sort_LL.LinkClicked += AffectedCharacters_Sort_LL_LinkClicked;
             // 
             // ModCreator
             // 

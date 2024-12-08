@@ -293,14 +293,14 @@
             // 
             // ProgressInfo_Label
             // 
-            ProgressInfo_Label.AutoSize = true;
             ProgressInfo_Label.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             ProgressInfo_Label.ForeColor = SystemColors.ActiveCaption;
-            ProgressInfo_Label.Location = new Point(248, 550);
+            ProgressInfo_Label.Location = new Point(24, 550);
             ProgressInfo_Label.Name = "ProgressInfo_Label";
-            ProgressInfo_Label.Size = new Size(90, 21);
+            ProgressInfo_Label.Size = new Size(534, 21);
             ProgressInfo_Label.TabIndex = 19;
             ProgressInfo_Label.Text = "Initializing...";
+            ProgressInfo_Label.TextAlign = ContentAlignment.TopCenter;
             ProgressInfo_Label.Visible = false;
             // 
             // DownloadProgress_PB

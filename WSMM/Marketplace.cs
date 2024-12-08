@@ -568,7 +568,6 @@ namespace WSMM
                 IProgress<double> progressHandler = new Progress<double>(x =>
                 {
                     ProgressInfo_Label.Text = "Downloading... " + ((int)x).ToString() + "%";
-                    ProgressInfo_Label.Left = ModPanel_Panel.Width / 2 - ProgressInfo_Label.Width / 2;
                     DownloadProgress_PB.Value = ((int)x);
                 }
                 );

@@ -767,14 +767,14 @@
             // 
             // ProgressInfo_Label
             // 
-            ProgressInfo_Label.AutoSize = true;
             ProgressInfo_Label.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             ProgressInfo_Label.ForeColor = SystemColors.ActiveCaption;
-            ProgressInfo_Label.Location = new Point(242, 36);
+            ProgressInfo_Label.Location = new Point(23, 36);
             ProgressInfo_Label.Name = "ProgressInfo_Label";
-            ProgressInfo_Label.Size = new Size(90, 21);
+            ProgressInfo_Label.Size = new Size(541, 21);
             ProgressInfo_Label.TabIndex = 4;
             ProgressInfo_Label.Text = "Initializing...";
+            ProgressInfo_Label.TextAlign = ContentAlignment.TopCenter;
             // 
             // BuildModProgress_PB
             // 
@@ -785,14 +785,14 @@
             // 
             // ProgressTitle_Label
             // 
-            ProgressTitle_Label.AutoSize = true;
             ProgressTitle_Label.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             ProgressTitle_Label.ForeColor = SystemColors.ActiveCaption;
-            ProgressTitle_Label.Location = new Point(213, 1);
+            ProgressTitle_Label.Location = new Point(23, 1);
             ProgressTitle_Label.Name = "ProgressTitle_Label";
-            ProgressTitle_Label.Size = new Size(161, 30);
+            ProgressTitle_Label.Size = new Size(541, 30);
             ProgressTitle_Label.TabIndex = 2;
             ProgressTitle_Label.Text = "Building Mods...";
+            ProgressTitle_Label.TextAlign = ContentAlignment.TopCenter;
             // 
             // SelectWLVersion_Panel
             // 
@@ -1819,7 +1819,6 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ProgressPanel.ResumeLayout(false);
-            ProgressPanel.PerformLayout();
             SelectWLVersion_Panel.ResumeLayout(false);
             SelectWLVersion_Panel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)SelectWLVersion_CloseButton).EndInit();
