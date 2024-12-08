@@ -140,6 +140,15 @@
             TransferModsFrom_CB = new ComboBox();
             label26 = new Label();
             TransferModsOpen_Button = new Button();
+            LoadEdit_Panel = new Panel();
+            LoadEdit_AutoMod_CLB = new CheckedListBox();
+            LoadEdit_Paks_CLB = new CheckedListBox();
+            label28 = new Label();
+            LoadEdit_SaveButton = new Button();
+            LoadEdit_CloseButton = new PictureBox();
+            label30 = new Label();
+            label31 = new Label();
+            LoadEdit_ModName_Label = new Label();
             TitlePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
@@ -164,6 +173,8 @@
             DTDownload_Panel.SuspendLayout();
             TransferMods_Panel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)TransferModsClose_Button).BeginInit();
+            LoadEdit_Panel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)LoadEdit_CloseButton).BeginInit();
             SuspendLayout();
             // 
             // TitlePanel
@@ -1633,6 +1644,120 @@
             TransferModsOpen_Button.UseVisualStyleBackColor = false;
             TransferModsOpen_Button.Click += TransferModsOpen_Button_Click;
             // 
+            // LoadEdit_Panel
+            // 
+            LoadEdit_Panel.BackColor = Color.FromArgb(75, 68, 138);
+            LoadEdit_Panel.BorderStyle = BorderStyle.FixedSingle;
+            LoadEdit_Panel.Controls.Add(LoadEdit_AutoMod_CLB);
+            LoadEdit_Panel.Controls.Add(LoadEdit_Paks_CLB);
+            LoadEdit_Panel.Controls.Add(label28);
+            LoadEdit_Panel.Controls.Add(LoadEdit_SaveButton);
+            LoadEdit_Panel.Controls.Add(LoadEdit_CloseButton);
+            LoadEdit_Panel.Controls.Add(label30);
+            LoadEdit_Panel.Controls.Add(label31);
+            LoadEdit_Panel.Controls.Add(LoadEdit_ModName_Label);
+            LoadEdit_Panel.Location = new Point(316, 235);
+            LoadEdit_Panel.Name = "LoadEdit_Panel";
+            LoadEdit_Panel.Size = new Size(503, 332);
+            LoadEdit_Panel.TabIndex = 57;
+            LoadEdit_Panel.Visible = false;
+            // 
+            // LoadEdit_AutoMod_CLB
+            // 
+            LoadEdit_AutoMod_CLB.BackColor = Color.FromArgb(32, 34, 81);
+            LoadEdit_AutoMod_CLB.BorderStyle = BorderStyle.FixedSingle;
+            LoadEdit_AutoMod_CLB.ForeColor = Color.White;
+            LoadEdit_AutoMod_CLB.FormattingEnabled = true;
+            LoadEdit_AutoMod_CLB.Location = new Point(13, 192);
+            LoadEdit_AutoMod_CLB.Name = "LoadEdit_AutoMod_CLB";
+            LoadEdit_AutoMod_CLB.ScrollAlwaysVisible = true;
+            LoadEdit_AutoMod_CLB.Size = new Size(477, 92);
+            LoadEdit_AutoMod_CLB.TabIndex = 43;
+            // 
+            // LoadEdit_Paks_CLB
+            // 
+            LoadEdit_Paks_CLB.BackColor = Color.FromArgb(32, 34, 81);
+            LoadEdit_Paks_CLB.BorderStyle = BorderStyle.FixedSingle;
+            LoadEdit_Paks_CLB.ForeColor = Color.White;
+            LoadEdit_Paks_CLB.FormattingEnabled = true;
+            LoadEdit_Paks_CLB.Location = new Point(13, 76);
+            LoadEdit_Paks_CLB.Name = "LoadEdit_Paks_CLB";
+            LoadEdit_Paks_CLB.ScrollAlwaysVisible = true;
+            LoadEdit_Paks_CLB.Size = new Size(477, 92);
+            LoadEdit_Paks_CLB.TabIndex = 42;
+            // 
+            // label28
+            // 
+            label28.AutoSize = true;
+            label28.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label28.ForeColor = SystemColors.ActiveCaption;
+            label28.Location = new Point(13, 170);
+            label28.Name = "label28";
+            label28.Size = new Size(66, 17);
+            label28.TabIndex = 39;
+            label28.Text = "AutoMod:";
+            // 
+            // LoadEdit_SaveButton
+            // 
+            LoadEdit_SaveButton.BackColor = Color.FromArgb(75, 68, 138);
+            LoadEdit_SaveButton.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            LoadEdit_SaveButton.FlatStyle = FlatStyle.Flat;
+            LoadEdit_SaveButton.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            LoadEdit_SaveButton.ForeColor = SystemColors.ActiveCaption;
+            LoadEdit_SaveButton.Location = new Point(186, 291);
+            LoadEdit_SaveButton.Name = "LoadEdit_SaveButton";
+            LoadEdit_SaveButton.Size = new Size(128, 30);
+            LoadEdit_SaveButton.TabIndex = 35;
+            LoadEdit_SaveButton.Text = "Save";
+            LoadEdit_SaveButton.UseVisualStyleBackColor = false;
+            LoadEdit_SaveButton.Click += LoadEdit_SaveButton_Click;
+            // 
+            // LoadEdit_CloseButton
+            // 
+            LoadEdit_CloseButton.Image = Properties.Resources.Close_Icon;
+            LoadEdit_CloseButton.Location = new Point(460, 4);
+            LoadEdit_CloseButton.Name = "LoadEdit_CloseButton";
+            LoadEdit_CloseButton.Size = new Size(37, 39);
+            LoadEdit_CloseButton.SizeMode = PictureBoxSizeMode.Zoom;
+            LoadEdit_CloseButton.TabIndex = 34;
+            LoadEdit_CloseButton.TabStop = false;
+            LoadEdit_CloseButton.Click += LoadEdit_CloseButton_Click;
+            LoadEdit_CloseButton.MouseEnter += LoadEdit_CloseButton_MouseEnter;
+            LoadEdit_CloseButton.MouseLeave += LoadEdit_CloseButton_MouseLeave;
+            // 
+            // label30
+            // 
+            label30.AutoSize = true;
+            label30.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label30.ForeColor = SystemColors.ActiveCaption;
+            label30.Location = new Point(13, 55);
+            label30.Name = "label30";
+            label30.Size = new Size(37, 17);
+            label30.TabIndex = 33;
+            label30.Text = "Paks:";
+            // 
+            // label31
+            // 
+            label31.AutoSize = true;
+            label31.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label31.ForeColor = SystemColors.ActiveCaption;
+            label31.Location = new Point(201, 4);
+            label31.Name = "label31";
+            label31.Size = new Size(99, 30);
+            label31.TabIndex = 2;
+            label31.Text = "Load Edit";
+            // 
+            // LoadEdit_ModName_Label
+            // 
+            LoadEdit_ModName_Label.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            LoadEdit_ModName_Label.ForeColor = SystemColors.ActiveCaption;
+            LoadEdit_ModName_Label.Location = new Point(13, 33);
+            LoadEdit_ModName_Label.Name = "LoadEdit_ModName_Label";
+            LoadEdit_ModName_Label.Size = new Size(477, 22);
+            LoadEdit_ModName_Label.TabIndex = 44;
+            LoadEdit_ModName_Label.Text = "ModName";
+            LoadEdit_ModName_Label.TextAlign = ContentAlignment.TopCenter;
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1640,6 +1765,7 @@
             BackColor = Color.FromArgb(32, 34, 81);
             ClientSize = new Size(1134, 761);
             ControlBox = false;
+            Controls.Add(LoadEdit_Panel);
             Controls.Add(BugReport_Panel);
             Controls.Add(ExpandedLink_Panel);
             Controls.Add(TransferMods_Panel);
@@ -1711,6 +1837,9 @@
             TransferMods_Panel.ResumeLayout(false);
             TransferMods_Panel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)TransferModsClose_Button).EndInit();
+            LoadEdit_Panel.ResumeLayout(false);
+            LoadEdit_Panel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)LoadEdit_CloseButton).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1828,5 +1957,20 @@
         private Button button1;
         private Button ReloadMods_Button;
         private CheckBox BS_AlwaysRunAM_CB;
+        private Panel LoadEdit_Panel;
+        private RadioButton radioButton1;
+        private RadioButton radioButton2;
+        private Label label28;
+        private ListBox listBox1;
+        private Label label29;
+        private TextBox textBox1;
+        private Button LoadEdit_SaveButton;
+        private PictureBox LoadEdit_CloseButton;
+        private Label label30;
+        private ComboBox comboBox1;
+        private Label label31;
+        private CheckedListBox LoadEdit_AutoMod_CLB;
+        private CheckedListBox LoadEdit_Paks_CLB;
+        private Label LoadEdit_ModName_Label;
     }
 }

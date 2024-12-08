@@ -33,7 +33,7 @@ namespace WSMM
         private bool StartingUp = true;
         private bool HasOldChanges = false;
 
-        private string WLMM_Version = "1.1.2";
+        private string WLMM_Version = "1.1.3";
         private string Datatable_Version = string.Empty;
         string BuildLog = string.Empty;
 
@@ -41,6 +41,8 @@ namespace WSMM
         public string prevPakPath = string.Empty;
         public string prevAutoModPath = string.Empty;
         public string prevModPath = string.Empty;
+
+        int SelectedModID = 0;
 
         //Panel, Picturebox, Label(Name), Label(Error), Label(Version), Label(SupportedVersions), Label(Author), LinkLabel(Remove), LinkLabel(Link), Checkbox
         Panel[] Mod_Panel = new Panel[100];
@@ -50,7 +52,7 @@ namespace WSMM
         Label[] Mod_VersionLabel = new Label[100];
         Label[] Mod_SupportedVersionsLabel = new Label[100];
         Label[] Mod_CharactersLabel = new Label[100];
-        Label[] Mod_ContainsLabel = new Label[100];
+        LinkLabel[] Mod_ContainsLabel = new LinkLabel[100];
         Label[] Mod_AuthorLabel = new Label[100];
         LinkLabel[] Mod_RemoveButton = new LinkLabel[100];
         LinkLabel[] Mod_ReloadButton = new LinkLabel[100];
@@ -1042,6 +1044,22 @@ namespace WSMM
                     });
                 }
 
+                if (File.Exists(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\LoadEdit.dat") == false)
+                {
+                    string LoadEdit_String = string.Empty;
+                    foreach (string pak in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\Paks", "*.pak"))
+                    {
+                        LoadEdit_String += Path.GetFileName(pak) + "\n";
+                    }
+                    foreach (string AM in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\AutoMod", "*.txt"))
+                    {
+                        LoadEdit_String += Path.GetFileName(AM) + "\n";
+                    }
+                    LoadEdit_String = LoadEdit_String.Trim();
+
+                    File.WriteAllText(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\LoadEdit.dat", LoadEdit_String);
+                }
+
                 CreateModEntry(ModName);
                 NoModsFound_Label.Invoke((System.Windows.Forms.MethodInvoker)delegate
                 {
@@ -1186,13 +1204,43 @@ namespace WSMM
             LabelSize = g.MeasureString(Mod_ErrorLabel[EntryID].Text, Mod_ErrorLabel[EntryID].Font);
             Mod_ErrorLabel[EntryID].Location = new Point(Mod_VersionLabel[EntryID].Left - ((int)LabelSize.Width) - 10, 11);
             //Label[] Mod_ContainsLabel = new Label[50];
-            Mod_ContainsLabel[EntryID] = new Label();
-            Mod_ContainsLabel[EntryID].BackColor = System.Drawing.Color.FromArgb(32, 34, 81);
-            Mod_ContainsLabel[EntryID].ForeColor = System.Drawing.SystemColors.GradientActiveCaption;
+            Mod_ContainsLabel[EntryID] = new LinkLabel();
             Mod_ContainsLabel[EntryID].Font = new Font(Mod_NameLabel[EntryID].Font.FontFamily, 10);
-            Mod_ContainsLabel[EntryID].Text = "| Paks: " + PakCount.ToString() + " | AutoMod: " + AutoModCount.ToString() + " |";
             Mod_ContainsLabel[EntryID].AutoSize = true;
-            Mod_ContainsLabel[EntryID].Location = new Point(310, 83);
+            Mod_ContainsLabel[EntryID].Location = new Point(290, 82);
+            Mod_ContainsLabel[EntryID].Tag = EntryID;
+            Mod_ContainsLabel[EntryID].Click += Mod_ContainsLabel_Click;
+            if (File.Exists(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\LoadEdit_Mod.dat"))
+            {
+                int Mod_PakCount = 0;
+                int Mod_AutoModCount = 0;
+                var LE_Mod_Content = File.ReadAllLines(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\LoadEdit_Mod.dat");
+                foreach (string line in LE_Mod_Content)
+                {
+                    if (line.EndsWith(".pak"))
+                    {
+                        Mod_PakCount++;
+                    }
+                    else if (line.EndsWith(".txt"))
+                    {
+                        Mod_AutoModCount++;
+                    }
+                }
+
+                Mod_ContainsLabel[EntryID].LinkColor = Color.PaleGreen;
+                Mod_ContainsLabel[EntryID].VisitedLinkColor = Color.PaleGreen;
+                Mod_ContainsLabel[EntryID].ActiveLinkColor = Color.Green;
+                Mod_ContainsLabel[EntryID].Text = "| Paks: " + Mod_PakCount.ToString() + "(" + PakCount.ToString() + ") | AutoMod: " + Mod_AutoModCount.ToString() + "(" + AutoModCount.ToString() + ") |";
+            }
+            else
+            {
+                Mod_ContainsLabel[EntryID].LinkColor = System.Drawing.SystemColors.GradientActiveCaption;
+                Mod_ContainsLabel[EntryID].VisitedLinkColor = System.Drawing.SystemColors.GradientActiveCaption;
+                Mod_ContainsLabel[EntryID].ActiveLinkColor = System.Drawing.SystemColors.Highlight;
+                Mod_ContainsLabel[EntryID].Text = "| Paks: " + PakCount.ToString() + " | AutoMod: " + AutoModCount.ToString() + " |";
+            }
+
+
             //LinkLabel[] Mod_RemoveButton = new LinkLabel[50];
             Mod_RemoveButton[EntryID] = new LinkLabel();
             Mod_RemoveButton[EntryID].Text = "Remove";
@@ -1429,6 +1477,15 @@ namespace WSMM
             ExpandedLink_LL.Text = Casted.Tag.ToString();
         }
 
+        private void Mod_ContainsLabel_Click(object sender, EventArgs e)
+        {
+            LinkLabel Casted = sender as LinkLabel;
+            int EntryID = int.Parse(Casted.Tag.ToString());
+            SelectedModID = EntryID;
+            LoadEdit_Panel.Show();
+            Load_LoadEdit(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + Mod_NameLabel[EntryID].Text);
+        }
+
         private void Mod_ReloadButton_Click(object sender, EventArgs e)
         {
             LinkLabel Casted = sender as LinkLabel;
@@ -1591,24 +1648,75 @@ namespace WSMM
                 if (ModName == "AutoMod") { continue; }
                 BuildLog += "+ " + ModName + "\n";
                 string isEnabled = File.ReadAllText(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\Enabled.dat");
+                List<string> EnabledPaks = new List<string>();
+                List<string> EnabledAutoMod = new List<string>();
                 if (isEnabled == "Checked")
                 {
+                    if (File.Exists(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\LoadEdit_Mod.dat"))
+                    {
+                        BuildLog += "+ " + "Load Edit Modified" + "\n";
+                        var LE_Mod_Content = File.ReadAllLines(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\LoadEdit_Mod.dat");
+                        foreach (string line in LE_Mod_Content)
+                        {
+                            if (line.EndsWith(".pak"))
+                            {
+                                EnabledPaks.Add(line.Trim());
+                            }
+                            else if (line.EndsWith(".txt"))
+                            {
+                                EnabledAutoMod.Add(line.Trim());
+                            }
+                        }
+                    }
+
                     try
                     {
                         //Copy .paks to Game
                         foreach (string pak in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\Paks", "*.pak"))
                         {
-                            BuildLog += "+ + " + Path.GetFileName(pak) + "\n";
-                            File.Copy(pak, LoadedWLPath + @"\WildLifeC\Content\Paks\" + Path.GetFileName(pak), true);
-                            ActiveMods.Add(Path.GetFileName(pak));
+                            if (EnabledPaks.Count == 0)
+                            {
+                                BuildLog += "+ + " + Path.GetFileName(pak) + "\n";
+                                File.Copy(pak, LoadedWLPath + @"\WildLifeC\Content\Paks\" + Path.GetFileName(pak), true);
+                                ActiveMods.Add(Path.GetFileName(pak));
+                            }
+                            else
+                            {
+                                if (EnabledPaks.Contains(Path.GetFileName(pak)))
+                                {
+                                    BuildLog += "+ + " + Path.GetFileName(pak) + "\n";
+                                    File.Copy(pak, LoadedWLPath + @"\WildLifeC\Content\Paks\" + Path.GetFileName(pak), true);
+                                    ActiveMods.Add(Path.GetFileName(pak));
+                                }
+                                else
+                                {
+                                    BuildLog += "+ - [Disabled] " + Path.GetFileName(pak) + "\n";
+                                }
+                            }
                         }
 
                         //Copy .txt and .collection to AutoMod
                         foreach (string AMFile in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\AutoMod", "*.txt"))
                         {
-                            BuildLog += "+ + " + Path.GetFileName(AMFile) + "\n";
-                            File.Copy(AMFile, Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\AutoMod\" + Path.GetFileName(AMFile), true);
-                            HasAutoMod = true;
+                            if ( EnabledAutoMod.Count == 0)
+                            {
+                                BuildLog += "+ + " + Path.GetFileName(AMFile) + "\n";
+                                File.Copy(AMFile, Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\AutoMod\" + Path.GetFileName(AMFile), true);
+                                HasAutoMod = true;
+                            }
+                            else
+                            {
+                                if (EnabledAutoMod.Contains(Path.GetFileName(AMFile)))
+                                {
+                                    BuildLog += "+ + " + Path.GetFileName(AMFile) + "\n";
+                                    File.Copy(AMFile, Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\AutoMod\" + Path.GetFileName(AMFile), true);
+                                    HasAutoMod = true;
+                                }
+                                else
+                                {
+                                    BuildLog += "+ - [Disabled] " + Path.GetFileName(AMFile) + "\n";
+                                }
+                            }
                         }
                         foreach (string AMFile in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\AutoMod", "*.collection"))
                         {
@@ -3432,6 +3540,120 @@ namespace WSMM
             if (Directory.Exists(Application.StartupPath + @"System") == false)
             {
                 Directory.CreateDirectory(Application.StartupPath + @"System");
+            }
+        }
+
+        private void LoadEdit_CloseButton_Click(object sender, EventArgs e)
+        {
+            LoadEdit_Panel.Hide();
+        }
+
+        private void LoadEdit_CloseButton_MouseEnter(object sender, EventArgs e)
+        {
+            LoadEdit_CloseButton.Image = Properties.Resources.Close_Icon_Hover;
+        }
+
+        private void LoadEdit_CloseButton_MouseLeave(object sender, EventArgs e)
+        {
+            LoadEdit_CloseButton.Image = Properties.Resources.Close_Icon;
+        }
+
+        private void Load_LoadEdit(string ModPath)
+        {
+            LoadEdit_Paks_CLB.Items.Clear();
+            LoadEdit_AutoMod_CLB.Items.Clear();
+
+            LoadEdit_ModName_Label.Text = Path.GetFileName(ModPath);
+
+            var LE_Content = File.ReadAllLines(ModPath + @"\LoadEdit.dat");
+            foreach (string line in LE_Content)
+            {
+                if (line.EndsWith(".pak"))
+                {
+                    LoadEdit_Paks_CLB.Items.Add(line, false);
+                }
+                else if (line.EndsWith(".txt"))
+                {
+                    LoadEdit_AutoMod_CLB.Items.Add(line, false);
+                }
+            }
+
+            // Check if modified LoadEdit exists
+            if (File.Exists(ModPath + @"\LoadEdit_Mod.dat"))
+            {
+                var LE_Mod_Content = File.ReadAllLines(ModPath + @"\LoadEdit_Mod.dat");
+                foreach (string line in LE_Mod_Content)
+                {
+                    if (line.EndsWith(".pak"))
+                    {
+                        for (int i = 0; i <= (LoadEdit_Paks_CLB.Items.Count - 1); i++)
+                        {
+                            if (line.Trim() == LoadEdit_Paks_CLB.Items[i].ToString().Trim())
+                            {
+                                LoadEdit_Paks_CLB.SetItemChecked(i, true);
+                            }
+                        }
+                    }
+                    else if (line.EndsWith(".txt"))
+                    {
+                        for (int i = 0; i <= (LoadEdit_AutoMod_CLB.Items.Count - 1); i++)
+                        {
+                            if (line.Trim() == LoadEdit_AutoMod_CLB.Items[i].ToString().Trim())
+                            {
+                                LoadEdit_AutoMod_CLB.SetItemChecked(i, true);
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                //Enable All
+                for (int i = 0; i <= (LoadEdit_Paks_CLB.Items.Count - 1); i++)
+                {
+                    LoadEdit_Paks_CLB.SetItemChecked(i, true);
+                }
+                for (int i = 0; i <= (LoadEdit_AutoMod_CLB.Items.Count - 1); i++)
+                {
+                    LoadEdit_AutoMod_CLB.SetItemChecked(i, true);
+                }
+            }
+        }
+
+        private void LoadEdit_SaveButton_Click(object sender, EventArgs e)
+        {
+            if (LoadEdit_Paks_CLB.CheckedItems.Count != LoadEdit_Paks_CLB.Items.Count || LoadEdit_AutoMod_CLB.CheckedItems.Count != LoadEdit_AutoMod_CLB.Items.Count)
+            {
+                //Is modified
+                string LoadEdit_String = string.Empty;
+                foreach (string pak in LoadEdit_Paks_CLB.CheckedItems)
+                {
+                    LoadEdit_String += pak + "\n";
+                }
+                foreach (string AM in LoadEdit_AutoMod_CLB.CheckedItems)
+                {
+                    LoadEdit_String += AM + "\n";
+                }
+                LoadEdit_String = LoadEdit_String.Trim();
+
+                File.WriteAllText(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + LoadEdit_ModName_Label.Text + @"\LoadEdit_Mod.dat", LoadEdit_String);
+                Mod_ContainsLabel[SelectedModID].LinkColor = Color.PaleGreen;
+                Mod_ContainsLabel[SelectedModID].VisitedLinkColor = Color.PaleGreen;
+                Mod_ContainsLabel[SelectedModID].ActiveLinkColor = Color.Green;
+                Mod_ContainsLabel[SelectedModID].Text = "| Paks: " + LoadEdit_Paks_CLB.CheckedItems.Count.ToString() + "(" + LoadEdit_Paks_CLB.Items.Count.ToString() + ") | AutoMod: " + LoadEdit_AutoMod_CLB.CheckedItems.Count.ToString() + "(" + LoadEdit_AutoMod_CLB.Items.Count.ToString() + ") |";
+                LoadEdit_Panel.Hide();
+            }
+            else
+            {
+                if (File.Exists(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + LoadEdit_ModName_Label.Text + @"\LoadEdit_Mod.dat"))
+                {
+                    File.Delete(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + LoadEdit_ModName_Label.Text + @"\LoadEdit_Mod.dat");
+                }
+                Mod_ContainsLabel[SelectedModID].LinkColor = System.Drawing.SystemColors.GradientActiveCaption;
+                Mod_ContainsLabel[SelectedModID].VisitedLinkColor = System.Drawing.SystemColors.GradientActiveCaption;
+                Mod_ContainsLabel[SelectedModID].ActiveLinkColor = System.Drawing.SystemColors.Highlight;
+                Mod_ContainsLabel[SelectedModID].Text = "| Paks: " + LoadEdit_Paks_CLB.CheckedItems.Count.ToString() + " | AutoMod: " + LoadEdit_AutoMod_CLB.CheckedItems.Count.ToString() + " |";
+                LoadEdit_Panel.Hide();
             }
         }
     }
