@@ -1,11 +1,14 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -309,6 +312,8 @@ namespace WSMM
 
                 // Last Update Day
                 LastUpdate_TB.Text = DateTime.Now.Year + "-" + DateTime.Now.Month + "-" + DateTime.Now.Day;
+
+                LoadFromMarketplace_Button.Show();
             }
         }
 
@@ -377,8 +382,8 @@ namespace WSMM
                     toolTip1.Show("Not a valid URL.", ModIconURL_TB, 3000);
                 }
             }
-            else 
-            { 
+            else
+            {
                 ModValid = false;
                 ModIconURL_TB.ForeColor = Color.LightCoral;
                 toolTip1.Show("Filetype not supported. Must be .jpg, .jpeg or .png.", ModIconURL_TB, 3000);
@@ -465,6 +470,78 @@ namespace WSMM
 
                 Clipboard.SetText(Metadata);
                 MessageBox.Show("Marketplace Data copied to clipboard.", "Wild Life Mod Manager");
+            }
+        }
+
+        private void LoadFromMarketplace_Button_Click(object sender, EventArgs e)
+        {
+            bool Found = false;
+            try
+            {
+                string VersionInfo = "";
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://pastebin.com/raw/iZSuG0WY");
+                request.Method = "GET";
+                request.AllowAutoRedirect = false;
+                request.ContentType = "application/json; charset=utf-8";
+                request.UserAgent = "WildLifeModManager";
+
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    Stream receiveStream = response.GetResponseStream();
+                    StreamReader readStream = null;
+
+                    readStream = new StreamReader(receiveStream);
+
+                    VersionInfo = readStream.ReadToEnd();
+
+                    response.Dispose();
+                    readStream.Dispose();
+                }
+
+                string[] TempArray = VersionInfo.Split('\r');
+                foreach (string temp in TempArray)
+                {
+                    string CleanString = temp.Trim('\n');
+                    CleanString = GetSlice(CleanString, ",", 0);
+                    CleanString = CleanString.Replace("ModName:", "");
+                    if (CleanString == ModName_TB.Text)
+                    {
+                        Found = true;
+                        ModIconURL_TB.Text = GetSlice(temp, ",", 9);
+                        ModIconURL_TB.Text = ModIconURL_TB.Text.Replace("ModIcon:", "");
+
+                        ModDLURL_TB.Text = GetSlice(temp, ",", 11);
+                        ModDLURL_TB.Text = ModDLURL_TB.Text.Replace("DownloadLink:", "");
+
+                        ModDescription_TB.Text = GetSlice(temp, ",", 10);
+                        ModDescription_TB.Text = ModDescription_TB.Text.Replace("ModDescription:", "");
+
+                        List<string> screenshots = new List<string>();
+                        if (temp.Contains("Screenshots:"))
+                        {
+                            CleanString = GetSlice(temp, ",", 12);
+                            CleanString = CleanString.Replace("Screenshots:", "");
+                            Screenshots_LB.Items.AddRange(CleanString.Split("*"));
+                        }
+                    }
+                    if (Found)
+                    {
+                        break;
+                    }
+                }
+
+                if (Found == true)
+                {
+                    MessageBox.Show("Loaded existing Marketplace entry.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("No existing Marketplace entry found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Unable to connect to Marketplace.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

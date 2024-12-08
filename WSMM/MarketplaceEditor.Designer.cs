@@ -57,6 +57,7 @@
             label4 = new Label();
             ModName_TB = new TextBox();
             panel2 = new Panel();
+            LoadFromMarketplace_Button = new Button();
             ModWLMMBrowse_Button = new Button();
             label9 = new Label();
             ModWLMMPath_TB = new TextBox();
@@ -422,6 +423,7 @@
             // panel2
             // 
             panel2.BorderStyle = BorderStyle.FixedSingle;
+            panel2.Controls.Add(LoadFromMarketplace_Button);
             panel2.Controls.Add(ModWLMMBrowse_Button);
             panel2.Controls.Add(label9);
             panel2.Controls.Add(ModWLMMPath_TB);
@@ -430,6 +432,22 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(570, 63);
             panel2.TabIndex = 16;
+            // 
+            // LoadFromMarketplace_Button
+            // 
+            LoadFromMarketplace_Button.BackColor = Color.FromArgb(75, 68, 138);
+            LoadFromMarketplace_Button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            LoadFromMarketplace_Button.FlatStyle = FlatStyle.Flat;
+            LoadFromMarketplace_Button.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            LoadFromMarketplace_Button.ForeColor = SystemColors.ActiveCaption;
+            LoadFromMarketplace_Button.Location = new Point(12, 4);
+            LoadFromMarketplace_Button.Name = "LoadFromMarketplace_Button";
+            LoadFromMarketplace_Button.Size = new Size(166, 22);
+            LoadFromMarketplace_Button.TabIndex = 41;
+            LoadFromMarketplace_Button.Text = "Load Data from Marketplace";
+            LoadFromMarketplace_Button.UseVisualStyleBackColor = false;
+            LoadFromMarketplace_Button.Visible = false;
+            LoadFromMarketplace_Button.Click += LoadFromMarketplace_Button_Click;
             // 
             // ModWLMMBrowse_Button
             // 
@@ -755,5 +773,6 @@
         private ToolTip toolTip1;
         private Label label14;
         private CheckedListBox AffectedCharacters_CLB;
+        private Button LoadFromMarketplace_Button;
     }
 }
