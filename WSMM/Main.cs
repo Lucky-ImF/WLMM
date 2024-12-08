@@ -338,6 +338,7 @@ namespace WSMM
             ModCreator_Button.Enabled = true;
             MetaDataPatcher_Button.Enabled = true;
             OpenWLFolder_Button.Enabled = true;
+            LaunchWL_Button.Enabled = true;
             RefreshBuildSettings_Button.Enabled = true;
             EnableMods_Button.Visible = true;
             DisableMods_Button.Visible = true;
@@ -1694,7 +1695,7 @@ namespace WSMM
                         //Copy .txt and .collection to AutoMod
                         foreach (string AMFile in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\AutoMod", "*.txt"))
                         {
-                            if ( EnabledAutoMod.Count == 0)
+                            if (EnabledAutoMod.Count == 0)
                             {
                                 BuildLog += "+ + " + Path.GetFileName(AMFile) + "\n";
                                 File.Copy(AMFile, Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\AutoMod\" + Path.GetFileName(AMFile), true);
@@ -3650,6 +3651,19 @@ namespace WSMM
                 LoadEdit_Panel.Hide();
                 AddChange();
             }
+        }
+
+        private void LaunchWL_Button_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Process.Start(LoadedWLPath + @"\WildLifeC.exe");
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("WildLifeC.exe not found in root...", "Wild Life Mod Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            
         }
     }
 }

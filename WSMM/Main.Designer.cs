@@ -149,6 +149,7 @@
             label30 = new Label();
             label31 = new Label();
             LoadEdit_ModName_Label = new Label();
+            LaunchWL_Button = new Button();
             TitlePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
@@ -976,7 +977,7 @@
             BuildSettings_Panel.Controls.Add(BS_BaseGameCharacterOutfitFile);
             BuildSettings_Panel.Controls.Add(label14);
             BuildSettings_Panel.Controls.Add(BS_BaseClothesOutfitFile);
-            BuildSettings_Panel.Location = new Point(898, 322);
+            BuildSettings_Panel.Location = new Point(899, 322);
             BuildSettings_Panel.Name = "BuildSettings_Panel";
             BuildSettings_Panel.Size = new Size(231, 314);
             BuildSettings_Panel.TabIndex = 13;
@@ -1758,6 +1759,22 @@
             LoadEdit_ModName_Label.Text = "ModName";
             LoadEdit_ModName_Label.TextAlign = ContentAlignment.TopCenter;
             // 
+            // LaunchWL_Button
+            // 
+            LaunchWL_Button.BackColor = Color.FromArgb(75, 68, 138);
+            LaunchWL_Button.Enabled = false;
+            LaunchWL_Button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            LaunchWL_Button.FlatStyle = FlatStyle.Flat;
+            LaunchWL_Button.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            LaunchWL_Button.ForeColor = SystemColors.ActiveCaption;
+            LaunchWL_Button.Location = new Point(926, 597);
+            LaunchWL_Button.Name = "LaunchWL_Button";
+            LaunchWL_Button.Size = new Size(176, 40);
+            LaunchWL_Button.TabIndex = 58;
+            LaunchWL_Button.Text = "Launch Wild Life";
+            LaunchWL_Button.UseVisualStyleBackColor = false;
+            LaunchWL_Button.Click += LaunchWL_Button_Click;
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1793,6 +1810,7 @@
             Controls.Add(Close_Button);
             Controls.Add(Separator_1);
             Controls.Add(TitlePanel);
+            Controls.Add(LaunchWL_Button);
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.None;
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -1971,5 +1989,6 @@
         private CheckedListBox LoadEdit_AutoMod_CLB;
         private CheckedListBox LoadEdit_Paks_CLB;
         private Label LoadEdit_ModName_Label;
+        private Button LaunchWL_Button;
     }
 }
