@@ -123,9 +123,8 @@
             label22 = new Label();
             OpenBuildLog_Button = new Button();
             Marketplace_Button = new Button();
-            DTDownload_Panel = new Panel();
             DTDownload_Progress = new ProgressBar();
-            label20 = new Label();
+            DT_Updater_ProgressLabel = new Label();
             MarketplaceEditor_Button = new Button();
             TransferMods_Panel = new Panel();
             TransferCompatMods_RB = new RadioButton();
@@ -150,6 +149,16 @@
             label31 = new Label();
             LoadEdit_ModName_Label = new Label();
             LaunchWL_Button = new Button();
+            DT_Updater_Panel = new Panel();
+            DT_Updater_VersionLabel = new Label();
+            DT_Updater_ChangesTB = new TextBox();
+            DT_Updater_SupVerLB = new ListBox();
+            label32 = new Label();
+            DT_Updater_DownloadButton = new Button();
+            DT_Updater_CloseButton = new PictureBox();
+            label33 = new Label();
+            label34 = new Label();
+            label35 = new Label();
             TitlePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
@@ -171,11 +180,12 @@
             ((System.ComponentModel.ISupportInitialize)BugReport_CloseButton).BeginInit();
             ExpandedLink_Panel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)ExpandedLink_CloseButton).BeginInit();
-            DTDownload_Panel.SuspendLayout();
             TransferMods_Panel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)TransferModsClose_Button).BeginInit();
             LoadEdit_Panel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)LoadEdit_CloseButton).BeginInit();
+            DT_Updater_Panel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)DT_Updater_CloseButton).BeginInit();
             SuspendLayout();
             // 
             // TitlePanel
@@ -1421,35 +1431,25 @@
             Marketplace_Button.UseVisualStyleBackColor = false;
             Marketplace_Button.Click += Marketplace_Button_Click;
             // 
-            // DTDownload_Panel
-            // 
-            DTDownload_Panel.BackColor = Color.FromArgb(75, 68, 138);
-            DTDownload_Panel.BorderStyle = BorderStyle.FixedSingle;
-            DTDownload_Panel.Controls.Add(DTDownload_Progress);
-            DTDownload_Panel.Controls.Add(label20);
-            DTDownload_Panel.Location = new Point(365, 345);
-            DTDownload_Panel.Name = "DTDownload_Panel";
-            DTDownload_Panel.Size = new Size(405, 71);
-            DTDownload_Panel.TabIndex = 53;
-            DTDownload_Panel.Visible = false;
-            // 
             // DTDownload_Progress
             // 
-            DTDownload_Progress.Location = new Point(8, 44);
+            DTDownload_Progress.Location = new Point(33, 343);
             DTDownload_Progress.Name = "DTDownload_Progress";
             DTDownload_Progress.Size = new Size(386, 13);
             DTDownload_Progress.TabIndex = 4;
+            DTDownload_Progress.Visible = false;
             // 
-            // label20
+            // DT_Updater_ProgressLabel
             // 
-            label20.AutoSize = true;
-            label20.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label20.ForeColor = SystemColors.ActiveCaption;
-            label20.Location = new Point(73, 5);
-            label20.Name = "label20";
-            label20.Size = new Size(258, 30);
-            label20.TabIndex = 2;
-            label20.Text = "Downloading DataTables...";
+            DT_Updater_ProgressLabel.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            DT_Updater_ProgressLabel.ForeColor = SystemColors.ActiveCaption;
+            DT_Updater_ProgressLabel.Location = new Point(33, 317);
+            DT_Updater_ProgressLabel.Name = "DT_Updater_ProgressLabel";
+            DT_Updater_ProgressLabel.Size = new Size(386, 24);
+            DT_Updater_ProgressLabel.TabIndex = 2;
+            DT_Updater_ProgressLabel.Text = "Downloading DataTables...";
+            DT_Updater_ProgressLabel.TextAlign = ContentAlignment.TopCenter;
+            DT_Updater_ProgressLabel.Visible = false;
             // 
             // MarketplaceEditor_Button
             // 
@@ -1776,6 +1776,135 @@
             LaunchWL_Button.UseVisualStyleBackColor = false;
             LaunchWL_Button.Click += LaunchWL_Button_Click;
             // 
+            // DT_Updater_Panel
+            // 
+            DT_Updater_Panel.BackColor = Color.FromArgb(75, 68, 138);
+            DT_Updater_Panel.BorderStyle = BorderStyle.FixedSingle;
+            DT_Updater_Panel.Controls.Add(DTDownload_Progress);
+            DT_Updater_Panel.Controls.Add(DT_Updater_VersionLabel);
+            DT_Updater_Panel.Controls.Add(DT_Updater_ChangesTB);
+            DT_Updater_Panel.Controls.Add(DT_Updater_SupVerLB);
+            DT_Updater_Panel.Controls.Add(label32);
+            DT_Updater_Panel.Controls.Add(DT_Updater_DownloadButton);
+            DT_Updater_Panel.Controls.Add(DT_Updater_CloseButton);
+            DT_Updater_Panel.Controls.Add(label33);
+            DT_Updater_Panel.Controls.Add(label34);
+            DT_Updater_Panel.Controls.Add(label35);
+            DT_Updater_Panel.Controls.Add(DT_Updater_ProgressLabel);
+            DT_Updater_Panel.Location = new Point(346, 214);
+            DT_Updater_Panel.Name = "DT_Updater_Panel";
+            DT_Updater_Panel.Size = new Size(443, 367);
+            DT_Updater_Panel.TabIndex = 59;
+            DT_Updater_Panel.Visible = false;
+            // 
+            // DT_Updater_VersionLabel
+            // 
+            DT_Updater_VersionLabel.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            DT_Updater_VersionLabel.ForeColor = SystemColors.GradientActiveCaption;
+            DT_Updater_VersionLabel.Location = new Point(9, 67);
+            DT_Updater_VersionLabel.Name = "DT_Updater_VersionLabel";
+            DT_Updater_VersionLabel.Size = new Size(423, 26);
+            DT_Updater_VersionLabel.TabIndex = 47;
+            DT_Updater_VersionLabel.Text = "DT_1 > DT_4";
+            DT_Updater_VersionLabel.TextAlign = ContentAlignment.TopCenter;
+            // 
+            // DT_Updater_ChangesTB
+            // 
+            DT_Updater_ChangesTB.BackColor = Color.FromArgb(32, 34, 81);
+            DT_Updater_ChangesTB.BorderStyle = BorderStyle.FixedSingle;
+            DT_Updater_ChangesTB.ForeColor = Color.White;
+            DT_Updater_ChangesTB.Location = new Point(22, 119);
+            DT_Updater_ChangesTB.Multiline = true;
+            DT_Updater_ChangesTB.Name = "DT_Updater_ChangesTB";
+            DT_Updater_ChangesTB.Size = new Size(401, 64);
+            DT_Updater_ChangesTB.TabIndex = 46;
+            // 
+            // DT_Updater_SupVerLB
+            // 
+            DT_Updater_SupVerLB.BackColor = Color.FromArgb(32, 34, 81);
+            DT_Updater_SupVerLB.BorderStyle = BorderStyle.FixedSingle;
+            DT_Updater_SupVerLB.ForeColor = Color.White;
+            DT_Updater_SupVerLB.FormattingEnabled = true;
+            DT_Updater_SupVerLB.ItemHeight = 15;
+            DT_Updater_SupVerLB.Location = new Point(22, 221);
+            DT_Updater_SupVerLB.Name = "DT_Updater_SupVerLB";
+            DT_Updater_SupVerLB.ScrollAlwaysVisible = true;
+            DT_Updater_SupVerLB.SelectionMode = SelectionMode.None;
+            DT_Updater_SupVerLB.Size = new Size(401, 92);
+            DT_Updater_SupVerLB.TabIndex = 45;
+            // 
+            // label32
+            // 
+            label32.AutoSize = true;
+            label32.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label32.ForeColor = SystemColors.ActiveCaption;
+            label32.Location = new Point(18, 200);
+            label32.Name = "label32";
+            label32.Size = new Size(126, 17);
+            label32.TabIndex = 39;
+            label32.Text = "Supported Versions:";
+            // 
+            // DT_Updater_DownloadButton
+            // 
+            DT_Updater_DownloadButton.BackColor = Color.FromArgb(75, 68, 138);
+            DT_Updater_DownloadButton.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            DT_Updater_DownloadButton.FlatStyle = FlatStyle.Flat;
+            DT_Updater_DownloadButton.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            DT_Updater_DownloadButton.ForeColor = SystemColors.ActiveCaption;
+            DT_Updater_DownloadButton.Location = new Point(156, 324);
+            DT_Updater_DownloadButton.Name = "DT_Updater_DownloadButton";
+            DT_Updater_DownloadButton.Size = new Size(128, 30);
+            DT_Updater_DownloadButton.TabIndex = 35;
+            DT_Updater_DownloadButton.Text = "Download";
+            DT_Updater_DownloadButton.UseVisualStyleBackColor = false;
+            DT_Updater_DownloadButton.Click += DT_Updater_DownloadButton_Click;
+            // 
+            // DT_Updater_CloseButton
+            // 
+            DT_Updater_CloseButton.Image = Properties.Resources.Close_Icon;
+            DT_Updater_CloseButton.Location = new Point(398, 6);
+            DT_Updater_CloseButton.Name = "DT_Updater_CloseButton";
+            DT_Updater_CloseButton.Size = new Size(37, 39);
+            DT_Updater_CloseButton.SizeMode = PictureBoxSizeMode.Zoom;
+            DT_Updater_CloseButton.TabIndex = 34;
+            DT_Updater_CloseButton.TabStop = false;
+            DT_Updater_CloseButton.Click += DT_Updater_CloseButton_Click;
+            DT_Updater_CloseButton.MouseEnter += DT_Updater_CloseButton_MouseEnter;
+            DT_Updater_CloseButton.MouseLeave += DT_Updater_CloseButton_MouseLeave;
+            // 
+            // label33
+            // 
+            label33.AutoSize = true;
+            label33.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label33.ForeColor = SystemColors.ActiveCaption;
+            label33.Location = new Point(21, 96);
+            label33.Name = "label33";
+            label33.Size = new Size(61, 17);
+            label33.TabIndex = 33;
+            label33.Text = "Changes:";
+            // 
+            // label34
+            // 
+            label34.AutoSize = true;
+            label34.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label34.ForeColor = SystemColors.ActiveCaption;
+            label34.Location = new Point(128, 6);
+            label34.Name = "label34";
+            label34.Size = new Size(185, 30);
+            label34.TabIndex = 2;
+            label34.Text = "DataTable Updater";
+            // 
+            // label35
+            // 
+            label35.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label35.ForeColor = Color.Chartreuse;
+            label35.Location = new Point(11, 38);
+            label35.Name = "label35";
+            label35.Size = new Size(423, 22);
+            label35.TabIndex = 44;
+            label35.Text = "New DataTables are available";
+            label35.TextAlign = ContentAlignment.TopCenter;
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1783,6 +1912,7 @@
             BackColor = Color.FromArgb(32, 34, 81);
             ClientSize = new Size(1134, 761);
             ControlBox = false;
+            Controls.Add(DT_Updater_Panel);
             Controls.Add(LoadEdit_Panel);
             Controls.Add(BugReport_Panel);
             Controls.Add(ExpandedLink_Panel);
@@ -1791,7 +1921,6 @@
             Controls.Add(BuildSettings_Panel);
             Controls.Add(MarketplaceEditor_Button);
             Controls.Add(SelectWLVersion_Panel);
-            Controls.Add(DTDownload_Panel);
             Controls.Add(Marketplace_Button);
             Controls.Add(OpenBuildLog_Button);
             Controls.Add(MetaDataPatcher_Button);
@@ -1850,14 +1979,15 @@
             ExpandedLink_Panel.ResumeLayout(false);
             ExpandedLink_Panel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)ExpandedLink_CloseButton).EndInit();
-            DTDownload_Panel.ResumeLayout(false);
-            DTDownload_Panel.PerformLayout();
             TransferMods_Panel.ResumeLayout(false);
             TransferMods_Panel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)TransferModsClose_Button).EndInit();
             LoadEdit_Panel.ResumeLayout(false);
             LoadEdit_Panel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)LoadEdit_CloseButton).EndInit();
+            DT_Updater_Panel.ResumeLayout(false);
+            DT_Updater_Panel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)DT_Updater_CloseButton).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1950,7 +2080,7 @@
         private Button OpenBuildLog_Button;
         private Button Marketplace_Button;
         private Panel DTDownload_Panel;
-        private Label label20;
+        private Label DT_Updater_ProgressLabel;
         private ProgressBar DTDownload_Progress;
         private TextBox SelectWLVersionUEV_TB;
         private CheckBox BS_AllowOutdated_CB;
@@ -1980,7 +2110,9 @@
         private RadioButton radioButton2;
         private Label label28;
         private ListBox listBox1;
-        private Label label29;
+        private TextBox DT_Updater_ChangesTB;
+        private ListBox DT_Updater_SupVerLB;
+        private Label DT_Updater_VersionLabel;
         private TextBox textBox1;
         private Button LoadEdit_SaveButton;
         private PictureBox LoadEdit_CloseButton;
@@ -1991,5 +2123,13 @@
         private CheckedListBox LoadEdit_Paks_CLB;
         private Label LoadEdit_ModName_Label;
         private Button LaunchWL_Button;
+        private Panel DT_Updater_Panel;
+        private ListBox listBox2;
+        private Label label32;
+        private Button DT_Updater_DownloadButton;
+        private PictureBox DT_Updater_CloseButton;
+        private Label label33;
+        private Label label34;
+        private Label label35;
     }
 }

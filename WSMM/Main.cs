@@ -44,6 +44,9 @@ namespace WSMM
 
         int SelectedModID = 0;
 
+        string DTVersion = "";
+        string DTLink = "";
+
         //Panel, Picturebox, Label(Name), Label(Error), Label(Version), Label(SupportedVersions), Label(Author), LinkLabel(Remove), LinkLabel(Link), Checkbox
         Panel[] Mod_Panel = new Panel[100];
         PictureBox[] Mod_Icon = new PictureBox[100];
@@ -358,6 +361,11 @@ namespace WSMM
             //Load Mods
             NoModsFound_Label.Visible = true;
             LoadMods();
+
+            if (DT_Updater_Panel.Visible == true)
+            {
+                ToggleButtons(false);
+            }
         }
 
         private void CreateCoreFiles()
@@ -409,7 +417,7 @@ namespace WSMM
                 ChangesMade = 0;
             }
 
-            if (LoadedWLVersion != "" && LoadedWLVersion != string.Empty)
+            if (LoadedWLVersion != "" && LoadedWLVersion != string.Empty && DT_Updater_Panel.Visible == false)
             {
                 BuildMods_Button.Enabled = true;
                 ModCreator_Button.Enabled = true;
@@ -447,8 +455,8 @@ namespace WSMM
             {
                 string ThisVersion = WLMM_Version;
                 string VersionInfo = "";
-                string DTVersion = "";
-                string DTLink = "";
+                string DTChanges = "";
+                string DTSupVers = "";
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://pastebin.com/raw/qskfNxrz");
                 request.Method = "GET";
                 request.AllowAutoRedirect = false;
@@ -478,6 +486,8 @@ namespace WSMM
                     WLMMPost_Link.Tag = TempArray[3].Trim('\n');
                     DTVersion = TempArray[4].Trim('\n');
                     DTLink = TempArray[5].Trim('\n');
+                    DTChanges = TempArray[6].Trim('\n');
+                    DTSupVers = TempArray[7].Trim('\n');
                 }
                 else
                 {
@@ -485,27 +495,29 @@ namespace WSMM
                     WLMMPost_Link.Tag = TempArray[3].Trim('\n');
                     DTVersion = TempArray[4].Trim('\n');
                     DTLink = TempArray[5].Trim('\n');
+                    DTChanges = TempArray[6].Trim('\n');
+                    DTSupVers = TempArray[7].Trim('\n');
                 }
 
                 if (Datatable_Version == string.Empty)
                 {
                     // No Datatables
-                    DialogResult dialogResult = MessageBox.Show("No DataTables found.\nDownload now?", "Wild Life Mod Manager", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                    if (dialogResult == DialogResult.Yes)
-                    {
-                        DTDownload_Panel.Show();
-                        DownloadDatatables(DTLink, DTVersion);
-                    }
+                    ToggleButtons(false);
+                    DT_Updater_Panel.Show();
+                    DT_Updater_VersionLabel.Text = "None > " + DTVersion;
+                    DT_Updater_ChangesTB.Text = DTChanges.Replace("*", "\n");
+                    DT_Updater_SupVerLB.Items.Clear();
+                    DT_Updater_SupVerLB.Items.AddRange(DTSupVers.Split('*'));
                 }
                 else if (DTVersion != Datatable_Version)
                 {
                     // Datatables outdated
-                    DialogResult dialogResult = MessageBox.Show("New DataTables found.\nUpdate now?", "Wild Life Mod Manager", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                    if (dialogResult == DialogResult.Yes)
-                    {
-                        DTDownload_Panel.Show();
-                        DownloadDatatables(DTLink, DTVersion);
-                    }
+                    ToggleButtons(false);
+                    DT_Updater_Panel.Show();
+                    DT_Updater_VersionLabel.Text = Datatable_Version + " > " + DTVersion;
+                    DT_Updater_ChangesTB.Text = DTChanges.Replace("*", "\n");
+                    DT_Updater_SupVerLB.Items.Clear();
+                    DT_Updater_SupVerLB.Items.AddRange(DTSupVers.Split('*'));
                 }
             }
             catch (Exception)
@@ -514,6 +526,29 @@ namespace WSMM
                 UpdateLink.LinkColor = Color.LightCoral;
                 UpdateLink.VisitedLinkColor = Color.LightCoral;
             }
+        }
+
+        private void ToggleButtons(bool State)
+        {
+            BuildSettings_Button.Enabled = State;
+            ModCreator_Button.Enabled = State;
+            MetaDataPatcher_Button.Enabled = State;
+            OpenWLFolder_Button.Enabled = State;
+            LaunchWL_Button.Enabled = State;
+            RefreshBuildSettings_Button.Enabled = State;
+            ReloadMods_Button.Enabled = State;
+            EnableMods_Button.Enabled = State;
+            DisableMods_Button.Enabled = State;
+            RemoveMods_Button.Enabled = State;
+            AddMod_Button.Enabled = State;
+            Marketplace_Button.Enabled = State;
+            MarketplaceEditor_Button.Enabled = State;
+            TransferModsOpen_Button.Enabled = State;
+            ModCreator_Button.Enabled = State;
+            BuildMods_Button.Enabled = State;
+            CreateBuildLog_Button.Enabled = State;
+            OpenBuildLog_Button.Enabled = State;
+            LoadGame_Button.Enabled = State;
         }
 
         async void DownloadDatatables(string url, string version)
@@ -592,8 +627,9 @@ namespace WSMM
                 LoadSupportedVersions();
                 LoadCategories();
 
-                DTDownload_Panel.Hide();
+                DT_Updater_Panel.Hide();
                 MessageBox.Show("DataTables updated!", "Wild Life Mod Manager", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                ToggleButtons(true);
             }
             catch (Exception ex)
             {
@@ -609,6 +645,7 @@ namespace WSMM
 
                 DTDownload_Panel.Hide();
                 MessageBox.Show(ex.Message, "WLMM Download Error\n" + ex.Message);
+                ToggleButtons(true);
             }
         }
 
@@ -1584,7 +1621,7 @@ namespace WSMM
         {
             this.Invoke((System.Windows.Forms.MethodInvoker)delegate
             {
-                if (HasOldChanges == false)
+                if (HasOldChanges == false && DT_Updater_Panel.Visible == false)
                 {
                     ChangesMade++;
                     BuildMods_Button.Enabled = true;
@@ -3664,7 +3701,32 @@ namespace WSMM
             {
                 MessageBox.Show("WildLifeC.exe not found in root...", "Wild Life Mod Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            
+
+        }
+
+        private void DT_Updater_DownloadButton_Click(object sender, EventArgs e)
+        {
+            DT_Updater_DownloadButton.Hide();
+            DT_Updater_CloseButton.Hide();
+            DTDownload_Progress.Show();
+            DT_Updater_ProgressLabel.Show();
+            DownloadDatatables(DTLink, DTVersion);
+        }
+
+        private void DT_Updater_CloseButton_Click(object sender, EventArgs e)
+        {
+            DT_Updater_Panel.Hide();
+            ToggleButtons(true);
+        }
+
+        private void DT_Updater_CloseButton_MouseEnter(object sender, EventArgs e)
+        {
+            DT_Updater_CloseButton.Image = Properties.Resources.Close_Icon_Hover;
+        }
+
+        private void DT_Updater_CloseButton_MouseLeave(object sender, EventArgs e)
+        {
+            DT_Updater_CloseButton.Image = Properties.Resources.Close_Icon;
         }
     }
 }
