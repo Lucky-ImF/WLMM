@@ -336,6 +336,7 @@
             ReloadMods_Button.TabIndex = 12;
             ReloadMods_Button.Text = "Reload";
             ReloadMods_Button.UseVisualStyleBackColor = false;
+            ReloadMods_Button.Visible = false;
             ReloadMods_Button.Click += ReloadMods_Button_Click;
             // 
             // DragNDrop_Panel

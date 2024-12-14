@@ -33,7 +33,7 @@ namespace WSMM
         private bool StartingUp = true;
         private bool HasOldChanges = false;
 
-        private string WLMM_Version = "1.1.3";
+        private string WLMM_Version = "1.1.4";
         private string Datatable_Version = string.Empty;
         string BuildLog = string.Empty;
 
@@ -340,6 +340,7 @@ namespace WSMM
             OpenWLFolder_Button.Enabled = true;
             LaunchWL_Button.Enabled = true;
             RefreshBuildSettings_Button.Enabled = true;
+            ReloadMods_Button.Visible = true;
             EnableMods_Button.Visible = true;
             DisableMods_Button.Visible = true;
             RemoveMods_Button.Visible = true;
