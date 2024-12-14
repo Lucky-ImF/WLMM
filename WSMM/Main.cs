@@ -1648,6 +1648,7 @@ namespace WSMM
         private void BuildMods()
         {
             BuildLog = "WLMM - " + WLMM_Version + " - Build Log\n";
+            BuildLog += "DataTable Version: " + Datatable_Version + "\n";
             BuildLog += "Initializing...\n";
             bool HasAutoMod = false;
             List<string> ActiveMods = new List<string>();
@@ -1982,10 +1983,12 @@ namespace WSMM
                         if (CalculatedHash == OriginalHash)
                         {
                             BuildLog += "+ " + Path.GetFileName(pak) + " valid.\n";
+                            BuildLog += "+ + " + CalculatedHash + " = " + OriginalHash + "\n";
                         }
                         else
                         {
                             BuildLog += "- " + Path.GetFileName(pak) + " invalid.\n";
+                            BuildLog += "- - " + CalculatedHash + " != " + OriginalHash + "\n";
                             MessageBox.Show(Path.GetFileName(pak) + " failed file verification.\nTry re-building mods or updating the affected mod.", "Wild Life Mod Manager");
                         }
                     }
@@ -3367,13 +3370,12 @@ namespace WSMM
 
         private void TransferMods_Button_Click(object sender, EventArgs e)
         {
-            // Add all loaded wlmm's to active
             List<string> ValidMods = new List<string>();
 
             foreach (string ModPath in Directory.EnumerateDirectories(Application.StartupPath + @"Mods\" + TransferModsFrom_CB.Text + @"\Loaded", "*"))
             {
                 string ModName = Path.GetFileName(ModPath);
-                if (ModName == "AutoMod") { continue; }
+                if (ModName == "AutoMod" || TransferModsList_LB.Items.Contains(ModName) == false) { continue; }
                 ValidMods.Add(ModPath);
             }
 
