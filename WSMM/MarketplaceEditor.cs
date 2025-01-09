@@ -389,12 +389,12 @@ namespace WSMM
                 toolTip1.Show("Filetype not supported. Must be .jpg, .jpeg or .png.", ModIconURL_TB, 3000);
             }
 
-            // Check Mod Description more than 0 lenght
-            if (ModDescription_TB.Text.Length <= 0 && ModDescription_TB.Text.Contains(":") == false && ModDescription_TB.Text.Contains(",") == false && ModDescription_TB.Text.Contains("*") == false)
+            // Check Mod Description more than 0 lenght or contain : , *
+            if (ModDescription_TB.Text.Length <= 0 || ModDescription_TB.Text.Contains(":") || ModDescription_TB.Text.Contains(",") || ModDescription_TB.Text.Contains("*"))
             {
                 ModValid = false;
                 ModDescription_TB.ForeColor = Color.LightCoral;
-                toolTip1.Show("Description can't contain : , *", ModDescription_TB, 3000);
+                toolTip1.Show("Description can't contain : , * or be empty.", ModDescription_TB, 3000);
             }
 
             // Check Download Link is Mega.nz
