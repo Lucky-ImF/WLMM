@@ -399,6 +399,12 @@ namespace WSMM
             this.Text = "Wild Life Mod Manager - v." + WLMM_Version;
             TitleLabel.Text = "Wild Life Mod Manager - v." + WLMM_Version;
 
+            if (HasMissingDLLS() == true)
+            {
+                MessageBox.Show("Missing core DLLs.\nPlease re-extract the .zip file.", "Wild Life Mod Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Application.Exit();
+            }
+
             CreateMissingFolders();
 
             LoadDatatableVersion();
@@ -3554,6 +3560,31 @@ namespace WSMM
         private void ReloadMods_Button_Click(object sender, EventArgs e)
         {
             LoadMods();
+        }
+
+        private static bool HasMissingDLLS()
+        {
+            if (File.Exists(Application.StartupPath + @"Newtonsoft.Json.dll") == false)
+            {
+                return true;
+            }
+            if (File.Exists(Application.StartupPath + @"MegaApiClient.dll") == false)
+            {
+                return true;
+            }
+            if (File.Exists(Application.StartupPath + @"UAssetAPI.dll") == false)
+            {
+                return true;
+            }
+            if (File.Exists(Application.StartupPath + @"WSMM.dll") == false)
+            {
+                return true;
+            }
+            if (File.Exists(Application.StartupPath + @"ZstdSharp.dll") == false)
+            {
+                return true;
+            }
+            return false;
         }
 
         private void CreateMissingFolders()
