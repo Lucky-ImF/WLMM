@@ -17,6 +17,7 @@ using static System.Windows.Forms.LinkLabel;
 using System.Xml.Linq;
 using System;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using static System.Windows.Forms.AxHost;
 
 namespace WSMM
 {
@@ -46,6 +47,8 @@ namespace WSMM
 
         string DTVersion = "";
         string DTLink = "";
+
+        string ModPackPath = string.Empty;
 
         //Panel, Picturebox, Label(Name), Label(Error), Label(Version), Label(SupportedVersions), Label(Author), LinkLabel(Remove), LinkLabel(Link), Checkbox
         Panel[] Mod_Panel = new Panel[100];
@@ -351,6 +354,7 @@ namespace WSMM
             Marketplace_Button.Enabled = true;
             MarketplaceEditor_Button.Enabled = true;
             TransferModsOpen_Button.Enabled = true;
+            CreateModPack_Button.Enabled = true;
 
             NoGameLoaded_Panel.Visible = false;
             ModFlow_Panel.AllowDrop = true;
@@ -555,6 +559,9 @@ namespace WSMM
             CreateBuildLog_Button.Enabled = State;
             OpenBuildLog_Button.Enabled = State;
             LoadGame_Button.Enabled = State;
+            CreateModPack_Button.Enabled = State;
+            ModPack_Add_Button.Enabled = State;
+            ModPack_Close_Button.Enabled = State;
         }
 
         async void DownloadDatatables(string url, string version)
@@ -906,11 +913,16 @@ namespace WSMM
             {
                 string[] Mods = openFileDialog1.FileNames;
                 List<string> ValidMods = new List<string>();
+                List<string> ValidModPacks = new List<string>();
                 foreach (string Mod in Mods)
                 {
                     if (Mod.EndsWith(".wlmm"))
                     {
                         ValidMods.Add(Mod);
+                    }
+                    else if (Mod.EndsWith(".wlmp"))
+                    {
+                        ValidModPacks.Add(Mod);
                     }
                 }
                 if (ValidMods.Count > 0)
@@ -925,6 +937,11 @@ namespace WSMM
                     Thread backgroundThread = new Thread(() => AddMods(ValidMods));
                     // Start thread
                     backgroundThread.Start();
+                }
+                else if (ValidModPacks.Count > 0)
+                {
+                    ModPackPath = ValidModPacks[0];
+                    LoadModPack();
                 }
                 prevModPath = Path.GetDirectoryName(openFileDialog1.FileName);
             }
@@ -1445,11 +1462,16 @@ namespace WSMM
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
             List<string> Mods = new List<string>();
+            List<string> Modpacks = new List<string>();
             foreach (string file in files)
             {
                 if (file.EndsWith(".wlmm"))
                 {
                     Mods.Add(file);
+                }
+                else if (file.EndsWith(".wlmp"))
+                {
+                    Modpacks.Add(file);
                 }
             }
             if (Mods.Count > 0)
@@ -1464,6 +1486,11 @@ namespace WSMM
                 Thread backgroundThread = new Thread(() => AddMods(Mods));
                 // Start thread
                 backgroundThread.Start();
+            }
+            else if (Modpacks.Count > 0)
+            {
+                ModPackPath = Modpacks[0];
+                LoadModPack();
             }
         }
 
@@ -3760,6 +3787,107 @@ namespace WSMM
         private void DT_Updater_CloseButton_MouseLeave(object sender, EventArgs e)
         {
             DT_Updater_CloseButton.Image = Properties.Resources.Close_Icon;
+        }
+
+        private void CreateModPack_Button_Click(object sender, EventArgs e)
+        {
+            ModPackCreator ModPackCreator_Form = new ModPackCreator();
+            ModPackCreator_Form.Show();
+            ModPackCreator_Form.TransferInfo(LoadedWLPath, LoadedWLVersion, LoadedUEVersion);
+        }
+
+        private void ModPack_Close_Button_Click(object sender, EventArgs e)
+        {
+            ModPack_Panel.Hide();
+        }
+
+        private void ModPack_Close_Button_MouseEnter(object sender, EventArgs e)
+        {
+            ModPack_Close_Button.Image = Properties.Resources.Close_Icon_Hover;
+        }
+
+        private void ModPack_Close_Button_MouseLeave(object sender, EventArgs e)
+        {
+            ModPack_Close_Button.Image = Properties.Resources.Close_Icon;
+        }
+
+        private void LoadModPack()
+        {
+            ModPack_Panel.Show();
+            ModPack_ModList_LB.Items.Clear();
+            ModPack_SupVers_LB.Items.Clear();
+            using (ZipArchive archive = ZipFile.OpenRead(ModPackPath))
+            {
+                foreach (ZipArchiveEntry entry in archive.Entries.Where(e => e.FullName == "Metadata.dat"))
+                {
+                    entry.ExtractToFile(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\Metadata.dat", true);
+                    break;
+                }
+            }
+            string SupVers = string.Empty;
+            string ModList = string.Empty;
+            string[] MetaData = File.ReadAllLines(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\Metadata.dat");
+            foreach (string meta in MetaData)
+            {
+                if (meta.StartsWith("ModAuthor"))
+                {
+                    ModPack_Author_Label.Text = GetSlice(meta, "=", 1);
+                }
+                else if (meta.StartsWith("ModName"))
+                {
+                    ModPack_Name_Label.Text = GetSlice(meta, "=", 1);
+                }
+                else if (meta.StartsWith("ModDescription"))
+                {
+                    ModPack_Description_TB.Text = GetSlice(meta, "=", 1);
+                    ModPack_Description_TB.Text = ModPack_Description_TB.Text.Replace("(nl)", "\r\n");
+                }
+                else if (meta.StartsWith("SupportedWLVersions"))
+                {
+                    SupVers = GetSlice(meta, "=", 1);
+                }
+                else if (meta.StartsWith("ModList"))
+                {
+                    ModList = GetSlice(meta, "=", 1);
+                }
+            }
+            string[] SplitString = SupVers.Split(',');
+            foreach (string vers in SplitString)
+            {
+                ModPack_SupVers_LB.Items.Add(vers);
+            }
+            SplitString = ModList.Split(',');
+            foreach (string mod in SplitString)
+            {
+                ModPack_ModList_LB.Items.Add(mod);
+            }
+        }
+
+        private void ModPack_Add_Button_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ToggleButtons(false);
+                if (ModPack_DisableCurrent_CB.Checked == true)
+                {
+                    foreach (int EntryID in Mod_Entries)
+                    {
+                        Mod_EnabledCB[EntryID].Checked = false;
+                    }
+                }
+
+                ZipFile.ExtractToDirectory(ModPackPath, Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded");
+                File.Delete(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\Metadata.dat");
+
+                ToggleButtons(true);
+                ModPack_Panel.Hide();
+                LoadMods();
+                MessageBox.Show("Mod Pack added successfully.", "Wild Life Mod Manager", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error adding modpack.\nEx: " + ex.Message.ToString(), "Wild Life Mod Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

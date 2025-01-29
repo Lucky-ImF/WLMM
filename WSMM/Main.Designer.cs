@@ -159,6 +159,20 @@
             label33 = new Label();
             label34 = new Label();
             label35 = new Label();
+            CreateModPack_Button = new Button();
+            ModPack_Panel = new Panel();
+            ModPack_ModList_LB = new ListBox();
+            label20 = new Label();
+            ModPack_Author_Label = new Label();
+            ModPack_Description_TB = new TextBox();
+            ModPack_SupVers_LB = new ListBox();
+            label29 = new Label();
+            ModPack_Add_Button = new Button();
+            ModPack_Close_Button = new PictureBox();
+            label36 = new Label();
+            label37 = new Label();
+            ModPack_Name_Label = new Label();
+            ModPack_DisableCurrent_CB = new CheckBox();
             TitlePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
@@ -186,6 +200,8 @@
             ((System.ComponentModel.ISupportInitialize)LoadEdit_CloseButton).BeginInit();
             DT_Updater_Panel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)DT_Updater_CloseButton).BeginInit();
+            ModPack_Panel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)ModPack_Close_Button).BeginInit();
             SuspendLayout();
             // 
             // TitlePanel
@@ -988,7 +1004,7 @@
             BuildSettings_Panel.Controls.Add(BS_BaseGameCharacterOutfitFile);
             BuildSettings_Panel.Controls.Add(label14);
             BuildSettings_Panel.Controls.Add(BS_BaseClothesOutfitFile);
-            BuildSettings_Panel.Location = new Point(899, 322);
+            BuildSettings_Panel.Location = new Point(898, 324);
             BuildSettings_Panel.Name = "BuildSettings_Panel";
             BuildSettings_Panel.Size = new Size(231, 314);
             BuildSettings_Panel.TabIndex = 13;
@@ -1161,7 +1177,7 @@
             // openFileDialog1
             // 
             openFileDialog1.FileName = "openFileDialog1";
-            openFileDialog1.Filter = "wlmm files (*.wlmm)|*.wlmm|All files (*.*)|*.*";
+            openFileDialog1.Filter = "wlmm & wlmp files (*.wlmm;*.wlmp)|*.wlmm;*.wlmp|All files (*.*)|*.*";
             openFileDialog1.Multiselect = true;
             // 
             // Icon_PB
@@ -1283,7 +1299,7 @@
             OpenWLFolder_Button.FlatStyle = FlatStyle.Flat;
             OpenWLFolder_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             OpenWLFolder_Button.ForeColor = SystemColors.ActiveCaption;
-            OpenWLFolder_Button.Location = new Point(926, 379);
+            OpenWLFolder_Button.Location = new Point(926, 406);
             OpenWLFolder_Button.Name = "OpenWLFolder_Button";
             OpenWLFolder_Button.Size = new Size(176, 26);
             OpenWLFolder_Button.TabIndex = 46;
@@ -1298,7 +1314,7 @@
             CreateBuildLog_Button.FlatStyle = FlatStyle.Flat;
             CreateBuildLog_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             CreateBuildLog_Button.ForeColor = SystemColors.ActiveCaption;
-            CreateBuildLog_Button.Location = new Point(926, 301);
+            CreateBuildLog_Button.Location = new Point(926, 332);
             CreateBuildLog_Button.Name = "CreateBuildLog_Button";
             CreateBuildLog_Button.Size = new Size(176, 26);
             CreateBuildLog_Button.TabIndex = 48;
@@ -1407,7 +1423,7 @@
             OpenBuildLog_Button.FlatStyle = FlatStyle.Flat;
             OpenBuildLog_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             OpenBuildLog_Button.ForeColor = SystemColors.ActiveCaption;
-            OpenBuildLog_Button.Location = new Point(926, 340);
+            OpenBuildLog_Button.Location = new Point(926, 369);
             OpenBuildLog_Button.Name = "OpenBuildLog_Button";
             OpenBuildLog_Button.Size = new Size(176, 26);
             OpenBuildLog_Button.TabIndex = 51;
@@ -1459,7 +1475,7 @@
             MarketplaceEditor_Button.FlatStyle = FlatStyle.Flat;
             MarketplaceEditor_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             MarketplaceEditor_Button.ForeColor = SystemColors.ActiveCaption;
-            MarketplaceEditor_Button.Location = new Point(926, 262);
+            MarketplaceEditor_Button.Location = new Point(926, 295);
             MarketplaceEditor_Button.Name = "MarketplaceEditor_Button";
             MarketplaceEditor_Button.Size = new Size(176, 26);
             MarketplaceEditor_Button.TabIndex = 54;
@@ -1638,7 +1654,7 @@
             TransferModsOpen_Button.FlatStyle = FlatStyle.Flat;
             TransferModsOpen_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             TransferModsOpen_Button.ForeColor = SystemColors.ActiveCaption;
-            TransferModsOpen_Button.Location = new Point(926, 223);
+            TransferModsOpen_Button.Location = new Point(926, 221);
             TransferModsOpen_Button.Name = "TransferModsOpen_Button";
             TransferModsOpen_Button.Size = new Size(176, 26);
             TransferModsOpen_Button.TabIndex = 56;
@@ -1905,6 +1921,188 @@
             label35.Text = "New DataTables are available";
             label35.TextAlign = ContentAlignment.TopCenter;
             // 
+            // CreateModPack_Button
+            // 
+            CreateModPack_Button.BackColor = Color.FromArgb(75, 68, 138);
+            CreateModPack_Button.Enabled = false;
+            CreateModPack_Button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            CreateModPack_Button.FlatStyle = FlatStyle.Flat;
+            CreateModPack_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            CreateModPack_Button.ForeColor = SystemColors.ActiveCaption;
+            CreateModPack_Button.Location = new Point(926, 258);
+            CreateModPack_Button.Name = "CreateModPack_Button";
+            CreateModPack_Button.Size = new Size(176, 26);
+            CreateModPack_Button.TabIndex = 60;
+            CreateModPack_Button.Text = "Modpack Creator";
+            CreateModPack_Button.UseVisualStyleBackColor = false;
+            CreateModPack_Button.Click += CreateModPack_Button_Click;
+            // 
+            // ModPack_Panel
+            // 
+            ModPack_Panel.BackColor = Color.FromArgb(75, 68, 138);
+            ModPack_Panel.BorderStyle = BorderStyle.FixedSingle;
+            ModPack_Panel.Controls.Add(ModPack_DisableCurrent_CB);
+            ModPack_Panel.Controls.Add(ModPack_ModList_LB);
+            ModPack_Panel.Controls.Add(label20);
+            ModPack_Panel.Controls.Add(ModPack_Author_Label);
+            ModPack_Panel.Controls.Add(ModPack_Description_TB);
+            ModPack_Panel.Controls.Add(ModPack_SupVers_LB);
+            ModPack_Panel.Controls.Add(label29);
+            ModPack_Panel.Controls.Add(ModPack_Add_Button);
+            ModPack_Panel.Controls.Add(ModPack_Close_Button);
+            ModPack_Panel.Controls.Add(label36);
+            ModPack_Panel.Controls.Add(label37);
+            ModPack_Panel.Controls.Add(ModPack_Name_Label);
+            ModPack_Panel.Location = new Point(346, 160);
+            ModPack_Panel.Name = "ModPack_Panel";
+            ModPack_Panel.Size = new Size(443, 460);
+            ModPack_Panel.TabIndex = 61;
+            ModPack_Panel.Visible = false;
+            // 
+            // ModPack_ModList_LB
+            // 
+            ModPack_ModList_LB.BackColor = Color.FromArgb(32, 34, 81);
+            ModPack_ModList_LB.BorderStyle = BorderStyle.FixedSingle;
+            ModPack_ModList_LB.ForeColor = Color.White;
+            ModPack_ModList_LB.FormattingEnabled = true;
+            ModPack_ModList_LB.ItemHeight = 15;
+            ModPack_ModList_LB.Location = new Point(22, 299);
+            ModPack_ModList_LB.Name = "ModPack_ModList_LB";
+            ModPack_ModList_LB.ScrollAlwaysVisible = true;
+            ModPack_ModList_LB.SelectionMode = SelectionMode.None;
+            ModPack_ModList_LB.Size = new Size(401, 107);
+            ModPack_ModList_LB.TabIndex = 49;
+            // 
+            // label20
+            // 
+            label20.AutoSize = true;
+            label20.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label20.ForeColor = SystemColors.ActiveCaption;
+            label20.Location = new Point(18, 278);
+            label20.Name = "label20";
+            label20.Size = new Size(98, 17);
+            label20.TabIndex = 48;
+            label20.Text = "Included Mods:";
+            // 
+            // ModPack_Author_Label
+            // 
+            ModPack_Author_Label.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            ModPack_Author_Label.ForeColor = SystemColors.GradientActiveCaption;
+            ModPack_Author_Label.Location = new Point(9, 71);
+            ModPack_Author_Label.Name = "ModPack_Author_Label";
+            ModPack_Author_Label.Size = new Size(423, 24);
+            ModPack_Author_Label.TabIndex = 47;
+            ModPack_Author_Label.Text = "Modpack Author";
+            ModPack_Author_Label.TextAlign = ContentAlignment.TopCenter;
+            // 
+            // ModPack_Description_TB
+            // 
+            ModPack_Description_TB.BackColor = Color.FromArgb(32, 34, 81);
+            ModPack_Description_TB.BorderStyle = BorderStyle.FixedSingle;
+            ModPack_Description_TB.ForeColor = Color.White;
+            ModPack_Description_TB.Location = new Point(22, 119);
+            ModPack_Description_TB.Multiline = true;
+            ModPack_Description_TB.Name = "ModPack_Description_TB";
+            ModPack_Description_TB.Size = new Size(401, 64);
+            ModPack_Description_TB.TabIndex = 46;
+            // 
+            // ModPack_SupVers_LB
+            // 
+            ModPack_SupVers_LB.BackColor = Color.FromArgb(32, 34, 81);
+            ModPack_SupVers_LB.BorderStyle = BorderStyle.FixedSingle;
+            ModPack_SupVers_LB.ForeColor = Color.White;
+            ModPack_SupVers_LB.FormattingEnabled = true;
+            ModPack_SupVers_LB.ItemHeight = 15;
+            ModPack_SupVers_LB.Location = new Point(22, 209);
+            ModPack_SupVers_LB.Name = "ModPack_SupVers_LB";
+            ModPack_SupVers_LB.ScrollAlwaysVisible = true;
+            ModPack_SupVers_LB.SelectionMode = SelectionMode.None;
+            ModPack_SupVers_LB.Size = new Size(401, 62);
+            ModPack_SupVers_LB.TabIndex = 45;
+            // 
+            // label29
+            // 
+            label29.AutoSize = true;
+            label29.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label29.ForeColor = SystemColors.ActiveCaption;
+            label29.Location = new Point(18, 188);
+            label29.Name = "label29";
+            label29.Size = new Size(126, 17);
+            label29.TabIndex = 39;
+            label29.Text = "Supported Versions:";
+            // 
+            // ModPack_Add_Button
+            // 
+            ModPack_Add_Button.BackColor = Color.FromArgb(75, 68, 138);
+            ModPack_Add_Button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            ModPack_Add_Button.FlatStyle = FlatStyle.Flat;
+            ModPack_Add_Button.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            ModPack_Add_Button.ForeColor = SystemColors.ActiveCaption;
+            ModPack_Add_Button.Location = new Point(254, 418);
+            ModPack_Add_Button.Name = "ModPack_Add_Button";
+            ModPack_Add_Button.Size = new Size(128, 30);
+            ModPack_Add_Button.TabIndex = 35;
+            ModPack_Add_Button.Text = "Add";
+            ModPack_Add_Button.UseVisualStyleBackColor = false;
+            ModPack_Add_Button.Click += ModPack_Add_Button_Click;
+            // 
+            // ModPack_Close_Button
+            // 
+            ModPack_Close_Button.Image = Properties.Resources.Close_Icon;
+            ModPack_Close_Button.Location = new Point(398, 6);
+            ModPack_Close_Button.Name = "ModPack_Close_Button";
+            ModPack_Close_Button.Size = new Size(37, 39);
+            ModPack_Close_Button.SizeMode = PictureBoxSizeMode.Zoom;
+            ModPack_Close_Button.TabIndex = 34;
+            ModPack_Close_Button.TabStop = false;
+            ModPack_Close_Button.Click += ModPack_Close_Button_Click;
+            ModPack_Close_Button.MouseEnter += ModPack_Close_Button_MouseEnter;
+            ModPack_Close_Button.MouseLeave += ModPack_Close_Button_MouseLeave;
+            // 
+            // label36
+            // 
+            label36.AutoSize = true;
+            label36.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label36.ForeColor = SystemColors.ActiveCaption;
+            label36.Location = new Point(21, 96);
+            label36.Name = "label36";
+            label36.Size = new Size(77, 17);
+            label36.TabIndex = 33;
+            label36.Text = "Description:";
+            // 
+            // label37
+            // 
+            label37.AutoSize = true;
+            label37.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label37.ForeColor = SystemColors.ActiveCaption;
+            label37.Location = new Point(137, 9);
+            label37.Name = "label37";
+            label37.Size = new Size(167, 30);
+            label37.TabIndex = 2;
+            label37.Text = "Import Modpack";
+            // 
+            // ModPack_Name_Label
+            // 
+            ModPack_Name_Label.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            ModPack_Name_Label.ForeColor = SystemColors.GradientInactiveCaption;
+            ModPack_Name_Label.Location = new Point(11, 42);
+            ModPack_Name_Label.Name = "ModPack_Name_Label";
+            ModPack_Name_Label.Size = new Size(423, 34);
+            ModPack_Name_Label.TabIndex = 44;
+            ModPack_Name_Label.Text = "Modpack Name";
+            ModPack_Name_Label.TextAlign = ContentAlignment.TopCenter;
+            // 
+            // ModPack_DisableCurrent_CB
+            // 
+            ModPack_DisableCurrent_CB.AutoSize = true;
+            ModPack_DisableCurrent_CB.ForeColor = SystemColors.GradientActiveCaption;
+            ModPack_DisableCurrent_CB.Location = new Point(43, 423);
+            ModPack_DisableCurrent_CB.Name = "ModPack_DisableCurrent_CB";
+            ModPack_DisableCurrent_CB.Size = new Size(181, 19);
+            ModPack_DisableCurrent_CB.TabIndex = 50;
+            ModPack_DisableCurrent_CB.Text = "Disable currently active mods";
+            ModPack_DisableCurrent_CB.UseVisualStyleBackColor = true;
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1912,6 +2110,8 @@
             BackColor = Color.FromArgb(32, 34, 81);
             ClientSize = new Size(1134, 761);
             ControlBox = false;
+            Controls.Add(ModPack_Panel);
+            Controls.Add(CreateModPack_Button);
             Controls.Add(DT_Updater_Panel);
             Controls.Add(LoadEdit_Panel);
             Controls.Add(BugReport_Panel);
@@ -1988,6 +2188,9 @@
             DT_Updater_Panel.ResumeLayout(false);
             DT_Updater_Panel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)DT_Updater_CloseButton).EndInit();
+            ModPack_Panel.ResumeLayout(false);
+            ModPack_Panel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)ModPack_Close_Button).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -2131,5 +2334,19 @@
         private Label label33;
         private Label label34;
         private Label label35;
+        private Button CreateModPack_Button;
+        private Panel ModPack_Panel;
+        private Label ModPack_Author_Label;
+        private TextBox ModPack_Description_TB;
+        private ListBox ModPack_SupVers_LB;
+        private Label label29;
+        private Button ModPack_Add_Button;
+        private PictureBox ModPack_Close_Button;
+        private Label label36;
+        private Label label37;
+        private Label ModPack_Name_Label;
+        private ListBox ModPack_ModList_LB;
+        private Label label20;
+        private CheckBox ModPack_DisableCurrent_CB;
     }
 }

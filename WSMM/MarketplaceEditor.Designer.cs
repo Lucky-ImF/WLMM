@@ -709,7 +709,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "MarketplaceEditor";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "MarketplaceEditor";
+            Text = "Marketplace Editor";
             Load += MarketplaceEditor_Load;
             ((System.ComponentModel.ISupportInitialize)Icon_PB).EndInit();
             ((System.ComponentModel.ISupportInitialize)Close_Button).EndInit();
