@@ -161,6 +161,7 @@
             label35 = new Label();
             CreateModPack_Button = new Button();
             ModPack_Panel = new Panel();
+            ModPack_DisableCurrent_RB = new RadioButton();
             ModPack_ModList_LB = new ListBox();
             label20 = new Label();
             ModPack_Author_Label = new Label();
@@ -172,7 +173,8 @@
             label36 = new Label();
             label37 = new Label();
             ModPack_Name_Label = new Label();
-            ModPack_DisableCurrent_CB = new CheckBox();
+            ModPack_KeepCurrent_RB = new RadioButton();
+            ModPack_RemoveCurrent_RB = new RadioButton();
             TitlePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
@@ -1941,7 +1943,9 @@
             // 
             ModPack_Panel.BackColor = Color.FromArgb(75, 68, 138);
             ModPack_Panel.BorderStyle = BorderStyle.FixedSingle;
-            ModPack_Panel.Controls.Add(ModPack_DisableCurrent_CB);
+            ModPack_Panel.Controls.Add(ModPack_RemoveCurrent_RB);
+            ModPack_Panel.Controls.Add(ModPack_KeepCurrent_RB);
+            ModPack_Panel.Controls.Add(ModPack_DisableCurrent_RB);
             ModPack_Panel.Controls.Add(ModPack_ModList_LB);
             ModPack_Panel.Controls.Add(label20);
             ModPack_Panel.Controls.Add(ModPack_Author_Label);
@@ -1953,11 +1957,22 @@
             ModPack_Panel.Controls.Add(label36);
             ModPack_Panel.Controls.Add(label37);
             ModPack_Panel.Controls.Add(ModPack_Name_Label);
-            ModPack_Panel.Location = new Point(346, 160);
+            ModPack_Panel.Location = new Point(346, 135);
             ModPack_Panel.Name = "ModPack_Panel";
-            ModPack_Panel.Size = new Size(443, 460);
+            ModPack_Panel.Size = new Size(443, 485);
             ModPack_Panel.TabIndex = 61;
             ModPack_Panel.Visible = false;
+            // 
+            // ModPack_DisableCurrent_RB
+            // 
+            ModPack_DisableCurrent_RB.AutoSize = true;
+            ModPack_DisableCurrent_RB.ForeColor = SystemColors.GradientInactiveCaption;
+            ModPack_DisableCurrent_RB.Location = new Point(23, 434);
+            ModPack_DisableCurrent_RB.Name = "ModPack_DisableCurrent_RB";
+            ModPack_DisableCurrent_RB.Size = new Size(180, 19);
+            ModPack_DisableCurrent_RB.TabIndex = 51;
+            ModPack_DisableCurrent_RB.Text = "Disable currently active mods";
+            ModPack_DisableCurrent_RB.UseVisualStyleBackColor = true;
             // 
             // ModPack_ModList_LB
             // 
@@ -2003,6 +2018,7 @@
             ModPack_Description_TB.Location = new Point(22, 119);
             ModPack_Description_TB.Multiline = true;
             ModPack_Description_TB.Name = "ModPack_Description_TB";
+            ModPack_Description_TB.ReadOnly = true;
             ModPack_Description_TB.Size = new Size(401, 64);
             ModPack_Description_TB.TabIndex = 46;
             // 
@@ -2038,7 +2054,7 @@
             ModPack_Add_Button.FlatStyle = FlatStyle.Flat;
             ModPack_Add_Button.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             ModPack_Add_Button.ForeColor = SystemColors.ActiveCaption;
-            ModPack_Add_Button.Location = new Point(254, 418);
+            ModPack_Add_Button.Location = new Point(295, 447);
             ModPack_Add_Button.Name = "ModPack_Add_Button";
             ModPack_Add_Button.Size = new Size(128, 30);
             ModPack_Add_Button.TabIndex = 35;
@@ -2092,16 +2108,29 @@
             ModPack_Name_Label.Text = "Modpack Name";
             ModPack_Name_Label.TextAlign = ContentAlignment.TopCenter;
             // 
-            // ModPack_DisableCurrent_CB
+            // ModPack_KeepCurrent_RB
             // 
-            ModPack_DisableCurrent_CB.AutoSize = true;
-            ModPack_DisableCurrent_CB.ForeColor = SystemColors.GradientActiveCaption;
-            ModPack_DisableCurrent_CB.Location = new Point(43, 423);
-            ModPack_DisableCurrent_CB.Name = "ModPack_DisableCurrent_CB";
-            ModPack_DisableCurrent_CB.Size = new Size(181, 19);
-            ModPack_DisableCurrent_CB.TabIndex = 50;
-            ModPack_DisableCurrent_CB.Text = "Disable currently active mods";
-            ModPack_DisableCurrent_CB.UseVisualStyleBackColor = true;
+            ModPack_KeepCurrent_RB.AutoSize = true;
+            ModPack_KeepCurrent_RB.Checked = true;
+            ModPack_KeepCurrent_RB.ForeColor = SystemColors.GradientInactiveCaption;
+            ModPack_KeepCurrent_RB.Location = new Point(23, 411);
+            ModPack_KeepCurrent_RB.Name = "ModPack_KeepCurrent_RB";
+            ModPack_KeepCurrent_RB.Size = new Size(207, 19);
+            ModPack_KeepCurrent_RB.TabIndex = 52;
+            ModPack_KeepCurrent_RB.TabStop = true;
+            ModPack_KeepCurrent_RB.Text = "Keep currently active mods loaded";
+            ModPack_KeepCurrent_RB.UseVisualStyleBackColor = true;
+            // 
+            // ModPack_RemoveCurrent_RB
+            // 
+            ModPack_RemoveCurrent_RB.AutoSize = true;
+            ModPack_RemoveCurrent_RB.ForeColor = SystemColors.GradientInactiveCaption;
+            ModPack_RemoveCurrent_RB.Location = new Point(23, 458);
+            ModPack_RemoveCurrent_RB.Name = "ModPack_RemoveCurrent_RB";
+            ModPack_RemoveCurrent_RB.Size = new Size(185, 19);
+            ModPack_RemoveCurrent_RB.TabIndex = 53;
+            ModPack_RemoveCurrent_RB.Text = "Remove currently active mods";
+            ModPack_RemoveCurrent_RB.UseVisualStyleBackColor = true;
             // 
             // Main
             // 
@@ -2309,7 +2338,7 @@
         private Button ReloadMods_Button;
         private CheckBox BS_AlwaysRunAM_CB;
         private Panel LoadEdit_Panel;
-        private RadioButton radioButton1;
+        private RadioButton ModPack_DisableCurrent_RB;
         private RadioButton radioButton2;
         private Label label28;
         private ListBox listBox1;
@@ -2347,6 +2376,7 @@
         private Label ModPack_Name_Label;
         private ListBox ModPack_ModList_LB;
         private Label label20;
-        private CheckBox ModPack_DisableCurrent_CB;
+        private RadioButton ModPack_RemoveCurrent_RB;
+        private RadioButton ModPack_KeepCurrent_RB;
     }
 }

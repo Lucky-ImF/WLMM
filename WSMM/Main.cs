@@ -3816,6 +3816,7 @@ namespace WSMM
             ModPack_Panel.Show();
             ModPack_ModList_LB.Items.Clear();
             ModPack_SupVers_LB.Items.Clear();
+            ModPack_KeepCurrent_RB.Checked = true;
             using (ZipArchive archive = ZipFile.OpenRead(ModPackPath))
             {
                 foreach (ZipArchiveEntry entry in archive.Entries.Where(e => e.FullName == "Metadata.dat"))
@@ -3868,12 +3869,54 @@ namespace WSMM
             try
             {
                 ToggleButtons(false);
-                if (ModPack_DisableCurrent_CB.Checked == true)
+                if (ModPack_DisableCurrent_RB.Checked == true)
                 {
                     foreach (int EntryID in Mod_Entries)
                     {
                         Mod_EnabledCB[EntryID].Checked = false;
                     }
+                }
+                else if (ModPack_RemoveCurrent_RB.Checked == true)
+                {
+                    foreach (int EntryID in Mod_Entries)
+                    {
+                        //Remove the mod files
+                        Directory.Delete(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + Mod_NameLabel[EntryID].Text, true);
+                        if (File.Exists(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + Mod_NameLabel[EntryID].Text + ".wlmm"))
+                        {
+                            File.Delete(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + Mod_NameLabel[EntryID].Text + ".wlmm");
+                        }
+
+                        Mod_Icon[EntryID].Dispose();
+                        Mod_NameLabel[EntryID].Dispose();
+                        Mod_ErrorLabel[EntryID].Dispose();
+                        Mod_VersionLabel[EntryID].Dispose();
+                        Mod_SupportedVersionsLabel[EntryID].Dispose();
+                        Mod_CharactersLabel[EntryID].Dispose();
+                        Mod_ContainsLabel[EntryID].Dispose();
+                        Mod_AuthorLabel[EntryID].Dispose();
+                        Mod_RemoveButton[EntryID].Dispose();
+                        Mod_ReloadButton[EntryID].Dispose();
+                        Mod_EditButton[EntryID].Dispose();
+                        Mod_LinkButton[EntryID].Dispose();
+                        Mod_EnabledCB[EntryID].Dispose();
+                        Mod_Panel[EntryID].Dispose();
+                        Mod_WLMMPath[EntryID] = string.Empty;
+                        Mod_Categories[EntryID] = string.Empty;
+
+                        AddChange();
+                    }
+                    Mod_Entries.Clear();
+                    Mod_CurrentEntryID = 0;
+
+                    //Clear Cats
+                    foreach (int EntryID in Cat_Entries)
+                    {
+                        Cat_Button[EntryID].Dispose();
+                        Cat_Flow[EntryID].Dispose();
+                    }
+                    Cat_Entries.Clear();
+                    Cat_CurrentEntryID = 0;
                 }
 
                 ZipFile.ExtractToDirectory(ModPackPath, Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded");
