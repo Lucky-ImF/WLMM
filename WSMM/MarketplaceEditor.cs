@@ -456,6 +456,8 @@ namespace WSMM
                 }
                 Screenshots = Screenshots.TrimEnd('*');
 
+                ModDescription_TB.Text = ModDescription_TB.Text.Replace("\r\n", "(nl)");
+
                 string Metadata = "ModName:" + ModName_TB.Text + ",ModAuthor:" + ModAuthor_TB.Text +
                     ",ModVersion:" + ModVersion_TB.Text + ",SupportedVersions:" + SupportedVersions +
                     ",ModLink:" + ModURL_TB.Text + ",ModSize:" + ModSize_TB.Text + ",Category:" + Categories +
@@ -515,6 +517,7 @@ namespace WSMM
 
                         ModDescription_TB.Text = GetSlice(temp, ",", 10);
                         ModDescription_TB.Text = ModDescription_TB.Text.Replace("ModDescription:", "");
+                        ModDescription_TB.Text = ModDescription_TB.Text.Replace("(nl)", "\r\n");
 
                         List<string> screenshots = new List<string>();
                         if (temp.Contains("Screenshots:"))

@@ -336,14 +336,6 @@ namespace WSMM
             Mod_AuthorLabel[EntryID].TextAlign = ContentAlignment.MiddleCenter;
             Mod_AuthorLabel[EntryID].Size = new Size(256, 21);
             Mod_AuthorLabel[EntryID].Location = new Point(2, 262);
-            //Label[] Mod_SupportedVersionsLabel = new Label[50];
-            //Mod_SupportedVersionsLabel[EntryID] = new Label();
-            //Mod_SupportedVersionsLabel[EntryID].BackColor = System.Drawing.Color.FromArgb(32, 34, 81);
-            //Mod_SupportedVersionsLabel[EntryID].ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            //Mod_SupportedVersionsLabel[EntryID].Font = new Font(Mod_NameLabel[EntryID].Font.FontFamily, 10);
-            //Mod_SupportedVersionsLabel[EntryID].Text = SupportedVersions;
-            //Mod_SupportedVersionsLabel[EntryID].AutoSize = true;
-            //Mod_SupportedVersionsLabel[EntryID].Location = new Point(90, 35);
             //Label[] Mod_InfoLabel = new Label[50];
             Mod_InfoLabel[EntryID] = new Label();
             Mod_InfoLabel[EntryID].BackColor = System.Drawing.Color.FromArgb(32, 34, 81);
@@ -471,6 +463,7 @@ namespace WSMM
                 else if (meta.StartsWith("ModDescription"))
                 {
                     ModDescription = meta.Replace(GetSlice(meta, ":", 0) + ":", "");
+                    ModDescription = ModDescription.Replace("(nl)", "\r\n");
                 }
                 else if (meta.StartsWith("DownloadLink"))
                 {
@@ -500,11 +493,6 @@ namespace WSMM
             DownloadMod_Button.Tag = ModDownloadLink;
             DownloadMod_Button.Text = "Download";
 
-            //ModName_Label.Left = ModPanel_Panel.Width / 2 - ModName_Label.Width / 2;
-            //ModAuthor_Label.Left = ModPanel_Panel.Width / 2 - ModAuthor_Label.Width / 2;
-            //ModVersion_Label.Left = ModPanel_Panel.Width / 2 - ModVersion_Label.Width / 2;
-            //SupportedVersions_Label.Left = ModPanel_Panel.Width / 2 - SupportedVersions_Label.Width / 2;
-            //ModLink_LL.Left = ModPanel_Panel.Width / 2 - ModLink_LL.Width / 2;
             ModLastUpdate_Label.Left = ModPanel_Panel.Width / 2 - LastUpdate_Label.Width / 2;
             ModFileSize_Label.Left = ModPanel_Panel.Width / 2 - ModFileSize_Label.Width / 2;
 
@@ -562,8 +550,6 @@ namespace WSMM
                 {
                     File.Delete(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Downloads\" + node.Name);
                 }
-
-                //IProgress<double> progressHandler = new Progress<double>(x => ProgressInfo_Label.Text = "Downloading... " + ((int)x).ToString() + "%");
 
                 IProgress<double> progressHandler = new Progress<double>(x =>
                 {
