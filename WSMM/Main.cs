@@ -792,9 +792,6 @@ namespace WSMM
                     if (LoadedWLVersion != "" && LoadedWLVersion != string.Empty)
                     {
                         LoadGameVersion(LoadedWLPath, LoadedWLVersion, LoadedUEVersion);
-
-                        //Load Mods in Loaded
-                        LoadMods();
                     }
                 }
             }
