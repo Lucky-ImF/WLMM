@@ -34,7 +34,7 @@ namespace WSMM
         private bool StartingUp = true;
         private bool HasOldChanges = false;
 
-        private string WLMM_Version = "1.1.4";
+        private string WLMM_Version = "1.1.5";
         private string Datatable_Version = string.Empty;
         string BuildLog = string.Empty;
 
@@ -159,11 +159,11 @@ namespace WSMM
 
         private void Mod_RemoveButtonClick(object sender, EventArgs e)
         {
-            LinkLabel Casted = sender as LinkLabel;
+            LinkLabel? Casted = sender as LinkLabel;
         }
         private void Mod_LinkButtonClick(object sender, EventArgs e)
         {
-            LinkLabel Casted = sender as LinkLabel;
+            LinkLabel? Casted = sender as LinkLabel;
         }
 
         private void LoadGame_Button_Click(object sender, EventArgs e)
@@ -468,26 +468,14 @@ namespace WSMM
                 string VersionInfo = "";
                 string DTChanges = "";
                 string DTSupVers = "";
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://pastebin.com/raw/qskfNxrz");
-                request.Method = "GET";
-                request.AllowAutoRedirect = false;
-                request.ContentType = "application/json; charset=utf-8";
-                request.UserAgent = "WildLifeModManager";
-
-                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                using (HttpClient client = new HttpClient())
                 {
-                    Stream receiveStream = response.GetResponseStream();
-                    StreamReader readStream = null;
-
-                    readStream = new StreamReader(receiveStream);
-
-                    VersionInfo = readStream.ReadToEnd();
-
-                    response.Dispose();
-                    readStream.Dispose();
+                    HttpResponseMessage response = client.GetAsync("https://pastebin.com/raw/qskfNxrz").Result;
+                    response.EnsureSuccessStatusCode();
+                    VersionInfo = response.Content.ReadAsStringAsync().Result;
                 }
 
-                string[] TempArray = VersionInfo.Split('\r');
+                string[] TempArray = VersionInfo.Split("\r");
                 if (ThisVersion != TempArray[0])
                 {
                     UpdateLink.Text = "New version " + TempArray[0] + " available! Click here to download!";
@@ -657,7 +645,7 @@ namespace WSMM
                     Directory.Delete(Application.StartupPath + @"Temp", true);
                 }
 
-                DTDownload_Panel.Hide();
+                DT_Updater_Panel.Hide();
                 MessageBox.Show(ex.Message, "WLMM Download Error\n" + ex.Message);
                 ToggleButtons(true);
             }
@@ -3122,7 +3110,7 @@ namespace WSMM
                     Process.Start("explorer", UpdateLink.Tag.ToString().Trim('\r'));
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 MessageBox.Show("Error: Could not open your default webbrowser.");
             }
@@ -3162,7 +3150,7 @@ namespace WSMM
                     Process.Start("explorer", WildSanctum_Link.Tag.ToString().Trim('\r'));
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 MessageBox.Show("Error: Could not open your default webbrowser.");
             }
@@ -3177,7 +3165,7 @@ namespace WSMM
                     Process.Start("explorer", WLMMPost_Link.Tag.ToString().Trim('\r'));
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 MessageBox.Show("Error: Could not open your default webbrowser.");
             }

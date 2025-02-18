@@ -115,7 +115,7 @@ namespace WSMM
             GetMarketplaceMods();
         }
 
-        private void GetMarketplaceMods()
+        private async void GetMarketplaceMods()
         {
             RefreshDelay.Start();
             RefreshMods_Button.Enabled = false;
@@ -123,23 +123,12 @@ namespace WSMM
             try
             {
                 string VersionInfo = "";
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://pastebin.com/raw/iZSuG0WY");
-                request.Method = "GET";
-                request.AllowAutoRedirect = false;
-                request.ContentType = "application/json; charset=utf-8";
-                request.UserAgent = "WildLifeModManager";
-
-                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                using (HttpClient client = new HttpClient())
                 {
-                    Stream receiveStream = response.GetResponseStream();
-                    StreamReader readStream = null;
-
-                    readStream = new StreamReader(receiveStream);
-
-                    VersionInfo = readStream.ReadToEnd();
-
-                    response.Dispose();
-                    readStream.Dispose();
+                    client.DefaultRequestHeaders.UserAgent.ParseAdd("WildLifeModManager");
+                    HttpResponseMessage response = await client.GetAsync("https://pastebin.com/raw/iZSuG0WY");
+                    response.EnsureSuccessStatusCode();
+                    VersionInfo = await response.Content.ReadAsStringAsync();
                 }
 
                 string[] TempArray = VersionInfo.Split('\r');
