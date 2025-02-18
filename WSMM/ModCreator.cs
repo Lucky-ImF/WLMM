@@ -1042,5 +1042,35 @@ namespace WSMM
                 toolTip1.SetToolTip(AffectedCharacters_Sort_LL, "Sort alphabetically.");
             }
         }
+
+        private void AutoModList_Expand_Button_Click(object sender, EventArgs e)
+        {
+            if (AutoModList.Height == 107)
+            {
+                AutoModList.Height = 545;
+                PakList.Height = 107;
+                AutoModList_Expand_Button.Text = "Collapse -";
+            }
+            else
+            {
+                AutoModList.Height = 107;
+                AutoModList_Expand_Button.Text = "Expand +";
+            }
+        }
+
+        private void PaksList_Expand_Button_Click(object sender, EventArgs e)
+        {
+            if (PakList.Height == 107)
+            {
+                PakList.Height = 688;
+                AutoModList.Height = 107;
+                PaksList_Expand_Button.Text = "Collapse -";
+            }
+            else
+            {
+                PakList.Height = 107;
+                PaksList_Expand_Button.Text = "Expand +";
+            }
+        }
     }
 }

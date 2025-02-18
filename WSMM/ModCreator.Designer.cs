@@ -82,6 +82,8 @@
             StopEditing_LL = new LinkLabel();
             CurrentlyEditing_LL = new LinkLabel();
             label106 = new Label();
+            AutoModList_Expand_Button = new Button();
+            PaksList_Expand_Button = new Button();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             TitlePanel.SuspendLayout();
@@ -287,6 +289,7 @@
             AutoModList.ShowItemToolTips = true;
             AutoModList.Size = new Size(570, 107);
             AutoModList.TabIndex = 10;
+            AutoModList.TileSize = new Size(64, 64);
             AutoModList.UseCompatibleStateImageBehavior = false;
             AutoModList.DragDrop += AutoModList_DragDrop;
             AutoModList.DragEnter += AutoModList_DragEnter;
@@ -763,6 +766,36 @@
             label106.TabIndex = 42;
             label106.Text = "Currently Editing: ";
             // 
+            // AutoModList_Expand_Button
+            // 
+            AutoModList_Expand_Button.BackColor = Color.FromArgb(75, 68, 138);
+            AutoModList_Expand_Button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            AutoModList_Expand_Button.FlatStyle = FlatStyle.Flat;
+            AutoModList_Expand_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            AutoModList_Expand_Button.ForeColor = Color.White;
+            AutoModList_Expand_Button.Location = new Point(156, 203);
+            AutoModList_Expand_Button.Name = "AutoModList_Expand_Button";
+            AutoModList_Expand_Button.Size = new Size(95, 26);
+            AutoModList_Expand_Button.TabIndex = 45;
+            AutoModList_Expand_Button.Text = "Expand +";
+            AutoModList_Expand_Button.UseVisualStyleBackColor = false;
+            AutoModList_Expand_Button.Click += AutoModList_Expand_Button_Click;
+            // 
+            // PaksList_Expand_Button
+            // 
+            PaksList_Expand_Button.BackColor = Color.FromArgb(75, 68, 138);
+            PaksList_Expand_Button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            PaksList_Expand_Button.FlatStyle = FlatStyle.Flat;
+            PaksList_Expand_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            PaksList_Expand_Button.ForeColor = Color.White;
+            PaksList_Expand_Button.Location = new Point(156, 60);
+            PaksList_Expand_Button.Name = "PaksList_Expand_Button";
+            PaksList_Expand_Button.Size = new Size(95, 26);
+            PaksList_Expand_Button.TabIndex = 46;
+            PaksList_Expand_Button.Text = "Expand +";
+            PaksList_Expand_Button.UseVisualStyleBackColor = false;
+            PaksList_Expand_Button.Click += PaksList_Expand_Button_Click;
+            // 
             // ModCreator
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -770,6 +803,10 @@
             BackColor = Color.FromArgb(32, 34, 81);
             ClientSize = new Size(658, 850);
             ControlBox = false;
+            Controls.Add(PakList);
+            Controls.Add(PaksList_Expand_Button);
+            Controls.Add(AutoModList);
+            Controls.Add(AutoModList_Expand_Button);
             Controls.Add(StopEditing_LL);
             Controls.Add(CurrentlyEditing_LL);
             Controls.Add(label106);
@@ -782,11 +819,9 @@
             Controls.Add(RemoveAutoMod_Button);
             Controls.Add(AddAutoMod_Button);
             Controls.Add(label2);
-            Controls.Add(AutoModList);
             Controls.Add(RemovePak_Button);
             Controls.Add(AddPak_Button);
             Controls.Add(label1);
-            Controls.Add(PakList);
             Controls.Add(BuildMods_Button);
             Controls.Add(Close_Button);
             Controls.Add(Separator_1);
@@ -867,5 +902,7 @@
         private Label label10;
         private CheckedListBox Categories_CLB;
         private LinkLabel AffectedCharacters_Sort_LL;
+        private Button AutoModList_Expand_Button;
+        private Button PaksList_Expand_Button;
     }
 }
