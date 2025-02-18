@@ -1002,6 +1002,7 @@ namespace WSMM
             }
 
             int CharactersAdded = 0;
+            List<string> CharactersAddedList = new List<string>();
             foreach (ListViewItem AMEntry in AutoModList.Items)
             {
                 string[] contents;
@@ -1017,7 +1018,20 @@ namespace WSMM
                             if (AffectedCharacters_CLB.Items[i].ToString() == Character)
                             {
                                 AffectedCharacters_CLB.SetItemChecked(i, true);
-                                CharactersAdded++;
+                                bool AlreadyCounted = false;
+                                foreach (string s in CharactersAddedList)
+                                {
+                                    if (s == Character)
+                                    {
+                                        AlreadyCounted = true;
+                                        break;
+                                    }
+                                }
+                                if (AlreadyCounted == false)
+                                {
+                                    CharactersAddedList.Add(Character);
+                                    CharactersAdded++;
+                                }
                             }
                         }
                     }
