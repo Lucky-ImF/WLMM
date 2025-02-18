@@ -48,6 +48,7 @@
             AutoModList = new ListView();
             CreateAutoMod_Button = new Button();
             panel1 = new Panel();
+            ManagePrereqs_Button = new Button();
             AffectedCharacters_Sort_LL = new LinkLabel();
             AffectedCharacterSetWithAutoMod_LL = new LinkLabel();
             label11 = new Label();
@@ -84,12 +85,21 @@
             label106 = new Label();
             AutoModList_Expand_Button = new Button();
             PaksList_Expand_Button = new Button();
+            PrereqManager_Panel = new Panel();
+            PrereqRemove_Button = new Button();
+            label12 = new Label();
+            PrereqAdd_Button = new Button();
+            PrereqAdd_TB = new TextBox();
+            label15 = new Label();
+            Prereqs_LB = new ListBox();
+            linkLabel2 = new LinkLabel();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             TitlePanel.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)ModIcon_Preview).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Icon_PB).BeginInit();
+            PrereqManager_Panel.SuspendLayout();
             SuspendLayout();
             // 
             // Close_Button
@@ -313,6 +323,7 @@
             // panel1
             // 
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(ManagePrereqs_Button);
             panel1.Controls.Add(AffectedCharacters_Sort_LL);
             panel1.Controls.Add(AffectedCharacterSetWithAutoMod_LL);
             panel1.Controls.Add(label11);
@@ -339,6 +350,21 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(570, 403);
             panel1.TabIndex = 14;
+            // 
+            // ManagePrereqs_Button
+            // 
+            ManagePrereqs_Button.BackColor = Color.FromArgb(75, 68, 138);
+            ManagePrereqs_Button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            ManagePrereqs_Button.FlatStyle = FlatStyle.Flat;
+            ManagePrereqs_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            ManagePrereqs_Button.ForeColor = Color.White;
+            ManagePrereqs_Button.Location = new Point(287, 104);
+            ManagePrereqs_Button.Name = "ManagePrereqs_Button";
+            ManagePrereqs_Button.Size = new Size(269, 26);
+            ManagePrereqs_Button.TabIndex = 46;
+            ManagePrereqs_Button.Text = "Manage Dependencies: 0";
+            ManagePrereqs_Button.UseVisualStyleBackColor = false;
+            ManagePrereqs_Button.Click += ManagePrereqs_Button_Click;
             // 
             // AffectedCharacters_Sort_LL
             // 
@@ -796,6 +822,116 @@
             PaksList_Expand_Button.UseVisualStyleBackColor = false;
             PaksList_Expand_Button.Click += PaksList_Expand_Button_Click;
             // 
+            // PrereqManager_Panel
+            // 
+            PrereqManager_Panel.BackColor = Color.FromArgb(75, 68, 138);
+            PrereqManager_Panel.BorderStyle = BorderStyle.Fixed3D;
+            PrereqManager_Panel.Controls.Add(PrereqRemove_Button);
+            PrereqManager_Panel.Controls.Add(label12);
+            PrereqManager_Panel.Controls.Add(PrereqAdd_Button);
+            PrereqManager_Panel.Controls.Add(PrereqAdd_TB);
+            PrereqManager_Panel.Controls.Add(label15);
+            PrereqManager_Panel.Controls.Add(Prereqs_LB);
+            PrereqManager_Panel.Controls.Add(linkLabel2);
+            PrereqManager_Panel.Location = new Point(265, 507);
+            PrereqManager_Panel.Name = "PrereqManager_Panel";
+            PrereqManager_Panel.Size = new Size(336, 158);
+            PrereqManager_Panel.TabIndex = 47;
+            PrereqManager_Panel.Visible = false;
+            // 
+            // PrereqRemove_Button
+            // 
+            PrereqRemove_Button.BackColor = Color.FromArgb(32, 34, 81);
+            PrereqRemove_Button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            PrereqRemove_Button.FlatStyle = FlatStyle.Flat;
+            PrereqRemove_Button.Font = new Font("Segoe UI", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            PrereqRemove_Button.ForeColor = Color.Red;
+            PrereqRemove_Button.Location = new Point(285, 80);
+            PrereqRemove_Button.Name = "PrereqRemove_Button";
+            PrereqRemove_Button.Size = new Size(39, 27);
+            PrereqRemove_Button.TabIndex = 45;
+            PrereqRemove_Button.Text = "X";
+            PrereqRemove_Button.UseVisualStyleBackColor = false;
+            PrereqRemove_Button.Click += PrereqRemove_Button_Click;
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label12.ForeColor = SystemColors.ActiveCaption;
+            label12.Location = new Point(11, 28);
+            label12.Name = "label12";
+            label12.Size = new Size(75, 17);
+            label12.TabIndex = 44;
+            label12.Text = "Mod Name";
+            // 
+            // PrereqAdd_Button
+            // 
+            PrereqAdd_Button.BackColor = Color.FromArgb(32, 34, 81);
+            PrereqAdd_Button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            PrereqAdd_Button.FlatStyle = FlatStyle.Flat;
+            PrereqAdd_Button.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            PrereqAdd_Button.ForeColor = SystemColors.ActiveCaption;
+            PrereqAdd_Button.Location = new Point(285, 47);
+            PrereqAdd_Button.Name = "PrereqAdd_Button";
+            PrereqAdd_Button.Size = new Size(39, 27);
+            PrereqAdd_Button.TabIndex = 43;
+            PrereqAdd_Button.Text = "Add";
+            PrereqAdd_Button.UseVisualStyleBackColor = false;
+            PrereqAdd_Button.Click += PrereqAdd_Button_Click;
+            // 
+            // PrereqAdd_TB
+            // 
+            PrereqAdd_TB.BackColor = Color.FromArgb(32, 34, 81);
+            PrereqAdd_TB.BorderStyle = BorderStyle.FixedSingle;
+            PrereqAdd_TB.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            PrereqAdd_TB.ForeColor = SystemColors.ActiveCaption;
+            PrereqAdd_TB.Location = new Point(11, 47);
+            PrereqAdd_TB.Name = "PrereqAdd_TB";
+            PrereqAdd_TB.Size = new Size(268, 27);
+            PrereqAdd_TB.TabIndex = 42;
+            PrereqAdd_TB.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label15.ForeColor = SystemColors.ActiveCaption;
+            label15.Location = new Point(113, 7);
+            label15.Name = "label15";
+            label15.Size = new Size(107, 21);
+            label15.TabIndex = 41;
+            label15.Text = "Dependencies";
+            // 
+            // Prereqs_LB
+            // 
+            Prereqs_LB.BackColor = Color.FromArgb(32, 34, 81);
+            Prereqs_LB.ForeColor = SystemColors.ActiveCaption;
+            Prereqs_LB.FormattingEnabled = true;
+            Prereqs_LB.ItemHeight = 15;
+            Prereqs_LB.Location = new Point(11, 80);
+            Prereqs_LB.Name = "Prereqs_LB";
+            Prereqs_LB.ScrollAlwaysVisible = true;
+            Prereqs_LB.Size = new Size(268, 49);
+            Prereqs_LB.TabIndex = 40;
+            // 
+            // linkLabel2
+            // 
+            linkLabel2.ActiveLinkColor = SystemColors.MenuHighlight;
+            linkLabel2.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            linkLabel2.AutoSize = true;
+            linkLabel2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            linkLabel2.LinkColor = SystemColors.MenuHighlight;
+            linkLabel2.Location = new Point(365, 539);
+            linkLabel2.Margin = new Padding(4, 0, 4, 0);
+            linkLabel2.Name = "linkLabel2";
+            linkLabel2.Size = new Size(86, 16);
+            linkLabel2.TabIndex = 37;
+            linkLabel2.TabStop = true;
+            linkLabel2.Tag = "null";
+            linkLabel2.Text = "Set to Default";
+            linkLabel2.VisitedLinkColor = SystemColors.MenuHighlight;
+            // 
             // ModCreator
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -803,6 +939,7 @@
             BackColor = Color.FromArgb(32, 34, 81);
             ClientSize = new Size(658, 850);
             ControlBox = false;
+            Controls.Add(PrereqManager_Panel);
             Controls.Add(PakList);
             Controls.Add(PaksList_Expand_Button);
             Controls.Add(AutoModList);
@@ -844,6 +981,8 @@
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)ModIcon_Preview).EndInit();
             ((System.ComponentModel.ISupportInitialize)Icon_PB).EndInit();
+            PrereqManager_Panel.ResumeLayout(false);
+            PrereqManager_Panel.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -904,5 +1043,14 @@
         private LinkLabel AffectedCharacters_Sort_LL;
         private Button AutoModList_Expand_Button;
         private Button PaksList_Expand_Button;
+        private Button ManagePrereqs_Button;
+        private Panel PrereqManager_Panel;
+        private Button PrereqRemove_Button;
+        private Label label12;
+        private Button PrereqAdd_Button;
+        private TextBox PrereqAdd_TB;
+        private Label label15;
+        private ListBox Prereqs_LB;
+        private LinkLabel linkLabel2;
     }
 }

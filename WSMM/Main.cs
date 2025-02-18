@@ -67,6 +67,7 @@ namespace WSMM
         CheckBox[] Mod_EnabledCB = new CheckBox[100];
         string[] Mod_WLMMPath = new string[100];
         string[] Mod_Categories = new string[100];
+        List<string>[] Mod_Dependencies = new List<string>[100];
 
         List<int> Mod_Entries = new List<int>();
         int Mod_CurrentEntryID = 0;
@@ -1128,6 +1129,7 @@ namespace WSMM
 
             // Conflict Check
             ConflictCheck();
+            DependenciesCheck();
 
             CheckCategories();
 
@@ -1155,6 +1157,7 @@ namespace WSMM
             string Categories = string.Empty;
             string FirstCategory = string.Empty;
             string Characters = string.Empty;
+            string Dependencies = string.Empty;
             int PakCount = 0;
             int AutoModCount = 0;
 
@@ -1187,6 +1190,10 @@ namespace WSMM
                 {
                     Characters = GetSlice(meta, "=", 1);
                     Characters = Characters.Replace(",", ", ");
+                }
+                else if (meta.StartsWith("Dependencies"))
+                {
+                    Dependencies = GetSlice(meta, "=", 1);
                 }
             }
 
@@ -1429,6 +1436,28 @@ namespace WSMM
             Mod_Panel[EntryID].Controls.Add(Mod_LinkButton[EntryID]);
             Mod_Panel[EntryID].Controls.Add(Mod_EnabledCB[EntryID]);
 
+            if (Dependencies.Contains(","))
+            {
+                Mod_Dependencies[EntryID] = new List<string>();
+                string[] SplitChars = Dependencies.Split(",");
+                foreach (string s in SplitChars)
+                {
+                    string TrimmedS = s.Trim();
+                    Mod_Dependencies[EntryID].Add(TrimmedS);
+                    Debug.WriteLine(Mod_Dependencies[EntryID].Count);
+                }
+            }
+            else
+            {
+                Mod_Dependencies[EntryID] = new List<string>();
+                string TrimmedS = Dependencies.Trim();
+                if (TrimmedS != string.Empty)
+                {
+                    Mod_Dependencies[EntryID].Add(TrimmedS);
+                    Debug.WriteLine(Mod_Dependencies[EntryID].Count);
+                }
+            }
+
             if (FirstCategory == string.Empty)
             {
                 FirstCategory = "Other";
@@ -1535,6 +1564,7 @@ namespace WSMM
                 }
                 AddChange();
                 ConflictCheck();
+                DependenciesCheck();
             }
         }
 
@@ -3478,6 +3508,58 @@ namespace WSMM
                     {
                         Mod_ErrorLabel[ModID_X].Visible = false;
                     });
+                }
+            }
+        }
+
+        private void DependenciesCheck()
+        {
+            foreach (int ModID_X in Mod_Entries)
+            {
+                bool AllDependenciesFound = true;
+                string DependenciesMissing = string.Empty;
+
+                if (Mod_Dependencies[ModID_X].Count != 0)
+                {
+                    foreach (string DependingOn in Mod_Dependencies[ModID_X])
+                    {
+                        bool CurrentDependencyFound = false;
+                        foreach (int ModID_Y in Mod_Entries)
+                        {
+                            if (Mod_NameLabel[ModID_Y].Text == DependingOn)
+                            {
+                                CurrentDependencyFound = true;
+                                break;
+                            }
+                        }
+                        if (CurrentDependencyFound == false)
+                        {
+                            AllDependenciesFound = false;
+                            DependenciesMissing += DependingOn + ", ";
+                        }
+                    }
+
+                    if (AllDependenciesFound == false)
+                    {
+                        DependenciesMissing = DependenciesMissing.TrimEnd(' ', ',');
+                        Mod_ErrorLabel[ModID_X].Invoke((System.Windows.Forms.MethodInvoker)delegate
+                        {
+                            Mod_ErrorLabel[ModID_X].Text = "Dependencies Missing: " + DependenciesMissing;
+                            Mod_ErrorLabel[ModID_X].ForeColor = System.Drawing.Color.LightCoral;
+                            Mod_ErrorLabel[ModID_X].Visible = true;
+                            Mod_EnabledCB[ModID_X].Enabled = false;
+                            Mod_EnabledCB[ModID_X].Checked = false;
+                            Graphics g = CreateGraphics();
+                            SizeF LabelSize = g.MeasureString(Mod_ErrorLabel[ModID_X].Text, Mod_ErrorLabel[ModID_X].Font);
+                            Mod_ErrorLabel[ModID_X].Location = new Point(Mod_VersionLabel[ModID_X].Left - ((int)LabelSize.Width) - 5, 11);
+                            Mod_ErrorLabel[ModID_X].BringToFront();
+                        });
+                    }
+                    else
+                    {
+                        Mod_ErrorLabel[ModID_X].Visible = false;
+                        Mod_EnabledCB[ModID_X].Enabled = true;
+                    }
                 }
             }
         }

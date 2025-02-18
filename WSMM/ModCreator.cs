@@ -531,10 +531,17 @@ namespace WSMM
             }
             Characters = Characters.TrimEnd(',');
 
+            string Dependencies = "";
+            foreach (string D in Prereqs_LB.Items)
+            {
+                Dependencies += D.ToString() + ",";
+            }
+            Dependencies = Dependencies.TrimEnd(',');
+
             string Metadata = "ModName = " + ModName_TB.Text + "\nModAuthor = " + ModAuthor_TB.Text +
                 "\nModVersion = " + ModVersion_TB.Text + "\nSupportedWLVersions = " + SupportedVersions +
                 "\nModURL = " + ModURL_TB.Text + "\nCategories = " + Categories +
-                "\nCharacters = " + Characters;
+                "\nCharacters = " + Characters + "\nDependencies = " + Dependencies;
             File.WriteAllText(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Staging\Metadata.dat", Metadata);
             File.WriteAllText(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Staging\Enabled.dat", "Checked");
             if (ModIconPath_TB.Text != "Default")
@@ -653,6 +660,7 @@ namespace WSMM
             string SupVers = string.Empty;
             string Categories = string.Empty;
             string Characters = string.Empty;
+            string Dependencies = string.Empty;
             string[] MetaData = File.ReadAllLines(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\Metadata.dat");
             foreach (string meta in MetaData)
             {
@@ -684,6 +692,10 @@ namespace WSMM
                 {
                     Characters = GetSlice(meta, "=", 1);
                 }
+                else if (meta.StartsWith("Dependencies"))
+                {
+                    Dependencies = GetSlice(meta, "=", 1);
+                }
             }
 
             //Clear Supported Versions
@@ -701,6 +713,8 @@ namespace WSMM
             {
                 Categories_CLB.SetItemChecked(i, false);
             }
+            Prereqs_LB.Items.Clear();
+            PrereqManager_Panel.Hide();
 
             if (SupVers.Contains("All Versions"))
             {
@@ -788,6 +802,26 @@ namespace WSMM
                     }
                 }
             }
+
+            if (Dependencies.Contains(","))
+            {
+                string[] SplitChars = Dependencies.Split(",");
+                foreach (string s in SplitChars)
+                {
+                    string TrimmedS = s.Trim();
+                    Prereqs_LB.Items.Add(TrimmedS);
+                }
+            }
+            else
+            {
+                string TrimmedS = Dependencies.Trim();
+                if (TrimmedS != string.Empty)
+                {
+                    Prereqs_LB.Items.Add(TrimmedS);
+                }
+            }
+            ManagePrereqs_Button.Text = "Manage Dependencies: " + Prereqs_LB.Items.Count.ToString();
+
 
             if (File.Exists(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\Icon.png"))
             {
@@ -1085,6 +1119,56 @@ namespace WSMM
                 PakList.Height = 107;
                 PaksList_Expand_Button.Text = "Expand +";
             }
+        }
+
+        private void ManagePrereqs_Button_Click(object sender, EventArgs e)
+        {
+            if (PrereqManager_Panel.Visible == true)
+            {
+                PrereqManager_Panel.Hide();
+            }
+            else
+            {
+                PrereqManager_Panel.Show();
+            }
+        }
+
+        private void PrereqAdd_Button_Click(object sender, EventArgs e)
+        {
+            bool ModValid = true;
+            string CharPool = @"=,\/:*?""<>|";
+            // Validate Text
+            if (PrereqAdd_TB.Text != "")
+            {
+                foreach (char c in CharPool)
+                {
+                    if (PrereqAdd_TB.Text.Contains(c))
+                    {
+                        toolTip1.Show(@"Mod Name is empty or invalid character found =,\/:*?""<>|", PrereqAdd_TB, 3000);
+                        ModValid = false;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                ModValid = false;
+                toolTip1.Show(@"Mod Name is empty or invalid character found =,\/:*?""<>|", PrereqAdd_TB, 3000);
+            }
+            if (ModValid == true)
+            {
+                Prereqs_LB.Items.Add(PrereqAdd_TB.Text);
+                ManagePrereqs_Button.Text = "Manage Dependencies: " + Prereqs_LB.Items.Count.ToString();
+            }
+        }
+
+        private void PrereqRemove_Button_Click(object sender, EventArgs e)
+        {
+            if (Prereqs_LB.SelectedIndex != -1)
+            {
+                Prereqs_LB.Items.RemoveAt(Prereqs_LB.SelectedIndex);
+            }
+            ManagePrereqs_Button.Text = "Manage Dependencies: " + Prereqs_LB.Items.Count.ToString();
         }
     }
 }
