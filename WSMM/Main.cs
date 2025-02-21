@@ -48,6 +48,8 @@ namespace WSMM
         string DTVersion = "";
         string DTLink = "";
 
+        bool MMMode = false;
+
         string ModPackPath = string.Empty;
 
         //Panel, Picturebox, Label(Name), Label(Error), Label(Version), Label(SupportedVersions), Label(Author), LinkLabel(Remove), LinkLabel(Link), Checkbox
@@ -341,21 +343,7 @@ namespace WSMM
             CreateCoreFiles();
 
             //Enable Buttons
-            BuildSettings_Button.Enabled = true;
-            ModCreator_Button.Enabled = true;
-            MetaDataPatcher_Button.Enabled = true;
-            OpenWLFolder_Button.Enabled = true;
-            LaunchWL_Button.Enabled = true;
-            RefreshBuildSettings_Button.Enabled = true;
-            ReloadMods_Button.Visible = true;
-            EnableMods_Button.Visible = true;
-            DisableMods_Button.Visible = true;
-            RemoveMods_Button.Visible = true;
-            AddMod_Button.Visible = true;
-            Marketplace_Button.Enabled = true;
-            MarketplaceEditor_Button.Enabled = true;
-            TransferModsOpen_Button.Enabled = true;
-            CreateModPack_Button.Enabled = true;
+            ToggleButtons(true);
 
             NoGameLoaded_Panel.Visible = false;
             ModFlow_Panel.AllowDrop = true;
@@ -468,6 +456,9 @@ namespace WSMM
                 string VersionInfo = "";
                 string DTChanges = "";
                 string DTSupVers = "";
+                string MM = "";
+                string MMInfo = "";
+                string MMMessage = "";
                 using (HttpClient client = new HttpClient())
                 {
                     HttpResponseMessage response = client.GetAsync("https://pastebin.com/raw/qskfNxrz").Result;
@@ -487,6 +478,9 @@ namespace WSMM
                     DTLink = TempArray[5].Trim('\n');
                     DTChanges = TempArray[6].Trim('\n');
                     DTSupVers = TempArray[7].Trim('\n');
+                    MM = TempArray[8].Trim('\n');
+                    MMInfo = TempArray[9].Trim('\n');
+                    MMMessage = TempArray[10].Trim('\n');
                 }
                 else
                 {
@@ -496,6 +490,9 @@ namespace WSMM
                     DTLink = TempArray[5].Trim('\n');
                     DTChanges = TempArray[6].Trim('\n');
                     DTSupVers = TempArray[7].Trim('\n');
+                    MM = TempArray[8].Trim('\n');
+                    MMInfo = TempArray[9].Trim('\n');
+                    MMMessage = TempArray[10].Trim('\n');
                 }
 
                 if (Datatable_Version == string.Empty)
@@ -518,12 +515,26 @@ namespace WSMM
                     DT_Updater_SupVerLB.Items.Clear();
                     DT_Updater_SupVerLB.Items.AddRange(DTSupVers.Split('*'));
                 }
+
+                if (MM == "MM=True")
+                {
+                    MM_Panel.Show();
+                    MM_Info.Text = MMInfo;
+                    MM_Message.Text = MMMessage.Replace("(nl)","\r\n");
+                    Marketplace_Button.Enabled = false;
+                    DT_Updater_DownloadButton.Enabled = false;
+                    MMMode = true;
+                }
             }
             catch (Exception)
             {
                 UpdateLink.Text = "Unable to check for new version.";
                 UpdateLink.LinkColor = Color.LightCoral;
                 UpdateLink.VisitedLinkColor = Color.LightCoral;
+
+                MM_Panel.Show();
+                MM_Info.Text = "Unable to check for new version.";
+                MM_Message.Text = "Is your network down or firewall blocking WLMM?\nIf not, check the WLMM post on Discord for info/help.";
             }
         }
 
@@ -540,7 +551,10 @@ namespace WSMM
             DisableMods_Button.Enabled = State;
             RemoveMods_Button.Enabled = State;
             AddMod_Button.Enabled = State;
-            Marketplace_Button.Enabled = State;
+            if (MMMode == false)
+            {
+                Marketplace_Button.Enabled = State;
+            }
             MarketplaceEditor_Button.Enabled = State;
             TransferModsOpen_Button.Enabled = State;
             ModCreator_Button.Enabled = State;
@@ -3998,6 +4012,21 @@ namespace WSMM
             {
                 MessageBox.Show("Error adding modpack.\nEx: " + ex.Message.ToString(), "Wild Life Mod Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void MM_CloseButton_Click(object sender, EventArgs e)
+        {
+            MM_Panel.Hide();
+        }
+
+        private void MM_CloseButton_MouseEnter(object sender, EventArgs e)
+        {
+            MM_CloseButton.Image = Properties.Resources.Close_Icon_Hover;
+        }
+
+        private void MM_CloseButton_MouseLeave(object sender, EventArgs e)
+        {
+            MM_CloseButton.Image = Properties.Resources.Close_Icon;
         }
     }
 }

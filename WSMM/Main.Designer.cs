@@ -161,6 +161,8 @@
             label35 = new Label();
             CreateModPack_Button = new Button();
             ModPack_Panel = new Panel();
+            ModPack_RemoveCurrent_RB = new RadioButton();
+            ModPack_KeepCurrent_RB = new RadioButton();
             ModPack_DisableCurrent_RB = new RadioButton();
             ModPack_ModList_LB = new ListBox();
             label20 = new Label();
@@ -173,8 +175,11 @@
             label36 = new Label();
             label37 = new Label();
             ModPack_Name_Label = new Label();
-            ModPack_KeepCurrent_RB = new RadioButton();
-            ModPack_RemoveCurrent_RB = new RadioButton();
+            MM_Panel = new Panel();
+            MM_Message = new TextBox();
+            MM_Info = new Label();
+            MM_CloseButton = new PictureBox();
+            label38 = new Label();
             TitlePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
@@ -204,6 +209,8 @@
             ((System.ComponentModel.ISupportInitialize)DT_Updater_CloseButton).BeginInit();
             ModPack_Panel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)ModPack_Close_Button).BeginInit();
+            MM_Panel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)MM_CloseButton).BeginInit();
             SuspendLayout();
             // 
             // TitlePanel
@@ -1963,6 +1970,30 @@
             ModPack_Panel.TabIndex = 61;
             ModPack_Panel.Visible = false;
             // 
+            // ModPack_RemoveCurrent_RB
+            // 
+            ModPack_RemoveCurrent_RB.AutoSize = true;
+            ModPack_RemoveCurrent_RB.ForeColor = SystemColors.GradientInactiveCaption;
+            ModPack_RemoveCurrent_RB.Location = new Point(23, 458);
+            ModPack_RemoveCurrent_RB.Name = "ModPack_RemoveCurrent_RB";
+            ModPack_RemoveCurrent_RB.Size = new Size(185, 19);
+            ModPack_RemoveCurrent_RB.TabIndex = 53;
+            ModPack_RemoveCurrent_RB.Text = "Remove currently active mods";
+            ModPack_RemoveCurrent_RB.UseVisualStyleBackColor = true;
+            // 
+            // ModPack_KeepCurrent_RB
+            // 
+            ModPack_KeepCurrent_RB.AutoSize = true;
+            ModPack_KeepCurrent_RB.Checked = true;
+            ModPack_KeepCurrent_RB.ForeColor = SystemColors.GradientInactiveCaption;
+            ModPack_KeepCurrent_RB.Location = new Point(23, 411);
+            ModPack_KeepCurrent_RB.Name = "ModPack_KeepCurrent_RB";
+            ModPack_KeepCurrent_RB.Size = new Size(207, 19);
+            ModPack_KeepCurrent_RB.TabIndex = 52;
+            ModPack_KeepCurrent_RB.TabStop = true;
+            ModPack_KeepCurrent_RB.Text = "Keep currently active mods loaded";
+            ModPack_KeepCurrent_RB.UseVisualStyleBackColor = true;
+            // 
             // ModPack_DisableCurrent_RB
             // 
             ModPack_DisableCurrent_RB.AutoSize = true;
@@ -2108,29 +2139,68 @@
             ModPack_Name_Label.Text = "Modpack Name";
             ModPack_Name_Label.TextAlign = ContentAlignment.TopCenter;
             // 
-            // ModPack_KeepCurrent_RB
+            // MM_Panel
             // 
-            ModPack_KeepCurrent_RB.AutoSize = true;
-            ModPack_KeepCurrent_RB.Checked = true;
-            ModPack_KeepCurrent_RB.ForeColor = SystemColors.GradientInactiveCaption;
-            ModPack_KeepCurrent_RB.Location = new Point(23, 411);
-            ModPack_KeepCurrent_RB.Name = "ModPack_KeepCurrent_RB";
-            ModPack_KeepCurrent_RB.Size = new Size(207, 19);
-            ModPack_KeepCurrent_RB.TabIndex = 52;
-            ModPack_KeepCurrent_RB.TabStop = true;
-            ModPack_KeepCurrent_RB.Text = "Keep currently active mods loaded";
-            ModPack_KeepCurrent_RB.UseVisualStyleBackColor = true;
+            MM_Panel.BackColor = Color.FromArgb(75, 68, 138);
+            MM_Panel.BorderStyle = BorderStyle.FixedSingle;
+            MM_Panel.Controls.Add(MM_Message);
+            MM_Panel.Controls.Add(MM_Info);
+            MM_Panel.Controls.Add(MM_CloseButton);
+            MM_Panel.Controls.Add(label38);
+            MM_Panel.Location = new Point(340, 297);
+            MM_Panel.Name = "MM_Panel";
+            MM_Panel.Size = new Size(454, 166);
+            MM_Panel.TabIndex = 62;
+            MM_Panel.Visible = false;
             // 
-            // ModPack_RemoveCurrent_RB
+            // MM_Message
             // 
-            ModPack_RemoveCurrent_RB.AutoSize = true;
-            ModPack_RemoveCurrent_RB.ForeColor = SystemColors.GradientInactiveCaption;
-            ModPack_RemoveCurrent_RB.Location = new Point(23, 458);
-            ModPack_RemoveCurrent_RB.Name = "ModPack_RemoveCurrent_RB";
-            ModPack_RemoveCurrent_RB.Size = new Size(185, 19);
-            ModPack_RemoveCurrent_RB.TabIndex = 53;
-            ModPack_RemoveCurrent_RB.Text = "Remove currently active mods";
-            ModPack_RemoveCurrent_RB.UseVisualStyleBackColor = true;
+            MM_Message.BackColor = Color.FromArgb(32, 34, 81);
+            MM_Message.BorderStyle = BorderStyle.FixedSingle;
+            MM_Message.ForeColor = Color.White;
+            MM_Message.Location = new Point(26, 71);
+            MM_Message.Multiline = true;
+            MM_Message.Name = "MM_Message";
+            MM_Message.ReadOnly = true;
+            MM_Message.ScrollBars = ScrollBars.Vertical;
+            MM_Message.Size = new Size(401, 80);
+            MM_Message.TabIndex = 47;
+            MM_Message.TextAlign = HorizontalAlignment.Center;
+            // 
+            // MM_Info
+            // 
+            MM_Info.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            MM_Info.ForeColor = Color.White;
+            MM_Info.Location = new Point(9, 41);
+            MM_Info.Name = "MM_Info";
+            MM_Info.Size = new Size(435, 21);
+            MM_Info.TabIndex = 35;
+            MM_Info.Text = "DataTable updater and Marketplace is currently disabled.";
+            MM_Info.TextAlign = ContentAlignment.TopCenter;
+            // 
+            // MM_CloseButton
+            // 
+            MM_CloseButton.Image = Properties.Resources.Close_Icon;
+            MM_CloseButton.Location = new Point(420, 3);
+            MM_CloseButton.Name = "MM_CloseButton";
+            MM_CloseButton.Size = new Size(30, 30);
+            MM_CloseButton.SizeMode = PictureBoxSizeMode.Zoom;
+            MM_CloseButton.TabIndex = 34;
+            MM_CloseButton.TabStop = false;
+            MM_CloseButton.Click += MM_CloseButton_Click;
+            MM_CloseButton.MouseEnter += MM_CloseButton_MouseEnter;
+            MM_CloseButton.MouseLeave += MM_CloseButton_MouseLeave;
+            // 
+            // label38
+            // 
+            label38.AutoSize = true;
+            label38.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label38.ForeColor = SystemColors.ActiveCaption;
+            label38.Location = new Point(129, 4);
+            label38.Name = "label38";
+            label38.Size = new Size(194, 30);
+            label38.TabIndex = 2;
+            label38.Text = "Maintenance Mode";
             // 
             // Main
             // 
@@ -2139,6 +2209,7 @@
             BackColor = Color.FromArgb(32, 34, 81);
             ClientSize = new Size(1134, 761);
             ControlBox = false;
+            Controls.Add(MM_Panel);
             Controls.Add(ModPack_Panel);
             Controls.Add(CreateModPack_Button);
             Controls.Add(DT_Updater_Panel);
@@ -2220,6 +2291,9 @@
             ModPack_Panel.ResumeLayout(false);
             ModPack_Panel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)ModPack_Close_Button).EndInit();
+            MM_Panel.ResumeLayout(false);
+            MM_Panel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)MM_CloseButton).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -2372,5 +2446,10 @@
         private Label label20;
         private RadioButton ModPack_RemoveCurrent_RB;
         private RadioButton ModPack_KeepCurrent_RB;
+        private Panel MM_Panel;
+        private TextBox MM_Message;
+        private Label MM_Info;
+        private PictureBox MM_CloseButton;
+        private Label label38;
     }
 }

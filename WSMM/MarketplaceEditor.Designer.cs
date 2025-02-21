@@ -545,6 +545,7 @@
             ModDescription_TB.Location = new Point(12, 230);
             ModDescription_TB.Multiline = true;
             ModDescription_TB.Name = "ModDescription_TB";
+            ModDescription_TB.ScrollBars = ScrollBars.Vertical;
             ModDescription_TB.Size = new Size(544, 49);
             ModDescription_TB.TabIndex = 48;
             ModDescription_TB.Text = "No Description Provided.";
