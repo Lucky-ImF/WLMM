@@ -150,6 +150,8 @@
             LoadEdit_ModName_Label = new Label();
             LaunchWL_Button = new Button();
             DT_Updater_Panel = new Panel();
+            DT_Updater_MDownloadButton = new Button();
+            DT_Updater_MInstallButton = new Button();
             DT_Updater_VersionLabel = new Label();
             DT_Updater_ChangesTB = new TextBox();
             DT_Updater_SupVerLB = new ListBox();
@@ -180,6 +182,7 @@
             MM_Info = new Label();
             MM_CloseButton = new PictureBox();
             label38 = new Label();
+            openFileDialog3 = new OpenFileDialog();
             TitlePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
@@ -1805,6 +1808,8 @@
             // 
             DT_Updater_Panel.BackColor = Color.FromArgb(75, 68, 138);
             DT_Updater_Panel.BorderStyle = BorderStyle.FixedSingle;
+            DT_Updater_Panel.Controls.Add(DT_Updater_MDownloadButton);
+            DT_Updater_Panel.Controls.Add(DT_Updater_MInstallButton);
             DT_Updater_Panel.Controls.Add(DTDownload_Progress);
             DT_Updater_Panel.Controls.Add(DT_Updater_VersionLabel);
             DT_Updater_Panel.Controls.Add(DT_Updater_ChangesTB);
@@ -1816,11 +1821,41 @@
             DT_Updater_Panel.Controls.Add(label34);
             DT_Updater_Panel.Controls.Add(label35);
             DT_Updater_Panel.Controls.Add(DT_Updater_ProgressLabel);
-            DT_Updater_Panel.Location = new Point(346, 214);
+            DT_Updater_Panel.Location = new Point(346, 157);
             DT_Updater_Panel.Name = "DT_Updater_Panel";
             DT_Updater_Panel.Size = new Size(443, 367);
             DT_Updater_Panel.TabIndex = 59;
             DT_Updater_Panel.Visible = false;
+            // 
+            // DT_Updater_MDownloadButton
+            // 
+            DT_Updater_MDownloadButton.BackColor = Color.FromArgb(75, 68, 138);
+            DT_Updater_MDownloadButton.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            DT_Updater_MDownloadButton.FlatStyle = FlatStyle.Flat;
+            DT_Updater_MDownloadButton.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            DT_Updater_MDownloadButton.ForeColor = SystemColors.ActiveCaption;
+            DT_Updater_MDownloadButton.Location = new Point(292, 324);
+            DT_Updater_MDownloadButton.Name = "DT_Updater_MDownloadButton";
+            DT_Updater_MDownloadButton.Size = new Size(128, 30);
+            DT_Updater_MDownloadButton.TabIndex = 49;
+            DT_Updater_MDownloadButton.Text = "Manual Download";
+            DT_Updater_MDownloadButton.UseVisualStyleBackColor = false;
+            DT_Updater_MDownloadButton.Click += DT_Updater_MDownloadButton_Click;
+            // 
+            // DT_Updater_MInstallButton
+            // 
+            DT_Updater_MInstallButton.BackColor = Color.FromArgb(75, 68, 138);
+            DT_Updater_MInstallButton.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            DT_Updater_MInstallButton.FlatStyle = FlatStyle.Flat;
+            DT_Updater_MInstallButton.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            DT_Updater_MInstallButton.ForeColor = SystemColors.ActiveCaption;
+            DT_Updater_MInstallButton.Location = new Point(20, 324);
+            DT_Updater_MInstallButton.Name = "DT_Updater_MInstallButton";
+            DT_Updater_MInstallButton.Size = new Size(128, 30);
+            DT_Updater_MInstallButton.TabIndex = 48;
+            DT_Updater_MInstallButton.Text = "Manual Install";
+            DT_Updater_MInstallButton.UseVisualStyleBackColor = false;
+            DT_Updater_MInstallButton.Click += DT_Updater_MInstallButton_Click;
             // 
             // DT_Updater_VersionLabel
             // 
@@ -2202,6 +2237,12 @@
             label38.TabIndex = 2;
             label38.Text = "Maintenance Mode";
             // 
+            // openFileDialog3
+            // 
+            openFileDialog3.FileName = "WLMM_DT";
+            openFileDialog3.Filter = "Zip File (*.zip)|*.zip|All files (*.*)|*.*";
+            openFileDialog3.Multiselect = true;
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -2210,9 +2251,9 @@
             ClientSize = new Size(1134, 761);
             ControlBox = false;
             Controls.Add(MM_Panel);
+            Controls.Add(DT_Updater_Panel);
             Controls.Add(ModPack_Panel);
             Controls.Add(CreateModPack_Button);
-            Controls.Add(DT_Updater_Panel);
             Controls.Add(LoadEdit_Panel);
             Controls.Add(BugReport_Panel);
             Controls.Add(ExpandedLink_Panel);
@@ -2451,5 +2492,8 @@
         private Label MM_Info;
         private PictureBox MM_CloseButton;
         private Label label38;
+        private Button DT_Updater_MInstallButton;
+        private Button DT_Updater_MDownloadButton;
+        private OpenFileDialog openFileDialog3;
     }
 }

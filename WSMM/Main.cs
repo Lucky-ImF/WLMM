@@ -3855,6 +3855,8 @@ namespace WSMM
         private void DT_Updater_DownloadButton_Click(object sender, EventArgs e)
         {
             DT_Updater_DownloadButton.Hide();
+            DT_Updater_MDownloadButton.Hide();
+            DT_Updater_MInstallButton.Hide();
             DT_Updater_CloseButton.Hide();
             DTDownload_Progress.Show();
             DT_Updater_ProgressLabel.Show();
@@ -4036,5 +4038,90 @@ namespace WSMM
             MM_CloseButton.Image = Properties.Resources.Close_Icon;
         }
 
+        private void DT_Updater_MInstallButton_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog3.ShowDialog() == DialogResult.OK)
+            {
+                if (File.Exists(openFileDialog3.FileName) && Path.GetFileName(openFileDialog3.FileName).StartsWith("WLMM_DT_"))
+                {
+                    InstallDatatables(openFileDialog3.FileName, DTVersion);
+                }
+            }
+        }
+
+        private void DT_Updater_MDownloadButton_Click(object sender, EventArgs e)
+        {
+            Process.Start("explorer", DTLink.Trim('\r'));
+        }
+
+        private void InstallDatatables(string filename, string version)
+        {
+            bool Valid = true;
+            string DTName = Path.GetFileNameWithoutExtension(filename);
+            ZipFile.ExtractToDirectory(filename, Application.StartupPath + @"Temp\" + DTName, true);
+
+            // Replace System\SupportedVersions.ini
+            if (File.Exists(Application.StartupPath + @"Temp\" + DTName + @"\System\SupportedVersions.ini"))
+            {
+                File.Copy(Application.StartupPath + @"Temp\" + DTName + @"\System\SupportedVersions.ini", Application.StartupPath + @"System\SupportedVersions.ini", true);
+            }
+            else
+            {
+                Valid = false;
+            }
+
+            // Replace System\EngineVersions.ini
+            if (File.Exists(Application.StartupPath + @"Temp\" + DTName + @"\System\EngineVersions.ini"))
+            {
+                File.Copy(Application.StartupPath + @"Temp\" + DTName + @"\System\EngineVersions.ini", Application.StartupPath + @"System\EngineVersions.ini", true);
+            }
+            else
+            {
+                Valid = false;
+            }
+
+            // Replace System\Categories.ini
+            if (File.Exists(Application.StartupPath + @"Temp\" + DTName + @"\System\Categories.ini"))
+            {
+                File.Copy(Application.StartupPath + @"Temp\" + DTName + @"\System\Categories.ini", Application.StartupPath + @"System\Categories.ini", true);
+            }
+            else
+            {
+                Valid = false;
+            }
+
+            if (Valid)
+            {
+                // Copy/Replace Mappings
+                foreach (string mapping in Directory.EnumerateFiles(Application.StartupPath + @"Temp\" + DTName + @"\Mappings", "*.usmap"))
+                {
+                    File.Copy(mapping, Application.StartupPath + @"Mappings\" + Path.GetFileName(mapping), true);
+                }
+                // Copy/Replace DataTables
+                foreach (string DTS in Directory.EnumerateDirectories(Application.StartupPath + @"Temp\" + DTName + @"\DataTables", "*"))
+                {
+                    CopyDirectory(DTS, Application.StartupPath + @"DataTables\" + Path.GetFileName(DTS));
+                }
+            }
+            
+            // Remove Temp Files
+            Directory.Delete(Application.StartupPath + @"Temp", true);
+            if (Valid)
+            {
+                // Update DatatableVersion.ini
+                File.WriteAllText(Application.StartupPath + @"System\DatatableVersion.ini", version);
+                LoadSupportedVersions();
+                LoadCategories();
+
+                DT_Updater_Panel.Hide();
+                MessageBox.Show("DataTables updated!", "Wild Life Mod Manager", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                ToggleButtons(true);
+            }
+            else
+            {
+                MessageBox.Show("DataTable updated failed.", "Wild Life Mod Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ToggleButtons(false);
+            }
+        }
     }
 }
