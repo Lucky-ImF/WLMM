@@ -525,6 +525,7 @@ namespace WSMM
                     Marketplace_Button.Enabled = false;
                     DT_Updater_DownloadButton.Enabled = false;
                     MMMode = true;
+                    MM_Panel.BringToFront();
                 }
             }
             catch (Exception)
