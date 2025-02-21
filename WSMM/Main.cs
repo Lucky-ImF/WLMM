@@ -18,6 +18,7 @@ using System.Xml.Linq;
 using System;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using static System.Windows.Forms.AxHost;
+using System.Windows.Forms;
 
 namespace WSMM
 {
@@ -520,7 +521,7 @@ namespace WSMM
                 {
                     MM_Panel.Show();
                     MM_Info.Text = MMInfo;
-                    MM_Message.Text = MMMessage.Replace("(nl)","\r\n");
+                    MM_Message.Text = MMMessage.Replace("(nl)", "\r\n");
                     Marketplace_Button.Enabled = false;
                     DT_Updater_DownloadButton.Enabled = false;
                     MMMode = true;
@@ -540,6 +541,12 @@ namespace WSMM
 
         private void ToggleButtons(bool State)
         {
+            ReloadMods_Button.Visible = State;
+            EnableMods_Button.Visible = State;
+            DisableMods_Button.Visible = State;
+            RemoveMods_Button.Visible = State;
+            AddMod_Button.Visible = State;
+
             BuildSettings_Button.Enabled = State;
             ModCreator_Button.Enabled = State;
             MetaDataPatcher_Button.Enabled = State;
@@ -4028,5 +4035,6 @@ namespace WSMM
         {
             MM_CloseButton.Image = Properties.Resources.Close_Icon;
         }
+
     }
 }

@@ -2149,7 +2149,7 @@
             MM_Panel.Controls.Add(label38);
             MM_Panel.Location = new Point(340, 297);
             MM_Panel.Name = "MM_Panel";
-            MM_Panel.Size = new Size(454, 166);
+            MM_Panel.Size = new Size(454, 224);
             MM_Panel.TabIndex = 62;
             MM_Panel.Visible = false;
             // 
@@ -2163,7 +2163,7 @@
             MM_Message.Name = "MM_Message";
             MM_Message.ReadOnly = true;
             MM_Message.ScrollBars = ScrollBars.Vertical;
-            MM_Message.Size = new Size(401, 80);
+            MM_Message.Size = new Size(401, 133);
             MM_Message.TabIndex = 47;
             MM_Message.TextAlign = HorizontalAlignment.Center;
             // 
