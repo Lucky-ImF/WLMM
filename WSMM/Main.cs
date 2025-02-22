@@ -521,9 +521,9 @@ namespace WSMM
                     MM_Panel.Show();
                     MM_Info.Text = MMInfo;
                     MM_Message.Text = MMMessage.Replace("(nl)", "\r\n");
-                    //Marketplace_Button.Enabled = false;
+                    Marketplace_Button.Enabled = false;
                     DT_Updater_DownloadButton.Enabled = false;
-                    //MMMode = true;
+                    MMMode = true;
                     MM_Panel.BringToFront();
                 }
             }
