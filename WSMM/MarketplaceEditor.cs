@@ -398,11 +398,11 @@ namespace WSMM
             }
 
             // Check Download Link is Mega.nz
-            if (ModDLURL_TB.Text.StartsWith("https://mega.nz/") == false)
+            if (ModDLURL_TB.Text.StartsWith("https://www.mediafire.com/file_premium/") == false)
             {
                 ModValid = false;
                 ModDLURL_TB.ForeColor = Color.LightCoral;
-                toolTip1.Show("Not a valid Mega.nz URL.", ModDLURL_TB, 3000);
+                toolTip1.Show("Not a valid MediaFire premium URL.", ModDLURL_TB, 3000);
             }
 
             // Write Data

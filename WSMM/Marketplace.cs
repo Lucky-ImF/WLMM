@@ -10,8 +10,8 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using CG.Web.MegaApiClient;
 using System.IO.Compression;
+using System.Xml.Linq;
 
 namespace WSMM
 {
@@ -42,6 +42,8 @@ namespace WSMM
         private int CurrentScreenshot = 0;
 
         public Main Main_Form = null;
+
+        string CurrentlyDownloadingModName = string.Empty;
 
         public Marketplace()
         {
@@ -517,14 +519,11 @@ namespace WSMM
             DownloadProgress_PB.Value = 0;
             CloseModPanel_Button.Enabled = false;
             Close_Button.Enabled = false;
-            DownloadFile(DownloadMod_Button.Tag.ToString());
+            DownloadFile(DownloadMod_Button.Tag.ToString(), ModName_Label.Text);
         }
 
-        async void DownloadFile(string link)
+        async void DownloadFile(string link, string ModName)
         {
-            var client = new MegaApiClient();
-            client.LoginAnonymous();
-
             try
             {
                 if (Directory.Exists(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Downloads") == false)
@@ -533,39 +532,21 @@ namespace WSMM
                 }
 
                 Uri fileLink = new Uri(link);
-                INode node = client.GetNodeFromLink(fileLink);
 
-                if (File.Exists(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Downloads\" + node.Name))
+                if (File.Exists(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Downloads\" + ModName + ".wlmm"))
                 {
-                    File.Delete(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Downloads\" + node.Name);
+                    File.Delete(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Downloads\" + ModName + ".wlmm");
                 }
 
-                IProgress<double> progressHandler = new Progress<double>(x =>
-                {
-                    ProgressInfo_Label.Text = "Downloading... " + ((int)x).ToString() + "%";
-                    DownloadProgress_PB.Value = ((int)x);
-                }
-                );
-
-                await client.DownloadFileAsync(fileLink, Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Downloads\" + node.Name, progressHandler);
-
-                client.Logout();
-
-                //Add Mod to active mods
-                List<string> mods = new List<string>();
-                mods.Add(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Downloads\" + node.Name);
-                Main_Form.AddMods(mods);
-
-                DownloadMod_Button.Show();
-                DownloadMod_Button.Text = "Mod Downloaded!";
-                ProgressInfo_Label.Hide();
-                ProgressInfo_Label.Text = "Initializing...";
-                DownloadProgress_PB.Hide();
+                ProgressInfo_Label.Text = "Downloading... 0%";
                 DownloadProgress_PB.Value = 0;
-                CloseModPanel_Button.Enabled = true;
-                Close_Button.Enabled = true;
+                CurrentlyDownloadingModName = ModName;
 
-                LoadMarketplaceMods();
+                using (System.Net.WebClient wc = new System.Net.WebClient())
+                {
+                    wc.DownloadProgressChanged += MP_DownloadProgressChanged;
+                    wc.DownloadFileAsync(fileLink, Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Downloads\" + ModName + ".wlmm");
+                }
             }
             catch (Exception ex)
             {
@@ -578,12 +559,32 @@ namespace WSMM
                 CloseModPanel_Button.Enabled = true;
                 Close_Button.Enabled = true;
 
-                if (client.IsLoggedIn)
-                {
-                    client.Logout();
-                }
-
                 MessageBox.Show(ex.Message, "WLMM Download Error");
+                LoadMarketplaceMods();
+            }
+        }
+
+        void MP_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        {
+            DownloadProgress_PB.Value = e.ProgressPercentage;
+            ProgressInfo_Label.Text = "Downloading... " + e.ProgressPercentage.ToString() + "%";
+
+            if (DownloadProgress_PB.Value == 100)
+            {
+                //Add Mod to active mods
+                List<string> mods = new List<string>();
+                mods.Add(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Downloads\" + CurrentlyDownloadingModName + ".wlmm");
+                Main_Form.AddMods(mods);
+
+                DownloadMod_Button.Show();
+                DownloadMod_Button.Text = "Mod Downloaded!";
+                ProgressInfo_Label.Hide();
+                ProgressInfo_Label.Text = "Initializing...";
+                DownloadProgress_PB.Hide();
+                DownloadProgress_PB.Value = 0;
+                CloseModPanel_Button.Enabled = true;
+                Close_Button.Enabled = true;
+
                 LoadMarketplaceMods();
             }
         }

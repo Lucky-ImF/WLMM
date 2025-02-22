@@ -11,8 +11,8 @@
     <Product>Wild Life Mod Manager</Product>
     <Company>Lucky</Company>
     <Copyright>Copyright © Lucky 2025</Copyright>
-    <AssemblyVersion>1.1.5</AssemblyVersion>
-    <FileVersion>1.1.5</FileVersion>
+    <AssemblyVersion>1.1.6</AssemblyVersion>
+    <FileVersion>1.1.6</FileVersion>
     <ApplicationIcon>WLMM_Icon.ico</ApplicationIcon>
     <Description></Description>
   </PropertyGroup>
@@ -22,7 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MegaApiClient" Version="1.10.4" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="ZstdSharp.Port" Version="0.8.1" />
   </ItemGroup>

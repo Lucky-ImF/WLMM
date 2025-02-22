@@ -1471,9 +1471,9 @@
             // 
             DT_Updater_ProgressLabel.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             DT_Updater_ProgressLabel.ForeColor = SystemColors.ActiveCaption;
-            DT_Updater_ProgressLabel.Location = new Point(33, 317);
+            DT_Updater_ProgressLabel.Location = new Point(11, 317);
             DT_Updater_ProgressLabel.Name = "DT_Updater_ProgressLabel";
-            DT_Updater_ProgressLabel.Size = new Size(386, 24);
+            DT_Updater_ProgressLabel.Size = new Size(421, 24);
             DT_Updater_ProgressLabel.TabIndex = 2;
             DT_Updater_ProgressLabel.Text = "Downloading DataTables...";
             DT_Updater_ProgressLabel.TextAlign = ContentAlignment.TopCenter;
@@ -1829,14 +1829,14 @@
             // 
             // DT_Updater_MDownloadButton
             // 
-            DT_Updater_MDownloadButton.BackColor = Color.FromArgb(75, 68, 138);
+            DT_Updater_MDownloadButton.BackColor = SystemColors.WindowFrame;
             DT_Updater_MDownloadButton.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             DT_Updater_MDownloadButton.FlatStyle = FlatStyle.Flat;
-            DT_Updater_MDownloadButton.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            DT_Updater_MDownloadButton.ForeColor = SystemColors.ActiveCaption;
-            DT_Updater_MDownloadButton.Location = new Point(292, 324);
+            DT_Updater_MDownloadButton.Font = new Font("Microsoft Sans Serif", 8.25F);
+            DT_Updater_MDownloadButton.ForeColor = Color.White;
+            DT_Updater_MDownloadButton.Location = new Point(314, 324);
             DT_Updater_MDownloadButton.Name = "DT_Updater_MDownloadButton";
-            DT_Updater_MDownloadButton.Size = new Size(128, 30);
+            DT_Updater_MDownloadButton.Size = new Size(106, 30);
             DT_Updater_MDownloadButton.TabIndex = 49;
             DT_Updater_MDownloadButton.Text = "Manual Download";
             DT_Updater_MDownloadButton.UseVisualStyleBackColor = false;
@@ -1844,14 +1844,14 @@
             // 
             // DT_Updater_MInstallButton
             // 
-            DT_Updater_MInstallButton.BackColor = Color.FromArgb(75, 68, 138);
+            DT_Updater_MInstallButton.BackColor = SystemColors.WindowFrame;
             DT_Updater_MInstallButton.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             DT_Updater_MInstallButton.FlatStyle = FlatStyle.Flat;
-            DT_Updater_MInstallButton.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            DT_Updater_MInstallButton.ForeColor = SystemColors.ActiveCaption;
+            DT_Updater_MInstallButton.Font = new Font("Microsoft Sans Serif", 8.25F);
+            DT_Updater_MInstallButton.ForeColor = Color.White;
             DT_Updater_MInstallButton.Location = new Point(20, 324);
             DT_Updater_MInstallButton.Name = "DT_Updater_MInstallButton";
-            DT_Updater_MInstallButton.Size = new Size(128, 30);
+            DT_Updater_MInstallButton.Size = new Size(105, 30);
             DT_Updater_MInstallButton.TabIndex = 48;
             DT_Updater_MInstallButton.Text = "Manual Install";
             DT_Updater_MInstallButton.UseVisualStyleBackColor = false;
@@ -1911,11 +1911,12 @@
             DT_Updater_DownloadButton.FlatStyle = FlatStyle.Flat;
             DT_Updater_DownloadButton.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             DT_Updater_DownloadButton.ForeColor = SystemColors.ActiveCaption;
-            DT_Updater_DownloadButton.Location = new Point(156, 324);
+            DT_Updater_DownloadButton.Location = new Point(136, 324);
             DT_Updater_DownloadButton.Name = "DT_Updater_DownloadButton";
-            DT_Updater_DownloadButton.Size = new Size(128, 30);
+            DT_Updater_DownloadButton.Size = new Size(167, 30);
             DT_Updater_DownloadButton.TabIndex = 35;
-            DT_Updater_DownloadButton.Text = "Download";
+            DT_Updater_DownloadButton.Text = "Download & Install";
+            DT_Updater_DownloadButton.UseMnemonic = false;
             DT_Updater_DownloadButton.UseVisualStyleBackColor = false;
             DT_Updater_DownloadButton.Click += DT_Updater_DownloadButton_Click;
             // 
@@ -2176,8 +2177,8 @@
             // 
             // MM_Panel
             // 
-            MM_Panel.BackColor = Color.FromArgb(75, 68, 138);
-            MM_Panel.BorderStyle = BorderStyle.FixedSingle;
+            MM_Panel.BackColor = Color.FromArgb(65, 40, 108);
+            MM_Panel.BorderStyle = BorderStyle.Fixed3D;
             MM_Panel.Controls.Add(MM_Message);
             MM_Panel.Controls.Add(MM_Info);
             MM_Panel.Controls.Add(MM_CloseButton);
@@ -2216,7 +2217,7 @@
             // MM_CloseButton
             // 
             MM_CloseButton.Image = Properties.Resources.Close_Icon;
-            MM_CloseButton.Location = new Point(420, 3);
+            MM_CloseButton.Location = new Point(417, 3);
             MM_CloseButton.Name = "MM_CloseButton";
             MM_CloseButton.Size = new Size(30, 30);
             MM_CloseButton.SizeMode = PictureBoxSizeMode.Zoom;
@@ -2250,8 +2251,8 @@
             BackColor = Color.FromArgb(32, 34, 81);
             ClientSize = new Size(1134, 761);
             ControlBox = false;
-            Controls.Add(MM_Panel);
             Controls.Add(DT_Updater_Panel);
+            Controls.Add(MM_Panel);
             Controls.Add(ModPack_Panel);
             Controls.Add(CreateModPack_Button);
             Controls.Add(LoadEdit_Panel);

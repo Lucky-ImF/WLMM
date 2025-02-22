@@ -12,7 +12,6 @@ using UAssetAPI.UnrealTypes;
 using UAssetAPI.Unversioned;
 using System.Net;
 using System.Security.Cryptography;
-using CG.Web.MegaApiClient;
 using static System.Windows.Forms.LinkLabel;
 using System.Xml.Linq;
 using System;
@@ -35,7 +34,7 @@ namespace WSMM
         private bool StartingUp = true;
         private bool HasOldChanges = false;
 
-        private string WLMM_Version = "1.1.5";
+        private string WLMM_Version = "1.1.6";
         private string Datatable_Version = string.Empty;
         string BuildLog = string.Empty;
 
@@ -522,9 +521,9 @@ namespace WSMM
                     MM_Panel.Show();
                     MM_Info.Text = MMInfo;
                     MM_Message.Text = MMMessage.Replace("(nl)", "\r\n");
-                    Marketplace_Button.Enabled = false;
+                    //Marketplace_Button.Enabled = false;
                     DT_Updater_DownloadButton.Enabled = false;
-                    MMMode = true;
+                    //MMMode = true;
                     MM_Panel.BringToFront();
                 }
             }
@@ -578,9 +577,8 @@ namespace WSMM
         async void DownloadDatatables(string url, string version)
         {
             DTDownload_Progress.Value = 0;
-            var client = new MegaApiClient();
-            client.LoginAnonymous();
 
+            string DTFileName = "WLMM_" + version + ".zip";
             try
             {
                 if (Directory.Exists(Application.StartupPath + @"Temp") == false)
@@ -589,79 +587,25 @@ namespace WSMM
                 }
 
                 Uri fileLink = new Uri(url);
-                INode node = client.GetNodeFromLink(fileLink);
 
-                if (File.Exists(Application.StartupPath + @"Temp\" + node.Name))
+                if (File.Exists(Application.StartupPath + @"Temp\" + DTFileName))
                 {
-                    File.Delete(Application.StartupPath + @"Temp\" + node.Name);
+                    File.Delete(Application.StartupPath + @"Temp\" + DTFileName);
                 }
 
-                IProgress<double> progressHandler = new Progress<double>(x =>
+                using (System.Net.WebClient wc = new System.Net.WebClient())
                 {
-                    DTDownload_Progress.Value = ((int)x);
-                }
-                );
-
-                await client.DownloadFileAsync(fileLink, Application.StartupPath + @"Temp\" + node.Name, progressHandler);
-
-                if (client.IsLoggedIn)
-                {
-                    client.Logout();
+                    wc.DownloadProgressChanged += DT_DownloadProgressChanged;
+                    wc.DownloadFileAsync(fileLink,Application.StartupPath + @"Temp\" + DTFileName);
                 }
 
-                if (Directory.Exists(Application.StartupPath + @"Temp\" + Path.GetFileNameWithoutExtension(node.Name)))
+                if (Directory.Exists(Application.StartupPath + @"Temp\" + Path.GetFileNameWithoutExtension(DTFileName)))
                 {
-                    Directory.Delete(Application.StartupPath + @"Temp\" + Path.GetFileNameWithoutExtension(node.Name), true);
+                    Directory.Delete(Application.StartupPath + @"Temp\" + Path.GetFileNameWithoutExtension(DTFileName), true);
                 }
-                ZipFile.ExtractToDirectory(Application.StartupPath + @"Temp\" + node.Name, Application.StartupPath + @"Temp\" + Path.GetFileNameWithoutExtension(node.Name), true);
-
-                // Replace System\SupportedVersions.ini
-                if (File.Exists(Application.StartupPath + @"Temp\" + Path.GetFileNameWithoutExtension(node.Name) + @"\System\SupportedVersions.ini"))
-                {
-                    File.Copy(Application.StartupPath + @"Temp\" + Path.GetFileNameWithoutExtension(node.Name) + @"\System\SupportedVersions.ini", Application.StartupPath + @"System\SupportedVersions.ini", true);
-                }
-
-                // Replace System\EngineVersions.ini
-                if (File.Exists(Application.StartupPath + @"Temp\" + Path.GetFileNameWithoutExtension(node.Name) + @"\System\EngineVersions.ini"))
-                {
-                    File.Copy(Application.StartupPath + @"Temp\" + Path.GetFileNameWithoutExtension(node.Name) + @"\System\EngineVersions.ini", Application.StartupPath + @"System\EngineVersions.ini", true);
-                }
-
-                // Replace System\Categories.ini
-                if (File.Exists(Application.StartupPath + @"Temp\" + Path.GetFileNameWithoutExtension(node.Name) + @"\System\Categories.ini"))
-                {
-                    File.Copy(Application.StartupPath + @"Temp\" + Path.GetFileNameWithoutExtension(node.Name) + @"\System\Categories.ini", Application.StartupPath + @"System\Categories.ini", true);
-                }
-
-                // Copy/Replace Mappings
-                foreach (string mapping in Directory.EnumerateFiles(Application.StartupPath + @"Temp\" + Path.GetFileNameWithoutExtension(node.Name) + @"\Mappings", "*.usmap"))
-                {
-                    File.Copy(mapping, Application.StartupPath + @"Mappings\" + Path.GetFileName(mapping), true);
-                }
-                // Copy/Replace DataTables
-                foreach (string DTS in Directory.EnumerateDirectories(Application.StartupPath + @"Temp\" + Path.GetFileNameWithoutExtension(node.Name) + @"\DataTables", "*"))
-                {
-                    CopyDirectory(DTS, Application.StartupPath + @"DataTables\" + Path.GetFileName(DTS));
-                }
-                // Remove Temp Files
-                Directory.Delete(Application.StartupPath + @"Temp", true);
-                // Update DatatableVersion.ini
-                File.WriteAllText(Application.StartupPath + @"System\DatatableVersion.ini", version);
-
-                LoadSupportedVersions();
-                LoadCategories();
-
-                DT_Updater_Panel.Hide();
-                MessageBox.Show("DataTables updated!", "Wild Life Mod Manager", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                ToggleButtons(true);
             }
             catch (Exception ex)
             {
-                if (client.IsLoggedIn)
-                {
-                    client.Logout();
-                }
-
                 if (Directory.Exists(Application.StartupPath + @"Temp"))
                 {
                     Directory.Delete(Application.StartupPath + @"Temp", true);
@@ -670,6 +614,21 @@ namespace WSMM
                 DT_Updater_Panel.Hide();
                 MessageBox.Show(ex.Message, "WLMM Download Error\n" + ex.Message);
                 ToggleButtons(true);
+            }
+        }
+
+        void DT_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        {
+            DTDownload_Progress.Value = e.ProgressPercentage;
+
+            if (DTDownload_Progress.Value == 100)
+            {
+                string DTFileName = "WLMM_" + DTVersion + ".zip";
+                if (File.Exists(Application.StartupPath + @"Temp\" + DTFileName))
+                {
+                    DT_Updater_ProgressLabel.Text = "Installing...";
+                    InstallDatatables(Application.StartupPath + @"Temp\" + DTFileName, DTVersion);
+                }
             }
         }
 
@@ -3684,10 +3643,6 @@ namespace WSMM
             {
                 return true;
             }
-            if (File.Exists(Application.StartupPath + @"MegaApiClient.dll") == false)
-            {
-                return true;
-            }
             if (File.Exists(Application.StartupPath + @"UAssetAPI.dll") == false)
             {
                 return true;
@@ -4104,7 +4059,7 @@ namespace WSMM
                     CopyDirectory(DTS, Application.StartupPath + @"DataTables\" + Path.GetFileName(DTS));
                 }
             }
-            
+
             // Remove Temp Files
             Directory.Delete(Application.StartupPath + @"Temp", true);
             if (Valid)
