@@ -638,7 +638,7 @@ namespace WSMM
                     string SavePath = string.Empty;
                     if (CurrentlyEditing_Path == string.Empty)
                     {
-                        SavePath = Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Mod Creator\AutoMod\" + ModName.Text + ".txt";
+                        SavePath = Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Mod Creator\AutoMod\" + ModName.Text + "_" + Character.Text + ".txt";
                     }
                     else
                     {
