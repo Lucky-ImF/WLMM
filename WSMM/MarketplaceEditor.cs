@@ -397,12 +397,12 @@ namespace WSMM
                 toolTip1.Show("Description can't contain : , * or be empty.", ModDescription_TB, 3000);
             }
 
-            // Check Download Link is Mega.nz
-            if (ModDLURL_TB.Text.StartsWith("https://www.mediafire.com/file_premium/") == false)
+            // Check Download Link is valid
+            if (ModDLURL_TB.Text.Length <= 0 || ModDLURL_TB.Text.ToLower().StartsWith("https://") == false && ModDLURL_TB.Text.ToLower().StartsWith("http://") == false)
             {
                 ModValid = false;
                 ModDLURL_TB.ForeColor = Color.LightCoral;
-                toolTip1.Show("Not a valid MediaFire premium URL.", ModDLURL_TB, 3000);
+                toolTip1.Show("Not a valid URL.", ModDLURL_TB, 3000);
             }
 
             // Write Data

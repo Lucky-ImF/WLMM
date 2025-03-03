@@ -556,11 +556,11 @@
             label10.AutoSize = true;
             label10.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label10.ForeColor = SystemColors.ActiveCaption;
-            label10.Location = new Point(147, 160);
+            label10.Location = new Point(221, 160);
             label10.Name = "label10";
-            label10.Size = new Size(274, 17);
+            label10.Size = new Size(126, 17);
             label10.TabIndex = 47;
-            label10.Text = "Mod Download URL (Must be a Mega.nz link)";
+            label10.Text = "Mod Download URL";
             // 
             // ModDLURL_TB
             // 
