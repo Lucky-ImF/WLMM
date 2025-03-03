@@ -1098,6 +1098,7 @@ namespace WSMM
                 AutoModList.Height = 545;
                 PakList.Height = 107;
                 AutoModList_Expand_Button.Text = "Collapse -";
+                PaksList_Expand_Button.Text = "Expand +";
             }
             else
             {
@@ -1113,6 +1114,7 @@ namespace WSMM
                 PakList.Height = 688;
                 AutoModList.Height = 107;
                 PaksList_Expand_Button.Text = "Collapse -";
+                AutoModList_Expand_Button.Text = "Expand +";
             }
             else
             {
