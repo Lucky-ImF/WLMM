@@ -571,21 +571,29 @@ namespace WSMM
 
             if (DownloadProgress_PB.Value == 100)
             {
-                //Add Mod to active mods
-                List<string> mods = new List<string>();
-                mods.Add(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Downloads\" + CurrentlyDownloadingModName + ".wlmm");
-                Main_Form.AddMods(mods);
+                try
+                {
+                    Thread.Sleep(500); //Potential crash fix
+                    //Add Mod to active mods
+                    List<string> mods = new List<string>();
+                    mods.Add(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Downloads\" + CurrentlyDownloadingModName + ".wlmm");
+                    Main_Form.AddMods(mods);
 
-                DownloadMod_Button.Show();
-                DownloadMod_Button.Text = "Mod Downloaded!";
-                ProgressInfo_Label.Hide();
-                ProgressInfo_Label.Text = "Initializing...";
-                DownloadProgress_PB.Hide();
-                DownloadProgress_PB.Value = 0;
-                CloseModPanel_Button.Enabled = true;
-                Close_Button.Enabled = true;
+                    DownloadMod_Button.Show();
+                    DownloadMod_Button.Text = "Mod Downloaded!";
+                    ProgressInfo_Label.Hide();
+                    ProgressInfo_Label.Text = "Initializing...";
+                    DownloadProgress_PB.Hide();
+                    DownloadProgress_PB.Value = 0;
+                    CloseModPanel_Button.Enabled = true;
+                    Close_Button.Enabled = true;
 
-                LoadMarketplaceMods();
+                    LoadMarketplaceMods();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "WLMM Download Error");
+                }
             }
         }
 
