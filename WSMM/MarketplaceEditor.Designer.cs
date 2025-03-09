@@ -77,6 +77,7 @@
             CopyData_Button = new Button();
             openFileDialog1 = new OpenFileDialog();
             toolTip1 = new ToolTip(components);
+            IncludeCodeTags = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)Icon_PB).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
@@ -91,7 +92,7 @@
             Icon_PB.Image = Properties.Resources.WLMM_Small_Icon;
             Icon_PB.Location = new Point(5, 6);
             Icon_PB.Name = "Icon_PB";
-            Icon_PB.Size = new Size(70, 70);
+            Icon_PB.Size = new Size(69, 50);
             Icon_PB.SizeMode = PictureBoxSizeMode.Zoom;
             Icon_PB.TabIndex = 5;
             Icon_PB.TabStop = false;
@@ -181,7 +182,7 @@
             panel1.Controls.Add(ModAuthor_TB);
             panel1.Controls.Add(label4);
             panel1.Controls.Add(ModName_TB);
-            panel1.Location = new Point(48, 147);
+            panel1.Location = new Point(48, 129);
             panel1.Name = "panel1";
             panel1.Size = new Size(570, 332);
             panel1.TabIndex = 15;
@@ -428,7 +429,7 @@
             panel2.Controls.Add(label9);
             panel2.Controls.Add(ModWLMMPath_TB);
             panel2.Controls.Add(linkLabel1);
-            panel2.Location = new Point(48, 78);
+            panel2.Location = new Point(48, 60);
             panel2.Name = "panel2";
             panel2.Size = new Size(570, 63);
             panel2.TabIndex = 16;
@@ -520,7 +521,7 @@
             panel3.Controls.Add(label2);
             panel3.Controls.Add(Screenshots_LB);
             panel3.Controls.Add(linkLabel2);
-            panel3.Location = new Point(48, 486);
+            panel3.Location = new Point(48, 468);
             panel3.Name = "panel3";
             panel3.Size = new Size(570, 288);
             panel3.TabIndex = 17;
@@ -672,7 +673,7 @@
             CopyData_Button.FlatStyle = FlatStyle.Flat;
             CopyData_Button.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             CopyData_Button.ForeColor = SystemColors.ActiveCaption;
-            CopyData_Button.Location = new Point(48, 783);
+            CopyData_Button.Location = new Point(48, 785);
             CopyData_Button.Name = "CopyData_Button";
             CopyData_Button.Size = new Size(570, 45);
             CopyData_Button.TabIndex = 18;
@@ -692,12 +693,26 @@
             toolTip1.IsBalloon = true;
             toolTip1.ReshowDelay = 100;
             // 
+            // IncludeCodeTags
+            // 
+            IncludeCodeTags.AutoSize = true;
+            IncludeCodeTags.Checked = true;
+            IncludeCodeTags.CheckState = CheckState.Checked;
+            IncludeCodeTags.ForeColor = SystemColors.ActiveCaption;
+            IncludeCodeTags.Location = new Point(231, 762);
+            IncludeCodeTags.Name = "IncludeCodeTags";
+            IncludeCodeTags.Size = new Size(197, 19);
+            IncludeCodeTags.TabIndex = 19;
+            IncludeCodeTags.Text = "Include Discord Code Block Tags";
+            IncludeCodeTags.UseVisualStyleBackColor = true;
+            // 
             // MarketplaceEditor
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(32, 34, 81);
             ClientSize = new Size(658, 839);
+            Controls.Add(IncludeCodeTags);
             Controls.Add(CopyData_Button);
             Controls.Add(panel3);
             Controls.Add(panel2);
@@ -724,6 +739,7 @@
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -775,5 +791,6 @@
         private Label label14;
         private CheckedListBox AffectedCharacters_CLB;
         private Button LoadFromMarketplace_Button;
+        private CheckBox IncludeCodeTags;
     }
 }

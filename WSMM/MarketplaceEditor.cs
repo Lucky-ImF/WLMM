@@ -469,6 +469,10 @@ namespace WSMM
                 {
                     Metadata += ",Screenshots:" + Screenshots;
                 }
+                if (IncludeCodeTags.Checked)
+                {
+                    Metadata = "```\n" + Metadata + "\n```";
+                }
 
                 Clipboard.SetText(Metadata);
                 MessageBox.Show("Marketplace Data copied to clipboard.", "Wild Life Mod Manager");
