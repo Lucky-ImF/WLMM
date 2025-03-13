@@ -37,6 +37,7 @@
             Separator_1 = new PictureBox();
             ModMain_Panel = new Panel();
             ModPanel_Panel = new Panel();
+            ProgressDetails_Label = new Label();
             Screenshot_HoverLabel = new Label();
             CloseModPanel_Button = new PictureBox();
             Characters_Label = new Label();
@@ -157,6 +158,7 @@
             // ModPanel_Panel
             // 
             ModPanel_Panel.BorderStyle = BorderStyle.Fixed3D;
+            ModPanel_Panel.Controls.Add(ProgressDetails_Label);
             ModPanel_Panel.Controls.Add(Screenshot_HoverLabel);
             ModPanel_Panel.Controls.Add(CloseModPanel_Button);
             ModPanel_Panel.Controls.Add(Characters_Label);
@@ -180,6 +182,18 @@
             ModPanel_Panel.Size = new Size(586, 609);
             ModPanel_Panel.TabIndex = 14;
             ModPanel_Panel.Visible = false;
+            // 
+            // ProgressDetails_Label
+            // 
+            ProgressDetails_Label.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            ProgressDetails_Label.ForeColor = Color.Orange;
+            ProgressDetails_Label.Location = new Point(24, 555);
+            ProgressDetails_Label.Name = "ProgressDetails_Label";
+            ProgressDetails_Label.Size = new Size(534, 21);
+            ProgressDetails_Label.TabIndex = 30;
+            ProgressDetails_Label.Text = "Speed: 0 B/s | 0 B / 0 B | Time Left: 00:00:00";
+            ProgressDetails_Label.TextAlign = ContentAlignment.TopCenter;
+            ProgressDetails_Label.Visible = false;
             // 
             // Screenshot_HoverLabel
             // 
@@ -295,7 +309,7 @@
             // 
             ProgressInfo_Label.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             ProgressInfo_Label.ForeColor = SystemColors.ActiveCaption;
-            ProgressInfo_Label.Location = new Point(24, 550);
+            ProgressInfo_Label.Location = new Point(24, 534);
             ProgressInfo_Label.Name = "ProgressInfo_Label";
             ProgressInfo_Label.Size = new Size(534, 21);
             ProgressInfo_Label.TabIndex = 19;
@@ -429,7 +443,7 @@
             NoModsFound_Label.AutoSize = true;
             NoModsFound_Label.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             NoModsFound_Label.ForeColor = SystemColors.ActiveCaption;
-            NoModsFound_Label.Location = new Point(274, 316);
+            NoModsFound_Label.Location = new Point(323, 316);
             NoModsFound_Label.Name = "NoModsFound_Label";
             NoModsFound_Label.Size = new Size(191, 30);
             NoModsFound_Label.TabIndex = 11;
@@ -641,5 +655,6 @@
         private Label Characters_Label;
         private Label Categories_Label;
         private Label Screenshot_HoverLabel;
+        private Label ProgressDetails_Label;
     }
 }

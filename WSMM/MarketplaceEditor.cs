@@ -491,12 +491,14 @@ namespace WSMM
                 string VersionInfo = "";
                 using (HttpClient client = new HttpClient())
                 {
-                    HttpResponseMessage response = await client.GetAsync("https://pastebin.com/raw/iZSuG0WY");
+                    client.DefaultRequestHeaders.UserAgent.ParseAdd("WildLifeModManager");
+                    HttpResponseMessage response = await client.GetAsync("https://gist.githubusercontent.com/Lucky-ImF/cb6aa813b89cb5f73708a487968efeac/raw/WLMM_Marketplace_Data.txt");
                     response.EnsureSuccessStatusCode();
                     VersionInfo = await response.Content.ReadAsStringAsync();
                 }
+                string Decompressed_MP_Data = DecompressString(VersionInfo);
 
-                string[] TempArray = VersionInfo.Split('\r');
+                string[] TempArray = Decompressed_MP_Data.Split('\r');
                 foreach (string temp in TempArray)
                 {
                     string CleanString = temp.Trim('\n');
@@ -542,6 +544,25 @@ namespace WSMM
             {
                 MessageBox.Show("Unable to connect to Marketplace.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        public static string DecompressString(string compressedString)
+        {
+            byte[] decompressedBytes;
+
+            var compressedStream = new MemoryStream(Convert.FromBase64String(compressedString));
+
+            using (var decompressorStream = new DeflateStream(compressedStream, CompressionMode.Decompress))
+            {
+                using (var decompressedStream = new MemoryStream())
+                {
+                    decompressorStream.CopyTo(decompressedStream);
+
+                    decompressedBytes = decompressedStream.ToArray();
+                }
+            }
+
+            return Encoding.UTF8.GetString(decompressedBytes);
         }
     }
 }

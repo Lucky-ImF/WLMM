@@ -34,7 +34,7 @@ namespace WSMM
         private bool StartingUp = true;
         private bool HasOldChanges = false;
 
-        private string WLMM_Version = "1.1.6";
+        private string WLMM_Version = "1.1.7";
         private string Datatable_Version = string.Empty;
         string BuildLog = string.Empty;
 
@@ -448,7 +448,7 @@ namespace WSMM
             }
         }
 
-        private void CheckForUpdate()
+        private async void CheckForUpdate()
         {
             try
             {
@@ -459,40 +459,42 @@ namespace WSMM
                 string MM = "";
                 string MMInfo = "";
                 string MMMessage = "";
+
                 using (HttpClient client = new HttpClient())
                 {
-                    HttpResponseMessage response = client.GetAsync("https://pastebin.com/raw/qskfNxrz").Result;
+                    client.DefaultRequestHeaders.UserAgent.ParseAdd("WildLifeModManager");
+                    HttpResponseMessage response = await client.GetAsync("https://gist.githubusercontent.com/Lucky-ImF/cb6aa813b89cb5f73708a487968efeac/raw/WLMM_Data.txt");
                     response.EnsureSuccessStatusCode();
-                    VersionInfo = response.Content.ReadAsStringAsync().Result;
+                    VersionInfo = await response.Content.ReadAsStringAsync();
                 }
 
-                string[] TempArray = VersionInfo.Split("\r");
+                string[] TempArray = VersionInfo.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.TrimEntries);
                 if (ThisVersion != TempArray[0])
                 {
                     UpdateLink.Text = "New version " + TempArray[0] + " available! Click here to download!";
-                    UpdateLink.Tag = TempArray[1].Trim('\n');
+                    UpdateLink.Tag = TempArray[1];
                     UpdateLink.Show();
-                    WildSanctum_Link.Tag = TempArray[2].Trim('\n');
-                    WLMMPost_Link.Tag = TempArray[3].Trim('\n');
-                    DTVersion = TempArray[4].Trim('\n');
-                    DTLink = TempArray[5].Trim('\n');
-                    DTChanges = TempArray[6].Trim('\n');
-                    DTSupVers = TempArray[7].Trim('\n');
-                    MM = TempArray[8].Trim('\n');
-                    MMInfo = TempArray[9].Trim('\n');
-                    MMMessage = TempArray[10].Trim('\n');
+                    WildSanctum_Link.Tag = TempArray[2];
+                    WLMMPost_Link.Tag = TempArray[3];
+                    DTVersion = TempArray[4];
+                    DTLink = TempArray[5];
+                    DTChanges = TempArray[6];
+                    DTSupVers = TempArray[7];
+                    MM = TempArray[8];
+                    MMInfo = TempArray[9];
+                    MMMessage = TempArray[10];
                 }
                 else
                 {
-                    WildSanctum_Link.Tag = TempArray[2].Trim('\n');
-                    WLMMPost_Link.Tag = TempArray[3].Trim('\n');
-                    DTVersion = TempArray[4].Trim('\n');
-                    DTLink = TempArray[5].Trim('\n');
-                    DTChanges = TempArray[6].Trim('\n');
-                    DTSupVers = TempArray[7].Trim('\n');
-                    MM = TempArray[8].Trim('\n');
-                    MMInfo = TempArray[9].Trim('\n');
-                    MMMessage = TempArray[10].Trim('\n');
+                    WildSanctum_Link.Tag = TempArray[2];
+                    WLMMPost_Link.Tag = TempArray[3];
+                    DTVersion = TempArray[4];
+                    DTLink = TempArray[5];
+                    DTChanges = TempArray[6];
+                    DTSupVers = TempArray[7];
+                    MM = TempArray[8];
+                    MMInfo = TempArray[9];
+                    MMMessage = TempArray[10];
                 }
 
                 if (Datatable_Version == string.Empty)
@@ -501,7 +503,7 @@ namespace WSMM
                     ToggleButtons(false);
                     DT_Updater_Panel.Show();
                     DT_Updater_VersionLabel.Text = "None > " + DTVersion;
-                    DT_Updater_ChangesTB.Text = DTChanges.Replace("*", "\n");
+                    DT_Updater_ChangesTB.Text = DTChanges.Replace("*", "\r\n");
                     DT_Updater_SupVerLB.Items.Clear();
                     DT_Updater_SupVerLB.Items.AddRange(DTSupVers.Split('*'));
                 }
@@ -511,7 +513,7 @@ namespace WSMM
                     ToggleButtons(false);
                     DT_Updater_Panel.Show();
                     DT_Updater_VersionLabel.Text = Datatable_Version + " > " + DTVersion;
-                    DT_Updater_ChangesTB.Text = DTChanges.Replace("*", "\n");
+                    DT_Updater_ChangesTB.Text = DTChanges.Replace("*", "\r\n");
                     DT_Updater_SupVerLB.Items.Clear();
                     DT_Updater_SupVerLB.Items.AddRange(DTSupVers.Split('*'));
                 }
@@ -527,7 +529,7 @@ namespace WSMM
                     MM_Panel.BringToFront();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 UpdateLink.Text = "Unable to check for new version.";
                 UpdateLink.LinkColor = Color.LightCoral;
@@ -535,7 +537,7 @@ namespace WSMM
 
                 MM_Panel.Show();
                 MM_Info.Text = "Unable to check for new version.";
-                MM_Message.Text = "Is your network down or firewall blocking WLMM?\nIf not, check the WLMM post on Discord for info/help.";
+                MM_Message.Text = "Is your network down or firewall blocking WLMM?\r\nIf not, check the WLMM post on Discord for info/help.\r\nException:\r\n" + ex.Message;
             }
         }
 
@@ -595,6 +597,7 @@ namespace WSMM
 
                 using (System.Net.WebClient wc = new System.Net.WebClient())
                 {
+                    wc.Headers.Add("User-Agent: WLMM");
                     wc.DownloadProgressChanged += DT_DownloadProgressChanged;
                     wc.DownloadFileAsync(fileLink,Application.StartupPath + @"Temp\" + DTFileName);
                 }
@@ -1987,7 +1990,19 @@ namespace WSMM
                 BuildLog += "+ + " + Repak_Message + ".\n";
                 //Copy AutoMod_P.pak to Game //5
                 BuildLog += "+ Moving AutoMod_P.pak to Game...\n";
-                File.Move(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P.pak", LoadedWLPath + @"\WildLifeC\Content\Paks\AutoMod_P.pak", true);
+                try
+                {
+                    File.Move(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P.pak", LoadedWLPath + @"\WildLifeC\Content\Paks\AutoMod_P.pak", true);
+                }
+                catch (Exception ex)
+                {
+                    FileCopyMessage = ex.Message;
+                    BuildLog += "- Failed moving AutoMod_P.pak to Game Directory\n";
+                    BuildLog += "- ex: " + FileCopyMessage + "\n";
+                    MessageBox.Show("Failed moving AutoMod_P.pak to Game Directory\nIs the file in use?", "Wild Life Mod Manager");
+                    ResetFromBuilding();
+                    return;
+                }
                 BuildLog += "+ AutoMod Process Success.\n";
             }
             else

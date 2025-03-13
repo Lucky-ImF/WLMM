@@ -1906,11 +1906,11 @@
             // 
             // DT_Updater_DownloadButton
             // 
-            DT_Updater_DownloadButton.BackColor = Color.FromArgb(75, 68, 138);
+            DT_Updater_DownloadButton.BackColor = Color.SteelBlue;
             DT_Updater_DownloadButton.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             DT_Updater_DownloadButton.FlatStyle = FlatStyle.Flat;
             DT_Updater_DownloadButton.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            DT_Updater_DownloadButton.ForeColor = SystemColors.ActiveCaption;
+            DT_Updater_DownloadButton.ForeColor = Color.White;
             DT_Updater_DownloadButton.Location = new Point(136, 324);
             DT_Updater_DownloadButton.Name = "DT_Updater_DownloadButton";
             DT_Updater_DownloadButton.Size = new Size(167, 30);
