@@ -113,6 +113,16 @@ namespace WSMM.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Download_Icon {
+            get {
+                object obj = ResourceManager.GetObject("Download_Icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap DragDrop_Icon {
             get {
                 object obj = ResourceManager.GetObject("DragDrop_Icon", resourceCulture);

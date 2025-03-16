@@ -37,6 +37,8 @@
             Separator_1 = new PictureBox();
             ModMain_Panel = new Panel();
             ModPanel_Panel = new Panel();
+            DownloadMod_Button = new Button();
+            ModFileSize_Label = new Label();
             ProgressDetails_Label = new Label();
             Screenshot_HoverLabel = new Label();
             CloseModPanel_Button = new PictureBox();
@@ -51,10 +53,8 @@
             DownloadProgress_PB = new ProgressBar();
             PreviousScreenshot_Button = new Button();
             NextScreenshot_Button = new Button();
-            ModFileSize_Label = new Label();
             Screenshot = new PictureBox();
             ModName_Label = new Label();
-            DownloadMod_Button = new Button();
             ModLink_LL = new LinkLabel();
             LastUpdate_Label = new Label();
             NoModsFound_Label = new Label();
@@ -158,6 +158,9 @@
             // ModPanel_Panel
             // 
             ModPanel_Panel.BorderStyle = BorderStyle.Fixed3D;
+            ModPanel_Panel.Controls.Add(ModAuthor_Label);
+            ModPanel_Panel.Controls.Add(DownloadMod_Button);
+            ModPanel_Panel.Controls.Add(ModFileSize_Label);
             ModPanel_Panel.Controls.Add(ProgressDetails_Label);
             ModPanel_Panel.Controls.Add(Screenshot_HoverLabel);
             ModPanel_Panel.Controls.Add(CloseModPanel_Button);
@@ -167,21 +170,45 @@
             ModPanel_Panel.Controls.Add(ModDescription_TB);
             ModPanel_Panel.Controls.Add(ModLastUpdate_Label);
             ModPanel_Panel.Controls.Add(SupportedVersions_Label);
-            ModPanel_Panel.Controls.Add(ModAuthor_Label);
             ModPanel_Panel.Controls.Add(ProgressInfo_Label);
             ModPanel_Panel.Controls.Add(DownloadProgress_PB);
             ModPanel_Panel.Controls.Add(PreviousScreenshot_Button);
             ModPanel_Panel.Controls.Add(NextScreenshot_Button);
-            ModPanel_Panel.Controls.Add(ModFileSize_Label);
             ModPanel_Panel.Controls.Add(Screenshot);
             ModPanel_Panel.Controls.Add(ModName_Label);
-            ModPanel_Panel.Controls.Add(DownloadMod_Button);
             ModPanel_Panel.Controls.Add(ModLink_LL);
             ModPanel_Panel.Location = new Point(125, 16);
             ModPanel_Panel.Name = "ModPanel_Panel";
             ModPanel_Panel.Size = new Size(586, 609);
             ModPanel_Panel.TabIndex = 14;
             ModPanel_Panel.Visible = false;
+            // 
+            // DownloadMod_Button
+            // 
+            DownloadMod_Button.BackColor = Color.FromArgb(75, 68, 138);
+            DownloadMod_Button.BackgroundImageLayout = ImageLayout.Zoom;
+            DownloadMod_Button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            DownloadMod_Button.FlatStyle = FlatStyle.Flat;
+            DownloadMod_Button.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            DownloadMod_Button.ForeColor = SystemColors.ActiveCaption;
+            DownloadMod_Button.Location = new Point(156, 552);
+            DownloadMod_Button.Name = "DownloadMod_Button";
+            DownloadMod_Button.Size = new Size(275, 38);
+            DownloadMod_Button.TabIndex = 3;
+            DownloadMod_Button.Text = "Download";
+            DownloadMod_Button.UseVisualStyleBackColor = false;
+            DownloadMod_Button.Click += DownloadMod_Button_Click;
+            // 
+            // ModFileSize_Label
+            // 
+            ModFileSize_Label.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            ModFileSize_Label.ForeColor = Color.FromArgb(192, 255, 255);
+            ModFileSize_Label.Location = new Point(78, 528);
+            ModFileSize_Label.Name = "ModFileSize_Label";
+            ModFileSize_Label.Size = new Size(426, 21);
+            ModFileSize_Label.TabIndex = 14;
+            ModFileSize_Label.Text = "Size: 512 MB | Downloads: 0";
+            ModFileSize_Label.TextAlign = ContentAlignment.TopCenter;
             // 
             // ProgressDetails_Label
             // 
@@ -272,14 +299,14 @@
             // 
             // ModLastUpdate_Label
             // 
-            ModLastUpdate_Label.AutoSize = true;
             ModLastUpdate_Label.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             ModLastUpdate_Label.ForeColor = SystemColors.ActiveCaption;
-            ModLastUpdate_Label.Location = new Point(202, 507);
+            ModLastUpdate_Label.Location = new Point(78, 507);
             ModLastUpdate_Label.Name = "ModLastUpdate_Label";
-            ModLastUpdate_Label.Size = new Size(183, 21);
+            ModLastUpdate_Label.Size = new Size(426, 21);
             ModLastUpdate_Label.TabIndex = 23;
-            ModLastUpdate_Label.Text = "Last Update: 2024-09-29";
+            ModLastUpdate_Label.Text = "Last Update: 2024-09-29 ";
+            ModLastUpdate_Label.TextAlign = ContentAlignment.TopCenter;
             // 
             // SupportedVersions_Label
             // 
@@ -357,17 +384,6 @@
             NextScreenshot_Button.UseVisualStyleBackColor = false;
             NextScreenshot_Button.Click += NextScreenshot_Button_Click;
             // 
-            // ModFileSize_Label
-            // 
-            ModFileSize_Label.AutoSize = true;
-            ModFileSize_Label.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            ModFileSize_Label.ForeColor = SystemColors.ActiveCaption;
-            ModFileSize_Label.Location = new Point(258, 528);
-            ModFileSize_Label.Name = "ModFileSize_Label";
-            ModFileSize_Label.Size = new Size(64, 21);
-            ModFileSize_Label.TabIndex = 14;
-            ModFileSize_Label.Text = "512 MB";
-            // 
             // Screenshot
             // 
             Screenshot.BorderStyle = BorderStyle.FixedSingle;
@@ -394,21 +410,6 @@
             ModName_Label.TabIndex = 12;
             ModName_Label.Text = "Mod Name";
             ModName_Label.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // DownloadMod_Button
-            // 
-            DownloadMod_Button.BackColor = Color.FromArgb(75, 68, 138);
-            DownloadMod_Button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            DownloadMod_Button.FlatStyle = FlatStyle.Flat;
-            DownloadMod_Button.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            DownloadMod_Button.ForeColor = SystemColors.ActiveCaption;
-            DownloadMod_Button.Location = new Point(156, 552);
-            DownloadMod_Button.Name = "DownloadMod_Button";
-            DownloadMod_Button.Size = new Size(275, 38);
-            DownloadMod_Button.TabIndex = 3;
-            DownloadMod_Button.Text = "Download";
-            DownloadMod_Button.UseVisualStyleBackColor = false;
-            DownloadMod_Button.Click += DownloadMod_Button_Click;
             // 
             // ModLink_LL
             // 
@@ -552,7 +553,7 @@
             Filter_CB.FlatStyle = FlatStyle.Flat;
             Filter_CB.ForeColor = SystemColors.ActiveCaption;
             Filter_CB.FormattingEnabled = true;
-            Filter_CB.Items.AddRange(new object[] { "All", "Outfit", "Hair", "Skin", "Pubic Hair", "Eyes", "Eyeliner", "Eyeshadow", "Lipstick", "Tanlines", "Fur", "Audio", "Other" });
+            Filter_CB.Items.AddRange(new object[] { "All", "Most Popular", "Outfit", "Hair", "Skin", "Pubic Hair", "Eyes", "Eyeliner", "Eyeshadow", "Lipstick", "Tanlines", "Fur", "Audio", "Other" });
             Filter_CB.Location = new Point(688, 6);
             Filter_CB.Name = "Filter_CB";
             Filter_CB.Size = new Size(145, 23);

@@ -12,6 +12,10 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Compression;
 using System.Xml.Linq;
+using static System.Windows.Forms.LinkLabel;
+using System.Text.Json;
+using System.Reflection.Emit;
+using System.Diagnostics.Eventing.Reader;
 
 namespace WSMM
 {
@@ -25,14 +29,17 @@ namespace WSMM
         private Point lastLocation;
 
         private List<string> MarketplaceMods = new List<string>();
+        private Dictionary<string, int> ModDownloadsDict = new Dictionary<string, int>();
 
         Panel[] Mod_Panel = new Panel[100];
         PictureBox[] Mod_Icon = new PictureBox[100];
+        PictureBox[] Mod_DLIcon = new PictureBox[100];
         LinkLabel[] Mod_NameLabel = new LinkLabel[100];
-        Label[] Mod_VersionLabel = new Label[100];
-        Label[] Mod_SupportedVersionsLabel = new Label[100];
-        Label[] Mod_AuthorLabel = new Label[100];
-        Label[] Mod_InfoLabel = new Label[100];
+        System.Windows.Forms.Label[] Mod_VersionLabel = new System.Windows.Forms.Label[100];
+        System.Windows.Forms.Label[] Mod_SupportedVersionsLabel = new System.Windows.Forms.Label[100];
+        System.Windows.Forms.Label[] Mod_AuthorLabel = new System.Windows.Forms.Label[100];
+        System.Windows.Forms.Label[] Mod_InfoLabel = new System.Windows.Forms.Label[100];
+        System.Windows.Forms.Label[] Mod_DownloadsLabel = new System.Windows.Forms.Label[100];
         string[] Mod_Category = new string[100];
 
         List<int> Mod_Entries = new List<int>();
@@ -67,7 +74,14 @@ namespace WSMM
         private string GetSlice(string Txt, string Delimiter, int slice)
         {
             string[] TempArray = Txt.Split(Delimiter);
-            return TempArray[slice].Trim();
+            if (slice == 999)
+            {
+                return TempArray[TempArray.Length - 1].Trim();
+            }
+            else
+            {
+                return TempArray[slice].Trim();
+            }
         }
 
         private void TitlePanel_MouseDown(object sender, MouseEventArgs e)
@@ -118,6 +132,7 @@ namespace WSMM
 
         private void RefreshMods_Button_Click(object sender, EventArgs e)
         {
+            ModDownloadsDict.Clear();
             GetMarketplaceMods();
         }
 
@@ -155,7 +170,65 @@ namespace WSMM
             }
             LoadMarketplaceMods();
         }
+        public class ModJson
+        {
+            public string ModName { get; set; }
+            public int ModDownloads { get; set; }
+        }
+        private async void GetAllDownloadAmounts()
+        {
+            if (ModDownloadsDict.Count == 0)
+            {
+                try
+                {
+                    string ModInfo = "";
 
+                    using (HttpClient client = new HttpClient())
+                    {
+                        client.DefaultRequestHeaders.UserAgent.ParseAdd("WLMM");
+                        HttpResponseMessage response = await client.GetAsync("https://wlmm-worker.luckybot.one/?action=ALL&modName=ALL");
+                        response.EnsureSuccessStatusCode();
+                        ModInfo = await response.Content.ReadAsStringAsync();
+                    }
+                    List<ModJson> mods = JsonSerializer.Deserialize<List<ModJson>>(ModInfo);
+
+                    foreach (ModJson mod in mods)
+                    {
+                        ModDownloadsDict.Add(mod.ModName, mod.ModDownloads);
+                    }
+
+                    foreach (int ModID in Mod_Entries)
+                    {
+                        if (ModDownloadsDict.ContainsKey(Mod_NameLabel[ModID].Text.Replace(" ", "_")))
+                        {
+                            Mod_DownloadsLabel[ModID].Text = Mod_DownloadsLabel[ModID].Text.Replace("?", ModDownloadsDict.GetValueOrDefault(Mod_NameLabel[ModID].Text.Replace(" ", "_")).ToString());
+                        }
+                        else
+                        {
+                            Mod_DownloadsLabel[ModID].Text = Mod_DownloadsLabel[ModID].Text.Replace("?", "0");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+            else
+            {
+                foreach (int ModID in Mod_Entries)
+                {
+                    if (ModDownloadsDict.ContainsKey(Mod_NameLabel[ModID].Text.Replace(" ", "_")))
+                    {
+                        Mod_DownloadsLabel[ModID].Text = Mod_DownloadsLabel[ModID].Text.Replace("?", ModDownloadsDict.GetValueOrDefault(Mod_NameLabel[ModID].Text.Replace(" ", "_")).ToString());
+                    }
+                    else
+                    {
+                        Mod_DownloadsLabel[ModID].Text = Mod_DownloadsLabel[ModID].Text.Replace("?", "0");
+                    }
+                }
+            }
+        }
         public static string DecompressString(string compressedString)
         {
             byte[] decompressedBytes;
@@ -213,7 +286,7 @@ namespace WSMM
             {
                 NoModsFound_Label.Hide();
             }
-
+            GetAllDownloadAmounts();
             ApplyFilter();
         }
 
@@ -330,7 +403,7 @@ namespace WSMM
             Mod_NameLabel[EntryID].Tag = ModString;
             Mod_NameLabel[EntryID].Click += Mod_NameLabel_Click;
             //Label[] Mod_VersionLabel = new Label[50];
-            Mod_VersionLabel[EntryID] = new Label();
+            Mod_VersionLabel[EntryID] = new System.Windows.Forms.Label();
             Mod_VersionLabel[EntryID].BackColor = System.Drawing.Color.FromArgb(32, 34, 81);
             Mod_VersionLabel[EntryID].ForeColor = System.Drawing.SystemColors.ActiveCaption;
             Mod_VersionLabel[EntryID].Font = new Font(Mod_NameLabel[EntryID].Font.FontFamily, 16);
@@ -342,7 +415,7 @@ namespace WSMM
             SizeF LabelSize = g.MeasureString(Mod_VersionLabel[EntryID].Text, Mod_VersionLabel[EntryID].Font);
             Mod_VersionLabel[EntryID].Location = new Point(177, 283);
             //Label[] Mod_AuthorLabel = new Label[50];
-            Mod_AuthorLabel[EntryID] = new Label();
+            Mod_AuthorLabel[EntryID] = new System.Windows.Forms.Label();
             Mod_AuthorLabel[EntryID].BackColor = System.Drawing.Color.FromArgb(32, 34, 81);
             Mod_AuthorLabel[EntryID].ForeColor = System.Drawing.SystemColors.ActiveCaption;
             Mod_AuthorLabel[EntryID].Font = new Font(Mod_NameLabel[EntryID].Font.FontFamily, 12);
@@ -353,10 +426,26 @@ namespace WSMM
             Mod_AuthorLabel[EntryID].Size = new Size(256, 21);
             Mod_AuthorLabel[EntryID].Location = new Point(2, 262);
             //Label[] Mod_InfoLabel = new Label[50];
-            Mod_InfoLabel[EntryID] = new Label();
+            Mod_InfoLabel[EntryID] = new System.Windows.Forms.Label();
             Mod_InfoLabel[EntryID].BackColor = System.Drawing.Color.FromArgb(32, 34, 81);
             Mod_InfoLabel[EntryID].ForeColor = System.Drawing.SystemColors.ActiveCaption;
             Mod_InfoLabel[EntryID].Font = new Font(Mod_NameLabel[EntryID].Font.FontFamily, 12);
+            //PictureBox[] Mod_DLIcon = new PictureBox[50];
+            Mod_DLIcon[EntryID] = new PictureBox();
+            Mod_DLIcon[EntryID].Size = new System.Drawing.Size(24, 24);
+            Mod_DLIcon[EntryID].Location = new Point(4, Mod_Panel[EntryID].Size.Height - 28);
+            Mod_DLIcon[EntryID].BackColor = System.Drawing.Color.FromArgb(32, 34, 81);
+            Mod_DLIcon[EntryID].BorderStyle = BorderStyle.None;
+            Mod_DLIcon[EntryID].SizeMode = PictureBoxSizeMode.Zoom;
+            Mod_DLIcon[EntryID].Image = Properties.Resources.Download_Icon;
+            //Label[] Mod_DownloadsLabel = new Label[50];
+            Mod_DownloadsLabel[EntryID] = new System.Windows.Forms.Label();
+            Mod_DownloadsLabel[EntryID].BackColor = System.Drawing.Color.FromArgb(32, 34, 81);
+            Mod_DownloadsLabel[EntryID].ForeColor = System.Drawing.Color.FromArgb(192, 255, 255);
+            Mod_DownloadsLabel[EntryID].Font = new Font(Mod_NameLabel[EntryID].Font.FontFamily, 14);
+            Mod_DownloadsLabel[EntryID].Text = "?";
+            Mod_DownloadsLabel[EntryID].AutoSize = true;
+            Mod_DownloadsLabel[EntryID].Location = new Point(30, Mod_Panel[EntryID].Size.Height - 30);
             // Check if this mod is in active mods
             string ActiveModVersion = Main_Form.GetActiveModByName(ModName);
             if (ActiveModVersion == ModVersion)
@@ -383,6 +472,8 @@ namespace WSMM
             //Mod_Panel[EntryID].Controls.Add(Mod_SupportedVersionsLabel[EntryID]);
             Mod_Panel[EntryID].Controls.Add(Mod_AuthorLabel[EntryID]);
             Mod_Panel[EntryID].Controls.Add(Mod_InfoLabel[EntryID]);
+            Mod_Panel[EntryID].Controls.Add(Mod_DLIcon[EntryID]);
+            Mod_Panel[EntryID].Controls.Add(Mod_DownloadsLabel[EntryID]);
             Mod_InfoLabel[EntryID].BringToFront();
 
             Mod_Category[EntryID] = Category;
@@ -414,6 +505,55 @@ namespace WSMM
                 return true;
             }
             else { return false; }
+        }
+
+        private async void GetDownloadAmount(string ModName)
+        {
+            ModName = ModName.Replace(" ", "_");
+            try
+            {
+                string ModInfo = "";
+
+                using (HttpClient client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.UserAgent.ParseAdd("WLMM");
+                    HttpResponseMessage response = await client.GetAsync("https://wlmm-worker.luckybot.one/?action=GET&" + "modName=" + ModName);
+                    response.EnsureSuccessStatusCode();
+                    ModInfo = await response.Content.ReadAsStringAsync();
+                }
+                Debug.WriteLine(ModInfo);
+                ModFileSize_Label.Text += GetSlice(ModInfo, ":", 999).TrimEnd('}');
+            }
+            catch (Exception ex)
+            {
+                ModFileSize_Label.Text += "0";
+            }
+        }
+
+        private async void IncrementDownloadAmount(string ModName)
+        {
+            ModName = ModName.Replace(" ", "_");
+            if (ModDownloadsDict.ContainsKey(ModName))
+            {
+                ModDownloadsDict[ModName] += 1;
+            }
+            else
+            {
+                ModDownloadsDict.Add(ModName, 1);
+            }
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.UserAgent.ParseAdd("WLMM");
+                    HttpResponseMessage response = await client.GetAsync("https://wlmm-worker.luckybot.one/?action=DL&" + "modName=" + ModName);
+                    response.EnsureSuccessStatusCode();
+                }
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show(ex.Message, "WLMM DATABASE Error");
+            }
         }
 
         private void OpenMod(string ModString)
@@ -505,12 +645,9 @@ namespace WSMM
             ModDescription_TB.Text = ModDescription;
             Screenshot.ImageLocation = ModIcon;
             ModLastUpdate_Label.Text = "Last Update: " + LastUpdate;
-            ModFileSize_Label.Text = ModSize;
+            ModFileSize_Label.Text = "Size: " + ModSize + " | Downloads: " + ModDownloadsDict.GetValueOrDefault(ModName.Replace(" ", "_")).ToString();
             DownloadMod_Button.Tag = ModDownloadLink;
             DownloadMod_Button.Text = "Download";
-
-            ModLastUpdate_Label.Left = ModPanel_Panel.Width / 2 - LastUpdate_Label.Width / 2;
-            ModFileSize_Label.Left = ModPanel_Panel.Width / 2 - ModFileSize_Label.Width / 2;
 
             LoadedModScreenshots.Clear();
             LoadedModScreenshots.Add(ModIcon);
@@ -539,6 +676,7 @@ namespace WSMM
         private void DownloadMod_Button_Click(object sender, EventArgs e)
         {
             DownloadMod_Button.Hide();
+            ModFileSize_Label.Hide();
             ProgressInfo_Label.Show();
             ProgressDetails_Label.Show();
             DownloadProgress_PB.Show();
@@ -580,6 +718,7 @@ namespace WSMM
             {
                 DownloadMod_Button.Show();
                 DownloadMod_Button.Text = "Download";
+                ModFileSize_Label.Show();
                 ProgressInfo_Label.Hide();
                 ProgressInfo_Label.Text = "Initializing...";
                 ProgressDetails_Label.Hide();
@@ -647,7 +786,7 @@ namespace WSMM
             }
 
             ProgressInfo_Label.Text = "Downloading... " + (string)Math.Truncate(percentage).ToString() + "%";
-            
+
 
             if (DownloadProgress_PB.Value == 100)
             {
@@ -664,6 +803,7 @@ namespace WSMM
 
                     DownloadMod_Button.Show();
                     DownloadMod_Button.Text = "Mod Downloaded!";
+                    ModFileSize_Label.Show();
                     ProgressInfo_Label.Hide();
                     ProgressInfo_Label.Text = "Initializing...";
                     ProgressDetails_Label.Hide();
@@ -672,6 +812,9 @@ namespace WSMM
                     DownloadProgress_PB.Value = 0;
                     CloseModPanel_Button.Enabled = true;
                     Close_Button.Enabled = true;
+
+                    IncrementDownloadAmount(CurrentlyDownloadingModName);
+                    ModFileSize_Label.Text = GetSlice(ModFileSize_Label.Text, "|", 0) + " | Downloads: " + ModDownloadsDict.GetValueOrDefault(CurrentlyDownloadingModName.Replace(" ", "_")).ToString();
 
                     LoadMarketplaceMods();
                 }
@@ -738,19 +881,35 @@ namespace WSMM
 
         private void ApplyFilter()
         {
+            Dictionary<int, int> UnsortedDict = new Dictionary<int, int>();
             foreach (int ModID in Mod_Entries)
             {
-                if (Mod_Category[ModID].Contains(Filter_CB.Text) && Mod_NameLabel[ModID].Text.ToLower().Contains(Search_TB.Text.ToLower()))
+                if (Filter_CB.Text == "Most Popular")
                 {
-                    Mod_Panel[ModID].Show();
-                }
-                else if (Filter_CB.Text == "All" && Mod_NameLabel[ModID].Text.ToLower().Contains(Search_TB.Text.ToLower()))
-                {
-                    Mod_Panel[ModID].Show();
+                    UnsortedDict.Add(ModID, ModDownloadsDict.GetValueOrDefault(Mod_NameLabel[ModID].Text.Replace(" ", "_")));
                 }
                 else
                 {
-                    Mod_Panel[ModID].Hide();
+                    if (Mod_Category[ModID].Contains(Filter_CB.Text) && Mod_NameLabel[ModID].Text.ToLower().Contains(Search_TB.Text.ToLower()))
+                    {
+                        Mod_Panel[ModID].Show();
+                    }
+                    else if (Filter_CB.Text == "All" && Mod_NameLabel[ModID].Text.ToLower().Contains(Search_TB.Text.ToLower()))
+                    {
+                        Mod_Panel[ModID].Show();
+                    }
+                    else
+                    {
+                        Mod_Panel[ModID].Hide();
+                    }
+                }
+            }
+            if (Filter_CB.Text == "Most Popular")
+            {
+                ModFlow_Panel.Controls.Clear();
+                foreach (KeyValuePair<int, int> entry in UnsortedDict.OrderByDescending(key => key.Value))
+                {
+                    ModFlow_Panel.Controls.Add(Mod_Panel[entry.Key]);
                 }
             }
         }
@@ -774,5 +933,6 @@ namespace WSMM
         {
             Screenshot_HoverLabel.Hide();
         }
+
     }
 }
