@@ -63,6 +63,19 @@ namespace WSMM
             LoadBaseInfo();
         }
 
+        private string GetSlice(string Txt, string Delimiter, int slice)
+        {
+            string[] TempArray = Txt.Split(Delimiter);
+            if (slice == 999)
+            {
+                return TempArray[TempArray.Length - 1].Trim();
+            }
+            else
+            {
+                return TempArray[slice].Trim();
+            }
+        }
+
         private void LoadBaseInfo()
         {
             OutfitChars = File.ReadAllLines(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\Characters.txt");
@@ -1065,30 +1078,55 @@ namespace WSMM
         {
             if (Head_ExtraPanel.Visible == false) { Head_ExtraPanel.Visible = true; }
             else { Head_ExtraPanel.Visible = false; }
+
+            if (Head_LoadEntry_CB.Items.Count == 0)
+            {
+                ExtractAllEntries();
+            }
         }
 
         private void Chest_ExtraButton_Click(object sender, EventArgs e)
         {
             if (Chest_ExtraPanel.Visible == false) { Chest_ExtraPanel.Visible = true; }
             else { Chest_ExtraPanel.Visible = false; }
+
+            if (Chest_LoadEntry_CB.Items.Count == 0)
+            {
+                ExtractAllEntries();
+            }
         }
 
         private void Hands_ExtraButton_Click(object sender, EventArgs e)
         {
             if (Hands_ExtraPanel.Visible == false) { Hands_ExtraPanel.Visible = true; }
             else { Hands_ExtraPanel.Visible = false; }
+
+            if (Hands_LoadEntry_CB.Items.Count == 0)
+            {
+                ExtractAllEntries();
+            }
         }
 
         private void Legs_ExtraButton_Click(object sender, EventArgs e)
         {
             if (Legs_ExtraPanel.Visible == false) { Legs_ExtraPanel.Visible = true; }
             else { Legs_ExtraPanel.Visible = false; }
+
+            if (Legs_LoadEntry_CB.Items.Count == 0)
+            {
+                ExtractAllEntries();
+            }
         }
 
         private void Feet_ExtraButton_Click(object sender, EventArgs e)
         {
             if (Feet_ExtraPanel.Visible == false) { Feet_ExtraPanel.Visible = true; }
             else { Feet_ExtraPanel.Visible = false; }
+
+            if (Feet_LoadEntry_CB.Items.Count == 0)
+            {
+                ExtractAllEntries();
+            }
         }
 
         private void Head_Dupe_Click(object sender, EventArgs e)
@@ -1776,6 +1814,630 @@ namespace WSMM
         private void AutoModCreator_ResizeEnd(object sender, EventArgs e)
         {
             this.Invalidate();
+        }
+
+        private void ExtractAllEntries()
+        {
+            string State = "";
+
+            var logFile = File.ReadAllLines(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_ClothesOutfit_Default.json");
+            var logList = new List<string>(logFile);
+
+            foreach (string line in logList)
+            {
+                if (State == "")
+                {
+                    if (line.Contains("\"StructType\": \"ClothesOutfitData\","))
+                    {
+                        // Found "StructType": "ClothesOutfitData",
+                        State = "FindName";
+                    }
+                }
+                else if (State == "FindName")
+                {
+                    if (line.Contains("\"Name\":"))
+                    {
+                        // Found Name
+                        string CleanName = line.Replace("\"Name\": \"", "").Trim();
+                        CleanName = CleanName.Replace("\",", "");
+
+                        Head_LoadEntry_CB.Items.Add(CleanName);
+                        Chest_LoadEntry_CB.Items.Add(CleanName);
+                        Hands_LoadEntry_CB.Items.Add(CleanName);
+                        Legs_LoadEntry_CB.Items.Add(CleanName);
+                        Feet_LoadEntry_CB.Items.Add(CleanName);
+
+                        State = "";
+                    }
+                }
+            }
+        }
+
+        private void ExtractValues(string FromItem, string Slot)
+        {
+            ToggleAllFurmasks(false);
+            int LineNR = 0;
+            string State = "";
+            bool ExtractAll = false;
+
+            var logFile = File.ReadAllLines(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_ClothesOutfit_Default.json");
+            var logList = new List<string>(logFile);
+
+            Dictionary<string, string> MeshPaths = new Dictionary<string, string>();
+            Dictionary<string, string> SexMeshPaths = new Dictionary<string, string>();
+            Dictionary<string, string> IconPaths = new Dictionary<string, string>();
+            Dictionary<string, string> FurmaskPaths = new Dictionary<string, string>();
+            Dictionary<string, string> SexFurmaskPaths = new Dictionary<string, string>();
+            Dictionary<string, string> PhysAreas = new Dictionary<string, string>();
+            Dictionary<string, string> MorphTargets = new Dictionary<string, string>();
+            Dictionary<string, string> MorphTargetValues = new Dictionary<string, string>();
+            Dictionary<string, string> ConstraintProfiles = new Dictionary<string, string>();
+            Dictionary<string, string> ArousalBlends = new Dictionary<string, string>();
+            Dictionary<string, string> FlexRegs = new Dictionary<string, string>();
+
+            string CurrentSlot = Slot;
+
+            if (Slot == "All")
+            {
+                CurrentSlot = "Head";
+                ExtractAll = true;
+            }
+
+            foreach (string line in logList)
+            {
+                if (State == "")
+                {
+                    if (line.Contains("\"Name\": \"" + FromItem + "\","))
+                    {
+                        // Found Item
+                        State = "FindSlot";
+                    }
+                }
+                else if (State == "FindSlot")
+                {
+                    if (line.Contains("\"Name\": \"" + CurrentSlot + "\","))
+                    {
+                        // Found Slot
+                        State = "FindMeshPath";
+                    }
+                }
+                else if (State == "FindMeshPath")
+                {
+                    if (line.Contains("\"PackageName\": "))
+                    {
+                        // Found MeshPath
+                        string CleanString = line.Replace("\"PackageName\": \"", "").Trim();
+                        CleanString = CleanString.Replace("\",", "");
+                        MeshPaths.Add(CurrentSlot, CleanString);
+                        State = "FindSexMeshPath";
+                    }
+                }
+                else if (State == "FindSexMeshPath")
+                {
+                    if (line.Contains("\"PackageName\": "))
+                    {
+                        // Found MeshPath
+                        string CleanString = line.Replace("\"PackageName\": \"", "").Trim();
+                        CleanString = CleanString.Replace("\",", "");
+                        SexMeshPaths.Add(CurrentSlot, CleanString);
+                        State = "FindIconPath";
+                    }
+                }
+                else if (State == "FindIconPath")
+                {
+                    if (line.Contains("\"PackageName\": "))
+                    {
+                        // Found IconPath
+                        string CleanString = line.Replace("\"PackageName\": \"", "").Trim();
+                        CleanString = CleanString.Replace("\",", "");
+                        IconPaths.Add(CurrentSlot, CleanString);
+                        State = "FindPhysicsAreas";
+                    }
+                }
+                else if (State == "FindPhysicsAreas")
+                {
+                    if (line.Contains("\"Name\": \"physicsAreas\","))
+                    {
+                        // Found Name
+                        State = "FindPhysicsAreas_Value";
+                    }
+                }
+                else if (State == "FindPhysicsAreas_Value")
+                {
+                    if (line.Contains("\"Value\": "))
+                    {
+                        // Found Value
+                        string CleanString = line.Replace("\"Value\": ", "").Trim();
+                        PhysAreas.Add(CurrentSlot, CleanString);
+                        State = "FindMorphTarget";
+                    }
+                }
+                else if (State == "FindMorphTarget")
+                {
+                    if (line.Contains("\"Name\": \"MorphTarget\","))
+                    {
+                        // Found Name
+                        State = "FindMorphTarget_Value";
+                    }
+                }
+                else if (State == "FindMorphTarget_Value")
+                {
+                    if (line.Contains("\"Value\": "))
+                    {
+                        // Found Value
+                        string CleanString = line.Replace("\"Value\": ", "").Trim();
+                        CleanString = CleanString.Replace(",", "");
+                        MorphTargets.Add(CurrentSlot, CleanString);
+                        State = "FindMorphTargetValue";
+                    }
+                }
+                else if (State == "FindMorphTargetValue")
+                {
+                    if (line.Contains("\"Name\": \"MorphTargetValue\","))
+                    {
+                        // Found Name
+                        string CleanString = logList[LineNR - 1].Replace("\"Value\": ", "").Trim();
+                        CleanString = CleanString.Replace(",", "");
+                        MorphTargetValues.Add(CurrentSlot, CleanString);
+                        State = "FindConstraintProfile";
+                    }
+                }
+                else if (State == "FindConstraintProfile")
+                {
+                    if (line.Contains("\"Name\": \"ConstraintProfile\","))
+                    {
+                        // Found Name
+                        State = "FindConstraintProfile_Value";
+                    }
+                }
+                else if (State == "FindConstraintProfile_Value")
+                {
+                    if (line.Contains("\"Value\": "))
+                    {
+                        // Found Value
+                        string CleanString = line.Replace("\"Value\": ", "").Trim();
+                        CleanString = CleanString.Replace(",", "");
+                        ConstraintProfiles.Add(CurrentSlot, CleanString);
+                        State = "FindArousalBlend";
+                    }
+                }
+                else if (State == "FindArousalBlend")
+                {
+                    if (line.Contains("\"Name\": \"ArousalBlend\","))
+                    {
+                        // Found Name
+                        string CleanString = logList[LineNR - 1].Replace("\"Value\": ", "").Trim();
+                        CleanString = CleanString.Replace(",", "");
+                        CleanString = CleanString.Replace("\"", "");
+                        CleanString = CleanString.Replace("+", "");
+                        ArousalBlends.Add(CurrentSlot, CleanString);
+                        State = "FindFlexReg";
+                    }
+                }
+                else if (State == "FindFlexReg")
+                {
+                    if (line.Contains("\"Name\": \"MuscleFlexRegions\","))
+                    {
+                        // Found Name
+                        State = "FindFlexReg_Value";
+                    }
+                }
+                else if (State == "FindFlexReg_Value")
+                {
+                    if (line.Contains("\"Value\": "))
+                    {
+                        // Found Value
+                        string CleanString = line.Replace("\"Value\": ", "").Trim();
+                        FlexRegs.Add(CurrentSlot, CleanString);
+
+                        State = "FindFurMask";
+                    }
+                }
+                else if (State == "FindFurMask")
+                {
+                    if (line.Contains("\"Name\": \"FurMasks\","))
+                    {
+                        // Found Name
+                        State = "FindFurMask_Value";
+                        Debug.WriteLine("Found FurMask");
+                    }
+                }
+                else if (State == "FindFurMask_Value")
+                {
+                    if (line.Contains("\"Value\": []"))
+                    {
+                        // No FurMask
+                        if (ExtractAll == false)
+                        {
+                            State = "Done";
+                        }
+                        else
+                        {
+                            if (CurrentSlot == "Feet")
+                            {
+                                CurrentSlot = "Head";
+                                State = "Done";
+                            }
+                            else if (CurrentSlot == "Legs")
+                            {
+                                CurrentSlot = "Feet";
+                                State = "FindSlot";
+                            }
+                            else if (CurrentSlot == "Hands")
+                            {
+                                CurrentSlot = "Legs";
+                                State = "FindSlot";
+                            }
+                            else if (CurrentSlot == "Chest")
+                            {
+                                CurrentSlot = "Hands";
+                                State = "FindSlot";
+                            }
+                            else if (CurrentSlot == "Head")
+                            {
+                                CurrentSlot = "Chest";
+                                State = "FindSlot";
+                            }
+                        }
+                    }
+                    else if (line.Contains("\"Value\": ["))
+                    {
+                        State = "FindFurMask_Path";
+                    }
+                }
+                else if (State == "FindFurMask_Path")
+                {
+                    if (line.Contains("\"PackageName\": "))
+                    {
+                        // Found FurMask Path
+                        string CleanString = line.Replace("\"PackageName\": \"", "").Trim();
+                        CleanString = CleanString.Replace("\",", "");
+                        FurmaskPaths.Add(CurrentSlot, CleanString);
+                        State = "FindFurMaskSex_Path";
+                    }
+                }
+                else if (State == "FindFurMaskSex_Path")
+                {
+                    if (line.Contains("\"PackageName\": "))
+                    {
+                        // Found FurMask Path
+                        string CleanString = line.Replace("\"PackageName\": \"", "").Trim();
+                        CleanString = CleanString.Replace("\",", "");
+                        SexFurmaskPaths.Add(CurrentSlot, CleanString);
+
+                        if (ExtractAll == false)
+                        {
+                            State = "Done";
+                        }
+                        else
+                        {
+                            if (CurrentSlot == "Feet")
+                            {
+                                CurrentSlot = "Head";
+                                State = "Done";
+                            }
+                            else if (CurrentSlot == "Legs")
+                            {
+                                CurrentSlot = "Feet";
+                                State = "FindSlot";
+                            }
+                            else if (CurrentSlot == "Hands")
+                            {
+                                CurrentSlot = "Legs";
+                                State = "FindSlot";
+                            }
+                            else if (CurrentSlot == "Chest")
+                            {
+                                CurrentSlot = "Hands";
+                                State = "FindSlot";
+                            }
+                            else if (CurrentSlot == "Head")
+                            {
+                                CurrentSlot = "Chest";
+                                State = "FindSlot";
+                            }
+                        }
+                    }
+                }
+
+                else if (State == "Done")
+                {
+                    if (CurrentSlot == "Head")
+                    {
+                        Head_Mesh_Path.Text = MeshPaths[CurrentSlot];
+                        Head_Mesh_Name.Text = GetSlice(MeshPaths[CurrentSlot], "/", 999);
+
+                        Head_SexMesh_Path.Text = SexMeshPaths[CurrentSlot];
+                        Head_SexMesh_Name.Text = GetSlice(SexMeshPaths[CurrentSlot], "/", 999);
+
+                        Head_Icon_Path.Text = IconPaths[CurrentSlot];
+                        Head_Icon_Name.Text = GetSlice(IconPaths[CurrentSlot], "/", 999);
+
+                        Head_PhysAreas.Text = PhysAreas[CurrentSlot];
+                        Head_MorphTargetCB.Text = MorphTargets[CurrentSlot];
+                        Head_MorphTargetVal.Text = MorphTargetValues[CurrentSlot];
+                        Head_ConstraintProfileCB.Text = ConstraintProfiles[CurrentSlot];
+                        Head_ArousalBlend.Text = ArousalBlends[CurrentSlot];
+                        Head_FlexReg.Text = FlexRegs[CurrentSlot];
+
+                        if (FurmaskPaths.ContainsKey(CurrentSlot) == true)
+                        {
+                            Head_Furmask_Path.Text = FurmaskPaths[CurrentSlot];
+                            Head_Furmask_Name.Text = GetSlice(FurmaskPaths[CurrentSlot], "/", 999);
+                            Head_SexFurmask_Path.Text = SexFurmaskPaths[CurrentSlot];
+                            Head_SexFurmask_Name.Text = GetSlice(SexFurmaskPaths[CurrentSlot], "/", 999);
+                            ToggleAllFurmasks(true);
+                        }
+                        else
+                        {
+                            Head_Furmask_Path.Text = "None";
+                            Head_Furmask_Name.Text = "None";
+                            Head_SexFurmask_Path.Text = "None";
+                            Head_SexFurmask_Name.Text = "None";
+                        }
+                        if (ExtractAll == true)
+                        {
+                            CurrentSlot = "Chest";
+                        }
+                    }
+                    if (CurrentSlot == "Chest")
+                    {
+                        Chest_Mesh_Path.Text = MeshPaths[CurrentSlot];
+                        Chest_Mesh_Name.Text = GetSlice(MeshPaths[CurrentSlot], "/", 999);
+
+                        Chest_SexMesh_Path.Text = SexMeshPaths[CurrentSlot];
+                        Chest_SexMesh_Name.Text = GetSlice(SexMeshPaths[CurrentSlot], "/", 999);
+
+                        Chest_Icon_Path.Text = IconPaths[CurrentSlot];
+                        Chest_Icon_Name.Text = GetSlice(IconPaths[CurrentSlot], "/", 999);
+
+                        Chest_PhysAreas.Text = PhysAreas[CurrentSlot];
+                        Chest_MorphTargetCB.Text = MorphTargets[CurrentSlot];
+                        Chest_MorphTargetVal.Text = MorphTargetValues[CurrentSlot];
+                        Chest_ConstraintProfileCB.Text = ConstraintProfiles[CurrentSlot];
+                        Chest_ArousalBlend.Text = ArousalBlends[CurrentSlot];
+                        Chest_FlexReg.Text = FlexRegs[CurrentSlot];
+
+                        if (FurmaskPaths.ContainsKey(CurrentSlot) == true)
+                        {
+                            Chest_Furmask_Path.Text = FurmaskPaths[CurrentSlot];
+                            Chest_Furmask_Name.Text = GetSlice(FurmaskPaths[CurrentSlot], "/", 999);
+                            Chest_SexFurmask_Path.Text = SexFurmaskPaths[CurrentSlot];
+                            Chest_SexFurmask_Name.Text = GetSlice(SexFurmaskPaths[CurrentSlot], "/", 999);
+                            ToggleAllFurmasks(true);
+                        }
+                        else
+                        {
+                            Chest_Furmask_Path.Text = "None";
+                            Chest_Furmask_Name.Text = "None";
+                            Chest_SexFurmask_Path.Text = "None";
+                            Chest_SexFurmask_Name.Text = "None";
+                        }
+                        if (ExtractAll == true)
+                        {
+                            CurrentSlot = "Hands";
+                        }
+                    }
+                    if (CurrentSlot == "Hands")
+                    {
+                        Hands_Mesh_Path.Text = MeshPaths[CurrentSlot];
+                        Hands_Mesh_Name.Text = GetSlice(MeshPaths[CurrentSlot], "/", 999);
+
+                        Hands_SexMesh_Path.Text = SexMeshPaths[CurrentSlot];
+                        Hands_SexMesh_Name.Text = GetSlice(SexMeshPaths[CurrentSlot], "/", 999);
+
+                        Hands_Icon_Path.Text = IconPaths[CurrentSlot];
+                        Hands_Icon_Name.Text = GetSlice(IconPaths[CurrentSlot], "/", 999);
+
+                        Hands_PhysAreas.Text = PhysAreas[CurrentSlot];
+                        Hands_MorphTargetCB.Text = MorphTargets[CurrentSlot];
+                        Hands_MorphTargetVal.Text = MorphTargetValues[CurrentSlot];
+                        Hands_ConstraintProfileCB.Text = ConstraintProfiles[CurrentSlot];
+                        Hands_ArousalBlend.Text = ArousalBlends[CurrentSlot];
+                        Hands_FlexReg.Text = FlexRegs[CurrentSlot];
+
+                        if (FurmaskPaths.ContainsKey(CurrentSlot) == true)
+                        {
+                            Hands_Furmask_Path.Text = FurmaskPaths[CurrentSlot];
+                            Hands_Furmask_Name.Text = GetSlice(FurmaskPaths[CurrentSlot], "/", 999);
+                            Hands_SexFurmask_Path.Text = SexFurmaskPaths[CurrentSlot];
+                            Hands_SexFurmask_Name.Text = GetSlice(SexFurmaskPaths[CurrentSlot], "/", 999);
+                            ToggleAllFurmasks(true);
+                        }
+                        else
+                        {
+                            Hands_Furmask_Path.Text = "None";
+                            Hands_Furmask_Name.Text = "None";
+                            Hands_SexFurmask_Path.Text = "None";
+                            Hands_SexFurmask_Name.Text = "None";
+                        }
+                        if (ExtractAll == true)
+                        {
+                            CurrentSlot = "Legs";
+                        }
+                    }
+                    if (CurrentSlot == "Legs")
+                    {
+                        Legs_Mesh_Path.Text = MeshPaths[CurrentSlot];
+                        Legs_Mesh_Name.Text = GetSlice(MeshPaths[CurrentSlot], "/", 999);
+
+                        Legs_SexMesh_Path.Text = SexMeshPaths[CurrentSlot];
+                        Legs_SexMesh_Name.Text = GetSlice(SexMeshPaths[CurrentSlot], "/", 999);
+
+                        Legs_Icon_Path.Text = IconPaths[CurrentSlot];
+                        Legs_Icon_Name.Text = GetSlice(IconPaths[CurrentSlot], "/", 999);
+
+                        Legs_PhysAreas.Text = PhysAreas[CurrentSlot];
+                        Legs_MorphTargetCB.Text = MorphTargets[CurrentSlot];
+                        Legs_MorphTargetVal.Text = MorphTargetValues[CurrentSlot];
+                        Legs_ConstraintProfileCB.Text = ConstraintProfiles[CurrentSlot];
+                        Legs_ArousalBlend.Text = ArousalBlends[CurrentSlot];
+                        Legs_FlexReg.Text = FlexRegs[CurrentSlot];
+
+                        if (FurmaskPaths.ContainsKey(CurrentSlot) == true)
+                        {
+                            Legs_Furmask_Path.Text = FurmaskPaths[CurrentSlot];
+                            Legs_Furmask_Name.Text = GetSlice(FurmaskPaths[CurrentSlot], "/", 999);
+                            Legs_SexFurmask_Path.Text = SexFurmaskPaths[CurrentSlot];
+                            Legs_SexFurmask_Name.Text = GetSlice(SexFurmaskPaths[CurrentSlot], "/", 999);
+                            ToggleAllFurmasks(true);
+                        }
+                        else
+                        {
+                            Legs_Furmask_Path.Text = "None";
+                            Legs_Furmask_Name.Text = "None";
+                            Legs_SexFurmask_Path.Text = "None";
+                            Legs_SexFurmask_Name.Text = "None";
+                        }
+                        if (ExtractAll == true)
+                        {
+                            CurrentSlot = "Feet";
+                        }
+                    }
+                    if (CurrentSlot == "Feet")
+                    {
+                        Feet_Mesh_Path.Text = MeshPaths[CurrentSlot];
+                        Feet_Mesh_Name.Text = GetSlice(MeshPaths[CurrentSlot], "/", 999);
+
+                        Feet_SexMesh_Path.Text = SexMeshPaths[CurrentSlot];
+                        Feet_SexMesh_Name.Text = GetSlice(SexMeshPaths[CurrentSlot], "/", 999);
+
+                        Feet_Icon_Path.Text = IconPaths[CurrentSlot];
+                        Feet_Icon_Name.Text = GetSlice(IconPaths[CurrentSlot], "/", 999);
+
+                        Feet_PhysAreas.Text = PhysAreas[CurrentSlot];
+                        Feet_MorphTargetCB.Text = MorphTargets[CurrentSlot];
+                        Feet_MorphTargetVal.Text = MorphTargetValues[CurrentSlot];
+                        Feet_ConstraintProfileCB.Text = ConstraintProfiles[CurrentSlot];
+                        Feet_ArousalBlend.Text = ArousalBlends[CurrentSlot];
+                        Feet_FlexReg.Text = FlexRegs[CurrentSlot];
+
+                        if (FurmaskPaths.ContainsKey(CurrentSlot) == true)
+                        {
+                            Feet_Furmask_Path.Text = FurmaskPaths[CurrentSlot];
+                            Feet_Furmask_Name.Text = GetSlice(FurmaskPaths[CurrentSlot], "/", 999);
+                            Feet_SexFurmask_Path.Text = SexFurmaskPaths[CurrentSlot];
+                            Feet_SexFurmask_Name.Text = GetSlice(SexFurmaskPaths[CurrentSlot], "/", 999);
+                            ToggleAllFurmasks(true);
+                        }
+                        else
+                        {
+                            Feet_Furmask_Path.Text = "None";
+                            Feet_Furmask_Name.Text = "None";
+                            Feet_SexFurmask_Path.Text = "None";
+                            Feet_SexFurmask_Name.Text = "None";
+                        }
+                    }
+                    return;
+                }
+
+                LineNR += 1;
+            }
+        }
+
+        private void Head_LoadEntry_CB_TextChanged(object sender, EventArgs e)
+        {
+            Head_LoadEntry_CB.DroppedDown = false;
+        }
+
+        private void Head_LoadEntry_Button_Click(object sender, EventArgs e)
+        {
+            if (Head_LoadEntry_CB.Text != "")
+            {
+                ExtractValues(Head_LoadEntry_CB.Text, "Head");
+            }
+        }
+
+        private void Head_LoadEntryAll_Button_Click(object sender, EventArgs e)
+        {
+            if (Head_LoadEntry_CB.Text != "")
+            {
+                ExtractValues(Head_LoadEntry_CB.Text, "All");
+            }
+        }
+
+        private void Chest_LoadEntry_CB_TextChanged(object sender, EventArgs e)
+        {
+            Chest_LoadEntry_CB.DroppedDown = false;
+        }
+
+        private void Hands_LoadEntry_CB_TextChanged(object sender, EventArgs e)
+        {
+            Hands_LoadEntry_CB.DroppedDown = false;
+        }
+
+        private void Legs_LoadEntry_CB_TextChanged(object sender, EventArgs e)
+        {
+            Legs_LoadEntry_CB.DroppedDown = false;
+        }
+
+        private void Feet_LoadEntry_CB_TextChanged(object sender, EventArgs e)
+        {
+            Feet_LoadEntry_CB.DroppedDown = false;
+        }
+
+        private void Chest_LoadEntry_Button_Click(object sender, EventArgs e)
+        {
+            if (Chest_LoadEntry_CB.Text != "")
+            {
+                ExtractValues(Chest_LoadEntry_CB.Text, "Chest");
+            }
+        }
+
+        private void Chest_LoadEntryAll_Button_Click(object sender, EventArgs e)
+        {
+            if (Chest_LoadEntry_CB.Text != "")
+            {
+                ExtractValues(Chest_LoadEntry_CB.Text, "All");
+            }
+        }
+
+        private void Hands_LoadEntry_Button_Click(object sender, EventArgs e)
+        {
+            if (Hands_LoadEntry_CB.Text != "")
+            {
+                ExtractValues(Hands_LoadEntry_CB.Text, "Hands");
+            }
+        }
+
+        private void Hands_LoadEntryAll_Button_Click(object sender, EventArgs e)
+        {
+            if (Hands_LoadEntry_CB.Text != "")
+            {
+                ExtractValues(Hands_LoadEntry_CB.Text, "All");
+            }
+        }
+
+        private void Legs_LoadEntry_Button_Click(object sender, EventArgs e)
+        {
+            if (Legs_LoadEntry_CB.Text != "")
+            {
+                ExtractValues(Legs_LoadEntry_CB.Text, "Legs");
+            }
+        }
+
+        private void Legs_LoadEntryAll_Button_Click(object sender, EventArgs e)
+        {
+            if (Legs_LoadEntry_CB.Text != "")
+            {
+                ExtractValues(Legs_LoadEntry_CB.Text, "All");
+            }
+        }
+
+        private void Feet_LoadEntry_Button_Click(object sender, EventArgs e)
+        {
+            if (Feet_LoadEntry_CB.Text != "")
+            {
+                ExtractValues(Feet_LoadEntry_CB.Text, "Feet");
+            }
+        }
+
+        private void Feet_LoadEntryAll_Button_Click(object sender, EventArgs e)
+        {
+            if (Feet_LoadEntry_CB.Text != "")
+            {
+                ExtractValues(Feet_LoadEntry_CB.Text, "All");
+            }
         }
     }
 }

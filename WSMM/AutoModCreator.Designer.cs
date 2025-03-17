@@ -50,6 +50,10 @@
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
             Head_ExtraPanel = new Panel();
+            Head_LoadEntryAll_Button = new Button();
+            Head_LoadEntry_Button = new Button();
+            label107 = new Label();
+            Head_LoadEntry_CB = new ComboBox();
             Head_Dupe = new Button();
             label87 = new Label();
             Head_DupeTo = new ComboBox();
@@ -97,6 +101,10 @@
             Head_Mesh_Path = new TextBox();
             tabPage2 = new TabPage();
             Chest_ExtraPanel = new Panel();
+            Chest_LoadEntryAll_Button = new Button();
+            Chest_LoadEntry_Button = new Button();
+            label108 = new Label();
+            Chest_LoadEntry_CB = new ComboBox();
             Chest_Dupe = new Button();
             label88 = new Label();
             Chest_DupeTo = new ComboBox();
@@ -144,6 +152,10 @@
             Chest_Mesh_Path = new TextBox();
             tabPage3 = new TabPage();
             Hands_ExtraPanel = new Panel();
+            Hands_LoadEntryAll_Button = new Button();
+            Hands_LoadEntry_Button = new Button();
+            label109 = new Label();
+            Hands_LoadEntry_CB = new ComboBox();
             Hands_Dupe = new Button();
             label89 = new Label();
             Hands_DupeTo = new ComboBox();
@@ -191,6 +203,10 @@
             Hands_Mesh_Path = new TextBox();
             tabPage4 = new TabPage();
             Legs_ExtraPanel = new Panel();
+            Legs_LoadEntryAll_Button = new Button();
+            Legs_LoadEntry_Button = new Button();
+            label110 = new Label();
+            Legs_LoadEntry_CB = new ComboBox();
             Legs_Dupe = new Button();
             label90 = new Label();
             Legs_DupeTo = new ComboBox();
@@ -238,6 +254,10 @@
             Legs_Mesh_Path = new TextBox();
             tabPage5 = new TabPage();
             Feet_ExtraPanel = new Panel();
+            Feet_LoadEntryAll_Button = new Button();
+            Feet_LoadEntry_Button = new Button();
+            label111 = new Label();
+            Feet_LoadEntry_CB = new ComboBox();
             Feet_Dupe = new Button();
             label91 = new Label();
             Feet_DupeTo = new ComboBox();
@@ -637,22 +657,79 @@
             // Head_ExtraPanel
             // 
             Head_ExtraPanel.BorderStyle = BorderStyle.FixedSingle;
+            Head_ExtraPanel.Controls.Add(Head_LoadEntryAll_Button);
+            Head_ExtraPanel.Controls.Add(Head_LoadEntry_Button);
+            Head_ExtraPanel.Controls.Add(label107);
+            Head_ExtraPanel.Controls.Add(Head_LoadEntry_CB);
             Head_ExtraPanel.Controls.Add(Head_Dupe);
             Head_ExtraPanel.Controls.Add(label87);
             Head_ExtraPanel.Controls.Add(Head_DupeTo);
             Head_ExtraPanel.Location = new Point(336, 31);
             Head_ExtraPanel.Margin = new Padding(4, 3, 4, 3);
             Head_ExtraPanel.Name = "Head_ExtraPanel";
-            Head_ExtraPanel.Size = new Size(233, 105);
+            Head_ExtraPanel.Size = new Size(233, 187);
             Head_ExtraPanel.TabIndex = 37;
             Head_ExtraPanel.Visible = false;
+            // 
+            // Head_LoadEntryAll_Button
+            // 
+            Head_LoadEntryAll_Button.BackColor = Color.FromArgb(75, 68, 138);
+            Head_LoadEntryAll_Button.FlatStyle = FlatStyle.Flat;
+            Head_LoadEntryAll_Button.ForeColor = SystemColors.ActiveCaption;
+            Head_LoadEntryAll_Button.Location = new Point(146, 149);
+            Head_LoadEntryAll_Button.Margin = new Padding(4, 3, 4, 3);
+            Head_LoadEntryAll_Button.Name = "Head_LoadEntryAll_Button";
+            Head_LoadEntryAll_Button.Size = new Size(72, 27);
+            Head_LoadEntryAll_Button.TabIndex = 41;
+            Head_LoadEntryAll_Button.Text = "Load all";
+            Head_LoadEntryAll_Button.UseVisualStyleBackColor = false;
+            Head_LoadEntryAll_Button.Click += Head_LoadEntryAll_Button_Click;
+            // 
+            // Head_LoadEntry_Button
+            // 
+            Head_LoadEntry_Button.BackColor = Color.FromArgb(75, 68, 138);
+            Head_LoadEntry_Button.FlatStyle = FlatStyle.Flat;
+            Head_LoadEntry_Button.ForeColor = SystemColors.ActiveCaption;
+            Head_LoadEntry_Button.Location = new Point(17, 149);
+            Head_LoadEntry_Button.Margin = new Padding(4, 3, 4, 3);
+            Head_LoadEntry_Button.Name = "Head_LoadEntry_Button";
+            Head_LoadEntry_Button.Size = new Size(121, 27);
+            Head_LoadEntry_Button.TabIndex = 40;
+            Head_LoadEntry_Button.Text = "Load this";
+            Head_LoadEntry_Button.UseVisualStyleBackColor = false;
+            Head_LoadEntry_Button.Click += Head_LoadEntry_Button_Click;
+            // 
+            // label107
+            // 
+            label107.AutoSize = true;
+            label107.ForeColor = SystemColors.ActiveCaption;
+            label107.Location = new Point(8, 97);
+            label107.Margin = new Padding(4, 0, 4, 0);
+            label107.Name = "label107";
+            label107.Size = new Size(66, 15);
+            label107.TabIndex = 39;
+            label107.Text = "Load Entry:";
+            // 
+            // Head_LoadEntry_CB
+            // 
+            Head_LoadEntry_CB.AutoCompleteMode = AutoCompleteMode.Suggest;
+            Head_LoadEntry_CB.AutoCompleteSource = AutoCompleteSource.ListItems;
+            Head_LoadEntry_CB.BackColor = Color.FromArgb(75, 68, 138);
+            Head_LoadEntry_CB.ForeColor = SystemColors.ActiveCaption;
+            Head_LoadEntry_CB.FormattingEnabled = true;
+            Head_LoadEntry_CB.Location = new Point(17, 118);
+            Head_LoadEntry_CB.Margin = new Padding(4, 3, 4, 3);
+            Head_LoadEntry_CB.Name = "Head_LoadEntry_CB";
+            Head_LoadEntry_CB.Size = new Size(201, 23);
+            Head_LoadEntry_CB.TabIndex = 38;
+            Head_LoadEntry_CB.TextChanged += Head_LoadEntry_CB_TextChanged;
             // 
             // Head_Dupe
             // 
             Head_Dupe.BackColor = Color.FromArgb(75, 68, 138);
             Head_Dupe.FlatStyle = FlatStyle.Flat;
             Head_Dupe.ForeColor = SystemColors.ActiveCaption;
-            Head_Dupe.Location = new Point(19, 61);
+            Head_Dupe.Location = new Point(17, 61);
             Head_Dupe.Margin = new Padding(4, 3, 4, 3);
             Head_Dupe.Name = "Head_Dupe";
             Head_Dupe.Size = new Size(202, 27);
@@ -665,7 +742,7 @@
             // 
             label87.AutoSize = true;
             label87.ForeColor = SystemColors.ActiveCaption;
-            label87.Location = new Point(10, 9);
+            label87.Location = new Point(8, 9);
             label87.Margin = new Padding(4, 0, 4, 0);
             label87.Name = "label87";
             label87.Size = new Size(74, 15);
@@ -678,7 +755,7 @@
             Head_DupeTo.ForeColor = SystemColors.ActiveCaption;
             Head_DupeTo.FormattingEnabled = true;
             Head_DupeTo.Items.AddRange(new object[] { "Chest", "Hands", "Legs", "Feet", "All" });
-            Head_DupeTo.Location = new Point(19, 30);
+            Head_DupeTo.Location = new Point(17, 30);
             Head_DupeTo.Margin = new Padding(4, 3, 4, 3);
             Head_DupeTo.Name = "Head_DupeTo";
             Head_DupeTo.Size = new Size(201, 23);
@@ -1237,22 +1314,79 @@
             // Chest_ExtraPanel
             // 
             Chest_ExtraPanel.BorderStyle = BorderStyle.FixedSingle;
+            Chest_ExtraPanel.Controls.Add(Chest_LoadEntryAll_Button);
+            Chest_ExtraPanel.Controls.Add(Chest_LoadEntry_Button);
+            Chest_ExtraPanel.Controls.Add(label108);
+            Chest_ExtraPanel.Controls.Add(Chest_LoadEntry_CB);
             Chest_ExtraPanel.Controls.Add(Chest_Dupe);
             Chest_ExtraPanel.Controls.Add(label88);
             Chest_ExtraPanel.Controls.Add(Chest_DupeTo);
             Chest_ExtraPanel.Location = new Point(336, 31);
             Chest_ExtraPanel.Margin = new Padding(4, 3, 4, 3);
             Chest_ExtraPanel.Name = "Chest_ExtraPanel";
-            Chest_ExtraPanel.Size = new Size(233, 105);
+            Chest_ExtraPanel.Size = new Size(233, 187);
             Chest_ExtraPanel.TabIndex = 61;
             Chest_ExtraPanel.Visible = false;
+            // 
+            // Chest_LoadEntryAll_Button
+            // 
+            Chest_LoadEntryAll_Button.BackColor = Color.FromArgb(75, 68, 138);
+            Chest_LoadEntryAll_Button.FlatStyle = FlatStyle.Flat;
+            Chest_LoadEntryAll_Button.ForeColor = SystemColors.ActiveCaption;
+            Chest_LoadEntryAll_Button.Location = new Point(146, 149);
+            Chest_LoadEntryAll_Button.Margin = new Padding(4, 3, 4, 3);
+            Chest_LoadEntryAll_Button.Name = "Chest_LoadEntryAll_Button";
+            Chest_LoadEntryAll_Button.Size = new Size(72, 27);
+            Chest_LoadEntryAll_Button.TabIndex = 45;
+            Chest_LoadEntryAll_Button.Text = "Load all";
+            Chest_LoadEntryAll_Button.UseVisualStyleBackColor = false;
+            Chest_LoadEntryAll_Button.Click += Chest_LoadEntryAll_Button_Click;
+            // 
+            // Chest_LoadEntry_Button
+            // 
+            Chest_LoadEntry_Button.BackColor = Color.FromArgb(75, 68, 138);
+            Chest_LoadEntry_Button.FlatStyle = FlatStyle.Flat;
+            Chest_LoadEntry_Button.ForeColor = SystemColors.ActiveCaption;
+            Chest_LoadEntry_Button.Location = new Point(17, 149);
+            Chest_LoadEntry_Button.Margin = new Padding(4, 3, 4, 3);
+            Chest_LoadEntry_Button.Name = "Chest_LoadEntry_Button";
+            Chest_LoadEntry_Button.Size = new Size(121, 27);
+            Chest_LoadEntry_Button.TabIndex = 44;
+            Chest_LoadEntry_Button.Text = "Load this";
+            Chest_LoadEntry_Button.UseVisualStyleBackColor = false;
+            Chest_LoadEntry_Button.Click += Chest_LoadEntry_Button_Click;
+            // 
+            // label108
+            // 
+            label108.AutoSize = true;
+            label108.ForeColor = SystemColors.ActiveCaption;
+            label108.Location = new Point(8, 97);
+            label108.Margin = new Padding(4, 0, 4, 0);
+            label108.Name = "label108";
+            label108.Size = new Size(66, 15);
+            label108.TabIndex = 43;
+            label108.Text = "Load Entry:";
+            // 
+            // Chest_LoadEntry_CB
+            // 
+            Chest_LoadEntry_CB.AutoCompleteMode = AutoCompleteMode.Suggest;
+            Chest_LoadEntry_CB.AutoCompleteSource = AutoCompleteSource.ListItems;
+            Chest_LoadEntry_CB.BackColor = Color.FromArgb(75, 68, 138);
+            Chest_LoadEntry_CB.ForeColor = SystemColors.ActiveCaption;
+            Chest_LoadEntry_CB.FormattingEnabled = true;
+            Chest_LoadEntry_CB.Location = new Point(17, 118);
+            Chest_LoadEntry_CB.Margin = new Padding(4, 3, 4, 3);
+            Chest_LoadEntry_CB.Name = "Chest_LoadEntry_CB";
+            Chest_LoadEntry_CB.Size = new Size(201, 23);
+            Chest_LoadEntry_CB.TabIndex = 42;
+            Chest_LoadEntry_CB.TextChanged += Chest_LoadEntry_CB_TextChanged;
             // 
             // Chest_Dupe
             // 
             Chest_Dupe.BackColor = Color.FromArgb(75, 68, 138);
             Chest_Dupe.FlatStyle = FlatStyle.Flat;
             Chest_Dupe.ForeColor = SystemColors.ActiveCaption;
-            Chest_Dupe.Location = new Point(19, 61);
+            Chest_Dupe.Location = new Point(17, 61);
             Chest_Dupe.Margin = new Padding(4, 3, 4, 3);
             Chest_Dupe.Name = "Chest_Dupe";
             Chest_Dupe.Size = new Size(202, 27);
@@ -1265,7 +1399,7 @@
             // 
             label88.AutoSize = true;
             label88.ForeColor = SystemColors.ActiveCaption;
-            label88.Location = new Point(10, 9);
+            label88.Location = new Point(8, 9);
             label88.Margin = new Padding(4, 0, 4, 0);
             label88.Name = "label88";
             label88.Size = new Size(74, 15);
@@ -1278,7 +1412,7 @@
             Chest_DupeTo.ForeColor = SystemColors.ActiveCaption;
             Chest_DupeTo.FormattingEnabled = true;
             Chest_DupeTo.Items.AddRange(new object[] { "Head", "Hands", "Legs", "Feet", "All" });
-            Chest_DupeTo.Location = new Point(19, 30);
+            Chest_DupeTo.Location = new Point(17, 30);
             Chest_DupeTo.Margin = new Padding(4, 3, 4, 3);
             Chest_DupeTo.Name = "Chest_DupeTo";
             Chest_DupeTo.Size = new Size(201, 23);
@@ -1836,22 +1970,79 @@
             // Hands_ExtraPanel
             // 
             Hands_ExtraPanel.BorderStyle = BorderStyle.FixedSingle;
+            Hands_ExtraPanel.Controls.Add(Hands_LoadEntryAll_Button);
+            Hands_ExtraPanel.Controls.Add(Hands_LoadEntry_Button);
+            Hands_ExtraPanel.Controls.Add(label109);
+            Hands_ExtraPanel.Controls.Add(Hands_LoadEntry_CB);
             Hands_ExtraPanel.Controls.Add(Hands_Dupe);
             Hands_ExtraPanel.Controls.Add(label89);
             Hands_ExtraPanel.Controls.Add(Hands_DupeTo);
             Hands_ExtraPanel.Location = new Point(336, 31);
             Hands_ExtraPanel.Margin = new Padding(4, 3, 4, 3);
             Hands_ExtraPanel.Name = "Hands_ExtraPanel";
-            Hands_ExtraPanel.Size = new Size(233, 105);
+            Hands_ExtraPanel.Size = new Size(233, 187);
             Hands_ExtraPanel.TabIndex = 61;
             Hands_ExtraPanel.Visible = false;
+            // 
+            // Hands_LoadEntryAll_Button
+            // 
+            Hands_LoadEntryAll_Button.BackColor = Color.FromArgb(75, 68, 138);
+            Hands_LoadEntryAll_Button.FlatStyle = FlatStyle.Flat;
+            Hands_LoadEntryAll_Button.ForeColor = SystemColors.ActiveCaption;
+            Hands_LoadEntryAll_Button.Location = new Point(146, 149);
+            Hands_LoadEntryAll_Button.Margin = new Padding(4, 3, 4, 3);
+            Hands_LoadEntryAll_Button.Name = "Hands_LoadEntryAll_Button";
+            Hands_LoadEntryAll_Button.Size = new Size(72, 27);
+            Hands_LoadEntryAll_Button.TabIndex = 45;
+            Hands_LoadEntryAll_Button.Text = "Load all";
+            Hands_LoadEntryAll_Button.UseVisualStyleBackColor = false;
+            Hands_LoadEntryAll_Button.Click += Hands_LoadEntryAll_Button_Click;
+            // 
+            // Hands_LoadEntry_Button
+            // 
+            Hands_LoadEntry_Button.BackColor = Color.FromArgb(75, 68, 138);
+            Hands_LoadEntry_Button.FlatStyle = FlatStyle.Flat;
+            Hands_LoadEntry_Button.ForeColor = SystemColors.ActiveCaption;
+            Hands_LoadEntry_Button.Location = new Point(17, 149);
+            Hands_LoadEntry_Button.Margin = new Padding(4, 3, 4, 3);
+            Hands_LoadEntry_Button.Name = "Hands_LoadEntry_Button";
+            Hands_LoadEntry_Button.Size = new Size(121, 27);
+            Hands_LoadEntry_Button.TabIndex = 44;
+            Hands_LoadEntry_Button.Text = "Load this";
+            Hands_LoadEntry_Button.UseVisualStyleBackColor = false;
+            Hands_LoadEntry_Button.Click += Hands_LoadEntry_Button_Click;
+            // 
+            // label109
+            // 
+            label109.AutoSize = true;
+            label109.ForeColor = SystemColors.ActiveCaption;
+            label109.Location = new Point(8, 97);
+            label109.Margin = new Padding(4, 0, 4, 0);
+            label109.Name = "label109";
+            label109.Size = new Size(66, 15);
+            label109.TabIndex = 43;
+            label109.Text = "Load Entry:";
+            // 
+            // Hands_LoadEntry_CB
+            // 
+            Hands_LoadEntry_CB.AutoCompleteMode = AutoCompleteMode.Suggest;
+            Hands_LoadEntry_CB.AutoCompleteSource = AutoCompleteSource.ListItems;
+            Hands_LoadEntry_CB.BackColor = Color.FromArgb(75, 68, 138);
+            Hands_LoadEntry_CB.ForeColor = SystemColors.ActiveCaption;
+            Hands_LoadEntry_CB.FormattingEnabled = true;
+            Hands_LoadEntry_CB.Location = new Point(17, 118);
+            Hands_LoadEntry_CB.Margin = new Padding(4, 3, 4, 3);
+            Hands_LoadEntry_CB.Name = "Hands_LoadEntry_CB";
+            Hands_LoadEntry_CB.Size = new Size(201, 23);
+            Hands_LoadEntry_CB.TabIndex = 42;
+            Hands_LoadEntry_CB.TextChanged += Hands_LoadEntry_CB_TextChanged;
             // 
             // Hands_Dupe
             // 
             Hands_Dupe.BackColor = Color.FromArgb(75, 68, 138);
             Hands_Dupe.FlatStyle = FlatStyle.Flat;
             Hands_Dupe.ForeColor = SystemColors.ActiveCaption;
-            Hands_Dupe.Location = new Point(19, 61);
+            Hands_Dupe.Location = new Point(17, 61);
             Hands_Dupe.Margin = new Padding(4, 3, 4, 3);
             Hands_Dupe.Name = "Hands_Dupe";
             Hands_Dupe.Size = new Size(202, 27);
@@ -1864,7 +2055,7 @@
             // 
             label89.AutoSize = true;
             label89.ForeColor = SystemColors.ActiveCaption;
-            label89.Location = new Point(10, 9);
+            label89.Location = new Point(8, 9);
             label89.Margin = new Padding(4, 0, 4, 0);
             label89.Name = "label89";
             label89.Size = new Size(74, 15);
@@ -1877,7 +2068,7 @@
             Hands_DupeTo.ForeColor = SystemColors.ActiveCaption;
             Hands_DupeTo.FormattingEnabled = true;
             Hands_DupeTo.Items.AddRange(new object[] { "Head", "Chest", "Legs", "Feet", "All" });
-            Hands_DupeTo.Location = new Point(19, 30);
+            Hands_DupeTo.Location = new Point(17, 30);
             Hands_DupeTo.Margin = new Padding(4, 3, 4, 3);
             Hands_DupeTo.Name = "Hands_DupeTo";
             Hands_DupeTo.Size = new Size(201, 23);
@@ -2435,22 +2626,79 @@
             // Legs_ExtraPanel
             // 
             Legs_ExtraPanel.BorderStyle = BorderStyle.FixedSingle;
+            Legs_ExtraPanel.Controls.Add(Legs_LoadEntryAll_Button);
+            Legs_ExtraPanel.Controls.Add(Legs_LoadEntry_Button);
+            Legs_ExtraPanel.Controls.Add(label110);
+            Legs_ExtraPanel.Controls.Add(Legs_LoadEntry_CB);
             Legs_ExtraPanel.Controls.Add(Legs_Dupe);
             Legs_ExtraPanel.Controls.Add(label90);
             Legs_ExtraPanel.Controls.Add(Legs_DupeTo);
             Legs_ExtraPanel.Location = new Point(336, 31);
             Legs_ExtraPanel.Margin = new Padding(4, 3, 4, 3);
             Legs_ExtraPanel.Name = "Legs_ExtraPanel";
-            Legs_ExtraPanel.Size = new Size(233, 105);
+            Legs_ExtraPanel.Size = new Size(233, 187);
             Legs_ExtraPanel.TabIndex = 61;
             Legs_ExtraPanel.Visible = false;
+            // 
+            // Legs_LoadEntryAll_Button
+            // 
+            Legs_LoadEntryAll_Button.BackColor = Color.FromArgb(75, 68, 138);
+            Legs_LoadEntryAll_Button.FlatStyle = FlatStyle.Flat;
+            Legs_LoadEntryAll_Button.ForeColor = SystemColors.ActiveCaption;
+            Legs_LoadEntryAll_Button.Location = new Point(146, 149);
+            Legs_LoadEntryAll_Button.Margin = new Padding(4, 3, 4, 3);
+            Legs_LoadEntryAll_Button.Name = "Legs_LoadEntryAll_Button";
+            Legs_LoadEntryAll_Button.Size = new Size(72, 27);
+            Legs_LoadEntryAll_Button.TabIndex = 45;
+            Legs_LoadEntryAll_Button.Text = "Load all";
+            Legs_LoadEntryAll_Button.UseVisualStyleBackColor = false;
+            Legs_LoadEntryAll_Button.Click += Legs_LoadEntryAll_Button_Click;
+            // 
+            // Legs_LoadEntry_Button
+            // 
+            Legs_LoadEntry_Button.BackColor = Color.FromArgb(75, 68, 138);
+            Legs_LoadEntry_Button.FlatStyle = FlatStyle.Flat;
+            Legs_LoadEntry_Button.ForeColor = SystemColors.ActiveCaption;
+            Legs_LoadEntry_Button.Location = new Point(17, 149);
+            Legs_LoadEntry_Button.Margin = new Padding(4, 3, 4, 3);
+            Legs_LoadEntry_Button.Name = "Legs_LoadEntry_Button";
+            Legs_LoadEntry_Button.Size = new Size(121, 27);
+            Legs_LoadEntry_Button.TabIndex = 44;
+            Legs_LoadEntry_Button.Text = "Load this";
+            Legs_LoadEntry_Button.UseVisualStyleBackColor = false;
+            Legs_LoadEntry_Button.Click += Legs_LoadEntry_Button_Click;
+            // 
+            // label110
+            // 
+            label110.AutoSize = true;
+            label110.ForeColor = SystemColors.ActiveCaption;
+            label110.Location = new Point(8, 97);
+            label110.Margin = new Padding(4, 0, 4, 0);
+            label110.Name = "label110";
+            label110.Size = new Size(66, 15);
+            label110.TabIndex = 43;
+            label110.Text = "Load Entry:";
+            // 
+            // Legs_LoadEntry_CB
+            // 
+            Legs_LoadEntry_CB.AutoCompleteMode = AutoCompleteMode.Suggest;
+            Legs_LoadEntry_CB.AutoCompleteSource = AutoCompleteSource.ListItems;
+            Legs_LoadEntry_CB.BackColor = Color.FromArgb(75, 68, 138);
+            Legs_LoadEntry_CB.ForeColor = SystemColors.ActiveCaption;
+            Legs_LoadEntry_CB.FormattingEnabled = true;
+            Legs_LoadEntry_CB.Location = new Point(17, 118);
+            Legs_LoadEntry_CB.Margin = new Padding(4, 3, 4, 3);
+            Legs_LoadEntry_CB.Name = "Legs_LoadEntry_CB";
+            Legs_LoadEntry_CB.Size = new Size(201, 23);
+            Legs_LoadEntry_CB.TabIndex = 42;
+            Legs_LoadEntry_CB.TextChanged += Legs_LoadEntry_CB_TextChanged;
             // 
             // Legs_Dupe
             // 
             Legs_Dupe.BackColor = Color.FromArgb(75, 68, 138);
             Legs_Dupe.FlatStyle = FlatStyle.Flat;
             Legs_Dupe.ForeColor = SystemColors.ActiveCaption;
-            Legs_Dupe.Location = new Point(19, 61);
+            Legs_Dupe.Location = new Point(17, 61);
             Legs_Dupe.Margin = new Padding(4, 3, 4, 3);
             Legs_Dupe.Name = "Legs_Dupe";
             Legs_Dupe.Size = new Size(202, 27);
@@ -2463,7 +2711,7 @@
             // 
             label90.AutoSize = true;
             label90.ForeColor = SystemColors.ActiveCaption;
-            label90.Location = new Point(10, 9);
+            label90.Location = new Point(8, 9);
             label90.Margin = new Padding(4, 0, 4, 0);
             label90.Name = "label90";
             label90.Size = new Size(74, 15);
@@ -2476,7 +2724,7 @@
             Legs_DupeTo.ForeColor = SystemColors.ActiveCaption;
             Legs_DupeTo.FormattingEnabled = true;
             Legs_DupeTo.Items.AddRange(new object[] { "Head", "Chest", "Hands", "Feet", "All" });
-            Legs_DupeTo.Location = new Point(19, 30);
+            Legs_DupeTo.Location = new Point(17, 30);
             Legs_DupeTo.Margin = new Padding(4, 3, 4, 3);
             Legs_DupeTo.Name = "Legs_DupeTo";
             Legs_DupeTo.Size = new Size(201, 23);
@@ -3034,22 +3282,79 @@
             // Feet_ExtraPanel
             // 
             Feet_ExtraPanel.BorderStyle = BorderStyle.FixedSingle;
+            Feet_ExtraPanel.Controls.Add(Feet_LoadEntryAll_Button);
+            Feet_ExtraPanel.Controls.Add(Feet_LoadEntry_Button);
+            Feet_ExtraPanel.Controls.Add(label111);
+            Feet_ExtraPanel.Controls.Add(Feet_LoadEntry_CB);
             Feet_ExtraPanel.Controls.Add(Feet_Dupe);
             Feet_ExtraPanel.Controls.Add(label91);
             Feet_ExtraPanel.Controls.Add(Feet_DupeTo);
             Feet_ExtraPanel.Location = new Point(336, 31);
             Feet_ExtraPanel.Margin = new Padding(4, 3, 4, 3);
             Feet_ExtraPanel.Name = "Feet_ExtraPanel";
-            Feet_ExtraPanel.Size = new Size(233, 105);
+            Feet_ExtraPanel.Size = new Size(233, 187);
             Feet_ExtraPanel.TabIndex = 61;
             Feet_ExtraPanel.Visible = false;
+            // 
+            // Feet_LoadEntryAll_Button
+            // 
+            Feet_LoadEntryAll_Button.BackColor = Color.FromArgb(75, 68, 138);
+            Feet_LoadEntryAll_Button.FlatStyle = FlatStyle.Flat;
+            Feet_LoadEntryAll_Button.ForeColor = SystemColors.ActiveCaption;
+            Feet_LoadEntryAll_Button.Location = new Point(146, 149);
+            Feet_LoadEntryAll_Button.Margin = new Padding(4, 3, 4, 3);
+            Feet_LoadEntryAll_Button.Name = "Feet_LoadEntryAll_Button";
+            Feet_LoadEntryAll_Button.Size = new Size(72, 27);
+            Feet_LoadEntryAll_Button.TabIndex = 45;
+            Feet_LoadEntryAll_Button.Text = "Load all";
+            Feet_LoadEntryAll_Button.UseVisualStyleBackColor = false;
+            Feet_LoadEntryAll_Button.Click += Feet_LoadEntryAll_Button_Click;
+            // 
+            // Feet_LoadEntry_Button
+            // 
+            Feet_LoadEntry_Button.BackColor = Color.FromArgb(75, 68, 138);
+            Feet_LoadEntry_Button.FlatStyle = FlatStyle.Flat;
+            Feet_LoadEntry_Button.ForeColor = SystemColors.ActiveCaption;
+            Feet_LoadEntry_Button.Location = new Point(17, 149);
+            Feet_LoadEntry_Button.Margin = new Padding(4, 3, 4, 3);
+            Feet_LoadEntry_Button.Name = "Feet_LoadEntry_Button";
+            Feet_LoadEntry_Button.Size = new Size(121, 27);
+            Feet_LoadEntry_Button.TabIndex = 44;
+            Feet_LoadEntry_Button.Text = "Load this";
+            Feet_LoadEntry_Button.UseVisualStyleBackColor = false;
+            Feet_LoadEntry_Button.Click += Feet_LoadEntry_Button_Click;
+            // 
+            // label111
+            // 
+            label111.AutoSize = true;
+            label111.ForeColor = SystemColors.ActiveCaption;
+            label111.Location = new Point(8, 97);
+            label111.Margin = new Padding(4, 0, 4, 0);
+            label111.Name = "label111";
+            label111.Size = new Size(66, 15);
+            label111.TabIndex = 43;
+            label111.Text = "Load Entry:";
+            // 
+            // Feet_LoadEntry_CB
+            // 
+            Feet_LoadEntry_CB.AutoCompleteMode = AutoCompleteMode.Suggest;
+            Feet_LoadEntry_CB.AutoCompleteSource = AutoCompleteSource.ListItems;
+            Feet_LoadEntry_CB.BackColor = Color.FromArgb(75, 68, 138);
+            Feet_LoadEntry_CB.ForeColor = SystemColors.ActiveCaption;
+            Feet_LoadEntry_CB.FormattingEnabled = true;
+            Feet_LoadEntry_CB.Location = new Point(17, 118);
+            Feet_LoadEntry_CB.Margin = new Padding(4, 3, 4, 3);
+            Feet_LoadEntry_CB.Name = "Feet_LoadEntry_CB";
+            Feet_LoadEntry_CB.Size = new Size(201, 23);
+            Feet_LoadEntry_CB.TabIndex = 42;
+            Feet_LoadEntry_CB.TextChanged += Feet_LoadEntry_CB_TextChanged;
             // 
             // Feet_Dupe
             // 
             Feet_Dupe.BackColor = Color.FromArgb(75, 68, 138);
             Feet_Dupe.FlatStyle = FlatStyle.Flat;
             Feet_Dupe.ForeColor = SystemColors.ActiveCaption;
-            Feet_Dupe.Location = new Point(19, 61);
+            Feet_Dupe.Location = new Point(17, 61);
             Feet_Dupe.Margin = new Padding(4, 3, 4, 3);
             Feet_Dupe.Name = "Feet_Dupe";
             Feet_Dupe.Size = new Size(202, 27);
@@ -3062,7 +3367,7 @@
             // 
             label91.AutoSize = true;
             label91.ForeColor = SystemColors.ActiveCaption;
-            label91.Location = new Point(10, 9);
+            label91.Location = new Point(8, 9);
             label91.Margin = new Padding(4, 0, 4, 0);
             label91.Name = "label91";
             label91.Size = new Size(74, 15);
@@ -3075,7 +3380,7 @@
             Feet_DupeTo.ForeColor = SystemColors.ActiveCaption;
             Feet_DupeTo.FormattingEnabled = true;
             Feet_DupeTo.Items.AddRange(new object[] { "Head", "Chest", "Hands", "Legs", "All" });
-            Feet_DupeTo.Location = new Point(19, 30);
+            Feet_DupeTo.Location = new Point(17, 30);
             Feet_DupeTo.Margin = new Padding(4, 3, 4, 3);
             Feet_DupeTo.Name = "Feet_DupeTo";
             Feet_DupeTo.Size = new Size(201, 23);
@@ -4151,7 +4456,7 @@
             CurrentlyEditing_LL.Location = new Point(108, 943);
             CurrentlyEditing_LL.Margin = new Padding(4, 0, 4, 0);
             CurrentlyEditing_LL.Name = "CurrentlyEditing_LL";
-            CurrentlyEditing_LL.Size = new Size(480, 15);
+            CurrentlyEditing_LL.Size = new Size(473, 15);
             CurrentlyEditing_LL.TabIndex = 40;
             CurrentlyEditing_LL.TabStop = true;
             CurrentlyEditing_LL.Text = "New File";
@@ -4165,12 +4470,12 @@
             StopEditing_LL.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             StopEditing_LL.AutoEllipsis = true;
             StopEditing_LL.AutoSize = true;
-            StopEditing_LL.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            StopEditing_LL.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             StopEditing_LL.LinkColor = Color.LightCoral;
-            StopEditing_LL.Location = new Point(592, 939);
+            StopEditing_LL.Location = new Point(592, 935);
             StopEditing_LL.Margin = new Padding(4, 0, 4, 0);
             StopEditing_LL.Name = "StopEditing_LL";
-            StopEditing_LL.Size = new Size(19, 21);
+            StopEditing_LL.Size = new Size(25, 30);
             StopEditing_LL.TabIndex = 41;
             StopEditing_LL.TabStop = true;
             StopEditing_LL.Text = "X";
@@ -4193,7 +4498,6 @@
             BackColor = Color.FromArgb(32, 34, 81);
             ClientSize = new Size(615, 997);
             ControlBox = false;
-            Controls.Add(StopEditing_LL);
             Controls.Add(CurrentlyEditing_LL);
             Controls.Add(label106);
             Controls.Add(Icon_PB);
@@ -4206,6 +4510,7 @@
             Controls.Add(tabControl1);
             Controls.Add(CharCustomBox);
             Controls.Add(FurCustomizationGB);
+            Controls.Add(StopEditing_LL);
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.SizableToolWindow;
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -4567,5 +4872,25 @@
         private LinkLabel StopEditing_LL;
         private Panel FurCust_ScrollBox;
         private ToolTip toolTip1;
+        private Button Head_LoadEntry_Button;
+        private Label label107;
+        private ComboBox Head_LoadEntry_CB;
+        private Button Head_LoadEntryAll_Button;
+        private Button Chest_LoadEntryAll_Button;
+        private Button Chest_LoadEntry_Button;
+        private Label label108;
+        private ComboBox Chest_LoadEntry_CB;
+        private Button Hands_LoadEntryAll_Button;
+        private Button Hands_LoadEntry_Button;
+        private Label label109;
+        private ComboBox Hands_LoadEntry_CB;
+        private Button Legs_LoadEntryAll_Button;
+        private Button Legs_LoadEntry_Button;
+        private Label label110;
+        private ComboBox Legs_LoadEntry_CB;
+        private Button Feet_LoadEntryAll_Button;
+        private Button Feet_LoadEntry_Button;
+        private Label label111;
+        private ComboBox Feet_LoadEntry_CB;
     }
 }
