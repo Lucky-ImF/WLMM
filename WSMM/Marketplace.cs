@@ -56,6 +56,8 @@ namespace WSMM
         private DateTime lastProgressUpdateTime;
         private long lastProgressUpdateBytes;
 
+        private int DownloadsRemaining = 50;
+
         public Marketplace()
         {
             InitializeComponent();
@@ -675,15 +677,23 @@ namespace WSMM
 
         private void DownloadMod_Button_Click(object sender, EventArgs e)
         {
-            DownloadMod_Button.Hide();
-            ModFileSize_Label.Hide();
-            ProgressInfo_Label.Show();
-            ProgressDetails_Label.Show();
-            DownloadProgress_PB.Show();
-            DownloadProgress_PB.Value = 0;
-            CloseModPanel_Button.Enabled = false;
-            Close_Button.Enabled = false;
-            DownloadFile(DownloadMod_Button.Tag.ToString(), ModName_Label.Text);
+            if (DownloadMod_Button.Text != "Mod Downloaded!")
+            {
+                if (DownloadsRemaining <= 0)
+                {
+                    MessageBox.Show("You have reached the download limit for this session. Please try again later.", "Download Limit Reached");
+                    return;
+                }
+                DownloadMod_Button.Hide();
+                ModFileSize_Label.Hide();
+                ProgressInfo_Label.Show();
+                ProgressDetails_Label.Show();
+                DownloadProgress_PB.Show();
+                DownloadProgress_PB.Value = 0;
+                CloseModPanel_Button.Enabled = false;
+                Close_Button.Enabled = false;
+                DownloadFile(DownloadMod_Button.Tag.ToString(), ModName_Label.Text);
+            }
         }
 
         async void DownloadFile(string link, string ModName)
@@ -792,6 +802,7 @@ namespace WSMM
             {
                 ProgressInfo_Label.Text = "Extracting Mod...";
                 ProgressDetails_Label.Text = "Almost there.";
+                DownloadProgress_PB.Value = 100;
                 Application.DoEvents();
                 try
                 {
@@ -812,6 +823,8 @@ namespace WSMM
                     DownloadProgress_PB.Value = 0;
                     CloseModPanel_Button.Enabled = true;
                     Close_Button.Enabled = true;
+
+                    DownloadsRemaining -= 1;
 
                     IncrementDownloadAmount(CurrentlyDownloadingModName);
                     ModFileSize_Label.Text = GetSlice(ModFileSize_Label.Text, "|", 0) + " | Downloads: " + ModDownloadsDict.GetValueOrDefault(CurrentlyDownloadingModName.Replace(" ", "_")).ToString();
