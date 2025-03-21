@@ -438,6 +438,11 @@ namespace WSMM
                 SelectWLVersion_CB.Items.Clear();
                 SelectWLVersion_CB.Items.AddRange(File.ReadAllLines(Application.StartupPath + @"System\SupportedVersions.ini"));
             }
+            else
+            {
+                SelectWLVersion_CB.Items.Clear();
+                SelectWLVersion_CB.Items.Add("All Versions");
+            }
         }
 
         private void LoadDatatableVersion()
