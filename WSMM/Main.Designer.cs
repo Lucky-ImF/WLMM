@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             TitlePanel = new Panel();
             BugReportLink = new LinkLabel();
@@ -90,6 +91,7 @@
             folderBrowserDialog1 = new FolderBrowserDialog();
             BuildSettings_Button = new Button();
             BuildSettings_Panel = new Panel();
+            BuildSettingsDTUpdater_Button = new Button();
             BS_AlwaysRunAM_CB = new CheckBox();
             BS_AllowOutdated_CB = new CheckBox();
             BS_VerifyFI_CB = new CheckBox();
@@ -150,6 +152,7 @@
             LoadEdit_ModName_Label = new Label();
             LaunchWL_Button = new Button();
             DT_Updater_Panel = new Panel();
+            DT_Updater_DownloadsLabel = new Label();
             DT_Updater_MDownloadButton = new Button();
             DT_Updater_MInstallButton = new Button();
             DT_Updater_VersionLabel = new Label();
@@ -183,6 +186,7 @@
             MM_CloseButton = new PictureBox();
             label38 = new Label();
             openFileDialog3 = new OpenFileDialog();
+            DTUpdateCooldown = new System.Windows.Forms.Timer(components);
             TitlePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
@@ -1004,6 +1008,7 @@
             // BuildSettings_Panel
             // 
             BuildSettings_Panel.BorderStyle = BorderStyle.FixedSingle;
+            BuildSettings_Panel.Controls.Add(BuildSettingsDTUpdater_Button);
             BuildSettings_Panel.Controls.Add(BS_AlwaysRunAM_CB);
             BuildSettings_Panel.Controls.Add(BS_AllowOutdated_CB);
             BuildSettings_Panel.Controls.Add(BS_VerifyFI_CB);
@@ -1016,18 +1021,33 @@
             BuildSettings_Panel.Controls.Add(BS_BaseGameCharacterOutfitFile);
             BuildSettings_Panel.Controls.Add(label14);
             BuildSettings_Panel.Controls.Add(BS_BaseClothesOutfitFile);
-            BuildSettings_Panel.Location = new Point(898, 324);
+            BuildSettings_Panel.Location = new Point(898, 303);
             BuildSettings_Panel.Name = "BuildSettings_Panel";
-            BuildSettings_Panel.Size = new Size(231, 314);
+            BuildSettings_Panel.Size = new Size(231, 335);
             BuildSettings_Panel.TabIndex = 13;
             BuildSettings_Panel.Visible = false;
+            // 
+            // BuildSettingsDTUpdater_Button
+            // 
+            BuildSettingsDTUpdater_Button.BackColor = Color.FromArgb(75, 68, 138);
+            BuildSettingsDTUpdater_Button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            BuildSettingsDTUpdater_Button.FlatStyle = FlatStyle.Flat;
+            BuildSettingsDTUpdater_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BuildSettingsDTUpdater_Button.ForeColor = SystemColors.ActiveCaption;
+            BuildSettingsDTUpdater_Button.Location = new Point(35, 182);
+            BuildSettingsDTUpdater_Button.Name = "BuildSettingsDTUpdater_Button";
+            BuildSettingsDTUpdater_Button.Size = new Size(159, 26);
+            BuildSettingsDTUpdater_Button.TabIndex = 46;
+            BuildSettingsDTUpdater_Button.Text = "DataTable Updater";
+            BuildSettingsDTUpdater_Button.UseVisualStyleBackColor = false;
+            BuildSettingsDTUpdater_Button.Click += BuildSettingsDTUpdater_Button_Click;
             // 
             // BS_AlwaysRunAM_CB
             // 
             BS_AlwaysRunAM_CB.AutoSize = true;
             BS_AlwaysRunAM_CB.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             BS_AlwaysRunAM_CB.ForeColor = SystemColors.ActiveCaption;
-            BS_AlwaysRunAM_CB.Location = new Point(5, 258);
+            BS_AlwaysRunAM_CB.Location = new Point(5, 285);
             BS_AlwaysRunAM_CB.Name = "BS_AlwaysRunAM_CB";
             BS_AlwaysRunAM_CB.Size = new Size(220, 24);
             BS_AlwaysRunAM_CB.TabIndex = 45;
@@ -1039,7 +1059,7 @@
             BS_AllowOutdated_CB.AutoSize = true;
             BS_AllowOutdated_CB.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             BS_AllowOutdated_CB.ForeColor = Color.Firebrick;
-            BS_AllowOutdated_CB.Location = new Point(5, 283);
+            BS_AllowOutdated_CB.Location = new Point(5, 310);
             BS_AllowOutdated_CB.Name = "BS_AllowOutdated_CB";
             BS_AllowOutdated_CB.Size = new Size(227, 24);
             BS_AllowOutdated_CB.TabIndex = 44;
@@ -1054,7 +1074,7 @@
             BS_VerifyFI_CB.CheckState = CheckState.Checked;
             BS_VerifyFI_CB.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             BS_VerifyFI_CB.ForeColor = SystemColors.ActiveCaption;
-            BS_VerifyFI_CB.Location = new Point(5, 234);
+            BS_VerifyFI_CB.Location = new Point(5, 261);
             BS_VerifyFI_CB.Name = "BS_VerifyFI_CB";
             BS_VerifyFI_CB.Size = new Size(224, 24);
             BS_VerifyFI_CB.TabIndex = 43;
@@ -1067,7 +1087,7 @@
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label1.ForeColor = SystemColors.ActiveCaption;
-            label1.Location = new Point(79, 184);
+            label1.Location = new Point(79, 211);
             label1.Name = "label1";
             label1.Size = new Size(70, 17);
             label1.TabIndex = 42;
@@ -1079,7 +1099,7 @@
             BS_Mappings.FlatStyle = FlatStyle.Flat;
             BS_Mappings.ForeColor = SystemColors.ActiveCaption;
             BS_Mappings.FormattingEnabled = true;
-            BS_Mappings.Location = new Point(6, 204);
+            BS_Mappings.Location = new Point(6, 231);
             BS_Mappings.Name = "BS_Mappings";
             BS_Mappings.Size = new Size(218, 23);
             BS_Mappings.TabIndex = 41;
@@ -1092,7 +1112,7 @@
             BuildSettingsDTFolder_Button.FlatStyle = FlatStyle.Flat;
             BuildSettingsDTFolder_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             BuildSettingsDTFolder_Button.ForeColor = SystemColors.ActiveCaption;
-            BuildSettingsDTFolder_Button.Location = new Point(35, 151);
+            BuildSettingsDTFolder_Button.Location = new Point(35, 150);
             BuildSettingsDTFolder_Button.Name = "BuildSettingsDTFolder_Button";
             BuildSettingsDTFolder_Button.Size = new Size(159, 26);
             BuildSettingsDTFolder_Button.TabIndex = 40;
@@ -1461,7 +1481,7 @@
             // 
             // DTDownload_Progress
             // 
-            DTDownload_Progress.Location = new Point(33, 343);
+            DTDownload_Progress.Location = new Point(33, 362);
             DTDownload_Progress.Name = "DTDownload_Progress";
             DTDownload_Progress.Size = new Size(386, 13);
             DTDownload_Progress.TabIndex = 4;
@@ -1471,7 +1491,7 @@
             // 
             DT_Updater_ProgressLabel.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             DT_Updater_ProgressLabel.ForeColor = SystemColors.ActiveCaption;
-            DT_Updater_ProgressLabel.Location = new Point(11, 317);
+            DT_Updater_ProgressLabel.Location = new Point(11, 336);
             DT_Updater_ProgressLabel.Name = "DT_Updater_ProgressLabel";
             DT_Updater_ProgressLabel.Size = new Size(421, 24);
             DT_Updater_ProgressLabel.TabIndex = 2;
@@ -1808,6 +1828,7 @@
             // 
             DT_Updater_Panel.BackColor = Color.FromArgb(75, 68, 138);
             DT_Updater_Panel.BorderStyle = BorderStyle.FixedSingle;
+            DT_Updater_Panel.Controls.Add(DT_Updater_DownloadsLabel);
             DT_Updater_Panel.Controls.Add(DT_Updater_MDownloadButton);
             DT_Updater_Panel.Controls.Add(DT_Updater_MInstallButton);
             DT_Updater_Panel.Controls.Add(DTDownload_Progress);
@@ -1821,11 +1842,22 @@
             DT_Updater_Panel.Controls.Add(label34);
             DT_Updater_Panel.Controls.Add(label35);
             DT_Updater_Panel.Controls.Add(DT_Updater_ProgressLabel);
-            DT_Updater_Panel.Location = new Point(346, 157);
+            DT_Updater_Panel.Location = new Point(346, 149);
             DT_Updater_Panel.Name = "DT_Updater_Panel";
-            DT_Updater_Panel.Size = new Size(443, 367);
+            DT_Updater_Panel.Size = new Size(443, 384);
             DT_Updater_Panel.TabIndex = 59;
             DT_Updater_Panel.Visible = false;
+            // 
+            // DT_Updater_DownloadsLabel
+            // 
+            DT_Updater_DownloadsLabel.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            DT_Updater_DownloadsLabel.ForeColor = SystemColors.GradientActiveCaption;
+            DT_Updater_DownloadsLabel.Location = new Point(9, 68);
+            DT_Updater_DownloadsLabel.Name = "DT_Updater_DownloadsLabel";
+            DT_Updater_DownloadsLabel.Size = new Size(423, 21);
+            DT_Updater_DownloadsLabel.TabIndex = 50;
+            DT_Updater_DownloadsLabel.Text = "Downloaded many times";
+            DT_Updater_DownloadsLabel.TextAlign = ContentAlignment.TopCenter;
             // 
             // DT_Updater_MDownloadButton
             // 
@@ -1834,7 +1866,7 @@
             DT_Updater_MDownloadButton.FlatStyle = FlatStyle.Flat;
             DT_Updater_MDownloadButton.Font = new Font("Microsoft Sans Serif", 8.25F);
             DT_Updater_MDownloadButton.ForeColor = Color.White;
-            DT_Updater_MDownloadButton.Location = new Point(314, 324);
+            DT_Updater_MDownloadButton.Location = new Point(314, 343);
             DT_Updater_MDownloadButton.Name = "DT_Updater_MDownloadButton";
             DT_Updater_MDownloadButton.Size = new Size(106, 30);
             DT_Updater_MDownloadButton.TabIndex = 49;
@@ -1849,7 +1881,7 @@
             DT_Updater_MInstallButton.FlatStyle = FlatStyle.Flat;
             DT_Updater_MInstallButton.Font = new Font("Microsoft Sans Serif", 8.25F);
             DT_Updater_MInstallButton.ForeColor = Color.White;
-            DT_Updater_MInstallButton.Location = new Point(20, 324);
+            DT_Updater_MInstallButton.Location = new Point(20, 343);
             DT_Updater_MInstallButton.Name = "DT_Updater_MInstallButton";
             DT_Updater_MInstallButton.Size = new Size(105, 30);
             DT_Updater_MInstallButton.TabIndex = 48;
@@ -1861,7 +1893,7 @@
             // 
             DT_Updater_VersionLabel.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             DT_Updater_VersionLabel.ForeColor = SystemColors.GradientActiveCaption;
-            DT_Updater_VersionLabel.Location = new Point(9, 67);
+            DT_Updater_VersionLabel.Location = new Point(9, 89);
             DT_Updater_VersionLabel.Name = "DT_Updater_VersionLabel";
             DT_Updater_VersionLabel.Size = new Size(423, 26);
             DT_Updater_VersionLabel.TabIndex = 47;
@@ -1873,7 +1905,7 @@
             DT_Updater_ChangesTB.BackColor = Color.FromArgb(32, 34, 81);
             DT_Updater_ChangesTB.BorderStyle = BorderStyle.FixedSingle;
             DT_Updater_ChangesTB.ForeColor = Color.White;
-            DT_Updater_ChangesTB.Location = new Point(22, 119);
+            DT_Updater_ChangesTB.Location = new Point(22, 138);
             DT_Updater_ChangesTB.Multiline = true;
             DT_Updater_ChangesTB.Name = "DT_Updater_ChangesTB";
             DT_Updater_ChangesTB.Size = new Size(401, 64);
@@ -1886,7 +1918,7 @@
             DT_Updater_SupVerLB.ForeColor = Color.White;
             DT_Updater_SupVerLB.FormattingEnabled = true;
             DT_Updater_SupVerLB.ItemHeight = 15;
-            DT_Updater_SupVerLB.Location = new Point(22, 221);
+            DT_Updater_SupVerLB.Location = new Point(22, 240);
             DT_Updater_SupVerLB.Name = "DT_Updater_SupVerLB";
             DT_Updater_SupVerLB.ScrollAlwaysVisible = true;
             DT_Updater_SupVerLB.SelectionMode = SelectionMode.None;
@@ -1898,7 +1930,7 @@
             label32.AutoSize = true;
             label32.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label32.ForeColor = SystemColors.ActiveCaption;
-            label32.Location = new Point(18, 200);
+            label32.Location = new Point(18, 219);
             label32.Name = "label32";
             label32.Size = new Size(126, 17);
             label32.TabIndex = 39;
@@ -1911,7 +1943,7 @@
             DT_Updater_DownloadButton.FlatStyle = FlatStyle.Flat;
             DT_Updater_DownloadButton.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             DT_Updater_DownloadButton.ForeColor = Color.White;
-            DT_Updater_DownloadButton.Location = new Point(136, 324);
+            DT_Updater_DownloadButton.Location = new Point(136, 343);
             DT_Updater_DownloadButton.Name = "DT_Updater_DownloadButton";
             DT_Updater_DownloadButton.Size = new Size(167, 30);
             DT_Updater_DownloadButton.TabIndex = 35;
@@ -1938,7 +1970,7 @@
             label33.AutoSize = true;
             label33.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label33.ForeColor = SystemColors.ActiveCaption;
-            label33.Location = new Point(21, 96);
+            label33.Location = new Point(21, 115);
             label33.Name = "label33";
             label33.Size = new Size(61, 17);
             label33.TabIndex = 33;
@@ -2244,6 +2276,11 @@
             openFileDialog3.Filter = "Zip File (*.zip)|*.zip|All files (*.*)|*.*";
             openFileDialog3.Multiselect = true;
             // 
+            // DTUpdateCooldown
+            // 
+            DTUpdateCooldown.Interval = 30000;
+            DTUpdateCooldown.Tick += DTUpdateCooldown_Tick;
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -2496,5 +2533,8 @@
         private Button DT_Updater_MInstallButton;
         private Button DT_Updater_MDownloadButton;
         private OpenFileDialog openFileDialog3;
+        private Button BuildSettingsDTUpdater_Button;
+        private System.Windows.Forms.Timer DTUpdateCooldown;
+        private Label DT_Updater_DownloadsLabel;
     }
 }

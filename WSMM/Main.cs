@@ -453,6 +453,49 @@ namespace WSMM
             }
         }
 
+        private async void GetDTDownloadAmount(string DTName)
+        {
+            if (DT_Updater_DownloadsLabel.Text != "Downloaded many times")
+            {
+                return;
+            }
+            try
+            {
+                string ModInfo = "";
+
+                using (HttpClient client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.UserAgent.ParseAdd("WLMM");
+                    HttpResponseMessage response = await client.GetAsync("https://wlmm-worker.luckybot.one/?action=GET&" + "modName=" + DTName);
+                    response.EnsureSuccessStatusCode();
+                    ModInfo = await response.Content.ReadAsStringAsync();
+                }
+                string DLAmount = GetSlice(ModInfo, ":", 999).TrimEnd('}');
+                DT_Updater_DownloadsLabel.Text = "Downloaded " + DLAmount + " times";
+            }
+            catch (Exception ex)
+            {
+                DT_Updater_DownloadsLabel.Text = "Downloaded many times";
+            }
+        }
+
+        private async void IncrementDownloadAmount(string DTName)
+        {
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.UserAgent.ParseAdd("WLMM");
+                    HttpResponseMessage response = await client.GetAsync("https://wlmm-worker.luckybot.one/?action=DL&" + "modName=" + DTName);
+                    response.EnsureSuccessStatusCode();
+                }
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show(ex.Message, "WLMM DATABASE Error");
+            }
+        }
+
         private async void CheckForUpdate()
         {
             try
@@ -502,25 +545,30 @@ namespace WSMM
                     MMMessage = TempArray[10];
                 }
 
+                DT_Updater_ChangesTB.Text = DTChanges.Replace("*", "\r\n");
+                DT_Updater_SupVerLB.Items.Clear();
+                DT_Updater_SupVerLB.Items.AddRange(DTSupVers.Split('*'));
+
                 if (Datatable_Version == string.Empty)
                 {
                     // No Datatables
+                    GetDTDownloadAmount(DTVersion);
                     ToggleButtons(false);
                     DT_Updater_Panel.Show();
                     DT_Updater_VersionLabel.Text = "None > " + DTVersion;
-                    DT_Updater_ChangesTB.Text = DTChanges.Replace("*", "\r\n");
-                    DT_Updater_SupVerLB.Items.Clear();
-                    DT_Updater_SupVerLB.Items.AddRange(DTSupVers.Split('*'));
+                    DT_Updater_CloseButton.Enabled = false;
                 }
                 else if (DTVersion != Datatable_Version)
                 {
                     // Datatables outdated
+                    GetDTDownloadAmount(DTVersion);
                     ToggleButtons(false);
                     DT_Updater_Panel.Show();
                     DT_Updater_VersionLabel.Text = Datatable_Version + " > " + DTVersion;
-                    DT_Updater_ChangesTB.Text = DTChanges.Replace("*", "\r\n");
-                    DT_Updater_SupVerLB.Items.Clear();
-                    DT_Updater_SupVerLB.Items.AddRange(DTSupVers.Split('*'));
+                }
+                else
+                {
+                    DT_Updater_VersionLabel.Text = Datatable_Version + " = " + DTVersion;
                 }
 
                 if (MM == "MM=True")
@@ -584,6 +632,7 @@ namespace WSMM
         async void DownloadDatatables(string url, string version)
         {
             DTDownload_Progress.Value = 0;
+            DT_Updater_ProgressLabel.Text = "Downloading DataTables..";
 
             string DTFileName = "WLMM_" + version + ".zip";
             try
@@ -604,7 +653,7 @@ namespace WSMM
                 {
                     wc.Headers.Add("User-Agent: WLMM");
                     wc.DownloadProgressChanged += DT_DownloadProgressChanged;
-                    wc.DownloadFileAsync(fileLink,Application.StartupPath + @"Temp\" + DTFileName);
+                    wc.DownloadFileAsync(fileLink, Application.StartupPath + @"Temp\" + DTFileName);
                 }
 
                 if (Directory.Exists(Application.StartupPath + @"Temp\" + Path.GetFileNameWithoutExtension(DTFileName)))
@@ -631,10 +680,13 @@ namespace WSMM
 
             if (DTDownload_Progress.Value == 100)
             {
+                DT_Updater_ProgressLabel.Text = "Installing DataTables..";
+                DTDownload_Progress.Value = 100;
+                Application.DoEvents();
+                Thread.Sleep(500);
                 string DTFileName = "WLMM_" + DTVersion + ".zip";
                 if (File.Exists(Application.StartupPath + @"Temp\" + DTFileName))
                 {
-                    DT_Updater_ProgressLabel.Text = "Installing...";
                     InstallDatatables(Application.StartupPath + @"Temp\" + DTFileName, DTVersion);
                 }
             }
@@ -860,7 +912,14 @@ namespace WSMM
         private string GetSlice(string Txt, string Delimiter, int slice)
         {
             string[] TempArray = Txt.Split(Delimiter);
-            return TempArray[slice].Trim();
+            if (slice == 999)
+            {
+                return TempArray[TempArray.Length - 1].Trim();
+            }
+            else
+            {
+                return TempArray[slice].Trim();
+            }
         }
 
         private void BS_Mappings_SelectedValueChanged(object sender, EventArgs e)
@@ -4090,6 +4149,20 @@ namespace WSMM
                 LoadCategories();
 
                 DT_Updater_Panel.Hide();
+                DT_Updater_CloseButton.Enabled = true;
+                DTDownload_Progress.Value = 0;
+                DT_Updater_DownloadButton.Show();
+                DT_Updater_MDownloadButton.Show();
+                DT_Updater_MInstallButton.Show();
+                DT_Updater_CloseButton.Show();
+                DTDownload_Progress.Hide();
+                DT_Updater_ProgressLabel.Hide();
+
+                DT_Updater_DownloadButton.Enabled = false;
+                DTUpdateCooldown.Start();
+
+                IncrementDownloadAmount(DTVersion);
+
                 MessageBox.Show("DataTables updated!", "Wild Life Mod Manager", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 ToggleButtons(true);
             }
@@ -4098,6 +4171,17 @@ namespace WSMM
                 MessageBox.Show("DataTable updated failed.", "Wild Life Mod Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 ToggleButtons(false);
             }
+        }
+
+        private void BuildSettingsDTUpdater_Button_Click(object sender, EventArgs e)
+        {
+            GetDTDownloadAmount(DTVersion);
+            DT_Updater_Panel.Show();
+        }
+
+        private void DTUpdateCooldown_Tick(object sender, EventArgs e)
+        {
+            DT_Updater_DownloadButton.Enabled = true;
         }
     }
 }

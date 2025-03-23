@@ -946,6 +946,5 @@ namespace WSMM
         {
             Screenshot_HoverLabel.Hide();
         }
-
     }
 }
