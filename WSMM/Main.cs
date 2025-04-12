@@ -34,7 +34,7 @@ namespace WSMM
         private bool StartingUp = true;
         private bool HasOldChanges = false;
 
-        private string WLMM_Version = "1.1.8";
+        private string WLMM_Version = "1.1.9";
         private string Datatable_Version = string.Empty;
         string BuildLog = string.Empty;
 
@@ -2184,6 +2184,7 @@ namespace WSMM
             List<string> Tanlines = new List<string>();
             bool CustomEdited = false;
             bool FurEdited = false;
+            bool UseNewHairJSON = true;
 
             var CharacterFile = File.ReadAllLines(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\Characters.txt");
             List<string> Characters = new List<string>(CharacterFile);
@@ -2212,6 +2213,17 @@ namespace WSMM
             string Original_FurmaskEntry = File.ReadAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_ClothesOutfit_Entry_FurMask.json");
             string Original_OutfitEntry = File.ReadAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GameCharacterOutfits_Entry_Default.json");
             string Original_CustomEntry = File.ReadAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GameCharacterCustomization_Entry_Default.json");
+            string Original_CustomHairEntry = "";
+            if (File.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GameCharacterCustomization_HairEntry_Default.json"))
+            {
+                Original_CustomHairEntry = File.ReadAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GameCharacterCustomization_HairEntry_Default.json");
+                UseNewHairJSON = true;
+            }
+            else
+            {
+                Original_CustomHairEntry = Original_CustomEntry;
+                UseNewHairJSON = false;
+            }
 
             Directory.CreateDirectory(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\AutoMod\Unzipped");
             foreach (string file in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\AutoMod", "*.collection"))
@@ -2434,9 +2446,36 @@ namespace WSMM
 
                         if (TempArray[0] == "Hair")
                         {
+                            if (UseNewHairJSON == true)
+                            {
+                                CustomEntry = Original_CustomHairEntry;
+                                CustomEntry = CustomEntry.Replace("[CUSTOM_NR]", "Mod_" + CustomNR.ToString());
+                            }
                             string[] PathNameArray = TempArray[1].Split(',');
                             CustomEntry = CustomEntry.Replace("[PACKAGE_PATH]", PathNameArray[0].Trim());
                             CustomEntry = CustomEntry.Replace("[PACKAGE_NAME]", PathNameArray[1].Trim());
+                            if (UseNewHairJSON == true)
+                            {
+                                if (PathNameArray.Count() > 2)
+                                {
+                                    if (PathNameArray[2].Trim() == "None")
+                                    {
+                                        CustomEntry = CustomEntry.Replace("[PHYSICS_ZERO]", "true");
+                                    }
+                                    else
+                                    {
+                                        CustomEntry = CustomEntry.Replace("[PHYSICS_ZERO]", "false");
+                                    }
+                                    CustomEntry = CustomEntry.Replace("[PHYSICS_PACKAGE_PATH]", PathNameArray[2].Trim());
+                                    CustomEntry = CustomEntry.Replace("[PHYSICS_PACKAGE_NAME]", PathNameArray[3].Trim());
+                                }
+                                else
+                                {
+                                    CustomEntry = CustomEntry.Replace("[PHYSICS_ZERO]", "true");
+                                    CustomEntry = CustomEntry.Replace("[PHYSICS_PACKAGE_PATH]", "None");
+                                    CustomEntry = CustomEntry.Replace("[PHYSICS_PACKAGE_NAME]", "None");
+                                }
+                            }
                             CustomEntry = CustomEntry.Insert(0, GetCleanString(contents, "Character") + "¤");
                             Hair.Add(CustomEntry);
                             CustomNameMap.Add("Mod_" + CustomNR.ToString());

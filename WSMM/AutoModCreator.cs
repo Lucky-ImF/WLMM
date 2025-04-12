@@ -42,6 +42,10 @@ namespace WSMM
         TextBox[] CharCust_Path = new TextBox[50];
         Label[] CharCust_NameLabel = new Label[50];
         TextBox[] CharCust_Name = new TextBox[50];
+        Label[] CharCust_Physics_PathLabel = new Label[50];
+        TextBox[] CharCust_Physics_Path = new TextBox[50];
+        Label[] CharCust_Physics_NameLabel = new Label[50];
+        TextBox[] CharCust_Physics_Name = new TextBox[50];
         LinkLabel[] CharCust_Dupe = new LinkLabel[50];
         LinkLabel[] CharCust_Remove = new LinkLabel[50];
 
@@ -634,9 +638,20 @@ namespace WSMM
 
                     foreach (int i in CharCust_Entries)
                     {
-                        ModString += CharCust_Target[i].Text + ": " + CharCust_Path[i].Text + "," + CharCust_Name[i].Text + "\n";
-                        AddToNameMap(CharCust_Path[i].Text);
-                        AddToNameMap(CharCust_Name[i].Text);
+                        if (CharCust_Target[i].Text == "Hair")
+                        {
+                            ModString += CharCust_Target[i].Text + ": " + CharCust_Path[i].Text + "," + CharCust_Name[i].Text + "," + CharCust_Physics_Path[i].Text + "," + CharCust_Physics_Name[i].Text + "\n";
+                            AddToNameMap(CharCust_Path[i].Text);
+                            AddToNameMap(CharCust_Name[i].Text);
+                            AddToNameMap(CharCust_Physics_Path[i].Text);
+                            AddToNameMap(CharCust_Physics_Name[i].Text);
+                        }
+                        else
+                        {
+                            ModString += CharCust_Target[i].Text + ": " + CharCust_Path[i].Text + "," + CharCust_Name[i].Text + "\n";
+                            AddToNameMap(CharCust_Path[i].Text);
+                            AddToNameMap(CharCust_Name[i].Text);
+                        }
                     }
                     ModString = ModString.TrimEnd('\n');
 
@@ -925,7 +940,21 @@ namespace WSMM
                 else
                 {
                     string[] TempArray2 = TempArray[1].Trim().Split(',');
-                    CreateCustCharEntry(99, TempArray[0], TempArray2[0], TempArray2[1]);
+                    if (TempArray[0] == "Hair")
+                    {
+                        if (TempArray2.Length > 2)
+                        {
+                            CreateCustCharEntry(99, TempArray[0], TempArray2[0], TempArray2[1], TempArray2[2], TempArray2[3]);
+                        }
+                        else
+                        {
+                            CreateCustCharEntry(99, TempArray[0], TempArray2[0], TempArray2[1]);
+                        }
+                    }
+                    else
+                    {
+                        CreateCustCharEntry(99, TempArray[0], TempArray2[0], TempArray2[1]);
+                    }
                 }
             }
         }
@@ -941,13 +970,13 @@ namespace WSMM
             }
         }
 
-        private void CreateCustCharEntry(int Dupe = 99, string setTarget = "Hair", string setPath = "/Game/Textures/...", string setName = "None")
+        private void CreateCustCharEntry(int Dupe = 99, string setTarget = "Hair", string setPath = "/Game/Textures/...", string setName = "None", string setPhysicsPath = "None", string setPhysicsName = "None")
         {
             int EntryID = CharCust_CurrentEntryID;
 
             CharCust_GB[EntryID] = new GroupBox();
             CharCust_GB[EntryID].Text = "Entry #" + EntryID.ToString();
-            CharCust_GB[EntryID].Size = new System.Drawing.Size(495, 145);
+            CharCust_GB[EntryID].Size = new System.Drawing.Size(495, 235);
             CharCust_GB[EntryID].ForeColor = System.Drawing.SystemColors.ActiveCaption;
             CharCust_GB[EntryID].Font = new Font(CharCust_GB[EntryID].Font.FontFamily, 8);
             CharCust_GB[EntryID].BackColor = System.Drawing.Color.FromArgb(75, 68, 138);
@@ -970,6 +999,18 @@ namespace WSMM
             CharCust_NameLabel[EntryID].AutoSize = true;
             CharCust_NameLabel[EntryID].Location = new System.Drawing.Point(6, 97);
 
+            CharCust_Physics_PathLabel[EntryID] = new Label();
+            CharCust_Physics_PathLabel[EntryID].Text = "Physics Path:";
+            CharCust_Physics_PathLabel[EntryID].ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            CharCust_Physics_PathLabel[EntryID].AutoSize = true;
+            CharCust_Physics_PathLabel[EntryID].Location = new System.Drawing.Point(6, 146);
+
+            CharCust_Physics_NameLabel[EntryID] = new Label();
+            CharCust_Physics_NameLabel[EntryID].Text = "Physics Name:";
+            CharCust_Physics_NameLabel[EntryID].ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            CharCust_Physics_NameLabel[EntryID].AutoSize = true;
+            CharCust_Physics_NameLabel[EntryID].Location = new System.Drawing.Point(6, 185);
+
             CharCust_Target[EntryID] = new ComboBox();
             CharCust_Target[EntryID].Items.AddRange(new string[] { "Hair", "Skin", "PubicHair", "Eyes", "EyeLiner", "EyeShadow", "Lipstick", "Tanlines" });
             CharCust_Target[EntryID].SelectedIndex = 0;
@@ -978,6 +1019,8 @@ namespace WSMM
             CharCust_Target[EntryID].Size = new System.Drawing.Size(464, 21);
             CharCust_Target[EntryID].Location = new System.Drawing.Point(14, 32);
             CharCust_Target[EntryID].Text = setTarget.ToString();
+            CharCust_Target[EntryID].Tag = EntryID;
+            CharCust_Target[EntryID].SelectedValueChanged += CharCust_Target_SelectedValueChanged;
 
             CharCust_Path[EntryID] = new TextBox();
             CharCust_Path[EntryID].Text = "None";
@@ -994,6 +1037,22 @@ namespace WSMM
             CharCust_Name[EntryID].Size = new System.Drawing.Size(464, 20);
             CharCust_Name[EntryID].Location = new System.Drawing.Point(14, 113);
             CharCust_Name[EntryID].Text = setName.ToString();
+
+            CharCust_Physics_Path[EntryID] = new TextBox();
+            CharCust_Physics_Path[EntryID].Text = "None";
+            CharCust_Physics_Path[EntryID].BackColor = System.Drawing.Color.FromArgb(75, 68, 138);
+            CharCust_Physics_Path[EntryID].ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            CharCust_Physics_Path[EntryID].Size = new System.Drawing.Size(464, 20);
+            CharCust_Physics_Path[EntryID].Location = new System.Drawing.Point(14, 162);
+            CharCust_Physics_Path[EntryID].Text = setPhysicsPath.ToString();
+
+            CharCust_Physics_Name[EntryID] = new TextBox();
+            CharCust_Physics_Name[EntryID].Text = "None";
+            CharCust_Physics_Name[EntryID].BackColor = System.Drawing.Color.FromArgb(75, 68, 138);
+            CharCust_Physics_Name[EntryID].ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            CharCust_Physics_Name[EntryID].Size = new System.Drawing.Size(464, 20);
+            CharCust_Physics_Name[EntryID].Location = new System.Drawing.Point(14, 201);
+            CharCust_Physics_Name[EntryID].Text = setPhysicsName.ToString();
 
             CharCust_Dupe[EntryID] = new LinkLabel();
             CharCust_Dupe[EntryID].AutoSize = true;
@@ -1020,9 +1079,13 @@ namespace WSMM
             CharCust_GB[EntryID].Controls.Add(CharCust_TargetLabel[EntryID]);
             CharCust_GB[EntryID].Controls.Add(CharCust_PathLabel[EntryID]);
             CharCust_GB[EntryID].Controls.Add(CharCust_NameLabel[EntryID]);
+            CharCust_GB[EntryID].Controls.Add(CharCust_Physics_PathLabel[EntryID]);
+            CharCust_GB[EntryID].Controls.Add(CharCust_Physics_NameLabel[EntryID]);
             CharCust_GB[EntryID].Controls.Add(CharCust_Target[EntryID]);
             CharCust_GB[EntryID].Controls.Add(CharCust_Path[EntryID]);
             CharCust_GB[EntryID].Controls.Add(CharCust_Name[EntryID]);
+            CharCust_GB[EntryID].Controls.Add(CharCust_Physics_Path[EntryID]);
+            CharCust_GB[EntryID].Controls.Add(CharCust_Physics_Name[EntryID]);
             CharCust_GB[EntryID].Controls.Add(CharCust_Dupe[EntryID]);
             CharCust_GB[EntryID].Controls.Add(CharCust_Remove[EntryID]);
 
@@ -1033,9 +1096,33 @@ namespace WSMM
                 CharCust_Name[EntryID].Text = CharCust_Name[Dupe].Text;
             }
 
+            if (CharCust_Target[EntryID].Text == "Hair")
+            {
+                CharCust_GB[EntryID].Size = new System.Drawing.Size(495, 235);
+            }
+            else
+            {
+                CharCust_GB[EntryID].Size = new System.Drawing.Size(495, 145);
+            }
+
             CharCustomFlow.Controls.Add(CharCust_GB[EntryID]);
             CharCust_Entries.Add(EntryID);
             CharCust_CurrentEntryID += 1;
+        }
+
+        private void CharCust_Target_SelectedValueChanged(object? sender, EventArgs e)
+        {
+            ComboBox Casted = sender as ComboBox;
+            int EntryID = int.Parse(Casted.Tag.ToString());
+
+            if (Casted.Text == "Hair")
+            {
+                CharCust_GB[EntryID].Size = new System.Drawing.Size(495, 235);
+            }
+            else
+            {
+                CharCust_GB[EntryID].Size = new System.Drawing.Size(495, 145);
+            }
         }
 
         private void CharCust_RemoveClick(object sender, EventArgs e)

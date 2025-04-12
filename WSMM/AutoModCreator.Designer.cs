@@ -4507,10 +4507,10 @@
             Controls.Add(Separator_1);
             Controls.Add(TitlePanel);
             Controls.Add(groupBox1);
-            Controls.Add(tabControl1);
+            Controls.Add(StopEditing_LL);
             Controls.Add(CharCustomBox);
             Controls.Add(FurCustomizationGB);
-            Controls.Add(StopEditing_LL);
+            Controls.Add(tabControl1);
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.SizableToolWindow;
             Icon = (Icon)resources.GetObject("$this.Icon");
