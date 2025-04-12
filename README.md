@@ -15,5 +15,4 @@ DIRECT YOUR QUESTIONS TO THE RELEVANT DISCORD POST.
 ## Dependencies:
 [UAssetAPI](https://github.com/atenfyr/UAssetAPI) </br>
 [Json.NET](https://www.newtonsoft.com/json) </br>
-[ZstdSharp](https://github.com/oleg-st/ZstdSharp) </br>
-[MegaApiClient](https://github.com/gpailler/MegaApiClient)
+[ZstdSharp](https://github.com/oleg-st/ZstdSharp)
