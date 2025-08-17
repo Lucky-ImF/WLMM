@@ -1543,7 +1543,7 @@
             TransferCompatMods_RB.ForeColor = SystemColors.ActiveCaption;
             TransferCompatMods_RB.Location = new Point(237, 220);
             TransferCompatMods_RB.Name = "TransferCompatMods_RB";
-            TransferCompatMods_RB.Size = new Size(171, 19);
+            TransferCompatMods_RB.Size = new Size(173, 19);
             TransferCompatMods_RB.TabIndex = 41;
             TransferCompatMods_RB.Text = "Transfer COMPATIBLE mods";
             TransferCompatMods_RB.UseVisualStyleBackColor = true;
@@ -1557,7 +1557,7 @@
             TransferAllMods_RB.ForeColor = SystemColors.ActiveCaption;
             TransferAllMods_RB.Location = new Point(92, 220);
             TransferAllMods_RB.Name = "TransferAllMods_RB";
-            TransferAllMods_RB.Size = new Size(122, 19);
+            TransferAllMods_RB.Size = new Size(123, 19);
             TransferAllMods_RB.TabIndex = 40;
             TransferAllMods_RB.TabStop = true;
             TransferAllMods_RB.Text = "Transfer ALL mods";
@@ -2288,11 +2288,11 @@
             BackColor = Color.FromArgb(32, 34, 81);
             ClientSize = new Size(1134, 761);
             ControlBox = false;
+            Controls.Add(LoadEdit_Panel);
             Controls.Add(DT_Updater_Panel);
             Controls.Add(MM_Panel);
             Controls.Add(ModPack_Panel);
             Controls.Add(CreateModPack_Button);
-            Controls.Add(LoadEdit_Panel);
             Controls.Add(BugReport_Panel);
             Controls.Add(ExpandedLink_Panel);
             Controls.Add(TransferMods_Panel);

@@ -2196,6 +2196,17 @@ namespace WSMM
             var FurList = new List<string>(FurFile);
 
 
+            string ClothesOutfitNameMap_Path = string.Empty;
+            BS_BaseClothesOutfitFile.Invoke((System.Windows.Forms.MethodInvoker)delegate
+            {
+                ClothesOutfitNameMap_Path = Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\" + BS_BaseClothesOutfitFile.Text.Replace(".json", "") + "_NameMap.txt";
+            });
+
+            if (File.Exists(ClothesOutfitNameMap_Path) == false)
+            {
+                ClothesOutfitNameMap_Path = Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_ClothesOutfit_Default_NameMap.txt";
+            }
+
             string OutfitFileNameMap_Path = string.Empty;
             BS_BaseGameCharacterOutfitFile.Invoke((System.Windows.Forms.MethodInvoker)delegate
             {
@@ -2206,6 +2217,8 @@ namespace WSMM
             {
                 OutfitFileNameMap_Path = Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GameCharacterOutfits_Default_NameMap.txt";
             }
+
+            string[] NameMap_ClothesOutfit_Defaults = File.ReadAllLines(ClothesOutfitNameMap_Path);
             string[] NameMap_Defaults = File.ReadAllLines(OutfitFileNameMap_Path);
             string[] CustomNameMap_Defaults = File.ReadAllLines(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GameCharacterCustomization_Default_NameMap.txt");
 
@@ -2270,7 +2283,31 @@ namespace WSMM
                     OutfitEntry = OutfitEntry.Replace("[CLOTHING_ID]", GetCleanString(contents, "[CLOTHING_ID]"));
                     OutfitEntry += "," + "\n";
                     OutfitEntry = OutfitEntry.Insert(0, GetCleanString(contents, "Character") + "¤");
-                    OutfitsNameMap.Add(GetCleanString(contents, "[CLOTHING_ID]"));
+                    
+                    bool DupeFound = false;
+                    foreach (string itm in NameMap_Defaults)
+                    {
+                        if (itm == GetCleanString(contents, "[CLOTHING_ID]"))
+                        {
+                            DupeFound = true;
+                            break;
+                        }
+                    }
+                    if (DupeFound == false)
+                    {
+                        foreach (string itm in OutfitsNameMap)
+                        {
+                            if (itm == GetCleanString(contents, "[CLOTHING_ID]"))
+                            {
+                                DupeFound = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (DupeFound == false)
+                    {
+                        OutfitsNameMap.Add(GetCleanString(contents, "[CLOTHING_ID]"));
+                    }
                     Outfits.Add(OutfitEntry);
 
                     Entry = Entry.Replace("[CLOTHING_ID]", GetCleanString(contents, "[CLOTHING_ID]"));
@@ -2406,7 +2443,7 @@ namespace WSMM
                         }
                         if (isDupe == false)
                         {
-                            foreach (string itm in NameMap_Defaults)
+                            foreach (string itm in NameMap_ClothesOutfit_Defaults)
                             {
                                 if (itm == temp)
                                 {
