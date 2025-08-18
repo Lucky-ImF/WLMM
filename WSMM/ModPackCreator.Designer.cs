@@ -269,8 +269,8 @@
             // 
             // ModPackCreator
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.FromArgb(32, 34, 81);
             ClientSize = new Size(658, 502);
             Controls.Add(CreateModPack_Button);

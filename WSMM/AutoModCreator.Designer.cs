@@ -845,7 +845,7 @@
             Head_SexFurmask_Path_Ex.Location = new Point(120, 121);
             Head_SexFurmask_Path_Ex.Margin = new Padding(4, 0, 4, 0);
             Head_SexFurmask_Path_Ex.Name = "Head_SexFurmask_Path_Ex";
-            Head_SexFurmask_Path_Ex.Size = new Size(394, 15);
+            Head_SexFurmask_Path_Ex.Size = new Size(393, 15);
             Head_SexFurmask_Path_Ex.TabIndex = 41;
             Head_SexFurmask_Path_Ex.TabStop = true;
             Head_SexFurmask_Path_Ex.Text = " (ex. /Game/Textures/Characters/Costumes/FurMasks/Harness/Flint_Ha...";
@@ -860,7 +860,7 @@
             Head_Furmask_Path_Ex.Location = new Point(73, 22);
             Head_Furmask_Path_Ex.Margin = new Padding(4, 0, 4, 0);
             Head_Furmask_Path_Ex.Name = "Head_Furmask_Path_Ex";
-            Head_Furmask_Path_Ex.Size = new Size(433, 15);
+            Head_Furmask_Path_Ex.Size = new Size(432, 15);
             Head_Furmask_Path_Ex.TabIndex = 40;
             Head_Furmask_Path_Ex.TabStop = true;
             Head_Furmask_Path_Ex.Text = " (ex. /Game/Textures/Characters/Costumes/FurMasks/Harness/Flint_HarnessSe...";
@@ -874,7 +874,7 @@
             label67.Location = new Point(8, 166);
             label67.Margin = new Padding(4, 0, 4, 0);
             label67.Name = "label67";
-            label67.Size = new Size(338, 15);
+            label67.Size = new Size(335, 15);
             label67.TabIndex = 39;
             label67.Text = "Sex Var Mask Name: (ex. Flint_HarnessSexo_furOffMaps_Chest)";
             // 
@@ -896,7 +896,7 @@
             label68.Location = new Point(8, 121);
             label68.Margin = new Padding(4, 0, 4, 0);
             label68.Name = "label68";
-            label68.Size = new Size(105, 15);
+            label68.Size = new Size(104, 15);
             label68.TabIndex = 37;
             label68.Text = "Sex Var Mask Path:";
             // 
@@ -918,7 +918,7 @@
             label69.Location = new Point(8, 67);
             label69.Margin = new Padding(4, 0, 4, 0);
             label69.Name = "label69";
-            label69.Size = new Size(298, 15);
+            label69.Size = new Size(296, 15);
             label69.TabIndex = 35;
             label69.Text = "Mask Name: (ex. Flint_HarnessSexo_furOffMaps_Chest)";
             // 
@@ -978,7 +978,7 @@
             Head_SexMesh_Path_Ex.Location = new Point(126, 113);
             Head_SexMesh_Path_Ex.Margin = new Padding(4, 0, 4, 0);
             Head_SexMesh_Path_Ex.Name = "Head_SexMesh_Path_Ex";
-            Head_SexMesh_Path_Ex.Size = new Size(437, 15);
+            Head_SexMesh_Path_Ex.Size = new Size(436, 15);
             Head_SexMesh_Path_Ex.TabIndex = 31;
             Head_SexMesh_Path_Ex.TabStop = true;
             Head_SexMesh_Path_Ex.Text = " (ex. /Game/Meshes/Characters/Maya/Costumes/costume_maya_barmaid_chest)";
@@ -993,7 +993,7 @@
             Head_Mesh_Path_Ex.Location = new Point(79, 14);
             Head_Mesh_Path_Ex.Margin = new Padding(4, 0, 4, 0);
             Head_Mesh_Path_Ex.Name = "Head_Mesh_Path_Ex";
-            Head_Mesh_Path_Ex.Size = new Size(437, 15);
+            Head_Mesh_Path_Ex.Size = new Size(436, 15);
             Head_Mesh_Path_Ex.TabIndex = 30;
             Head_Mesh_Path_Ex.TabStop = true;
             Head_Mesh_Path_Ex.Text = " (ex. /Game/Meshes/Characters/Maya/Costumes/costume_maya_barmaid_chest)";
@@ -1007,7 +1007,7 @@
             label15.Location = new Point(289, 412);
             label15.Margin = new Padding(4, 0, 4, 0);
             label15.Name = "label15";
-            label15.Size = new Size(117, 15);
+            label15.Size = new Size(116, 15);
             label15.TabIndex = 29;
             label15.Text = "Muscle Flex Regions:";
             // 
@@ -1051,7 +1051,7 @@
             label13.Location = new Point(289, 363);
             label13.Margin = new Padding(4, 0, 4, 0);
             label13.Name = "label13";
-            label13.Size = new Size(112, 15);
+            label13.Size = new Size(113, 15);
             label13.TabIndex = 25;
             label13.Text = "Morph Target Value:";
             // 
@@ -1096,7 +1096,7 @@
             label12.Location = new Point(289, 315);
             label12.Margin = new Padding(4, 0, 4, 0);
             label12.Name = "label12";
-            label12.Size = new Size(81, 15);
+            label12.Size = new Size(82, 15);
             label12.TabIndex = 21;
             label12.Text = "Morph Target:";
             // 
@@ -1185,7 +1185,7 @@
             label7.Location = new Point(14, 158);
             label7.Margin = new Padding(4, 0, 4, 0);
             label7.Name = "label7";
-            label7.Size = new Size(305, 15);
+            label7.Size = new Size(303, 15);
             label7.TabIndex = 13;
             label7.Text = "Sex Var Mesh Name: (ex. costume_maya_barmaid_chest)";
             // 
@@ -1207,7 +1207,7 @@
             label8.Location = new Point(14, 113);
             label8.Margin = new Padding(4, 0, 4, 0);
             label8.Name = "label8";
-            label8.Size = new Size(106, 15);
+            label8.Size = new Size(105, 15);
             label8.TabIndex = 11;
             label8.Text = "Sex Var Mesh Path:";
             // 
@@ -1229,7 +1229,7 @@
             label6.Location = new Point(14, 59);
             label6.Margin = new Padding(4, 0, 4, 0);
             label6.Name = "label6";
-            label6.Size = new Size(265, 15);
+            label6.Size = new Size(264, 15);
             label6.TabIndex = 9;
             label6.Text = "Mesh Name: (ex. costume_maya_barmaid_chest)";
             // 
@@ -1502,7 +1502,7 @@
             Chest_SexFurmask_Path_Ex.Location = new Point(120, 121);
             Chest_SexFurmask_Path_Ex.Margin = new Padding(4, 0, 4, 0);
             Chest_SexFurmask_Path_Ex.Name = "Chest_SexFurmask_Path_Ex";
-            Chest_SexFurmask_Path_Ex.Size = new Size(394, 15);
+            Chest_SexFurmask_Path_Ex.Size = new Size(393, 15);
             Chest_SexFurmask_Path_Ex.TabIndex = 41;
             Chest_SexFurmask_Path_Ex.TabStop = true;
             Chest_SexFurmask_Path_Ex.Text = " (ex. /Game/Textures/Characters/Costumes/FurMasks/Harness/Flint_Ha...";
@@ -1517,7 +1517,7 @@
             Chest_Furmask_Path_Ex.Location = new Point(73, 22);
             Chest_Furmask_Path_Ex.Margin = new Padding(4, 0, 4, 0);
             Chest_Furmask_Path_Ex.Name = "Chest_Furmask_Path_Ex";
-            Chest_Furmask_Path_Ex.Size = new Size(433, 15);
+            Chest_Furmask_Path_Ex.Size = new Size(432, 15);
             Chest_Furmask_Path_Ex.TabIndex = 40;
             Chest_Furmask_Path_Ex.TabStop = true;
             Chest_Furmask_Path_Ex.Text = " (ex. /Game/Textures/Characters/Costumes/FurMasks/Harness/Flint_HarnessSe...";
@@ -1531,7 +1531,7 @@
             label71.Location = new Point(8, 166);
             label71.Margin = new Padding(4, 0, 4, 0);
             label71.Name = "label71";
-            label71.Size = new Size(338, 15);
+            label71.Size = new Size(335, 15);
             label71.TabIndex = 39;
             label71.Text = "Sex Var Mask Name: (ex. Flint_HarnessSexo_furOffMaps_Chest)";
             // 
@@ -1553,7 +1553,7 @@
             label72.Location = new Point(8, 121);
             label72.Margin = new Padding(4, 0, 4, 0);
             label72.Name = "label72";
-            label72.Size = new Size(105, 15);
+            label72.Size = new Size(104, 15);
             label72.TabIndex = 37;
             label72.Text = "Sex Var Mask Path:";
             // 
@@ -1575,7 +1575,7 @@
             label73.Location = new Point(8, 67);
             label73.Margin = new Padding(4, 0, 4, 0);
             label73.Name = "label73";
-            label73.Size = new Size(298, 15);
+            label73.Size = new Size(296, 15);
             label73.TabIndex = 35;
             label73.Text = "Mask Name: (ex. Flint_HarnessSexo_furOffMaps_Chest)";
             // 
@@ -1635,7 +1635,7 @@
             Chest_SexMesh_Path_Ex.Location = new Point(126, 113);
             Chest_SexMesh_Path_Ex.Margin = new Padding(4, 0, 4, 0);
             Chest_SexMesh_Path_Ex.Name = "Chest_SexMesh_Path_Ex";
-            Chest_SexMesh_Path_Ex.Size = new Size(437, 15);
+            Chest_SexMesh_Path_Ex.Size = new Size(436, 15);
             Chest_SexMesh_Path_Ex.TabIndex = 55;
             Chest_SexMesh_Path_Ex.TabStop = true;
             Chest_SexMesh_Path_Ex.Text = " (ex. /Game/Meshes/Characters/Maya/Costumes/costume_maya_barmaid_chest)";
@@ -1650,7 +1650,7 @@
             Chest_Mesh_Path_Ex.Location = new Point(79, 14);
             Chest_Mesh_Path_Ex.Margin = new Padding(4, 0, 4, 0);
             Chest_Mesh_Path_Ex.Name = "Chest_Mesh_Path_Ex";
-            Chest_Mesh_Path_Ex.Size = new Size(437, 15);
+            Chest_Mesh_Path_Ex.Size = new Size(436, 15);
             Chest_Mesh_Path_Ex.TabIndex = 54;
             Chest_Mesh_Path_Ex.TabStop = true;
             Chest_Mesh_Path_Ex.Text = " (ex. /Game/Meshes/Characters/Maya/Costumes/costume_maya_barmaid_chest)";
@@ -1664,7 +1664,7 @@
             label17.Location = new Point(289, 412);
             label17.Margin = new Padding(4, 0, 4, 0);
             label17.Name = "label17";
-            label17.Size = new Size(117, 15);
+            label17.Size = new Size(116, 15);
             label17.TabIndex = 53;
             label17.Text = "Muscle Flex Regions:";
             // 
@@ -1708,7 +1708,7 @@
             label19.Location = new Point(289, 363);
             label19.Margin = new Padding(4, 0, 4, 0);
             label19.Name = "label19";
-            label19.Size = new Size(112, 15);
+            label19.Size = new Size(113, 15);
             label19.TabIndex = 49;
             label19.Text = "Morph Target Value:";
             // 
@@ -1753,7 +1753,7 @@
             label21.Location = new Point(289, 315);
             label21.Margin = new Padding(4, 0, 4, 0);
             label21.Name = "label21";
-            label21.Size = new Size(81, 15);
+            label21.Size = new Size(82, 15);
             label21.TabIndex = 45;
             label21.Text = "Morph Target:";
             // 
@@ -1842,7 +1842,7 @@
             label25.Location = new Point(14, 158);
             label25.Margin = new Padding(4, 0, 4, 0);
             label25.Name = "label25";
-            label25.Size = new Size(305, 15);
+            label25.Size = new Size(303, 15);
             label25.TabIndex = 37;
             label25.Text = "Sex Var Mesh Name: (ex. costume_maya_barmaid_chest)";
             // 
@@ -1864,7 +1864,7 @@
             label26.Location = new Point(14, 113);
             label26.Margin = new Padding(4, 0, 4, 0);
             label26.Name = "label26";
-            label26.Size = new Size(106, 15);
+            label26.Size = new Size(105, 15);
             label26.TabIndex = 35;
             label26.Text = "Sex Var Mesh Path:";
             // 
@@ -1886,7 +1886,7 @@
             label27.Location = new Point(14, 59);
             label27.Margin = new Padding(4, 0, 4, 0);
             label27.Name = "label27";
-            label27.Size = new Size(265, 15);
+            label27.Size = new Size(264, 15);
             label27.TabIndex = 33;
             label27.Text = "Mesh Name: (ex. costume_maya_barmaid_chest)";
             // 
@@ -2158,7 +2158,7 @@
             Hands_SexFurmask_Path_Ex.Location = new Point(120, 121);
             Hands_SexFurmask_Path_Ex.Margin = new Padding(4, 0, 4, 0);
             Hands_SexFurmask_Path_Ex.Name = "Hands_SexFurmask_Path_Ex";
-            Hands_SexFurmask_Path_Ex.Size = new Size(394, 15);
+            Hands_SexFurmask_Path_Ex.Size = new Size(393, 15);
             Hands_SexFurmask_Path_Ex.TabIndex = 41;
             Hands_SexFurmask_Path_Ex.TabStop = true;
             Hands_SexFurmask_Path_Ex.Text = " (ex. /Game/Textures/Characters/Costumes/FurMasks/Harness/Flint_Ha...";
@@ -2173,7 +2173,7 @@
             Hands_Furmask_Path_Ex.Location = new Point(73, 22);
             Hands_Furmask_Path_Ex.Margin = new Padding(4, 0, 4, 0);
             Hands_Furmask_Path_Ex.Name = "Hands_Furmask_Path_Ex";
-            Hands_Furmask_Path_Ex.Size = new Size(433, 15);
+            Hands_Furmask_Path_Ex.Size = new Size(432, 15);
             Hands_Furmask_Path_Ex.TabIndex = 40;
             Hands_Furmask_Path_Ex.TabStop = true;
             Hands_Furmask_Path_Ex.Text = " (ex. /Game/Textures/Characters/Costumes/FurMasks/Harness/Flint_HarnessSe...";
@@ -2187,7 +2187,7 @@
             label75.Location = new Point(8, 166);
             label75.Margin = new Padding(4, 0, 4, 0);
             label75.Name = "label75";
-            label75.Size = new Size(338, 15);
+            label75.Size = new Size(335, 15);
             label75.TabIndex = 39;
             label75.Text = "Sex Var Mask Name: (ex. Flint_HarnessSexo_furOffMaps_Chest)";
             // 
@@ -2209,7 +2209,7 @@
             label76.Location = new Point(8, 121);
             label76.Margin = new Padding(4, 0, 4, 0);
             label76.Name = "label76";
-            label76.Size = new Size(105, 15);
+            label76.Size = new Size(104, 15);
             label76.TabIndex = 37;
             label76.Text = "Sex Var Mask Path:";
             // 
@@ -2231,7 +2231,7 @@
             label77.Location = new Point(8, 67);
             label77.Margin = new Padding(4, 0, 4, 0);
             label77.Name = "label77";
-            label77.Size = new Size(298, 15);
+            label77.Size = new Size(296, 15);
             label77.TabIndex = 35;
             label77.Text = "Mask Name: (ex. Flint_HarnessSexo_furOffMaps_Chest)";
             // 
@@ -2291,7 +2291,7 @@
             Hands_SexMesh_Path_Ex.Location = new Point(126, 113);
             Hands_SexMesh_Path_Ex.Margin = new Padding(4, 0, 4, 0);
             Hands_SexMesh_Path_Ex.Name = "Hands_SexMesh_Path_Ex";
-            Hands_SexMesh_Path_Ex.Size = new Size(437, 15);
+            Hands_SexMesh_Path_Ex.Size = new Size(436, 15);
             Hands_SexMesh_Path_Ex.TabIndex = 55;
             Hands_SexMesh_Path_Ex.TabStop = true;
             Hands_SexMesh_Path_Ex.Text = " (ex. /Game/Meshes/Characters/Maya/Costumes/costume_maya_barmaid_chest)";
@@ -2306,7 +2306,7 @@
             Hands_Mesh_Path_Ex.Location = new Point(79, 14);
             Hands_Mesh_Path_Ex.Margin = new Padding(4, 0, 4, 0);
             Hands_Mesh_Path_Ex.Name = "Hands_Mesh_Path_Ex";
-            Hands_Mesh_Path_Ex.Size = new Size(437, 15);
+            Hands_Mesh_Path_Ex.Size = new Size(436, 15);
             Hands_Mesh_Path_Ex.TabIndex = 54;
             Hands_Mesh_Path_Ex.TabStop = true;
             Hands_Mesh_Path_Ex.Text = " (ex. /Game/Meshes/Characters/Maya/Costumes/costume_maya_barmaid_chest)";
@@ -2320,7 +2320,7 @@
             label29.Location = new Point(289, 412);
             label29.Margin = new Padding(4, 0, 4, 0);
             label29.Name = "label29";
-            label29.Size = new Size(117, 15);
+            label29.Size = new Size(116, 15);
             label29.TabIndex = 53;
             label29.Text = "Muscle Flex Regions:";
             // 
@@ -2364,7 +2364,7 @@
             label31.Location = new Point(289, 363);
             label31.Margin = new Padding(4, 0, 4, 0);
             label31.Name = "label31";
-            label31.Size = new Size(112, 15);
+            label31.Size = new Size(113, 15);
             label31.TabIndex = 49;
             label31.Text = "Morph Target Value:";
             // 
@@ -2409,7 +2409,7 @@
             label33.Location = new Point(289, 315);
             label33.Margin = new Padding(4, 0, 4, 0);
             label33.Name = "label33";
-            label33.Size = new Size(81, 15);
+            label33.Size = new Size(82, 15);
             label33.TabIndex = 45;
             label33.Text = "Morph Target:";
             // 
@@ -2498,7 +2498,7 @@
             label37.Location = new Point(14, 158);
             label37.Margin = new Padding(4, 0, 4, 0);
             label37.Name = "label37";
-            label37.Size = new Size(305, 15);
+            label37.Size = new Size(303, 15);
             label37.TabIndex = 37;
             label37.Text = "Sex Var Mesh Name: (ex. costume_maya_barmaid_chest)";
             // 
@@ -2520,7 +2520,7 @@
             label38.Location = new Point(14, 113);
             label38.Margin = new Padding(4, 0, 4, 0);
             label38.Name = "label38";
-            label38.Size = new Size(106, 15);
+            label38.Size = new Size(105, 15);
             label38.TabIndex = 35;
             label38.Text = "Sex Var Mesh Path:";
             // 
@@ -2542,7 +2542,7 @@
             label39.Location = new Point(14, 59);
             label39.Margin = new Padding(4, 0, 4, 0);
             label39.Name = "label39";
-            label39.Size = new Size(265, 15);
+            label39.Size = new Size(264, 15);
             label39.TabIndex = 33;
             label39.Text = "Mesh Name: (ex. costume_maya_barmaid_chest)";
             // 
@@ -2564,7 +2564,7 @@
             label40.Location = new Point(14, 14);
             label40.Margin = new Padding(4, 0, 4, 0);
             label40.Name = "label40";
-            label40.Size = new Size(496, 15);
+            label40.Size = new Size(495, 15);
             label40.TabIndex = 31;
             label40.Text = "Mesh Path: (ex. /Game/Meshes/Characters/Maya/Costumes/costume_maya_barmaid_chest)";
             // 
@@ -2814,7 +2814,7 @@
             Legs_SexFurmask_Path_Ex.Location = new Point(120, 121);
             Legs_SexFurmask_Path_Ex.Margin = new Padding(4, 0, 4, 0);
             Legs_SexFurmask_Path_Ex.Name = "Legs_SexFurmask_Path_Ex";
-            Legs_SexFurmask_Path_Ex.Size = new Size(394, 15);
+            Legs_SexFurmask_Path_Ex.Size = new Size(393, 15);
             Legs_SexFurmask_Path_Ex.TabIndex = 41;
             Legs_SexFurmask_Path_Ex.TabStop = true;
             Legs_SexFurmask_Path_Ex.Text = " (ex. /Game/Textures/Characters/Costumes/FurMasks/Harness/Flint_Ha...";
@@ -2829,7 +2829,7 @@
             Legs_Furmask_Path_Ex.Location = new Point(73, 22);
             Legs_Furmask_Path_Ex.Margin = new Padding(4, 0, 4, 0);
             Legs_Furmask_Path_Ex.Name = "Legs_Furmask_Path_Ex";
-            Legs_Furmask_Path_Ex.Size = new Size(433, 15);
+            Legs_Furmask_Path_Ex.Size = new Size(432, 15);
             Legs_Furmask_Path_Ex.TabIndex = 40;
             Legs_Furmask_Path_Ex.TabStop = true;
             Legs_Furmask_Path_Ex.Text = " (ex. /Game/Textures/Characters/Costumes/FurMasks/Harness/Flint_HarnessSe...";
@@ -2843,7 +2843,7 @@
             label79.Location = new Point(8, 166);
             label79.Margin = new Padding(4, 0, 4, 0);
             label79.Name = "label79";
-            label79.Size = new Size(338, 15);
+            label79.Size = new Size(335, 15);
             label79.TabIndex = 39;
             label79.Text = "Sex Var Mask Name: (ex. Flint_HarnessSexo_furOffMaps_Chest)";
             // 
@@ -2865,7 +2865,7 @@
             label80.Location = new Point(8, 121);
             label80.Margin = new Padding(4, 0, 4, 0);
             label80.Name = "label80";
-            label80.Size = new Size(105, 15);
+            label80.Size = new Size(104, 15);
             label80.TabIndex = 37;
             label80.Text = "Sex Var Mask Path:";
             // 
@@ -2887,7 +2887,7 @@
             label81.Location = new Point(8, 67);
             label81.Margin = new Padding(4, 0, 4, 0);
             label81.Name = "label81";
-            label81.Size = new Size(298, 15);
+            label81.Size = new Size(296, 15);
             label81.TabIndex = 35;
             label81.Text = "Mask Name: (ex. Flint_HarnessSexo_furOffMaps_Chest)";
             // 
@@ -2947,7 +2947,7 @@
             Legs_SexMesh_Path_Ex.Location = new Point(126, 113);
             Legs_SexMesh_Path_Ex.Margin = new Padding(4, 0, 4, 0);
             Legs_SexMesh_Path_Ex.Name = "Legs_SexMesh_Path_Ex";
-            Legs_SexMesh_Path_Ex.Size = new Size(437, 15);
+            Legs_SexMesh_Path_Ex.Size = new Size(436, 15);
             Legs_SexMesh_Path_Ex.TabIndex = 55;
             Legs_SexMesh_Path_Ex.TabStop = true;
             Legs_SexMesh_Path_Ex.Text = " (ex. /Game/Meshes/Characters/Maya/Costumes/costume_maya_barmaid_chest)";
@@ -2962,7 +2962,7 @@
             Legs_Mesh_Path_Ex.Location = new Point(79, 14);
             Legs_Mesh_Path_Ex.Margin = new Padding(4, 0, 4, 0);
             Legs_Mesh_Path_Ex.Name = "Legs_Mesh_Path_Ex";
-            Legs_Mesh_Path_Ex.Size = new Size(437, 15);
+            Legs_Mesh_Path_Ex.Size = new Size(436, 15);
             Legs_Mesh_Path_Ex.TabIndex = 54;
             Legs_Mesh_Path_Ex.TabStop = true;
             Legs_Mesh_Path_Ex.Text = " (ex. /Game/Meshes/Characters/Maya/Costumes/costume_maya_barmaid_chest)";
@@ -2976,7 +2976,7 @@
             label41.Location = new Point(289, 412);
             label41.Margin = new Padding(4, 0, 4, 0);
             label41.Name = "label41";
-            label41.Size = new Size(117, 15);
+            label41.Size = new Size(116, 15);
             label41.TabIndex = 53;
             label41.Text = "Muscle Flex Regions:";
             // 
@@ -3020,7 +3020,7 @@
             label43.Location = new Point(289, 363);
             label43.Margin = new Padding(4, 0, 4, 0);
             label43.Name = "label43";
-            label43.Size = new Size(112, 15);
+            label43.Size = new Size(113, 15);
             label43.TabIndex = 49;
             label43.Text = "Morph Target Value:";
             // 
@@ -3065,7 +3065,7 @@
             label45.Location = new Point(289, 315);
             label45.Margin = new Padding(4, 0, 4, 0);
             label45.Name = "label45";
-            label45.Size = new Size(81, 15);
+            label45.Size = new Size(82, 15);
             label45.TabIndex = 45;
             label45.Text = "Morph Target:";
             // 
@@ -3154,7 +3154,7 @@
             label49.Location = new Point(14, 158);
             label49.Margin = new Padding(4, 0, 4, 0);
             label49.Name = "label49";
-            label49.Size = new Size(305, 15);
+            label49.Size = new Size(303, 15);
             label49.TabIndex = 37;
             label49.Text = "Sex Var Mesh Name: (ex. costume_maya_barmaid_chest)";
             // 
@@ -3176,7 +3176,7 @@
             label50.Location = new Point(14, 113);
             label50.Margin = new Padding(4, 0, 4, 0);
             label50.Name = "label50";
-            label50.Size = new Size(106, 15);
+            label50.Size = new Size(105, 15);
             label50.TabIndex = 35;
             label50.Text = "Sex Var Mesh Path:";
             // 
@@ -3198,7 +3198,7 @@
             label51.Location = new Point(14, 59);
             label51.Margin = new Padding(4, 0, 4, 0);
             label51.Name = "label51";
-            label51.Size = new Size(265, 15);
+            label51.Size = new Size(264, 15);
             label51.TabIndex = 33;
             label51.Text = "Mesh Name: (ex. costume_maya_barmaid_chest)";
             // 
@@ -3220,7 +3220,7 @@
             label52.Location = new Point(14, 14);
             label52.Margin = new Padding(4, 0, 4, 0);
             label52.Name = "label52";
-            label52.Size = new Size(496, 15);
+            label52.Size = new Size(495, 15);
             label52.TabIndex = 31;
             label52.Text = "Mesh Path: (ex. /Game/Meshes/Characters/Maya/Costumes/costume_maya_barmaid_chest)";
             // 
@@ -3470,7 +3470,7 @@
             Feet_SexFurmask_Path_Ex.Location = new Point(120, 121);
             Feet_SexFurmask_Path_Ex.Margin = new Padding(4, 0, 4, 0);
             Feet_SexFurmask_Path_Ex.Name = "Feet_SexFurmask_Path_Ex";
-            Feet_SexFurmask_Path_Ex.Size = new Size(394, 15);
+            Feet_SexFurmask_Path_Ex.Size = new Size(393, 15);
             Feet_SexFurmask_Path_Ex.TabIndex = 41;
             Feet_SexFurmask_Path_Ex.TabStop = true;
             Feet_SexFurmask_Path_Ex.Text = " (ex. /Game/Textures/Characters/Costumes/FurMasks/Harness/Flint_Ha...";
@@ -3485,7 +3485,7 @@
             Feet_Furmask_Path_Ex.Location = new Point(73, 22);
             Feet_Furmask_Path_Ex.Margin = new Padding(4, 0, 4, 0);
             Feet_Furmask_Path_Ex.Name = "Feet_Furmask_Path_Ex";
-            Feet_Furmask_Path_Ex.Size = new Size(433, 15);
+            Feet_Furmask_Path_Ex.Size = new Size(432, 15);
             Feet_Furmask_Path_Ex.TabIndex = 40;
             Feet_Furmask_Path_Ex.TabStop = true;
             Feet_Furmask_Path_Ex.Text = " (ex. /Game/Textures/Characters/Costumes/FurMasks/Harness/Flint_HarnessSe...";
@@ -3499,7 +3499,7 @@
             label83.Location = new Point(8, 166);
             label83.Margin = new Padding(4, 0, 4, 0);
             label83.Name = "label83";
-            label83.Size = new Size(338, 15);
+            label83.Size = new Size(335, 15);
             label83.TabIndex = 39;
             label83.Text = "Sex Var Mask Name: (ex. Flint_HarnessSexo_furOffMaps_Chest)";
             // 
@@ -3521,7 +3521,7 @@
             label84.Location = new Point(8, 121);
             label84.Margin = new Padding(4, 0, 4, 0);
             label84.Name = "label84";
-            label84.Size = new Size(105, 15);
+            label84.Size = new Size(104, 15);
             label84.TabIndex = 37;
             label84.Text = "Sex Var Mask Path:";
             // 
@@ -3543,7 +3543,7 @@
             label85.Location = new Point(8, 67);
             label85.Margin = new Padding(4, 0, 4, 0);
             label85.Name = "label85";
-            label85.Size = new Size(298, 15);
+            label85.Size = new Size(296, 15);
             label85.TabIndex = 35;
             label85.Text = "Mask Name: (ex. Flint_HarnessSexo_furOffMaps_Chest)";
             // 
@@ -3603,7 +3603,7 @@
             Feet_SexMesh_Path_Ex.Location = new Point(126, 113);
             Feet_SexMesh_Path_Ex.Margin = new Padding(4, 0, 4, 0);
             Feet_SexMesh_Path_Ex.Name = "Feet_SexMesh_Path_Ex";
-            Feet_SexMesh_Path_Ex.Size = new Size(437, 15);
+            Feet_SexMesh_Path_Ex.Size = new Size(436, 15);
             Feet_SexMesh_Path_Ex.TabIndex = 55;
             Feet_SexMesh_Path_Ex.TabStop = true;
             Feet_SexMesh_Path_Ex.Text = " (ex. /Game/Meshes/Characters/Maya/Costumes/costume_maya_barmaid_chest)";
@@ -3618,7 +3618,7 @@
             Feet_Mesh_Path_Ex.Location = new Point(79, 14);
             Feet_Mesh_Path_Ex.Margin = new Padding(4, 0, 4, 0);
             Feet_Mesh_Path_Ex.Name = "Feet_Mesh_Path_Ex";
-            Feet_Mesh_Path_Ex.Size = new Size(437, 15);
+            Feet_Mesh_Path_Ex.Size = new Size(436, 15);
             Feet_Mesh_Path_Ex.TabIndex = 54;
             Feet_Mesh_Path_Ex.TabStop = true;
             Feet_Mesh_Path_Ex.Text = " (ex. /Game/Meshes/Characters/Maya/Costumes/costume_maya_barmaid_chest)";
@@ -3632,7 +3632,7 @@
             label53.Location = new Point(289, 412);
             label53.Margin = new Padding(4, 0, 4, 0);
             label53.Name = "label53";
-            label53.Size = new Size(117, 15);
+            label53.Size = new Size(116, 15);
             label53.TabIndex = 53;
             label53.Text = "Muscle Flex Regions:";
             // 
@@ -3676,7 +3676,7 @@
             label55.Location = new Point(289, 363);
             label55.Margin = new Padding(4, 0, 4, 0);
             label55.Name = "label55";
-            label55.Size = new Size(112, 15);
+            label55.Size = new Size(113, 15);
             label55.TabIndex = 49;
             label55.Text = "Morph Target Value:";
             // 
@@ -3721,7 +3721,7 @@
             label57.Location = new Point(289, 315);
             label57.Margin = new Padding(4, 0, 4, 0);
             label57.Name = "label57";
-            label57.Size = new Size(81, 15);
+            label57.Size = new Size(82, 15);
             label57.TabIndex = 45;
             label57.Text = "Morph Target:";
             // 
@@ -3810,7 +3810,7 @@
             label61.Location = new Point(14, 158);
             label61.Margin = new Padding(4, 0, 4, 0);
             label61.Name = "label61";
-            label61.Size = new Size(305, 15);
+            label61.Size = new Size(303, 15);
             label61.TabIndex = 37;
             label61.Text = "Sex Var Mesh Name: (ex. costume_maya_barmaid_chest)";
             // 
@@ -3832,7 +3832,7 @@
             label62.Location = new Point(14, 113);
             label62.Margin = new Padding(4, 0, 4, 0);
             label62.Name = "label62";
-            label62.Size = new Size(106, 15);
+            label62.Size = new Size(105, 15);
             label62.TabIndex = 35;
             label62.Text = "Sex Var Mesh Path:";
             // 
@@ -3854,7 +3854,7 @@
             label63.Location = new Point(14, 59);
             label63.Margin = new Padding(4, 0, 4, 0);
             label63.Name = "label63";
-            label63.Size = new Size(265, 15);
+            label63.Size = new Size(264, 15);
             label63.TabIndex = 33;
             label63.Text = "Mesh Name: (ex. costume_maya_barmaid_chest)";
             // 
@@ -3876,7 +3876,7 @@
             label64.Location = new Point(14, 14);
             label64.Margin = new Padding(4, 0, 4, 0);
             label64.Name = "label64";
-            label64.Size = new Size(496, 15);
+            label64.Size = new Size(495, 15);
             label64.TabIndex = 31;
             label64.Text = "Mesh Path: (ex. /Game/Meshes/Characters/Maya/Costumes/costume_maya_barmaid_chest)";
             // 
@@ -4493,8 +4493,8 @@
             // 
             // AutoModCreator
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.FromArgb(32, 34, 81);
             ClientSize = new Size(615, 997);
             ControlBox = false;

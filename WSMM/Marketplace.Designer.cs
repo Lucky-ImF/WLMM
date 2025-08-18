@@ -37,6 +37,7 @@
             Separator_1 = new PictureBox();
             ModMain_Panel = new Panel();
             ModPanel_Panel = new Panel();
+            ModAuthor_Label = new Label();
             DownloadMod_Button = new Button();
             ModFileSize_Label = new Label();
             ProgressDetails_Label = new Label();
@@ -48,7 +49,6 @@
             ModDescription_TB = new TextBox();
             ModLastUpdate_Label = new Label();
             SupportedVersions_Label = new Label();
-            ModAuthor_Label = new Label();
             ProgressInfo_Label = new Label();
             DownloadProgress_PB = new ProgressBar();
             PreviousScreenshot_Button = new Button();
@@ -182,6 +182,18 @@
             ModPanel_Panel.Size = new Size(586, 609);
             ModPanel_Panel.TabIndex = 14;
             ModPanel_Panel.Visible = false;
+            // 
+            // ModAuthor_Label
+            // 
+            ModAuthor_Label.AutoEllipsis = true;
+            ModAuthor_Label.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            ModAuthor_Label.ForeColor = SystemColors.ActiveCaption;
+            ModAuthor_Label.Location = new Point(24, 37);
+            ModAuthor_Label.Name = "ModAuthor_Label";
+            ModAuthor_Label.Size = new Size(534, 25);
+            ModAuthor_Label.TabIndex = 20;
+            ModAuthor_Label.Text = "Author";
+            ModAuthor_Label.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // DownloadMod_Button
             // 
@@ -319,18 +331,6 @@
             SupportedVersions_Label.TabIndex = 22;
             SupportedVersions_Label.Text = "2024.08.22_Shipping_Full_Build";
             SupportedVersions_Label.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // ModAuthor_Label
-            // 
-            ModAuthor_Label.AutoEllipsis = true;
-            ModAuthor_Label.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            ModAuthor_Label.ForeColor = SystemColors.ActiveCaption;
-            ModAuthor_Label.Location = new Point(24, 37);
-            ModAuthor_Label.Name = "ModAuthor_Label";
-            ModAuthor_Label.Size = new Size(534, 25);
-            ModAuthor_Label.TabIndex = 20;
-            ModAuthor_Label.Text = "Author";
-            ModAuthor_Label.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // ProgressInfo_Label
             // 
@@ -582,8 +582,8 @@
             // 
             // Marketplace
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.FromArgb(32, 34, 81);
             ClientSize = new Size(847, 719);
             ControlBox = false;

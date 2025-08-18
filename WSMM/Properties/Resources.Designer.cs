@@ -143,6 +143,36 @@ namespace WSMM.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Tut_Arrow_1 {
+            get {
+                object obj = ResourceManager.GetObject("Tut_Arrow_1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Tut_Arrow_2 {
+            get {
+                object obj = ResourceManager.GetObject("Tut_Arrow_2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Tut_Arrow_3 {
+            get {
+                object obj = ResourceManager.GetObject("Tut_Arrow_3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap WLMM_Small_Icon {
             get {
                 object obj = ResourceManager.GetObject("WLMM_Small_Icon", resourceCulture);

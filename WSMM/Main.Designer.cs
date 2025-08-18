@@ -46,9 +46,6 @@
             label8 = new Label();
             label9 = new Label();
             NoModsFound_Label = new Label();
-            NoGameLoaded_Panel = new Panel();
-            pictureBox4 = new PictureBox();
-            label11 = new Label();
             RemoveMods_Button = new Button();
             AddMod_Button = new Button();
             DisableMods_Button = new Button();
@@ -69,6 +66,9 @@
             pictureBox2 = new PictureBox();
             label2 = new Label();
             button1 = new Button();
+            NoGameLoaded_Panel = new Panel();
+            pictureBox4 = new PictureBox();
+            label11 = new Label();
             BuildMods_Button = new Button();
             pictureBox1 = new PictureBox();
             ChangesMade_Label = new Label();
@@ -187,17 +187,32 @@
             label38 = new Label();
             openFileDialog3 = new OpenFileDialog();
             DTUpdateCooldown = new System.Windows.Forms.Timer(components);
+            Tutorial_1 = new Panel();
+            DisableTutorial_1 = new LinkLabel();
+            pictureBox5 = new PictureBox();
+            label39 = new Label();
+            Tutorial_2 = new Panel();
+            pictureBox7 = new PictureBox();
+            label41 = new Label();
+            DisableTutorial_2 = new LinkLabel();
+            pictureBox6 = new PictureBox();
+            label40 = new Label();
+            Tutorial_3 = new Panel();
+            label42 = new Label();
+            DisableTutorial_3 = new LinkLabel();
+            pictureBox9 = new PictureBox();
+            label43 = new Label();
             TitlePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
             ModMain_Panel.SuspendLayout();
             DragNDrop_Panel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
-            NoGameLoaded_Panel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             ModFlow_Panel.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            NoGameLoaded_Panel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ProgressPanel.SuspendLayout();
             SelectWLVersion_Panel.SuspendLayout();
@@ -218,6 +233,13 @@
             ((System.ComponentModel.ISupportInitialize)ModPack_Close_Button).BeginInit();
             MM_Panel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)MM_CloseButton).BeginInit();
+            Tutorial_1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
+            Tutorial_2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox7).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox6).BeginInit();
+            Tutorial_3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox9).BeginInit();
             SuspendLayout();
             // 
             // TitlePanel
@@ -354,7 +376,6 @@
             ModMain_Panel.Controls.Add(ReloadMods_Button);
             ModMain_Panel.Controls.Add(DragNDrop_Panel);
             ModMain_Panel.Controls.Add(NoModsFound_Label);
-            ModMain_Panel.Controls.Add(NoGameLoaded_Panel);
             ModMain_Panel.Controls.Add(RemoveMods_Button);
             ModMain_Panel.Controls.Add(AddMod_Button);
             ModMain_Panel.Controls.Add(DisableMods_Button);
@@ -438,38 +459,6 @@
             NoModsFound_Label.TabIndex = 11;
             NoModsFound_Label.Text = "- No Mods Found -";
             NoModsFound_Label.Visible = false;
-            // 
-            // NoGameLoaded_Panel
-            // 
-            NoGameLoaded_Panel.BackColor = Color.FromArgb(75, 68, 138);
-            NoGameLoaded_Panel.BorderStyle = BorderStyle.FixedSingle;
-            NoGameLoaded_Panel.Controls.Add(pictureBox4);
-            NoGameLoaded_Panel.Controls.Add(label11);
-            NoGameLoaded_Panel.Location = new Point(297, 245);
-            NoGameLoaded_Panel.Name = "NoGameLoaded_Panel";
-            NoGameLoaded_Panel.Size = new Size(283, 172);
-            NoGameLoaded_Panel.TabIndex = 10;
-            // 
-            // pictureBox4
-            // 
-            pictureBox4.Image = Properties.Resources.AutoMod_Icon;
-            pictureBox4.Location = new Point(90, 17);
-            pictureBox4.Name = "pictureBox4";
-            pictureBox4.Size = new Size(100, 100);
-            pictureBox4.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox4.TabIndex = 5;
-            pictureBox4.TabStop = false;
-            // 
-            // label11
-            // 
-            label11.AutoSize = true;
-            label11.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label11.ForeColor = SystemColors.ActiveCaption;
-            label11.Location = new Point(18, 126);
-            label11.Name = "label11";
-            label11.Size = new Size(249, 30);
-            label11.TabIndex = 2;
-            label11.Text = "No Game Version Loaded";
             // 
             // RemoveMods_Button
             // 
@@ -743,6 +732,39 @@
             button1.Text = "Outfit";
             button1.TextImageRelation = TextImageRelation.ImageBeforeText;
             button1.UseVisualStyleBackColor = false;
+            button1.Visible = false;
+            // 
+            // NoGameLoaded_Panel
+            // 
+            NoGameLoaded_Panel.BackColor = Color.FromArgb(75, 68, 138);
+            NoGameLoaded_Panel.BorderStyle = BorderStyle.FixedSingle;
+            NoGameLoaded_Panel.Controls.Add(pictureBox4);
+            NoGameLoaded_Panel.Controls.Add(label11);
+            NoGameLoaded_Panel.Location = new Point(330, 294);
+            NoGameLoaded_Panel.Name = "NoGameLoaded_Panel";
+            NoGameLoaded_Panel.Size = new Size(283, 172);
+            NoGameLoaded_Panel.TabIndex = 10;
+            // 
+            // pictureBox4
+            // 
+            pictureBox4.Image = Properties.Resources.AutoMod_Icon;
+            pictureBox4.Location = new Point(90, 17);
+            pictureBox4.Name = "pictureBox4";
+            pictureBox4.Size = new Size(100, 100);
+            pictureBox4.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox4.TabIndex = 5;
+            pictureBox4.TabStop = false;
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label11.ForeColor = SystemColors.ActiveCaption;
+            label11.Location = new Point(18, 126);
+            label11.Name = "label11";
+            label11.Size = new Size(249, 30);
+            label11.TabIndex = 2;
+            label11.Text = "No Game Version Loaded";
             // 
             // BuildMods_Button
             // 
@@ -2281,13 +2303,199 @@
             DTUpdateCooldown.Interval = 30000;
             DTUpdateCooldown.Tick += DTUpdateCooldown_Tick;
             // 
+            // Tutorial_1
+            // 
+            Tutorial_1.BackColor = Color.FromArgb(75, 68, 138);
+            Tutorial_1.BorderStyle = BorderStyle.FixedSingle;
+            Tutorial_1.Controls.Add(DisableTutorial_1);
+            Tutorial_1.Controls.Add(pictureBox5);
+            Tutorial_1.Controls.Add(label39);
+            Tutorial_1.Location = new Point(462, 82);
+            Tutorial_1.Name = "Tutorial_1";
+            Tutorial_1.Size = new Size(385, 61);
+            Tutorial_1.TabIndex = 63;
+            Tutorial_1.Visible = false;
+            // 
+            // DisableTutorial_1
+            // 
+            DisableTutorial_1.ActiveLinkColor = Color.MistyRose;
+            DisableTutorial_1.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            DisableTutorial_1.LinkColor = SystemColors.GradientInactiveCaption;
+            DisableTutorial_1.Location = new Point(3, 3);
+            DisableTutorial_1.Name = "DisableTutorial_1";
+            DisableTutorial_1.Size = new Size(315, 21);
+            DisableTutorial_1.TabIndex = 13;
+            DisableTutorial_1.TabStop = true;
+            DisableTutorial_1.Text = "Disable Tutorial";
+            DisableTutorial_1.TextAlign = ContentAlignment.TopCenter;
+            DisableTutorial_1.VisitedLinkColor = Color.LightCoral;
+            DisableTutorial_1.LinkClicked += DisableTutorial_1_LinkClicked;
+            // 
+            // pictureBox5
+            // 
+            pictureBox5.Image = Properties.Resources.Tut_Arrow_1;
+            pictureBox5.Location = new Point(321, 3);
+            pictureBox5.Name = "pictureBox5";
+            pictureBox5.Size = new Size(63, 53);
+            pictureBox5.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox5.TabIndex = 5;
+            pictureBox5.TabStop = false;
+            // 
+            // label39
+            // 
+            label39.AutoSize = true;
+            label39.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label39.ForeColor = SystemColors.ActiveCaption;
+            label39.Location = new Point(6, 26);
+            label39.Name = "label39";
+            label39.Size = new Size(321, 30);
+            label39.TabIndex = 2;
+            label39.Text = "Click here to load a game version";
+            // 
+            // Tutorial_2
+            // 
+            Tutorial_2.BackColor = Color.FromArgb(75, 68, 138);
+            Tutorial_2.BorderStyle = BorderStyle.FixedSingle;
+            Tutorial_2.Controls.Add(pictureBox7);
+            Tutorial_2.Controls.Add(label41);
+            Tutorial_2.Controls.Add(DisableTutorial_2);
+            Tutorial_2.Controls.Add(pictureBox6);
+            Tutorial_2.Controls.Add(label40);
+            Tutorial_2.Location = new Point(400, 121);
+            Tutorial_2.Name = "Tutorial_2";
+            Tutorial_2.Size = new Size(456, 108);
+            Tutorial_2.TabIndex = 64;
+            Tutorial_2.Visible = false;
+            // 
+            // pictureBox7
+            // 
+            pictureBox7.Image = Properties.Resources.Tut_Arrow_2;
+            pictureBox7.Location = new Point(3, 57);
+            pictureBox7.Name = "pictureBox7";
+            pictureBox7.Size = new Size(63, 53);
+            pictureBox7.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox7.TabIndex = 15;
+            pictureBox7.TabStop = false;
+            // 
+            // label41
+            // 
+            label41.AutoSize = true;
+            label41.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label41.ForeColor = SystemColors.ActiveCaption;
+            label41.Location = new Point(65, 54);
+            label41.Name = "label41";
+            label41.Size = new Size(331, 30);
+            label41.TabIndex = 14;
+            label41.Text = "Or drag and drop .wlmm files here";
+            // 
+            // DisableTutorial_2
+            // 
+            DisableTutorial_2.ActiveLinkColor = Color.MistyRose;
+            DisableTutorial_2.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            DisableTutorial_2.LinkColor = SystemColors.GradientInactiveCaption;
+            DisableTutorial_2.Location = new Point(3, 3);
+            DisableTutorial_2.Name = "DisableTutorial_2";
+            DisableTutorial_2.Size = new Size(385, 21);
+            DisableTutorial_2.TabIndex = 13;
+            DisableTutorial_2.TabStop = true;
+            DisableTutorial_2.Text = "Disable Tutorial";
+            DisableTutorial_2.TextAlign = ContentAlignment.TopCenter;
+            DisableTutorial_2.VisitedLinkColor = Color.LightCoral;
+            DisableTutorial_2.LinkClicked += DisableTutorial_2_LinkClicked;
+            // 
+            // pictureBox6
+            // 
+            pictureBox6.Image = Properties.Resources.Tut_Arrow_1;
+            pictureBox6.Location = new Point(388, 3);
+            pictureBox6.Name = "pictureBox6";
+            pictureBox6.Size = new Size(63, 53);
+            pictureBox6.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox6.TabIndex = 5;
+            pictureBox6.TabStop = false;
+            // 
+            // label40
+            // 
+            label40.AutoSize = true;
+            label40.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label40.ForeColor = SystemColors.ActiveCaption;
+            label40.Location = new Point(96, 25);
+            label40.Name = "label40";
+            label40.Size = new Size(293, 30);
+            label40.TabIndex = 2;
+            label40.Text = "Click here to add .wlmm mods";
+            // 
+            // Tutorial_3
+            // 
+            Tutorial_3.BackColor = Color.FromArgb(75, 68, 138);
+            Tutorial_3.BorderStyle = BorderStyle.FixedSingle;
+            Tutorial_3.Controls.Add(label42);
+            Tutorial_3.Controls.Add(DisableTutorial_3);
+            Tutorial_3.Controls.Add(pictureBox9);
+            Tutorial_3.Controls.Add(label43);
+            Tutorial_3.Location = new Point(511, 618);
+            Tutorial_3.Name = "Tutorial_3";
+            Tutorial_3.Size = new Size(525, 81);
+            Tutorial_3.TabIndex = 65;
+            Tutorial_3.Visible = false;
+            // 
+            // label42
+            // 
+            label42.AutoSize = true;
+            label42.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label42.ForeColor = SystemColors.ActiveCaption;
+            label42.Location = new Point(69, 51);
+            label42.Name = "label42";
+            label42.Size = new Size(310, 21);
+            label42.TabIndex = 14;
+            label42.Text = "(Do this everytime you swap/modify mods)";
+            // 
+            // DisableTutorial_3
+            // 
+            DisableTutorial_3.ActiveLinkColor = Color.MistyRose;
+            DisableTutorial_3.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            DisableTutorial_3.LinkColor = SystemColors.GradientInactiveCaption;
+            DisableTutorial_3.Location = new Point(3, 3);
+            DisableTutorial_3.Name = "DisableTutorial_3";
+            DisableTutorial_3.Size = new Size(517, 21);
+            DisableTutorial_3.TabIndex = 13;
+            DisableTutorial_3.TabStop = true;
+            DisableTutorial_3.Text = "Disable Tutorial";
+            DisableTutorial_3.TextAlign = ContentAlignment.TopCenter;
+            DisableTutorial_3.VisitedLinkColor = Color.LightCoral;
+            DisableTutorial_3.LinkClicked += DisableTutorial_3_LinkClicked;
+            // 
+            // pictureBox9
+            // 
+            pictureBox9.Image = Properties.Resources.Tut_Arrow_3;
+            pictureBox9.Location = new Point(457, 28);
+            pictureBox9.Name = "pictureBox9";
+            pictureBox9.Size = new Size(63, 53);
+            pictureBox9.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox9.TabIndex = 5;
+            pictureBox9.TabStop = false;
+            // 
+            // label43
+            // 
+            label43.AutoSize = true;
+            label43.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label43.ForeColor = SystemColors.ActiveCaption;
+            label43.Location = new Point(11, 21);
+            label43.Name = "label43";
+            label43.Size = new Size(455, 30);
+            label43.TabIndex = 2;
+            label43.Text = "Click here to deploy/build/install enabled mods ";
+            // 
             // Main
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.FromArgb(32, 34, 81);
             ClientSize = new Size(1134, 761);
             ControlBox = false;
+            Controls.Add(Tutorial_3);
+            Controls.Add(Tutorial_2);
+            Controls.Add(Tutorial_1);
+            Controls.Add(NoGameLoaded_Panel);
             Controls.Add(LoadEdit_Panel);
             Controls.Add(DT_Updater_Panel);
             Controls.Add(MM_Panel);
@@ -2337,13 +2545,13 @@
             DragNDrop_Panel.ResumeLayout(false);
             DragNDrop_Panel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
-            NoGameLoaded_Panel.ResumeLayout(false);
-            NoGameLoaded_Panel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
             ModFlow_Panel.ResumeLayout(false);
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            NoGameLoaded_Panel.ResumeLayout(false);
+            NoGameLoaded_Panel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ProgressPanel.ResumeLayout(false);
             SelectWLVersion_Panel.ResumeLayout(false);
@@ -2373,6 +2581,16 @@
             MM_Panel.ResumeLayout(false);
             MM_Panel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)MM_CloseButton).EndInit();
+            Tutorial_1.ResumeLayout(false);
+            Tutorial_1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
+            Tutorial_2.ResumeLayout(false);
+            Tutorial_2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox7).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox6).EndInit();
+            Tutorial_3.ResumeLayout(false);
+            Tutorial_3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox9).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -2536,5 +2754,20 @@
         private Button BuildSettingsDTUpdater_Button;
         private System.Windows.Forms.Timer DTUpdateCooldown;
         private Label DT_Updater_DownloadsLabel;
+        private Panel Tutorial_1;
+        private LinkLabel DisableTutorial_1;
+        private PictureBox pictureBox5;
+        private Label label39;
+        private Panel Tutorial_2;
+        private PictureBox pictureBox7;
+        private Label label41;
+        private LinkLabel DisableTutorial_2;
+        private PictureBox pictureBox6;
+        private Label label40;
+        private Panel Tutorial_3;
+        private LinkLabel DisableTutorial_3;
+        private PictureBox pictureBox9;
+        private Label label43;
+        private Label label42;
     }
 }

@@ -52,6 +52,8 @@ namespace WSMM
 
         string ModPackPath = string.Empty;
 
+        bool TutorialEnabled = true;
+
         //Panel, Picturebox, Label(Name), Label(Error), Label(Version), Label(SupportedVersions), Label(Author), LinkLabel(Remove), LinkLabel(Link), Checkbox
         Panel[] Mod_Panel = new Panel[100];
         PictureBox[] Mod_Icon = new PictureBox[100];
@@ -174,6 +176,8 @@ namespace WSMM
             SelectWLVersionPath_TB.Text = "None";
             SelectWLVersion_CB.Text = "Please specify version...";
             SelectWLVersionUEV_TB.Text = "None";
+            SelectWLVersion_Panel.BringToFront();
+            Tutorial_1.Hide();
         }
 
         private void SelectWLVersion_CloseButton_MouseEnter(object sender, EventArgs e)
@@ -316,6 +320,10 @@ namespace WSMM
                 Cat_CurrentEntryID = 0;
 
                 NoModsFound_Label.Show();
+                if (TutorialEnabled == true)
+                {
+                    Tutorial_2.Show();
+                }
 
                 LoadGameVersion(Path.GetDirectoryName(SelectWLVersionPath_TB.Text), SelectWLVersion_CB.Text, SelectWLVersionUEV_TB.Text);
             }
@@ -353,6 +361,10 @@ namespace WSMM
 
             //Load Mods
             NoModsFound_Label.Visible = true;
+            if (TutorialEnabled == true)
+            {
+                Tutorial_2.Show();
+            }
             LoadMods();
 
             if (DT_Updater_Panel.Visible == true)
@@ -388,6 +400,7 @@ namespace WSMM
 
         private void Main_Load(object sender, EventArgs e)
         {
+            Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
             //Set title
             this.Text = "Wild Life Mod Manager - v." + WLMM_Version;
             TitleLabel.Text = "Wild Life Mod Manager - v." + WLMM_Version;
@@ -826,6 +839,17 @@ namespace WSMM
                     {
                         prevModPath = GetSlice(file, "=", 1);
                     }
+                    else if (file.StartsWith("Tutorial"))
+                    {
+                        if (GetSlice(file, "=", 1) == "True")
+                        {
+                            TutorialEnabled = true;
+                        }
+                        else
+                        {
+                            TutorialEnabled = false;
+                        }
+                    }
                 }
 
                 if (LoadedWLPath != "" && LoadedWLPath != string.Empty)
@@ -834,13 +858,34 @@ namespace WSMM
                     {
                         LoadGameVersion(LoadedWLPath, LoadedWLVersion, LoadedUEVersion);
                     }
+                    else
+                    {
+                        if (TutorialEnabled == true)
+                        {
+                            Tutorial_1.Show();
+                        }
+                    }
+                }
+                else
+                {
+                    if (TutorialEnabled == true)
+                    {
+                        Tutorial_1.Show();
+                    }
+                }
+            }
+            else
+            {
+                if (TutorialEnabled == true)
+                {
+                    Tutorial_1.Show();
                 }
             }
         }
 
         private void SaveSession()
         {
-            string SaveFile = "WL_Path = " + LoadedWLPath + "\nWL_Version = " + LoadedWLVersion + "\nUE_Version = " + LoadedUEVersion + "\nChangesMade = " + ChangesMade.ToString() + "\nprevIconPath = " + prevIconPath + "\nprevPakPath = " + prevPakPath + "\nprevAutoModPath = " + prevAutoModPath + "\nprevModPath = " + prevModPath;
+            string SaveFile = "WL_Path = " + LoadedWLPath + "\nWL_Version = " + LoadedWLVersion + "\nUE_Version = " + LoadedUEVersion + "\nChangesMade = " + ChangesMade.ToString() + "\nprevIconPath = " + prevIconPath + "\nprevPakPath = " + prevPakPath + "\nprevAutoModPath = " + prevAutoModPath + "\nprevModPath = " + prevModPath + "\nTutorial = " + TutorialEnabled.ToString();
             File.WriteAllText(Application.StartupPath + @"System\Session.dat", SaveFile);
         }
 
@@ -1157,6 +1202,11 @@ namespace WSMM
                 NoModsFound_Label.Invoke((System.Windows.Forms.MethodInvoker)delegate
                 {
                     NoModsFound_Label.Hide();
+                    Tutorial_2.Hide();
+                    if (TutorialEnabled == true)
+                    {
+                        Tutorial_3.Show();
+                    }
                 });
             }
 
@@ -1734,6 +1784,8 @@ namespace WSMM
             BuildModProgress_PB.Value = 0;
             BuildModProgress_PB.Maximum = Mod_Entries.Count + 2;
             BuildMods_Button.Enabled = false;
+            Tutorial_3.Hide();
+            TutorialEnabled = false;
 
             // Create a thread and call a background method
             Thread backgroundThread = new Thread(() => BuildMods());
@@ -2283,7 +2335,7 @@ namespace WSMM
                     OutfitEntry = OutfitEntry.Replace("[CLOTHING_ID]", GetCleanString(contents, "[CLOTHING_ID]"));
                     OutfitEntry += "," + "\n";
                     OutfitEntry = OutfitEntry.Insert(0, GetCleanString(contents, "Character") + "¤");
-                    
+
                     bool DupeFound = false;
                     foreach (string itm in NameMap_Defaults)
                     {
@@ -4258,6 +4310,24 @@ namespace WSMM
         private void DTUpdateCooldown_Tick(object sender, EventArgs e)
         {
             DT_Updater_DownloadButton.Enabled = true;
+        }
+
+        private void DisableTutorial_1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            TutorialEnabled = false;
+            Tutorial_1.Hide();
+        }
+
+        private void DisableTutorial_2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            TutorialEnabled = false;
+            Tutorial_2.Hide();
+        }
+
+        private void DisableTutorial_3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            TutorialEnabled = false;
+            Tutorial_3.Hide();
         }
     }
 }

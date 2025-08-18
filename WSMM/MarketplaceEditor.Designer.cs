@@ -701,15 +701,15 @@
             IncludeCodeTags.ForeColor = SystemColors.ActiveCaption;
             IncludeCodeTags.Location = new Point(231, 762);
             IncludeCodeTags.Name = "IncludeCodeTags";
-            IncludeCodeTags.Size = new Size(197, 19);
+            IncludeCodeTags.Size = new Size(198, 19);
             IncludeCodeTags.TabIndex = 19;
             IncludeCodeTags.Text = "Include Discord Code Block Tags";
             IncludeCodeTags.UseVisualStyleBackColor = true;
             // 
             // MarketplaceEditor
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.FromArgb(32, 34, 81);
             ClientSize = new Size(658, 839);
             Controls.Add(IncludeCodeTags);
