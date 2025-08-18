@@ -712,6 +712,7 @@ namespace WSMM
             {
                 BuildSettings_Button.Text = "Build Settings";
                 BuildSettings_Panel.Hide();
+                SaveBuildSettings();
             }
             else
             {
@@ -923,6 +924,10 @@ namespace WSMM
                             BS_VerifyFI_CB.Checked = false;
                         }
                     }
+                    else if (file.StartsWith("LaunchParams"))
+                    {
+                        BS_LaunchParams.Text = GetSlice(file, "=", 1);
+                    }
                 }
             }
             else
@@ -950,7 +955,8 @@ namespace WSMM
         private void SaveBuildSettings()
         {
             string SaveFile = "DT_ClothesOutfit = " + BS_BaseClothesOutfitFile.Text + "\nDT_GameCharacterOutfits = " + BS_BaseGameCharacterOutfitFile.Text +
-                "\nDT_GameCharacterCustomization = " + BS_BaseGameCharacterCustomizationFile.Text + "\nMappings = " + BS_Mappings.Text + "\nVerifyIntegrity = " + BS_VerifyFI_CB.CheckState.ToString();
+                "\nDT_GameCharacterCustomization = " + BS_BaseGameCharacterCustomizationFile.Text + "\nMappings = " + BS_Mappings.Text + "\nVerifyIntegrity = " + BS_VerifyFI_CB.CheckState.ToString() +
+                "\nLaunchParams = " + BS_LaunchParams.Text;
             File.WriteAllText(Application.StartupPath + @"System\" + LoadedWLVersion + @"_BuildSettings.ini", SaveFile);
         }
 
@@ -3304,6 +3310,7 @@ namespace WSMM
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
             SaveSession();
+            SaveBuildSettings();
         }
 
         private void BugReportLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -4006,7 +4013,7 @@ namespace WSMM
         {
             try
             {
-                Process.Start(LoadedWLPath + @"\WildLifeC.exe");
+                Process.Start(LoadedWLPath + @"\WildLifeC.exe", BS_LaunchParams.Text);
             }
             catch (Exception)
             {

@@ -91,6 +91,8 @@
             folderBrowserDialog1 = new FolderBrowserDialog();
             BuildSettings_Button = new Button();
             BuildSettings_Panel = new Panel();
+            BS_LaunchParams = new TextBox();
+            label44 = new Label();
             BuildSettingsDTUpdater_Button = new Button();
             BS_AlwaysRunAM_CB = new CheckBox();
             BS_AllowOutdated_CB = new CheckBox();
@@ -1030,6 +1032,8 @@
             // BuildSettings_Panel
             // 
             BuildSettings_Panel.BorderStyle = BorderStyle.FixedSingle;
+            BuildSettings_Panel.Controls.Add(BS_LaunchParams);
+            BuildSettings_Panel.Controls.Add(label44);
             BuildSettings_Panel.Controls.Add(BuildSettingsDTUpdater_Button);
             BuildSettings_Panel.Controls.Add(BS_AlwaysRunAM_CB);
             BuildSettings_Panel.Controls.Add(BS_AllowOutdated_CB);
@@ -1043,11 +1047,31 @@
             BuildSettings_Panel.Controls.Add(BS_BaseGameCharacterOutfitFile);
             BuildSettings_Panel.Controls.Add(label14);
             BuildSettings_Panel.Controls.Add(BS_BaseClothesOutfitFile);
-            BuildSettings_Panel.Location = new Point(898, 303);
+            BuildSettings_Panel.Location = new Point(898, 255);
             BuildSettings_Panel.Name = "BuildSettings_Panel";
-            BuildSettings_Panel.Size = new Size(231, 335);
+            BuildSettings_Panel.Size = new Size(231, 383);
             BuildSettings_Panel.TabIndex = 13;
             BuildSettings_Panel.Visible = false;
+            // 
+            // BS_LaunchParams
+            // 
+            BS_LaunchParams.BackColor = Color.FromArgb(32, 34, 81);
+            BS_LaunchParams.ForeColor = SystemColors.ActiveCaption;
+            BS_LaunchParams.Location = new Point(6, 353);
+            BS_LaunchParams.Name = "BS_LaunchParams";
+            BS_LaunchParams.Size = new Size(218, 23);
+            BS_LaunchParams.TabIndex = 49;
+            // 
+            // label44
+            // 
+            label44.AutoSize = true;
+            label44.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label44.ForeColor = SystemColors.ActiveCaption;
+            label44.Location = new Point(54, 333);
+            label44.Name = "label44";
+            label44.Size = new Size(121, 17);
+            label44.TabIndex = 48;
+            label44.Text = "Launch Parameters:";
             // 
             // BuildSettingsDTUpdater_Button
             // 
@@ -2492,6 +2516,7 @@
             BackColor = Color.FromArgb(32, 34, 81);
             ClientSize = new Size(1134, 761);
             ControlBox = false;
+            Controls.Add(BuildSettings_Panel);
             Controls.Add(Tutorial_3);
             Controls.Add(Tutorial_2);
             Controls.Add(Tutorial_1);
@@ -2505,7 +2530,6 @@
             Controls.Add(ExpandedLink_Panel);
             Controls.Add(TransferMods_Panel);
             Controls.Add(TransferModsOpen_Button);
-            Controls.Add(BuildSettings_Panel);
             Controls.Add(MarketplaceEditor_Button);
             Controls.Add(SelectWLVersion_Panel);
             Controls.Add(Marketplace_Button);
@@ -2769,5 +2793,7 @@
         private PictureBox pictureBox9;
         private Label label43;
         private Label label42;
+        private TextBox BS_LaunchParams;
+        private Label label44;
     }
 }
