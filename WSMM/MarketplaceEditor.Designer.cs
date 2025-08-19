@@ -489,6 +489,8 @@
             ModWLMMPath_TB.TabIndex = 38;
             ModWLMMPath_TB.Text = "None";
             ModWLMMPath_TB.TextAlign = HorizontalAlignment.Center;
+            ModWLMMPath_TB.DragDrop += ModWLMMPath_TB_DragDrop;
+            ModWLMMPath_TB.DragEnter += ModWLMMPath_TB_DragEnter;
             // 
             // linkLabel1
             // 
@@ -696,8 +698,8 @@
             // IncludeCodeTags
             // 
             IncludeCodeTags.AutoSize = true;
-            IncludeCodeTags.Checked = true;
             IncludeCodeTags.CheckState = CheckState.Checked;
+            IncludeCodeTags.Checked = true;
             IncludeCodeTags.ForeColor = SystemColors.ActiveCaption;
             IncludeCodeTags.Location = new Point(231, 762);
             IncludeCodeTags.Name = "IncludeCodeTags";

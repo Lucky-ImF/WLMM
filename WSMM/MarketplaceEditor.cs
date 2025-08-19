@@ -141,179 +141,184 @@ namespace WSMM
             Close_Button.Image = Properties.Resources.Close_Icon;
         }
 
-        private void ModWLMMBrowse_Button_Click(object sender, EventArgs e)
+        private void LoadWLMMFile()
         {
-            openFileDialog1.InitialDirectory = Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Mod Creator";
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            Directory.CreateDirectory(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp");
+            // Load Metadata
+            if (File.Exists(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\Metadata.dat"))
             {
-                ModWLMMPath_TB.Text = openFileDialog1.FileName;
-                Directory.CreateDirectory(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp");
-                // Load Metadata
-                if (File.Exists(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\Metadata.dat"))
-                {
-                    File.Delete(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\Metadata.dat");
-                }
-                using (ZipArchive zip = ZipFile.Open(openFileDialog1.FileName, ZipArchiveMode.Read))
-                    foreach (ZipArchiveEntry entry in zip.Entries)
-                        if (entry.Name == "Metadata.dat")
-                            entry.ExtractToFile(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\Metadata.dat");
+                File.Delete(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\Metadata.dat");
+            }
+            using (ZipArchive zip = ZipFile.Open(ModWLMMPath_TB.Text, ZipArchiveMode.Read))
+                foreach (ZipArchiveEntry entry in zip.Entries)
+                    if (entry.Name == "Metadata.dat")
+                        entry.ExtractToFile(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\Metadata.dat");
 
-                //Read MetaData
-                string SupVers = string.Empty;
-                string Categories = string.Empty;
-                string Characters = string.Empty;
-                string[] MetaData = File.ReadAllLines(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\Metadata.dat");
-                foreach (string meta in MetaData)
+            //Read MetaData
+            string SupVers = string.Empty;
+            string Categories = string.Empty;
+            string Characters = string.Empty;
+            string[] MetaData = File.ReadAllLines(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\Metadata.dat");
+            foreach (string meta in MetaData)
+            {
+                if (meta.StartsWith("ModAuthor"))
                 {
-                    if (meta.StartsWith("ModAuthor"))
-                    {
-                        ModAuthor_TB.Text = GetSlice(meta, "=", 1);
-                    }
-                    else if (meta.StartsWith("ModName"))
-                    {
-                        ModName_TB.Text = GetSlice(meta, "=", 1);
-                    }
-                    else if (meta.StartsWith("ModVersion"))
-                    {
-                        ModVersion_TB.Text = GetSlice(meta, "=", 1);
-                    }
-                    else if (meta.StartsWith("SupportedWLVersions"))
-                    {
-                        SupVers = GetSlice(meta, "=", 1);
-                    }
-                    else if (meta.StartsWith("ModURL"))
-                    {
-                        ModURL_TB.Text = GetSlice(meta, "=", 1);
-                    }
-                    else if (meta.StartsWith("Categories"))
-                    {
-                        Categories = GetSlice(meta, "=", 1);
-                    }
-                    else if (meta.StartsWith("Characters"))
-                    {
-                        Characters = GetSlice(meta, "=", 1);
-                    }
+                    ModAuthor_TB.Text = GetSlice(meta, "=", 1);
                 }
+                else if (meta.StartsWith("ModName"))
+                {
+                    ModName_TB.Text = GetSlice(meta, "=", 1);
+                }
+                else if (meta.StartsWith("ModVersion"))
+                {
+                    ModVersion_TB.Text = GetSlice(meta, "=", 1);
+                }
+                else if (meta.StartsWith("SupportedWLVersions"))
+                {
+                    SupVers = GetSlice(meta, "=", 1);
+                }
+                else if (meta.StartsWith("ModURL"))
+                {
+                    ModURL_TB.Text = GetSlice(meta, "=", 1);
+                }
+                else if (meta.StartsWith("Categories"))
+                {
+                    Categories = GetSlice(meta, "=", 1);
+                }
+                else if (meta.StartsWith("Characters"))
+                {
+                    Characters = GetSlice(meta, "=", 1);
+                }
+            }
 
-                //Clear Supported Versions
-                for (int i = 0; i <= (SupportedWLVersions_CLB.Items.Count - 1); i++)
-                {
-                    SupportedWLVersions_CLB.SetItemChecked(i, false);
-                }
-                //Clear Characters
-                for (int i = 0; i <= (AffectedCharacters_CLB.Items.Count - 1); i++)
-                {
-                    AffectedCharacters_CLB.SetItemChecked(i, false);
-                }
-                //Clear Categories
-                for (int i = 0; i <= (Categories_CLB.Items.Count - 1); i++)
-                {
-                    Categories_CLB.SetItemChecked(i, false);
-                }
+            //Clear Supported Versions
+            for (int i = 0; i <= (SupportedWLVersions_CLB.Items.Count - 1); i++)
+            {
+                SupportedWLVersions_CLB.SetItemChecked(i, false);
+            }
+            //Clear Characters
+            for (int i = 0; i <= (AffectedCharacters_CLB.Items.Count - 1); i++)
+            {
+                AffectedCharacters_CLB.SetItemChecked(i, false);
+            }
+            //Clear Categories
+            for (int i = 0; i <= (Categories_CLB.Items.Count - 1); i++)
+            {
+                Categories_CLB.SetItemChecked(i, false);
+            }
 
-                if (SupVers.Contains("All Versions"))
+            if (SupVers.Contains("All Versions"))
+            {
+                SupportedWLVersions_CLB.SetItemChecked(SupportedWLVersions_CLB.Items.Count - 1, true);
+            }
+            else
+            {
+                if (SupVers.Contains(","))
                 {
-                    SupportedWLVersions_CLB.SetItemChecked(SupportedWLVersions_CLB.Items.Count - 1, true);
-                }
-                else
-                {
-                    if (SupVers.Contains(","))
+                    string[] SplitSupVers = SupVers.Split(",");
+                    foreach (string s in SplitSupVers)
                     {
-                        string[] SplitSupVers = SupVers.Split(",");
-                        foreach (string s in SplitSupVers)
-                        {
-                            string TrimmedS = s.Trim();
-                            for (int i = 0; i <= (SupportedWLVersions_CLB.Items.Count - 1); i++)
-                            {
-                                if (SupportedWLVersions_CLB.Items[i].ToString() == TrimmedS)
-                                {
-                                    SupportedWLVersions_CLB.SetItemChecked(i, true);
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
+                        string TrimmedS = s.Trim();
                         for (int i = 0; i <= (SupportedWLVersions_CLB.Items.Count - 1); i++)
                         {
-                            if (SupportedWLVersions_CLB.Items[i].ToString() == SupVers)
+                            if (SupportedWLVersions_CLB.Items[i].ToString() == TrimmedS)
                             {
                                 SupportedWLVersions_CLB.SetItemChecked(i, true);
                             }
                         }
                     }
                 }
-
-                // Characters
-                if (Characters.Contains(","))
+                else
                 {
-                    string[] SplitChars = Characters.Split(",");
-                    foreach (string s in SplitChars)
+                    for (int i = 0; i <= (SupportedWLVersions_CLB.Items.Count - 1); i++)
                     {
-                        string TrimmedS = s.Trim();
-                        for (int i = 0; i <= (AffectedCharacters_CLB.Items.Count - 1); i++)
+                        if (SupportedWLVersions_CLB.Items[i].ToString() == SupVers)
                         {
-                            if (AffectedCharacters_CLB.Items[i].ToString() == TrimmedS)
-                            {
-                                AffectedCharacters_CLB.SetItemChecked(i, true);
-                            }
+                            SupportedWLVersions_CLB.SetItemChecked(i, true);
                         }
                     }
                 }
-                else
+            }
+
+            // Characters
+            if (Characters.Contains(","))
+            {
+                string[] SplitChars = Characters.Split(",");
+                foreach (string s in SplitChars)
                 {
+                    string TrimmedS = s.Trim();
                     for (int i = 0; i <= (AffectedCharacters_CLB.Items.Count - 1); i++)
                     {
-                        if (AffectedCharacters_CLB.Items[i].ToString() == Characters)
+                        if (AffectedCharacters_CLB.Items[i].ToString() == TrimmedS)
                         {
                             AffectedCharacters_CLB.SetItemChecked(i, true);
                         }
                     }
                 }
-
-                // Categories
-                if (Categories.Contains(","))
+            }
+            else
+            {
+                for (int i = 0; i <= (AffectedCharacters_CLB.Items.Count - 1); i++)
                 {
-                    string[] SplitCats = Categories.Split(",");
-                    foreach (string s in SplitCats)
+                    if (AffectedCharacters_CLB.Items[i].ToString() == Characters)
                     {
-                        string TrimmedS = s.Trim();
-                        for (int i = 0; i <= (Categories_CLB.Items.Count - 1); i++)
-                        {
-                            if (Categories_CLB.Items[i].ToString() == TrimmedS)
-                            {
-                                Categories_CLB.SetItemChecked(i, true);
-                            }
-                        }
+                        AffectedCharacters_CLB.SetItemChecked(i, true);
                     }
                 }
-                else
+            }
+
+            // Categories
+            if (Categories.Contains(","))
+            {
+                string[] SplitCats = Categories.Split(",");
+                foreach (string s in SplitCats)
                 {
+                    string TrimmedS = s.Trim();
                     for (int i = 0; i <= (Categories_CLB.Items.Count - 1); i++)
                     {
-                        if (Categories_CLB.Items[i].ToString() == Categories)
+                        if (Categories_CLB.Items[i].ToString() == TrimmedS)
                         {
                             Categories_CLB.SetItemChecked(i, true);
                         }
                     }
                 }
-
-                // Calculate mod size
-                string[] sizes = { "B", "KB", "MB", "GB", "TB" };
-                double len = new FileInfo(openFileDialog1.FileName).Length;
-                int order = 0;
-                while (len >= 1024 && order < sizes.Length - 1)
+            }
+            else
+            {
+                for (int i = 0; i <= (Categories_CLB.Items.Count - 1); i++)
                 {
-                    order++;
-                    len = len / 1024;
+                    if (Categories_CLB.Items[i].ToString() == Categories)
+                    {
+                        Categories_CLB.SetItemChecked(i, true);
+                    }
                 }
-                string result = String.Format("{0:0.##} {1}", len, sizes[order]);
-                ModSize_TB.Text = result.Replace(",", ".");
+            }
 
-                // Last Update Day
-                LastUpdate_TB.Text = DateTime.Now.Year + "-" + DateTime.Now.Month + "-" + DateTime.Now.Day;
+            // Calculate mod size
+            string[] sizes = { "B", "KB", "MB", "GB", "TB" };
+            double len = new FileInfo(ModWLMMPath_TB.Text).Length;
+            int order = 0;
+            while (len >= 1024 && order < sizes.Length - 1)
+            {
+                order++;
+                len = len / 1024;
+            }
+            string result = String.Format("{0:0.##} {1}", len, sizes[order]);
+            ModSize_TB.Text = result.Replace(",", ".");
 
-                LoadFromMarketplace_Button.Show();
+            // Last Update Day
+            LastUpdate_TB.Text = DateTime.Now.Year + "-" + DateTime.Now.Month + "-" + DateTime.Now.Day;
+
+            LoadFromMarketplace_Button.Show();
+        }
+
+        private void ModWLMMBrowse_Button_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.InitialDirectory = Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Mod Creator";
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                ModWLMMPath_TB.Text = openFileDialog1.FileName;
+                LoadWLMMFile();
             }
         }
 
@@ -563,6 +568,22 @@ namespace WSMM
             }
 
             return Encoding.UTF8.GetString(decompressedBytes);
+        }
+
+        private void ModWLMMPath_TB_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+            if (files[0].ToLower().EndsWith(".wlmm"))
+            {
+                ModWLMMPath_TB.Text = files[0];
+                LoadWLMMFile();
+            }
+        }
+
+        private void ModWLMMPath_TB_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
         }
     }
 }

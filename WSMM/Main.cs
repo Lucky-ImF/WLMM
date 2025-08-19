@@ -1498,6 +1498,7 @@ namespace WSMM
             {
                 Mod_ErrorLabel[EntryID].Text = "Version Mismatch";
                 Mod_ErrorLabel[EntryID].Visible = true;
+                Mod_ErrorLabel[EntryID].BringToFront();
                 Mod_SupportedVersionsLabel[EntryID].ForeColor = System.Drawing.Color.LightCoral;
                 Mod_EnabledCB[EntryID].Enabled = false;
                 Mod_EnabledCB[EntryID].Checked = false;
@@ -1533,7 +1534,6 @@ namespace WSMM
                 {
                     string TrimmedS = s.Trim();
                     Mod_Dependencies[EntryID].Add(TrimmedS);
-                    Debug.WriteLine(Mod_Dependencies[EntryID].Count);
                 }
             }
             else
@@ -1543,7 +1543,6 @@ namespace WSMM
                 if (TrimmedS != string.Empty)
                 {
                     Mod_Dependencies[EntryID].Add(TrimmedS);
-                    Debug.WriteLine(Mod_Dependencies[EntryID].Count);
                 }
             }
 
@@ -3664,6 +3663,7 @@ namespace WSMM
                                         Mod_ErrorLabel[ModID_X].Text = "Conflicting with: " + Mod_NameLabel[ModID_Y].Text;
                                         Mod_ErrorLabel[ModID_X].ForeColor = Color.Gold;
                                         Mod_ErrorLabel[ModID_X].Visible = true;
+                                        Mod_ErrorLabel[ModID_X].BringToFront();
                                         Graphics g = CreateGraphics();
                                         SizeF LabelSize = g.MeasureString(Mod_ErrorLabel[ModID_X].Text, Mod_ErrorLabel[ModID_X].Font);
                                         Mod_ErrorLabel[ModID_X].Location = new Point(Mod_VersionLabel[ModID_X].Left - ((int)LabelSize.Width) - 5, 11);
