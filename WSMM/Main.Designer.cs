@@ -749,7 +749,7 @@
             // 
             // pictureBox4
             // 
-            pictureBox4.Image = Properties.Resources.AutoMod_Icon;
+            pictureBox4.Image = Properties.Resources.WLMM_Small_Icon;
             pictureBox4.Location = new Point(90, 17);
             pictureBox4.Name = "pictureBox4";
             pictureBox4.Size = new Size(100, 100);
@@ -1116,8 +1116,8 @@
             // BS_VerifyFI_CB
             // 
             BS_VerifyFI_CB.AutoSize = true;
-            BS_VerifyFI_CB.Checked = true;
             BS_VerifyFI_CB.CheckState = CheckState.Checked;
+            BS_VerifyFI_CB.Checked = true;
             BS_VerifyFI_CB.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             BS_VerifyFI_CB.ForeColor = SystemColors.ActiveCaption;
             BS_VerifyFI_CB.Location = new Point(5, 261);
