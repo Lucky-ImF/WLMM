@@ -204,6 +204,10 @@
             DisableTutorial_3 = new LinkLabel();
             pictureBox9 = new PictureBox();
             label43 = new Label();
+            Tutorial_0 = new Panel();
+            DisableTutorial_0 = new LinkLabel();
+            pictureBox8 = new PictureBox();
+            label45 = new Label();
             TitlePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
@@ -242,6 +246,8 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox6).BeginInit();
             Tutorial_3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox9).BeginInit();
+            Tutorial_0.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox8).BeginInit();
             SuspendLayout();
             // 
             // TitlePanel
@@ -1116,8 +1122,8 @@
             // BS_VerifyFI_CB
             // 
             BS_VerifyFI_CB.AutoSize = true;
-            BS_VerifyFI_CB.CheckState = CheckState.Checked;
             BS_VerifyFI_CB.Checked = true;
+            BS_VerifyFI_CB.CheckState = CheckState.Checked;
             BS_VerifyFI_CB.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             BS_VerifyFI_CB.ForeColor = SystemColors.ActiveCaption;
             BS_VerifyFI_CB.Location = new Point(5, 261);
@@ -2509,6 +2515,55 @@
             label43.TabIndex = 2;
             label43.Text = "Click here to deploy/build/install enabled mods ";
             // 
+            // Tutorial_0
+            // 
+            Tutorial_0.BackColor = Color.FromArgb(75, 68, 138);
+            Tutorial_0.BorderStyle = BorderStyle.FixedSingle;
+            Tutorial_0.Controls.Add(DisableTutorial_0);
+            Tutorial_0.Controls.Add(pictureBox8);
+            Tutorial_0.Controls.Add(label45);
+            Tutorial_0.Location = new Point(196, 535);
+            Tutorial_0.Name = "Tutorial_0";
+            Tutorial_0.Size = new Size(402, 61);
+            Tutorial_0.TabIndex = 66;
+            Tutorial_0.Visible = false;
+            // 
+            // DisableTutorial_0
+            // 
+            DisableTutorial_0.ActiveLinkColor = Color.MistyRose;
+            DisableTutorial_0.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            DisableTutorial_0.LinkColor = SystemColors.GradientInactiveCaption;
+            DisableTutorial_0.Location = new Point(3, 3);
+            DisableTutorial_0.Name = "DisableTutorial_0";
+            DisableTutorial_0.Size = new Size(315, 21);
+            DisableTutorial_0.TabIndex = 13;
+            DisableTutorial_0.TabStop = true;
+            DisableTutorial_0.Text = "Disable Tutorial";
+            DisableTutorial_0.TextAlign = ContentAlignment.TopCenter;
+            DisableTutorial_0.VisitedLinkColor = Color.LightCoral;
+            DisableTutorial_0.LinkClicked += DisableTutorial_0_LinkClicked;
+            // 
+            // pictureBox8
+            // 
+            pictureBox8.Image = Properties.Resources.Tut_Arrow_1;
+            pictureBox8.Location = new Point(334, 3);
+            pictureBox8.Name = "pictureBox8";
+            pictureBox8.Size = new Size(63, 53);
+            pictureBox8.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox8.TabIndex = 5;
+            pictureBox8.TabStop = false;
+            // 
+            // label45
+            // 
+            label45.AutoSize = true;
+            label45.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label45.ForeColor = SystemColors.ActiveCaption;
+            label45.Location = new Point(6, 26);
+            label45.Name = "label45";
+            label45.Size = new Size(327, 30);
+            label45.TabIndex = 2;
+            label45.Text = "Click here to download datatables";
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
@@ -2516,13 +2571,14 @@
             BackColor = Color.FromArgb(32, 34, 81);
             ClientSize = new Size(1134, 761);
             ControlBox = false;
+            Controls.Add(Tutorial_0);
+            Controls.Add(DT_Updater_Panel);
             Controls.Add(BuildSettings_Panel);
             Controls.Add(Tutorial_3);
             Controls.Add(Tutorial_2);
             Controls.Add(Tutorial_1);
             Controls.Add(NoGameLoaded_Panel);
             Controls.Add(LoadEdit_Panel);
-            Controls.Add(DT_Updater_Panel);
             Controls.Add(MM_Panel);
             Controls.Add(ModPack_Panel);
             Controls.Add(CreateModPack_Button);
@@ -2615,6 +2671,9 @@
             Tutorial_3.ResumeLayout(false);
             Tutorial_3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox9).EndInit();
+            Tutorial_0.ResumeLayout(false);
+            Tutorial_0.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox8).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -2795,5 +2854,9 @@
         private Label label42;
         private TextBox BS_LaunchParams;
         private Label label44;
+        private Panel Tutorial_0;
+        private LinkLabel DisableTutorial_0;
+        private PictureBox pictureBox8;
+        private Label label45;
     }
 }

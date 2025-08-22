@@ -568,8 +568,15 @@ namespace WSMM
                     GetDTDownloadAmount(DTVersion);
                     ToggleButtons(false);
                     DT_Updater_Panel.Show();
+                    DT_Updater_Panel.BringToFront();
                     DT_Updater_VersionLabel.Text = "None > " + DTVersion;
                     DT_Updater_CloseButton.Enabled = false;
+                    if (TutorialEnabled == true)
+                    {
+                        Tutorial_0.Show();
+                        Tutorial_0.BringToFront();
+                        Tutorial_1.Hide();
+                    }
                 }
                 else if (DTVersion != Datatable_Version)
                 {
@@ -577,7 +584,14 @@ namespace WSMM
                     GetDTDownloadAmount(DTVersion);
                     ToggleButtons(false);
                     DT_Updater_Panel.Show();
+                    DT_Updater_Panel.BringToFront();
                     DT_Updater_VersionLabel.Text = Datatable_Version + " > " + DTVersion;
+                    if (TutorialEnabled == true)
+                    {
+                        Tutorial_0.Show();
+                        Tutorial_0.BringToFront();
+                        Tutorial_1.Hide();
+                    }
                 }
                 else
                 {
@@ -672,6 +686,11 @@ namespace WSMM
                 if (Directory.Exists(Application.StartupPath + @"Temp\" + Path.GetFileNameWithoutExtension(DTFileName)))
                 {
                     Directory.Delete(Application.StartupPath + @"Temp\" + Path.GetFileNameWithoutExtension(DTFileName), true);
+                }
+
+                if (TutorialEnabled == true)
+                {
+                    Tutorial_1.Show();
                 }
             }
             catch (Exception ex)
@@ -4030,6 +4049,7 @@ namespace WSMM
             DT_Updater_CloseButton.Hide();
             DTDownload_Progress.Show();
             DT_Updater_ProgressLabel.Show();
+            Tutorial_0.Hide();
             DownloadDatatables(DTLink, DTVersion);
         }
 
@@ -4312,6 +4332,12 @@ namespace WSMM
         {
             GetDTDownloadAmount(DTVersion);
             DT_Updater_Panel.Show();
+            DT_Updater_Panel.BringToFront();
+
+            if (TutorialEnabled == true)
+            {
+                Tutorial_0.Show();
+            }
         }
 
         private void DTUpdateCooldown_Tick(object sender, EventArgs e)
@@ -4335,6 +4361,12 @@ namespace WSMM
         {
             TutorialEnabled = false;
             Tutorial_3.Hide();
+        }
+
+        private void DisableTutorial_0_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            TutorialEnabled = false;
+            Tutorial_0.Hide();
         }
     }
 }
