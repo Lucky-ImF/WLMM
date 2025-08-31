@@ -27,6 +27,11 @@ namespace WSMM
 
         string CurrentlyEditing_Path = string.Empty;
 
+        string CurrentSearchTerm = string.Empty;
+        int SearchTotal = 0;
+        int SearchCurrent = 0;
+        List<string> SearchResults = new List<string>();
+
         public void TransferInfo(string Path, string Version, string UEV, Main main)
         {
             LoadedWLVersion = Version;
@@ -1095,15 +1100,33 @@ namespace WSMM
         {
             if (AutoModList.Height == 107)
             {
-                AutoModList.Height = 545;
+                AutoModList.Height = 545 - 36;
                 PakList.Height = 107;
                 AutoModList_Expand_Button.Text = "Collapse -";
                 PaksList_Expand_Button.Text = "Expand +";
+
+                SearchPanel_AM.Show();
+                AutoModList.Top += 36;
+
+                SearchPanel_Pak.Hide();
+                PakList.Top = 89;
+                SearchTB_Pak.Text = "";
+                foreach (ListViewItem item in PakList.Items)
+                {
+                    item.BackColor = Color.FromArgb(32, 34, 81);
+                }
             }
             else
             {
                 AutoModList.Height = 107;
                 AutoModList_Expand_Button.Text = "Expand +";
+                SearchPanel_AM.Hide();
+                AutoModList.Top = 231;
+                SearchTB_AM.Text = "";
+                foreach (ListViewItem item in AutoModList.Items)
+                {
+                    item.BackColor = Color.FromArgb(32, 34, 81);
+                }
             }
         }
 
@@ -1111,15 +1134,33 @@ namespace WSMM
         {
             if (PakList.Height == 107)
             {
-                PakList.Height = 688;
+                PakList.Height = 688 - 36;
                 AutoModList.Height = 107;
                 PaksList_Expand_Button.Text = "Collapse -";
                 AutoModList_Expand_Button.Text = "Expand +";
+
+                SearchPanel_Pak.Show();
+                PakList.Top += 36;
+
+                SearchPanel_AM.Hide();
+                AutoModList.Top = 231;
+                SearchTB_AM.Text = "";
+                foreach (ListViewItem item in AutoModList.Items)
+                {
+                    item.BackColor = Color.FromArgb(32, 34, 81);
+                }
             }
             else
             {
                 PakList.Height = 107;
                 PaksList_Expand_Button.Text = "Expand +";
+                SearchPanel_Pak.Hide();
+                PakList.Top = 89;
+                SearchTB_Pak.Text = "";
+                foreach (ListViewItem item in PakList.Items)
+                {
+                    item.BackColor = Color.FromArgb(32, 34, 81);
+                }
             }
         }
 
@@ -1171,6 +1212,73 @@ namespace WSMM
                 Prereqs_LB.Items.RemoveAt(Prereqs_LB.SelectedIndex);
             }
             ManagePrereqs_Button.Text = "Manage Dependencies: " + Prereqs_LB.Items.Count.ToString();
+        }
+
+        private void SearchButton_AM_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SearchAM()
+        {
+            bool found = false;
+            foreach (ListViewItem item in AutoModList.Items)
+            {
+                if (item.Text.ToLower().Contains(SearchTB_AM.Text.ToLower()) && SearchTB_AM.Text != "")
+                {
+                    item.BackColor = Color.Red;
+                    if (found == false)
+                    {
+                        item.EnsureVisible();
+                        found = true;
+                    }
+                }
+                else
+                {
+                    item.BackColor = Color.FromArgb(32, 34, 81);
+                }
+            }
+        }
+
+        private void SearchPak()
+        {
+            bool found = false;
+            foreach (ListViewItem item in PakList.Items)
+            {
+                if (item.Text.ToLower().Contains(SearchTB_Pak.Text.ToLower()) && SearchTB_Pak.Text != "")
+                {
+                    item.BackColor = Color.Red;
+                    if (found == false)
+                    {
+                        item.EnsureVisible();
+                        found = true;
+                    }
+                }
+                else
+                {
+                    item.BackColor = Color.FromArgb(32, 34, 81);
+                }
+            }
+        }
+
+        private void SearchTB_AM_TextChanged(object sender, EventArgs e)
+        {
+            SearchAM();
+        }
+
+        private void SearchClear_AM_Click(object sender, EventArgs e)
+        {
+            SearchTB_AM.Text = "";
+        }
+
+        private void SearchClear_Pak_Click(object sender, EventArgs e)
+        {
+            SearchTB_Pak.Text = "";
+        }
+
+        private void SearchTB_Pak_TextChanged(object sender, EventArgs e)
+        {
+            SearchPak();
         }
     }
 }

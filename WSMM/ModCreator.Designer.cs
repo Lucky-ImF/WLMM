@@ -93,6 +93,14 @@
             label15 = new Label();
             Prereqs_LB = new ListBox();
             linkLabel2 = new LinkLabel();
+            SearchPanel_AM = new Panel();
+            SearchClear_AM = new Button();
+            label21 = new Label();
+            SearchTB_AM = new TextBox();
+            SearchPanel_Pak = new Panel();
+            SearchClear_Pak = new Button();
+            label13 = new Label();
+            SearchTB_Pak = new TextBox();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             TitlePanel.SuspendLayout();
@@ -100,6 +108,8 @@
             ((System.ComponentModel.ISupportInitialize)ModIcon_Preview).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Icon_PB).BeginInit();
             PrereqManager_Panel.SuspendLayout();
+            SearchPanel_AM.SuspendLayout();
+            SearchPanel_Pak.SuspendLayout();
             SuspendLayout();
             // 
             // Close_Button
@@ -932,6 +942,108 @@
             linkLabel2.Text = "Set to Default";
             linkLabel2.VisitedLinkColor = SystemColors.MenuHighlight;
             // 
+            // SearchPanel_AM
+            // 
+            SearchPanel_AM.BorderStyle = BorderStyle.FixedSingle;
+            SearchPanel_AM.Controls.Add(SearchClear_AM);
+            SearchPanel_AM.Controls.Add(label21);
+            SearchPanel_AM.Controls.Add(SearchTB_AM);
+            SearchPanel_AM.Location = new Point(44, 231);
+            SearchPanel_AM.Name = "SearchPanel_AM";
+            SearchPanel_AM.Size = new Size(570, 35);
+            SearchPanel_AM.TabIndex = 48;
+            SearchPanel_AM.Visible = false;
+            // 
+            // SearchClear_AM
+            // 
+            SearchClear_AM.BackColor = Color.FromArgb(32, 34, 81);
+            SearchClear_AM.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            SearchClear_AM.FlatStyle = FlatStyle.Flat;
+            SearchClear_AM.Font = new Font("Segoe UI", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            SearchClear_AM.ForeColor = Color.Red;
+            SearchClear_AM.Location = new Point(432, 3);
+            SearchClear_AM.Name = "SearchClear_AM";
+            SearchClear_AM.Size = new Size(28, 27);
+            SearchClear_AM.TabIndex = 46;
+            SearchClear_AM.Text = "X";
+            SearchClear_AM.UseVisualStyleBackColor = false;
+            SearchClear_AM.Click += SearchClear_AM_Click;
+            // 
+            // label21
+            // 
+            label21.AutoSize = true;
+            label21.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label21.ForeColor = SystemColors.ActiveCaption;
+            label21.Location = new Point(108, 7);
+            label21.Name = "label21";
+            label21.Size = new Size(50, 17);
+            label21.TabIndex = 16;
+            label21.Text = "Search:";
+            // 
+            // SearchTB_AM
+            // 
+            SearchTB_AM.BackColor = Color.FromArgb(75, 68, 138);
+            SearchTB_AM.BorderStyle = BorderStyle.FixedSingle;
+            SearchTB_AM.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            SearchTB_AM.ForeColor = SystemColors.ActiveCaption;
+            SearchTB_AM.Location = new Point(158, 3);
+            SearchTB_AM.Name = "SearchTB_AM";
+            SearchTB_AM.Size = new Size(269, 27);
+            SearchTB_AM.TabIndex = 0;
+            SearchTB_AM.TextAlign = HorizontalAlignment.Center;
+            SearchTB_AM.TextChanged += SearchTB_AM_TextChanged;
+            // 
+            // SearchPanel_Pak
+            // 
+            SearchPanel_Pak.BorderStyle = BorderStyle.FixedSingle;
+            SearchPanel_Pak.Controls.Add(SearchClear_Pak);
+            SearchPanel_Pak.Controls.Add(label13);
+            SearchPanel_Pak.Controls.Add(SearchTB_Pak);
+            SearchPanel_Pak.Location = new Point(44, 89);
+            SearchPanel_Pak.Name = "SearchPanel_Pak";
+            SearchPanel_Pak.Size = new Size(570, 35);
+            SearchPanel_Pak.TabIndex = 49;
+            SearchPanel_Pak.Visible = false;
+            // 
+            // SearchClear_Pak
+            // 
+            SearchClear_Pak.BackColor = Color.FromArgb(32, 34, 81);
+            SearchClear_Pak.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            SearchClear_Pak.FlatStyle = FlatStyle.Flat;
+            SearchClear_Pak.Font = new Font("Segoe UI", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            SearchClear_Pak.ForeColor = Color.Red;
+            SearchClear_Pak.Location = new Point(432, 3);
+            SearchClear_Pak.Name = "SearchClear_Pak";
+            SearchClear_Pak.Size = new Size(28, 27);
+            SearchClear_Pak.TabIndex = 46;
+            SearchClear_Pak.Text = "X";
+            SearchClear_Pak.UseVisualStyleBackColor = false;
+            SearchClear_Pak.Click += SearchClear_Pak_Click;
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label13.ForeColor = SystemColors.ActiveCaption;
+            label13.Location = new Point(108, 7);
+            label13.Name = "label13";
+            label13.Size = new Size(50, 17);
+            label13.TabIndex = 16;
+            label13.Text = "Search:";
+            // 
+            // SearchTB_Pak
+            // 
+            SearchTB_Pak.BackColor = Color.FromArgb(75, 68, 138);
+            SearchTB_Pak.BorderStyle = BorderStyle.FixedSingle;
+            SearchTB_Pak.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            SearchTB_Pak.ForeColor = SystemColors.ActiveCaption;
+            SearchTB_Pak.Location = new Point(158, 3);
+            SearchTB_Pak.Name = "SearchTB_Pak";
+            SearchTB_Pak.Size = new Size(269, 27);
+            SearchTB_Pak.TabIndex = 0;
+            SearchTB_Pak.TextAlign = HorizontalAlignment.Center;
+            SearchTB_Pak.TextChanged += SearchTB_Pak_TextChanged;
+            // 
             // ModCreator
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
@@ -939,6 +1051,8 @@
             BackColor = Color.FromArgb(32, 34, 81);
             ClientSize = new Size(658, 850);
             ControlBox = false;
+            Controls.Add(SearchPanel_Pak);
+            Controls.Add(SearchPanel_AM);
             Controls.Add(PrereqManager_Panel);
             Controls.Add(PakList);
             Controls.Add(PaksList_Expand_Button);
@@ -983,6 +1097,10 @@
             ((System.ComponentModel.ISupportInitialize)Icon_PB).EndInit();
             PrereqManager_Panel.ResumeLayout(false);
             PrereqManager_Panel.PerformLayout();
+            SearchPanel_AM.ResumeLayout(false);
+            SearchPanel_AM.PerformLayout();
+            SearchPanel_Pak.ResumeLayout(false);
+            SearchPanel_Pak.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1052,5 +1170,13 @@
         private Label label15;
         private ListBox Prereqs_LB;
         private LinkLabel linkLabel2;
+        private Panel SearchPanel_AM;
+        private Label label21;
+        private TextBox SearchTB_AM;
+        private Button SearchClear_AM;
+        private Panel SearchPanel_Pak;
+        private Button SearchClear_Pak;
+        private Label label13;
+        private TextBox SearchTB_Pak;
     }
 }
