@@ -34,7 +34,7 @@ namespace WSMM
         private bool StartingUp = true;
         private bool HasOldChanges = false;
 
-        private string WLMM_Version = "1.2.0";
+        private string WLMM_Version = "1.2.1";
         private string Datatable_Version = string.Empty;
         string BuildLog = string.Empty;
 
@@ -82,6 +82,8 @@ namespace WSMM
         List<int> Cat_Entries = new List<int>();
 
         List<string> Categories_List = new List<string>();
+
+        List<string> MarketplaceMods = new List<string>();
 
         public Main()
         {
@@ -1239,6 +1241,7 @@ namespace WSMM
             ConflictCheck();
             DependenciesCheck();
 
+            GetMarketplaceMods();
             CheckCategories();
 
             if (Mod_CurrentEntryID >= 101)
@@ -4367,6 +4370,152 @@ namespace WSMM
         {
             TutorialEnabled = false;
             Tutorial_0.Hide();
+        }
+
+        public static string DecompressString(string compressedString)
+        {
+            byte[] decompressedBytes;
+
+            var compressedStream = new MemoryStream(Convert.FromBase64String(compressedString));
+
+            using (var decompressorStream = new DeflateStream(compressedStream, CompressionMode.Decompress))
+            {
+                using (var decompressedStream = new MemoryStream())
+                {
+                    decompressorStream.CopyTo(decompressedStream);
+
+                    decompressedBytes = decompressedStream.ToArray();
+                }
+            }
+
+            return Encoding.UTF8.GetString(decompressedBytes);
+        }
+
+        private async void GetMarketplaceMods()
+        {
+            if (MarketplaceMods.Count == 0)
+            {
+                try
+                {
+                    string VersionInfo = "";
+                    using (HttpClient client = new HttpClient())
+                    {
+                        client.DefaultRequestHeaders.UserAgent.ParseAdd("WildLifeModManager");
+                        HttpResponseMessage response = await client.GetAsync("https://gist.githubusercontent.com/Lucky-ImF/cb6aa813b89cb5f73708a487968efeac/raw/WLMM_Marketplace_Data.txt");
+                        response.EnsureSuccessStatusCode();
+                        VersionInfo = await response.Content.ReadAsStringAsync();
+                    }
+                    string Decompressed_MP_Data = DecompressString(VersionInfo);
+
+                    string[] TempArray = Decompressed_MP_Data.Split('\r');
+                    foreach (string temp in TempArray)
+                    {
+                        MarketplaceMods.Add(temp.Trim('\n'));
+                        CheckModUpdate(temp.Trim('\n'));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "WLMM Marketplace Error");
+                }
+            }
+            else
+            {
+                foreach (string mod in MarketplaceMods)
+                {
+                    CheckModUpdate(mod);
+                }
+            }
+        }
+
+        private void CheckModUpdate(string ModString)
+        {
+            string ModName = string.Empty;
+            string ModAuthor = string.Empty;
+            string ModVersion = string.Empty;
+            string SupportedVersions = string.Empty;
+            string ModURL = string.Empty;
+            string ModIcon = string.Empty;
+            string ModSize = string.Empty;
+            string Category = string.Empty;
+            string LastUpdate = string.Empty;
+            string ModDescription = string.Empty;
+            string ModDownloadLink = string.Empty;
+            string ModScreenshots = string.Empty;
+
+            //Read MetaData
+            string[] MetaData = ModString.Split(",");
+            foreach (string meta in MetaData)
+            {
+                if (meta.StartsWith("ModAuthor"))
+                {
+                    ModAuthor = meta.Replace(GetSlice(meta, ":", 0) + ":", "");
+                }
+                else if (meta.StartsWith("ModVersion"))
+                {
+                    ModVersion = meta.Replace(GetSlice(meta, ":", 0) + ":", "");
+                }
+                else if (meta.StartsWith("SupportedVersions"))
+                {
+                    SupportedVersions = meta.Replace(GetSlice(meta, ":", 0) + ":", "");
+                    SupportedVersions = SupportedVersions.Replace("*", ", ");
+                }
+                else if (meta.StartsWith("ModLink"))
+                {
+                    ModURL = meta.Replace(GetSlice(meta, ":", 0) + ":", "");
+                }
+                else if (meta.StartsWith("ModName"))
+                {
+                    ModName = meta.Replace(GetSlice(meta, ":", 0) + ":", "");
+                }
+                else if (meta.StartsWith("ModSize"))
+                {
+                    ModSize = meta.Replace(GetSlice(meta, ":", 0) + ":", "");
+                }
+                else if (meta.StartsWith("ModIcon"))
+                {
+                    ModIcon = meta.Replace(GetSlice(meta, ":", 0) + ":", "");
+                }
+                else if (meta.StartsWith("Category"))
+                {
+                    Category = meta.Replace(GetSlice(meta, ":", 0) + ":", "");
+                }
+                else if (meta.StartsWith("LastUpdate"))
+                {
+                    LastUpdate = meta.Replace(GetSlice(meta, ":", 0) + ":", "");
+                }
+                else if (meta.StartsWith("ModDescription"))
+                {
+                    ModDescription = meta.Replace(GetSlice(meta, ":", 0) + ":", "");
+                }
+                else if (meta.StartsWith("DownloadLink"))
+                {
+                    ModDownloadLink = meta.Replace(GetSlice(meta, ":", 0) + ":", "");
+                }
+                else if (meta.StartsWith("Screenshots"))
+                {
+                    ModScreenshots = meta.Replace(GetSlice(meta, ":", 0) + ":", "");
+                }
+            }
+
+            // Check if this mod is in active mods
+            string ActiveModVersion = GetActiveModByName(ModName);
+            if (ActiveModVersion != ModVersion && ActiveModVersion != string.Empty)
+            {
+                foreach (int ModID in Mod_Entries)
+                {
+                    if (ModName == Mod_NameLabel[ModID].Text && Mod_ErrorLabel[ModID].Text == "")
+                    {
+                        Mod_ErrorLabel[ModID].Text = "Update available!";
+                        Mod_ErrorLabel[ModID].ForeColor = Color.ForestGreen;
+                        Mod_ErrorLabel[ModID].Visible = true;
+                        Mod_ErrorLabel[ModID].BringToFront();
+                        Graphics g = CreateGraphics();
+                        SizeF LabelSize = g.MeasureString(Mod_ErrorLabel[ModID].Text, Mod_ErrorLabel[ModID].Font);
+                        Mod_ErrorLabel[ModID].Location = new Point(Mod_VersionLabel[ModID].Left - ((int)LabelSize.Width) - 5, 11);
+                    }
+                }
+            }
         }
     }
 }
