@@ -907,7 +907,7 @@ namespace WSMM
                     {
                         Mod_Panel[ModID].Show();
                     }
-                    else if (Filter_CB.Text == "All" && Mod_NameLabel[ModID].Text.ToLower().Contains(Search_TB.Text.ToLower()))
+                    else if (Filter_CB.Text == "Latest" && Mod_NameLabel[ModID].Text.ToLower().Contains(Search_TB.Text.ToLower()))
                     {
                         Mod_Panel[ModID].Show();
                     }
@@ -923,6 +923,7 @@ namespace WSMM
                 foreach (KeyValuePair<int, int> entry in UnsortedDict.OrderByDescending(key => key.Value))
                 {
                     ModFlow_Panel.Controls.Add(Mod_Panel[entry.Key]);
+                    Mod_Panel[entry.Key].Show();
                 }
             }
         }
