@@ -451,7 +451,7 @@
             Categories_CLB.BorderStyle = BorderStyle.FixedSingle;
             Categories_CLB.ForeColor = SystemColors.ActiveCaption;
             Categories_CLB.FormattingEnabled = true;
-            Categories_CLB.Items.AddRange(new object[] { "Outfit", "Hair", "Skin", "Pubic Hair", "Eyes", "Eyeliner", "Eyeshadow", "Lipstick", "Tanlines", "Fur", "Audio", "Other" });
+            Categories_CLB.Items.AddRange(new object[] { "Outfit", "Hair", "Beard", "Skin", "Pubic Hair", "Eyes", "Eyeliner", "Eyeshadow", "Lipstick", "Tanlines", "Fur", "Audio", "Other" });
             Categories_CLB.Location = new Point(12, 204);
             Categories_CLB.Name = "Categories_CLB";
             Categories_CLB.ScrollAlwaysVisible = true;

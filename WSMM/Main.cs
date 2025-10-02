@@ -2254,6 +2254,7 @@ namespace WSMM
             List<string> CustomNameMap = new List<string>();
             List<string> Outfits = new List<string>();
             List<string> Hair = new List<string>();
+            List<string> Beard = new List<string>();
             List<string> Skin = new List<string>();
             List<string> PubicHair = new List<string>();
             List<string> Eyes = new List<string>();
@@ -2594,6 +2595,16 @@ namespace WSMM
                             }
                             CustomEntry = CustomEntry.Insert(0, GetCleanString(contents, "Character") + "¤");
                             Hair.Add(CustomEntry);
+                            CustomNameMap.Add("Mod_" + CustomNR.ToString());
+                            CustomNR += 1;
+                        }
+                        else if (TempArray[0] == "Beard")
+                        {
+                            string[] PathNameArray = TempArray[1].Split(',');
+                            CustomEntry = CustomEntry.Replace("[PACKAGE_PATH]", PathNameArray[0].Trim());
+                            CustomEntry = CustomEntry.Replace("[PACKAGE_NAME]", PathNameArray[1].Trim());
+                            CustomEntry = CustomEntry.Insert(0, GetCleanString(contents, "Character") + "¤");
+                            Beard.Add(CustomEntry);
                             CustomNameMap.Add("Mod_" + CustomNR.ToString());
                             CustomNR += 1;
                         }
@@ -3005,6 +3016,7 @@ namespace WSMM
                 if (CustomEdited == true)
                 {
                     string CompiledHairEntries = string.Empty;
+                    string CompiledBeardEntries = string.Empty;
                     string CompiledSkinEntries = string.Empty;
                     string CompiledPubicHairEntries = string.Empty;
                     string CompiledEyesEntries = string.Empty;
@@ -3022,6 +3034,14 @@ namespace WSMM
                             GameChar = TempArray[0].ToUpper();
                             CompiledHairEntries = "\n" + TempArray[1].TrimEnd('\n') + ",[" + GameChar + "_HAIR]";
                             GameCharacterCustom = GameCharacterCustom.Replace("[" + GameChar + "_HAIR]", CompiledHairEntries);
+                        }
+
+                        foreach (string Ent in Beard)
+                        {
+                            string[] TempArray = Ent.Split('¤');
+                            GameChar = TempArray[0].ToUpper();
+                            CompiledBeardEntries = "\n" + TempArray[1].TrimEnd('\n') + ",[" + GameChar + "_BEARD]";
+                            GameCharacterCustom = GameCharacterCustom.Replace("[" + GameChar + "_BEARD]", CompiledBeardEntries);
                         }
 
                         foreach (string Ent in Skin)
@@ -3084,6 +3104,7 @@ namespace WSMM
                         foreach (string GmCh in CustomizerCharacters)
                         {
                             GameCharacterCustom = GameCharacterCustom.Replace(",[" + GmCh.ToUpper() + "_HAIR]", "");
+                            GameCharacterCustom = GameCharacterCustom.Replace(",[" + GmCh.ToUpper() + "_BEARD]", "");
                             GameCharacterCustom = GameCharacterCustom.Replace(",[" + GmCh.ToUpper() + "_SKIN]", "");
                             GameCharacterCustom = GameCharacterCustom.Replace(",[" + GmCh.ToUpper() + "_PUBICHAIR]", "");
                             GameCharacterCustom = GameCharacterCustom.Replace(",[" + GmCh.ToUpper() + "_EYES]", "");

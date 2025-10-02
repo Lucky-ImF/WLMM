@@ -352,7 +352,7 @@
             Categories_CLB.BorderStyle = BorderStyle.FixedSingle;
             Categories_CLB.ForeColor = SystemColors.ActiveCaption;
             Categories_CLB.FormattingEnabled = true;
-            Categories_CLB.Items.AddRange(new object[] { "Outfit", "Hair", "Skin", "Pubic Hair", "Eyes", "Eyeliner", "Eyeshadow", "Lipstick", "Tanlines", "Fur", "Audio", "Other" });
+            Categories_CLB.Items.AddRange(new object[] { "Outfit", "Hair", "Beard", "Skin", "Pubic Hair", "Eyes", "Eyeliner", "Eyeshadow", "Lipstick", "Tanlines", "Fur", "Audio", "Other" });
             Categories_CLB.Location = new Point(13, 249);
             Categories_CLB.Name = "Categories_CLB";
             Categories_CLB.ScrollAlwaysVisible = true;
@@ -698,8 +698,8 @@
             // IncludeCodeTags
             // 
             IncludeCodeTags.AutoSize = true;
-            IncludeCodeTags.CheckState = CheckState.Checked;
             IncludeCodeTags.Checked = true;
+            IncludeCodeTags.CheckState = CheckState.Checked;
             IncludeCodeTags.ForeColor = SystemColors.ActiveCaption;
             IncludeCodeTags.Location = new Point(231, 762);
             IncludeCodeTags.Name = "IncludeCodeTags";

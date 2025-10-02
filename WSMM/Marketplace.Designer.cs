@@ -553,7 +553,7 @@
             Filter_CB.FlatStyle = FlatStyle.Flat;
             Filter_CB.ForeColor = SystemColors.ActiveCaption;
             Filter_CB.FormattingEnabled = true;
-            Filter_CB.Items.AddRange(new object[] { "All", "Most Popular", "Outfit", "Hair", "Skin", "Pubic Hair", "Eyes", "Eyeliner", "Eyeshadow", "Lipstick", "Tanlines", "Fur", "Audio", "Other" });
+            Filter_CB.Items.AddRange(new object[] { "All", "Most Popular", "Outfit", "Hair", "Beard", "Skin", "Pubic Hair", "Eyes", "Eyeliner", "Eyeshadow", "Lipstick", "Tanlines", "Fur", "Audio", "Other" });
             Filter_CB.Location = new Point(688, 6);
             Filter_CB.Name = "Filter_CB";
             Filter_CB.Size = new Size(145, 23);

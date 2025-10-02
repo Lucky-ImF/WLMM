@@ -1012,7 +1012,7 @@ namespace WSMM
             CharCust_Physics_NameLabel[EntryID].Location = new System.Drawing.Point(6, 185);
 
             CharCust_Target[EntryID] = new ComboBox();
-            CharCust_Target[EntryID].Items.AddRange(new string[] { "Hair", "Skin", "PubicHair", "Eyes", "EyeLiner", "EyeShadow", "Lipstick", "Tanlines" });
+            CharCust_Target[EntryID].Items.AddRange(new string[] { "Hair", "Beard", "Skin", "PubicHair", "Eyes", "EyeLiner", "EyeShadow", "Lipstick", "Tanlines" });
             CharCust_Target[EntryID].SelectedIndex = 0;
             CharCust_Target[EntryID].BackColor = System.Drawing.Color.FromArgb(75, 68, 138);
             CharCust_Target[EntryID].ForeColor = System.Drawing.SystemColors.ActiveCaption;
