@@ -37,6 +37,7 @@
             Separator_1 = new PictureBox();
             ModMain_Panel = new Panel();
             ModPanel_Panel = new Panel();
+            DeleteAfterDownload_CB = new CheckBox();
             ModAuthor_Label = new Label();
             DownloadMod_Button = new Button();
             ModFileSize_Label = new Label();
@@ -69,7 +70,6 @@
             Filter_CB = new ComboBox();
             Search_TB = new TextBox();
             RefreshDelay = new System.Windows.Forms.Timer(components);
-            DeleteAfterDownload_CB = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)Icon_PB).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
             TitlePanel.SuspendLayout();
@@ -184,6 +184,18 @@
             ModPanel_Panel.Size = new Size(586, 627);
             ModPanel_Panel.TabIndex = 14;
             ModPanel_Panel.Visible = false;
+            // 
+            // DeleteAfterDownload_CB
+            // 
+            DeleteAfterDownload_CB.AutoSize = true;
+            DeleteAfterDownload_CB.ForeColor = Color.White;
+            DeleteAfterDownload_CB.Location = new Point(196, 596);
+            DeleteAfterDownload_CB.Name = "DeleteAfterDownload_CB";
+            DeleteAfterDownload_CB.Size = new Size(201, 19);
+            DeleteAfterDownload_CB.TabIndex = 31;
+            DeleteAfterDownload_CB.Text = "Delete .wlmm file after download";
+            DeleteAfterDownload_CB.UseVisualStyleBackColor = true;
+            DeleteAfterDownload_CB.CheckedChanged += DeleteAfterDownload_CB_CheckedChanged;
             // 
             // ModAuthor_Label
             // 
@@ -581,18 +593,6 @@
             // 
             RefreshDelay.Interval = 5000;
             RefreshDelay.Tick += RefreshDelay_Tick;
-            // 
-            // DeleteAfterDownload_CB
-            // 
-            DeleteAfterDownload_CB.AutoSize = true;
-            DeleteAfterDownload_CB.ForeColor = Color.White;
-            DeleteAfterDownload_CB.Location = new Point(196, 596);
-            DeleteAfterDownload_CB.Name = "DeleteAfterDownload_CB";
-            DeleteAfterDownload_CB.Size = new Size(201, 19);
-            DeleteAfterDownload_CB.TabIndex = 31;
-            DeleteAfterDownload_CB.Text = "Delete .wlmm file after download";
-            DeleteAfterDownload_CB.UseVisualStyleBackColor = true;
-            DeleteAfterDownload_CB.CheckedChanged += DeleteAfterDownload_CB_CheckedChanged;
             // 
             // Marketplace
             // 

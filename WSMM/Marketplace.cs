@@ -71,6 +71,11 @@ namespace WSMM
             DeleteAfterDownload_CB.Checked = DelAfterDl;
             Main_Form = MainForm;
 
+            Filter_CB.Items.Clear();
+            Filter_CB.Items.Add("Latest");
+            Filter_CB.Items.Add("Most Popular");
+            Filter_CB.Items.AddRange(Main_Form.Categories_List.ToArray());
+
             GetMarketplaceMods();
         }
 

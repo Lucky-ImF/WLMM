@@ -83,7 +83,7 @@ namespace WSMM
         int Cat_CurrentEntryID = 0;
         List<int> Cat_Entries = new List<int>();
 
-        List<string> Categories_List = new List<string>();
+        public List<string> Categories_List = new List<string>();
 
         List<string> MarketplaceMods = new List<string>();
 
