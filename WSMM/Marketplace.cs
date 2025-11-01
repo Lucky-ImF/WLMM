@@ -63,11 +63,12 @@ namespace WSMM
             InitializeComponent();
         }
 
-        public void TransferInfo(string Path, string Version, string UEV, Main MainForm)
+        public void TransferInfo(string Path, string Version, string UEV, bool DelAfterDl, Main MainForm)
         {
             LoadedWLVersion = Version;
             LoadedWLPath = Path;
             LoadedUEVersion = UEV;
+            DeleteAfterDownload_CB.Checked = DelAfterDl;
             Main_Form = MainForm;
 
             GetMarketplaceMods();
@@ -129,7 +130,7 @@ namespace WSMM
 
         private void Marketplace_Load(object sender, EventArgs e)
         {
-            //GetMarketplaceMods();
+
         }
 
         private void RefreshMods_Button_Click(object sender, EventArgs e)
@@ -812,6 +813,12 @@ namespace WSMM
                     mods.Add(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Downloads\" + CurrentlyDownloadingModName + ".wlmm");
                     Main_Form.AddMods(mods);
 
+                    if (DeleteAfterDownload_CB.Checked == true)
+                    {
+                        File.Delete(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Downloads\" + CurrentlyDownloadingModName + ".wlmm");
+                        Main_Form.LoadMods();
+                    }
+
                     DownloadMod_Button.Show();
                     DownloadMod_Button.Text = "Mod Downloaded!";
                     ModFileSize_Label.Show();
@@ -946,6 +953,14 @@ namespace WSMM
         private void Screenshot_MouseLeave(object sender, EventArgs e)
         {
             Screenshot_HoverLabel.Hide();
+        }
+
+        private void DeleteAfterDownload_CB_CheckedChanged(object sender, EventArgs e)
+        {
+            if (Main_Form is not null)
+            {
+                Main_Form.DeleteWLMMAfterDownload = DeleteAfterDownload_CB.Checked;
+            }
         }
     }
 }

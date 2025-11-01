@@ -69,6 +69,7 @@
             Filter_CB = new ComboBox();
             Search_TB = new TextBox();
             RefreshDelay = new System.Windows.Forms.Timer(components);
+            DeleteAfterDownload_CB = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)Icon_PB).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
             TitlePanel.SuspendLayout();
@@ -158,6 +159,7 @@
             // ModPanel_Panel
             // 
             ModPanel_Panel.BorderStyle = BorderStyle.Fixed3D;
+            ModPanel_Panel.Controls.Add(DeleteAfterDownload_CB);
             ModPanel_Panel.Controls.Add(ModAuthor_Label);
             ModPanel_Panel.Controls.Add(DownloadMod_Button);
             ModPanel_Panel.Controls.Add(ModFileSize_Label);
@@ -177,9 +179,9 @@
             ModPanel_Panel.Controls.Add(Screenshot);
             ModPanel_Panel.Controls.Add(ModName_Label);
             ModPanel_Panel.Controls.Add(ModLink_LL);
-            ModPanel_Panel.Location = new Point(125, 16);
+            ModPanel_Panel.Location = new Point(125, 18);
             ModPanel_Panel.Name = "ModPanel_Panel";
-            ModPanel_Panel.Size = new Size(586, 609);
+            ModPanel_Panel.Size = new Size(586, 627);
             ModPanel_Panel.TabIndex = 14;
             ModPanel_Panel.Visible = false;
             // 
@@ -580,6 +582,18 @@
             RefreshDelay.Interval = 5000;
             RefreshDelay.Tick += RefreshDelay_Tick;
             // 
+            // DeleteAfterDownload_CB
+            // 
+            DeleteAfterDownload_CB.AutoSize = true;
+            DeleteAfterDownload_CB.ForeColor = Color.White;
+            DeleteAfterDownload_CB.Location = new Point(196, 596);
+            DeleteAfterDownload_CB.Name = "DeleteAfterDownload_CB";
+            DeleteAfterDownload_CB.Size = new Size(201, 19);
+            DeleteAfterDownload_CB.TabIndex = 31;
+            DeleteAfterDownload_CB.Text = "Delete .wlmm file after download";
+            DeleteAfterDownload_CB.UseVisualStyleBackColor = true;
+            DeleteAfterDownload_CB.CheckedChanged += DeleteAfterDownload_CB_CheckedChanged;
+            // 
             // Marketplace
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
@@ -657,5 +671,6 @@
         private Label Categories_Label;
         private Label Screenshot_HoverLabel;
         private Label ProgressDetails_Label;
+        private CheckBox DeleteAfterDownload_CB;
     }
 }

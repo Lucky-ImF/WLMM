@@ -54,6 +54,8 @@ namespace WSMM
 
         bool TutorialEnabled = true;
 
+        public bool DeleteWLMMAfterDownload = false; 
+
         //Panel, Picturebox, Label(Name), Label(Error), Label(Version), Label(SupportedVersions), Label(Author), LinkLabel(Remove), LinkLabel(Link), Checkbox
         Panel[] Mod_Panel = new Panel[100];
         PictureBox[] Mod_Icon = new PictureBox[100];
@@ -872,6 +874,17 @@ namespace WSMM
                             TutorialEnabled = false;
                         }
                     }
+                    else if (file.StartsWith("DeleteAfterDownload"))
+                    {
+                        if (GetSlice(file, "=", 1) == "True")
+                        {
+                            DeleteWLMMAfterDownload = true;
+                        }
+                        else
+                        {
+                            DeleteWLMMAfterDownload = false;
+                        }
+                    }
                 }
 
                 if (LoadedWLPath != "" && LoadedWLPath != string.Empty)
@@ -907,7 +920,7 @@ namespace WSMM
 
         private void SaveSession()
         {
-            string SaveFile = "WL_Path = " + LoadedWLPath + "\nWL_Version = " + LoadedWLVersion + "\nUE_Version = " + LoadedUEVersion + "\nChangesMade = " + ChangesMade.ToString() + "\nprevIconPath = " + prevIconPath + "\nprevPakPath = " + prevPakPath + "\nprevAutoModPath = " + prevAutoModPath + "\nprevModPath = " + prevModPath + "\nTutorial = " + TutorialEnabled.ToString();
+            string SaveFile = "WL_Path = " + LoadedWLPath + "\nWL_Version = " + LoadedWLVersion + "\nUE_Version = " + LoadedUEVersion + "\nChangesMade = " + ChangesMade.ToString() + "\nprevIconPath = " + prevIconPath + "\nprevPakPath = " + prevPakPath + "\nprevAutoModPath = " + prevAutoModPath + "\nprevModPath = " + prevModPath + "\nTutorial = " + TutorialEnabled.ToString() + "\nDeleteAfterDownload = " + DeleteWLMMAfterDownload.ToString();
             File.WriteAllText(Application.StartupPath + @"System\Session.dat", SaveFile);
         }
 
@@ -1136,7 +1149,7 @@ namespace WSMM
             }
         }
 
-        private void LoadMods()
+        public void LoadMods()
         {
             //Clear ModFlow
             ModFlow_Panel.Invoke((System.Windows.Forms.MethodInvoker)delegate
@@ -3520,7 +3533,7 @@ namespace WSMM
         {
             Marketplace Marketplace_Form = new Marketplace();
             Marketplace_Form.Show();
-            Marketplace_Form.TransferInfo(LoadedWLPath, LoadedWLVersion, LoadedUEVersion, this);
+            Marketplace_Form.TransferInfo(LoadedWLPath, LoadedWLVersion, LoadedUEVersion, DeleteWLMMAfterDownload, this);
         }
 
         private string GetUEVersion(string version)
