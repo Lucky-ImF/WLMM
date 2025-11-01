@@ -901,7 +901,14 @@ namespace WSMM
         private void Filter_CB_TextChanged(object sender, EventArgs e)
         {
             //LoadMarketplaceMods();
-            ApplyFilter();
+            if (Filter_CB.Text == "Latest")
+            {
+                LoadMarketplaceMods();
+            }
+            else
+            {
+                ApplyFilter();
+            } 
         }
 
         private void ApplyFilter()
