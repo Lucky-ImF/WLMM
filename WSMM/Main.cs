@@ -35,7 +35,7 @@ namespace WSMM
         private bool StartingUp = true;
         private bool HasOldChanges = false;
 
-        private string WLMM_Version = "1.2.1";
+        private string WLMM_Version = "1.3.0";
         private string Datatable_Version = string.Empty;
         string BuildLog = string.Empty;
 
@@ -1501,7 +1501,7 @@ namespace WSMM
             Mod_EditButton[EntryID].ActiveLinkColor = System.Drawing.SystemColors.ActiveCaption;
             Mod_EditButton[EntryID].Location = new System.Drawing.Point(255, 80);
             Mod_EditButton[EntryID].Tag = EntryID;
-            Mod_EditButton[EntryID].Click += Mod_EditButton_Click;
+            Mod_EditButton[EntryID].LinkClicked += Mod_EditButton_Click;
             Mod_EditButton[EntryID].AutoSize = true;
             Mod_EditButton[EntryID].Font = new Font(Mod_EditButton[EntryID].Font.FontFamily, 12);
             if (Mod_WLMMPath[EntryID] != string.Empty && File.Exists(Mod_WLMMPath[EntryID]))
@@ -1770,15 +1770,23 @@ namespace WSMM
             AddMods(ValidMods);
         }
 
-        private void Mod_EditButton_Click(object sender, EventArgs e)
+        private void Mod_EditButton_Click(object sender, LinkLabelLinkClickedEventArgs e)
         {
             LinkLabel Casted = sender as LinkLabel;
             int EntryID = int.Parse(Casted.Tag.ToString());
 
-            ModCreator ModCreator_Form = new ModCreator();
-            ModCreator_Form.Show();
-            ModCreator_Form.TransferInfo(LoadedWLPath, LoadedWLVersion, LoadedUEVersion, this);
-            ModCreator_Form.LoadMod(Mod_WLMMPath[EntryID]);
+            if (e.Button == MouseButtons.Left)
+            {
+                ModCreator ModCreator_Form = new ModCreator();
+                ModCreator_Form.Show();
+                ModCreator_Form.TransferInfo(LoadedWLPath, LoadedWLVersion, LoadedUEVersion, this);
+                ModCreator_Form.LoadMod(Mod_WLMMPath[EntryID]);
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+                Process.Start("explorer.exe", Path.GetDirectoryName(Mod_WLMMPath[EntryID]));
+            }
+
         }
 
         private void ModEnabledCB_CheckStateChanged(object sender, EventArgs e)
