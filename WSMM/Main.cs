@@ -55,7 +55,7 @@ namespace WSMM
 
         bool TutorialEnabled = true;
 
-        public bool DeleteWLMMAfterDownload = false; 
+        public bool DeleteWLMMAfterDownload = false;
 
         //Panel, Picturebox, Label(Name), Label(Error), Label(Version), Label(SupportedVersions), Label(Author), LinkLabel(Remove), LinkLabel(Link), Checkbox
         Panel[] Mod_Panel = new Panel[100];
@@ -817,6 +817,21 @@ namespace WSMM
             {
 
             }
+
+            try
+            {
+                foreach (string file in Directory.EnumerateFiles(Application.StartupPath + @"DataTables\" + LoadedWLVersion, "DT_SandboxProps_*.json"))
+                {
+                    if (file.Contains("DT_SandboxProps_Generated") == false && file.Contains("DT_SandboxProps_Entry_Default") == false && file.Contains("DT_SandboxProps_Debug") == false)
+                    {
+                        BS_BaseGameSandboxPropsFile.Items.Add(Path.GetFileName(file));
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+            }
         }
 
         private void LoadSession()
@@ -945,6 +960,10 @@ namespace WSMM
                     {
                         BS_BaseGameCharacterCustomizationFile.Text = GetSlice(file, "=", 1);
                     }
+                    else if (file.StartsWith("DT_SandboxProps"))
+                    {
+                        BS_BaseGameSandboxPropsFile.Text = GetSlice(file, "=", 1);
+                    }
                     else if (file.StartsWith("Mappings"))
                     {
                         BS_Mappings.Text = GetSlice(file, "=", 1);
@@ -965,6 +984,10 @@ namespace WSMM
                         BS_LaunchParams.Text = GetSlice(file, "=", 1);
                     }
                 }
+                if (BS_BaseGameSandboxPropsFile.Text == "")
+                {
+                    BS_BaseGameSandboxPropsFile.Text = BS_BaseGameSandboxPropsFile.Items[0].ToString();
+                }
             }
             else
             {
@@ -973,6 +996,7 @@ namespace WSMM
                     BS_BaseClothesOutfitFile.Text = BS_BaseClothesOutfitFile.Items[0].ToString();
                     BS_BaseGameCharacterOutfitFile.Text = BS_BaseGameCharacterOutfitFile.Items[0].ToString();
                     BS_BaseGameCharacterCustomizationFile.Text = BS_BaseGameCharacterCustomizationFile.Items[0].ToString();
+                    BS_BaseGameSandboxPropsFile.Text = BS_BaseGameSandboxPropsFile.Items[0].ToString();
                     foreach (string M in BS_Mappings.Items)
                     {
                         if (M.Contains(LoadedWLVersion))
@@ -992,7 +1016,7 @@ namespace WSMM
         {
             string SaveFile = "DT_ClothesOutfit = " + BS_BaseClothesOutfitFile.Text + "\nDT_GameCharacterOutfits = " + BS_BaseGameCharacterOutfitFile.Text +
                 "\nDT_GameCharacterCustomization = " + BS_BaseGameCharacterCustomizationFile.Text + "\nMappings = " + BS_Mappings.Text + "\nVerifyIntegrity = " + BS_VerifyFI_CB.CheckState.ToString() +
-                "\nLaunchParams = " + BS_LaunchParams.Text;
+                "\nLaunchParams = " + BS_LaunchParams.Text + "\nDT_SandboxProps = " + BS_BaseGameSandboxPropsFile.Text;
             File.WriteAllText(Application.StartupPath + @"System\" + LoadedWLVersion + @"_BuildSettings.ini", SaveFile);
         }
 
@@ -2259,6 +2283,7 @@ namespace WSMM
             string ClothesOutfit = string.Empty;
             string GameCharacterOutfits = string.Empty;
             string GameCharacterCustom = string.Empty;
+            string SandboxProps = string.Empty;
 
             BS_BaseGameCharacterCustomizationFile.Invoke((System.Windows.Forms.MethodInvoker)delegate
             {
@@ -2289,10 +2314,23 @@ namespace WSMM
                 return "Base DT_GameCharacterOutfits was not found.";
             }
 
+            try
+            {
+                BS_BaseGameSandboxPropsFile.Invoke((System.Windows.Forms.MethodInvoker)delegate
+                {
+                    SandboxProps = File.ReadAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\" + BS_BaseGameSandboxPropsFile.Text);
+                });
+            }
+            catch (Exception)
+            {
+                return "Base DT_SandboxProps was not found.";
+            }
+
             List<string> Entries = new List<string>();
             List<string> NameMap = new List<string>();
             List<string> OutfitsNameMap = new List<string>();
             List<string> CustomNameMap = new List<string>();
+            List<string> SandboxPropsNameMap = new List<string>();
             List<string> Outfits = new List<string>();
             List<string> Hair = new List<string>();
             List<string> Beard = new List<string>();
@@ -2303,6 +2341,7 @@ namespace WSMM
             List<string> EyeShadow = new List<string>();
             List<string> Lipstick = new List<string>();
             List<string> Tanlines = new List<string>();
+            List<string> Props = new List<string>();
             bool CustomEdited = false;
             bool FurEdited = false;
             bool UseNewHairJSON = true;
@@ -2342,11 +2381,13 @@ namespace WSMM
             string[] NameMap_ClothesOutfit_Defaults = File.ReadAllLines(ClothesOutfitNameMap_Path);
             string[] NameMap_Defaults = File.ReadAllLines(OutfitFileNameMap_Path);
             string[] CustomNameMap_Defaults = File.ReadAllLines(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GameCharacterCustomization_Default_NameMap.txt");
+            string[] SandboxPropsNameMap_Defaults = File.ReadAllLines(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_SandboxProps_Default_NameMap.txt");
 
             string Original_Entry = File.ReadAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_ClothesOutfit_Entry_Default.json");
             string Original_FurmaskEntry = File.ReadAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_ClothesOutfit_Entry_FurMask.json");
             string Original_OutfitEntry = File.ReadAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GameCharacterOutfits_Entry_Default.json");
             string Original_CustomEntry = File.ReadAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GameCharacterCustomization_Entry_Default.json");
+            string Original_SandboxPropsEntry = File.ReadAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_SandboxProps_Entry_Default.json");
             string Original_CustomHairEntry = "";
             if (File.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GameCharacterCustomization_HairEntry_Default.json"))
             {
@@ -2378,6 +2419,7 @@ namespace WSMM
                 string Entry = Original_Entry;
                 string OutfitEntry = Original_OutfitEntry;
                 string CustomEntry = Original_CustomEntry;
+                string SandboxPropsEntry = Original_SandboxPropsEntry;
                 string[] contents;
                 bool UsingFurMask = false;
                 contents = File.ReadAllLines(file);
@@ -2967,6 +3009,120 @@ namespace WSMM
                         }
                     }
                 }
+                else if (GetCleanString(contents, "Variant") == "Props")
+                {
+
+                    foreach (string S in contents)
+                    {
+                        string CleanString = GetSlice(S, ":", 1).Trim();
+                        if (GetSlice(S, ":", 0).Trim() == "Prop")
+                        {
+                            SandboxPropsEntry = Original_SandboxPropsEntry;
+                            SandboxPropsEntry = SandboxPropsEntry.Replace("[PROP_ID]", GetSlice(CleanString, " | ", 0));
+                            SandboxPropsEntry = SandboxPropsEntry.Replace("[PROP_NAME]", GetSlice(CleanString, " | ", 1));
+                            SandboxPropsEntry = SandboxPropsEntry.Replace("[PROP_CATEGORY]", GetSlice(CleanString, " | ", 2));
+                            string PropIconPath = GetSlice(CleanString, " | ", 3);
+                            SandboxPropsEntry = SandboxPropsEntry.Replace("[PROP_ICON_PATH]", PropIconPath);
+                            SandboxPropsEntry = SandboxPropsEntry.Replace("[PROP_ICON_NAME]", GetSlice(PropIconPath, "/", 999));
+                            string PropMeshPath = GetSlice(CleanString, " | ", 4);
+                            SandboxPropsEntry = SandboxPropsEntry.Replace("[PROP_MESH_PATH]", PropMeshPath);
+                            SandboxPropsEntry = SandboxPropsEntry.Replace("[PROP_MESH_NAME]", GetSlice(PropMeshPath, "/", 999));
+                            string PropSkelMeshPath = GetSlice(CleanString, " | ", 5);
+                            SandboxPropsEntry = SandboxPropsEntry.Replace("[PROP_SKELETON_PATH]", PropSkelMeshPath);
+                            SandboxPropsEntry = SandboxPropsEntry.Replace("[PROP_SKELETON_NAME]", GetSlice(PropSkelMeshPath, "/", 999));
+                            string PropActorPath = GetSlice(CleanString, " | ", 6);
+                            SandboxPropsEntry = SandboxPropsEntry.Replace("[PROP_ACTOR_PATH]", PropActorPath);
+                            SandboxPropsEntry = SandboxPropsEntry.Replace("[PROP_ACTOR_NAME]", GetSlice(PropActorPath, "/", 999));
+                            string[] PivotOffset = GetSlice(CleanString, " | ", 7).Split(",");
+                            SandboxPropsEntry = SandboxPropsEntry.Replace("[PIVOTOFFSET_X]", PivotOffset[0].Trim());
+                            SandboxPropsEntry = SandboxPropsEntry.Replace("[PIVOTOFFSET_Y]", PivotOffset[1].Trim());
+                            SandboxPropsEntry = SandboxPropsEntry.Replace("[PIVOTOFFSET_Z]", PivotOffset[2].Trim());
+                            string[] PlacementOffset = GetSlice(CleanString, " | ", 8).Split(",");
+                            SandboxPropsEntry = SandboxPropsEntry.Replace("[PLACEMENTOFFSET_X]", PlacementOffset[0].Trim());
+                            SandboxPropsEntry = SandboxPropsEntry.Replace("[PLACEMENTOFFSET_Y]", PlacementOffset[1].Trim());
+                            SandboxPropsEntry = SandboxPropsEntry.Replace("[PLACEMENTOFFSET_Z]", PlacementOffset[2].Trim());
+                            SandboxPropsEntry = SandboxPropsEntry.Replace("[PLACEMENTCOLLISION]", GetSlice(CleanString, " | ", 9).Trim());
+                            string[] ColOffset = GetSlice(CleanString, " | ", 10).Split(",");
+                            SandboxPropsEntry = SandboxPropsEntry.Replace("[COLLISIONOFFSET_X]", ColOffset[0].Trim());
+                            SandboxPropsEntry = SandboxPropsEntry.Replace("[COLLISIONOFFSET_Y]", ColOffset[1].Trim());
+                            SandboxPropsEntry = SandboxPropsEntry.Replace("[COLLISIONOFFSET_Z]", ColOffset[2].Trim());
+                            string[] ColRotation = GetSlice(CleanString, " | ", 11).Split(",");
+                            SandboxPropsEntry = SandboxPropsEntry.Replace("[COLLISIONROTATION_PITCH]", ColRotation[0].Trim());
+                            SandboxPropsEntry = SandboxPropsEntry.Replace("[COLLISIONROTATION_YAW]", ColRotation[1].Trim());
+                            SandboxPropsEntry = SandboxPropsEntry.Replace("[COLLISIONROTATION_ROLL]", ColRotation[2].Trim());
+                            string[] ColExtents = GetSlice(CleanString, " | ", 12).Split(",");
+                            SandboxPropsEntry = SandboxPropsEntry.Replace("[COLLISIONEXTENTS_X]", ColExtents[0].Trim());
+                            SandboxPropsEntry = SandboxPropsEntry.Replace("[COLLISIONEXTENTS_Y]", ColExtents[1].Trim());
+                            SandboxPropsEntry = SandboxPropsEntry.Replace("[COLLISIONEXTENTS_Z]", ColExtents[2].Trim());
+                            SandboxPropsEntry = SandboxPropsEntry.Replace("[BLUEPRINT_PATH]", GetSlice(CleanString, " | ", 13));
+                            SandboxPropsEntry = SandboxPropsEntry.Replace("[BLUEPRINT_NAME]", GetSlice(CleanString, " | ", 14));
+                            SandboxPropsEntry = SandboxPropsEntry.Replace("[ADFL]", GetSlice(CleanString, " | ", 15).Trim());
+
+                            Props.Add(SandboxPropsEntry);
+                        }
+                    }
+                    string NM = GetCleanString(contents, "NameMap");
+                    string[] TempArray = NM.Split(',');
+                    foreach (string temp in TempArray)
+                    {
+                        bool isDupe = false;
+                        foreach (string itm in SandboxPropsNameMap)
+                        {
+                            if (itm == temp)
+                            {
+                                isDupe = true;
+                                break;
+                            }
+                        }
+                        if (isDupe == false)
+                        {
+                            foreach (string itm in SandboxPropsNameMap_Defaults)
+                            {
+                                if (itm == temp)
+                                {
+                                    isDupe = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if (isDupe == false)
+                        {
+                            SandboxPropsNameMap.Add(temp);
+                        }
+                    }
+
+                    //PropID_TB.Text = SplitEntry[0];
+                    //PropName_TB.Text = SplitEntry[1];
+                    //PropCategory_CB.Text = SplitEntry[2];
+                    //PropIcon_TB.Text = SplitEntry[3];
+                    //PropMesh_TB.Text = SplitEntry[4];
+                    //PropSkelMesh_TB.Text = SplitEntry[5];
+                    //PropActor_TB.Text = SplitEntry[6];
+                    //string[] PivotOffset = SplitEntry[7].Split(",");
+                    //PropPivotOffset_X.Value = Decimal.Parse(PivotOffset[0]);
+                    //PropPivotOffset_Y.Value = Decimal.Parse(PivotOffset[1]);
+                    //PropPivotOffset_Z.Value = Decimal.Parse(PivotOffset[2]);
+                    //string[] PlacementOffset = SplitEntry[8].Split(",");
+                    //PropPlacementOffset_X.Value = Decimal.Parse(PlacementOffset[0]);
+                    //PropPlacementOffset_Y.Value = Decimal.Parse(PlacementOffset[1]);
+                    //PropPlacementOffset_Z.Value = Decimal.Parse(PlacementOffset[2]);
+                    //PropCollision_CB.Checked = Boolean.Parse(SplitEntry[9]);
+                    //string[] ColOffset = SplitEntry[10].Split(",");
+                    //PropColOffset_X.Value = Decimal.Parse(ColOffset[0]);
+                    //PropColOffset_Y.Value = Decimal.Parse(ColOffset[1]);
+                    //PropColOffset_Z.Value = Decimal.Parse(ColOffset[2]);
+                    //string[] ColRotation = SplitEntry[11].Split(",");
+                    //PropColRotation_Pitch.Value = Decimal.Parse(ColRotation[0]);
+                    //PropColRotation_Yaw.Value = Decimal.Parse(ColRotation[1]);
+                    //PropColRotation_Roll.Value = Decimal.Parse(ColRotation[2]);
+                    //string[] ColExtents = SplitEntry[12].Split(",");
+                    //PropColExtents_X.Value = Decimal.Parse(ColExtents[0]);
+                    //PropColExtents_Y.Value = Decimal.Parse(ColExtents[1]);
+                    //PropColExtents_Z.Value = Decimal.Parse(ColExtents[2]);
+                    //PropCustomBlueprint_TB.Text = SplitEntry[13];
+                    //PropCustomBlueprintName_TB.Text = SplitEntry[14];
+                    //PropADFL_CB.Checked = Boolean.Parse(SplitEntry[15]);
+                }
             }
 
             //Remove Temp files
@@ -3216,6 +3372,37 @@ namespace WSMM
             {
                 return "DT_GFur json error: " + ex.Message;
             }
+
+            string CompiledPropEntries = string.Empty;
+            string CompiledPropNameMap = string.Empty;
+            try
+            {
+                foreach (string Ent in Props)
+                {
+                    CompiledPropEntries += Ent + ",\n";
+                }
+                CompiledPropEntries = CompiledPropEntries.TrimEnd('\n');
+                CompiledPropEntries = CompiledPropEntries.TrimEnd(',');
+
+                foreach (string Ent in SandboxPropsNameMap)
+                {
+                    CompiledPropNameMap += "\"" + Ent + "\"" + "," + "\n";
+                }
+                CompiledPropNameMap = CompiledPropNameMap.TrimEnd('\n');
+                CompiledPropNameMap = CompiledPropNameMap.TrimEnd(',');
+
+                SandboxProps = SandboxProps.Replace("[ENTRYSTART]", CompiledPropEntries);
+                SandboxProps = SandboxProps.Replace("[NAMEMAPSTART]", CompiledPropNameMap);
+                File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_SandboxProps_Debug.json", SandboxProps);
+                dynamic PropsArray = JsonConvert.DeserializeObject(SandboxProps);
+                string PropsjsonString = JsonConvert.SerializeObject(PropsArray, Newtonsoft.Json.Formatting.Indented);
+                File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_SandboxProps_Generated.json", PropsjsonString);
+            }
+            catch (Exception ex)
+            {
+                return "DT_SandboxProps json error: " + ex.Message;
+            }
+
             return "Success";
         }
 
@@ -3315,6 +3502,25 @@ namespace WSMM
                 }
             }
 
+            if (File.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_SandboxProps_Generated.json"))
+            {
+                var DT_SandboxProps = new UAsset();
+                try
+                {
+                    using (var sr = new FileStream(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_SandboxProps_Generated.json", FileMode.Open))
+                    {
+                        DT_SandboxProps = UAsset.DeserializeJson(sr);
+                    }
+                    DT_SandboxProps.Mappings = mappings;
+
+                    DT_SandboxProps.Write(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P\WildLifeC\Content\DataTables\Sandbox\DT_SandboxProps.uasset");
+                }
+                catch (Exception ex)
+                {
+                    return "DT_SandboxProps Serialization Error: " + ex.Message;
+                }
+            }
+
             return "Success";
         }
 
@@ -3344,6 +3550,11 @@ namespace WSMM
                     {
                         pak_writer.WriteFile("WildLifeC/Content/DataTables/NPC/DT_GameCharacterCustomization.uasset", File.ReadAllBytes(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P\WildLifeC\Content\DataTables\NPC\DT_GameCharacterCustomization.uasset"));
                         pak_writer.WriteFile("WildLifeC/Content/DataTables/NPC/DT_GameCharacterCustomization.uexp", File.ReadAllBytes(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P\WildLifeC\Content\DataTables\NPC\DT_GameCharacterCustomization.uexp"));
+                    }
+                    if (File.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_SandboxProps_Generated.json"))
+                    {
+                        pak_writer.WriteFile("WildLifeC/Content/DataTables/Sandbox/DT_SandboxProps.uasset", File.ReadAllBytes(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P\WildLifeC\Content\DataTables\Sandbox\DT_SandboxProps.uasset"));
+                        pak_writer.WriteFile("WildLifeC/Content/DataTables/Sandbox/DT_SandboxProps.uexp", File.ReadAllBytes(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P\WildLifeC\Content\DataTables\Sandbox\DT_SandboxProps.uexp"));
                     }
                     pak_writer.WriteIndex();
                 }
@@ -4633,6 +4844,14 @@ namespace WSMM
                         Mod_ErrorLabel[ModID].Location = new Point(Mod_VersionLabel[ModID].Left - ((int)LabelSize.Width) - 5, 11);
                     }
                 }
+            }
+        }
+
+        private void BS_BaseGameSandboxPropsFile_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (StartingUp == false)
+            {
+                SaveBuildSettings();
             }
         }
     }

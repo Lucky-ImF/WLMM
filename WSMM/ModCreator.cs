@@ -135,6 +135,7 @@ namespace WSMM
         {
             AffectedCharacters_CLB.Items.Clear();
             AffectedCharacters_CLB.Items.Add("All");
+            AffectedCharacters_CLB.Items.Add("None");
             if (File.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\Characters.txt"))
             {
                 AffectedCharacters_CLB.Items.AddRange(File.ReadAllLines(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\Characters.txt"));
@@ -258,7 +259,7 @@ namespace WSMM
         {
             AutoModCreator AutoModCreator_Form = new AutoModCreator();
             AutoModCreator_Form.Show();
-            AutoModCreator_Form.TransferInfo(LoadedWLPath, LoadedWLVersion, LoadedUEVersion, this);
+            AutoModCreator_Form.TransferInfo(LoadedWLPath, LoadedWLVersion, LoadedUEVersion, ModAuthor_TB.Text, this);
         }
 
         private void BuildMods_Button_Click(object sender, EventArgs e)
@@ -876,7 +877,7 @@ namespace WSMM
             {
                 AutoModCreator AutoModCreator_Form = new AutoModCreator();
                 AutoModCreator_Form.Show();
-                AutoModCreator_Form.TransferInfo(LoadedWLPath, LoadedWLVersion, LoadedUEVersion, this);
+                AutoModCreator_Form.TransferInfo(LoadedWLPath, LoadedWLVersion, LoadedUEVersion, "", this);
                 AutoModCreator_Form.LoadAutoMod(AutoModList.SelectedItems[0].Tag.ToString());
             }
         }

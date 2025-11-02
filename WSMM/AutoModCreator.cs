@@ -57,12 +57,16 @@ namespace WSMM
             InitializeComponent();
         }
 
-        public void TransferInfo(string Path, string Version, string UEV, ModCreator MCF)
+        public void TransferInfo(string Path, string Version, string UEV, string Author, ModCreator MCF)
         {
             LoadedWLVersion = Version;
             LoadedWLPath = Path;
             LoadedUEVersion = UEV;
             ModCreator_Form = MCF;
+            if (Author != "")
+            {
+                ModAuthor.Text = Author;
+            }
 
             LoadBaseInfo();
         }
@@ -353,6 +357,7 @@ namespace WSMM
         {
             try
             {
+                NameMap.Clear();
                 string ModString = "ModName: " + ModName.Text + "\n";
                 ModString += "Author: " + ModAuthor.Text + "\n";
                 ModString += "Variant: " + Variant.Text + "\n";
@@ -728,6 +733,57 @@ namespace WSMM
                     File.WriteAllText(SavePath, ModString);
                     ModCreator_Form.AddToAutoModList(SavePath);
                 }
+                else if (Variant.Text == "Props")
+                {
+                    ModString += "NameMap: [NAMEMAPREPLACE]" + "\n";
+
+                    foreach (string s in Props_LB.Items)
+                    {
+                        ModString += "Prop: " + s + "\n";
+                        AddToNameMap(GetSlice(s, " | ", 0)); // ID
+                        string MeshPath = GetSlice(s, " | ", 4);
+                        AddToNameMap(GetSlice(MeshPath, "/", 999)); // Mesh Name
+                        AddToNameMap(MeshPath); // Mesh Path
+                        string SkelMeshPath = GetSlice(s, " | ", 5);
+                        AddToNameMap(GetSlice(SkelMeshPath, "/", 999)); // SkelMesh Name
+                        AddToNameMap(SkelMeshPath); // SkelMesh Path
+                        string ActorPath = GetSlice(s, " | ", 5);
+                        AddToNameMap(GetSlice(ActorPath, "/", 999)); // Actor Name
+                        AddToNameMap(ActorPath); // Actor Path
+                        string Blueprint = GetSlice(s, " | ", 13);
+                        AddToNameMap(Blueprint); // Blueprint
+                    }
+                    ModString = ModString.TrimEnd('\n');
+
+                    string NameMapString = string.Empty;
+                    foreach (string itm in NameMap)
+                    {
+                        NameMapString += itm + ",";
+                    }
+                    NameMapString = NameMapString.TrimEnd(',');
+                    ModString = ModString.Replace("[NAMEMAPREPLACE]", NameMapString);
+
+                    string SavePath = string.Empty;
+                    if (CurrentlyEditing_Path == string.Empty)
+                    {
+                        SavePath = Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Mod Creator\AutoMod\" + ModName.Text + "_Props.txt";
+                    }
+                    else
+                    {
+                        if (File.Exists(CurrentlyEditing_Path))
+                        {
+                            SavePath = CurrentlyEditing_Path;
+                        }
+                        else
+                        {
+                            MessageBox.Show("The file you are editing could not be found.\nMod write was unsuccessful.", "Wild Life Mod Manager");
+                            return;
+                        }
+                    }
+
+                    File.WriteAllText(SavePath, ModString);
+                    ModCreator_Form.AddToAutoModList(SavePath);
+                }
                 MessageBox.Show("Mod file created!", "AutoMod");
             }
             catch (Exception)
@@ -769,6 +825,8 @@ namespace WSMM
                 Character.Items.Clear();
                 Character.Items.AddRange(OutfitChars);
                 Character.SelectedIndex = 0;
+                PropsGB.Visible = false;
+                Character.Enabled = true;
             }
             else if (Variant.Text == "Port")
             {
@@ -781,6 +839,8 @@ namespace WSMM
                 Character.Items.Clear();
                 Character.Items.AddRange(OutfitChars);
                 Character.SelectedIndex = 0;
+                PropsGB.Visible = false;
+                Character.Enabled = true;
             }
             else if (Variant.Text == "Character Customization")
             {
@@ -792,6 +852,8 @@ namespace WSMM
                 CharCustomBox.Visible = true;
                 OutfitID.Enabled = false;
                 OutfitName.Enabled = false;
+                PropsGB.Visible = false;
+                Character.Enabled = true;
             }
             else if (Variant.Text == "Fur Customization")
             {
@@ -803,6 +865,19 @@ namespace WSMM
                 FurCustomizationGB.Visible = true;
                 OutfitID.Enabled = false;
                 OutfitName.Enabled = false;
+                PropsGB.Visible = false;
+                Character.Enabled = true;
+            }
+            else if (Variant.Text == "Props")
+            {
+                tabControl1.Visible = false;
+                FurCustomizationGB.Visible = false;
+                Character.Items.Clear();
+                Character.Enabled = false;
+                CharCustomBox.Visible = false;
+                OutfitID.Enabled = false;
+                OutfitName.Enabled = false;
+                PropsGB.Visible = true;
             }
         }
 
@@ -937,6 +1012,10 @@ namespace WSMM
                 else if (TempArray[0].Trim() == "MaxForceTorqueFactor") { Fur_MaxForceTorqueFactor.Text = TempArray[1].Trim(); }
                 else if (TempArray[0].Trim() == "ReferenceHairBias") { Fur_RefHairBias.Text = TempArray[1].Trim(); }
                 else if (TempArray[0].Trim() == "HairLengthForceUniformity") { Fur_HairLengthForceUniformity.Text = TempArray[1].Trim(); }
+                else if (TempArray[0].Trim() == "Prop")
+                { 
+                    Props_LB.Items.Add(TempArray[1].Trim());
+                }
                 else
                 {
                     string[] TempArray2 = TempArray[1].Trim().Split(',');
@@ -2524,6 +2603,102 @@ namespace WSMM
             if (Feet_LoadEntry_CB.Text != "")
             {
                 ExtractValues(Feet_LoadEntry_CB.Text, "All");
+            }
+        }
+
+        private void PropIcon_Ex_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            PropIcon_TB.Text = "/Game/Textures/UI/Icons/Sandbox/PropIcons/T_FriedMeatFIcon";
+        }
+
+        private void PropMesh_Ex_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            PropMesh_TB.Text = "/Game/Meshes/Environment/Props/X_Props/X_Props_S/SM_Prop_Fried_Meat_F";
+        }
+
+        private void PropCustomBlueprint_Ex_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            PropCustomBlueprint_TB.Text = "/Game/Blueprints/Sandbox/Props/BP_SandboxProp_XPropBase";
+        }
+
+        private void Props_Add_Button_Click(object sender, EventArgs e)
+        {
+            string PropEntry = PropID_TB.Text + " | " + PropName_TB.Text + " | " + PropCategory_CB.Text + " | " + PropIcon_TB.Text + " | " + PropMesh_TB.Text + " | " + PropSkelMesh_TB.Text
+                + " | " + PropActor_TB.Text + " | " + PropPivotOffset_X.Value.ToString() + "," + PropPivotOffset_Y.Value.ToString() + "," + PropPivotOffset_Z.Value.ToString() + " | "
+                + PropPlacementOffset_X.Value.ToString() + "," + PropPlacementOffset_Y.Value.ToString() + "," + PropPlacementOffset_Z.Value.ToString() + " | "
+                + PropCollision_CB.Checked.ToString() + " | " + PropColOffset_X.Value.ToString() + "," + PropColOffset_X.Value.ToString() + "," + PropColOffset_X.Value.ToString() + " | "
+                + PropColRotation_Pitch.Value.ToString() + "," + PropColRotation_Yaw.Value.ToString() + "," + PropColRotation_Roll.Value.ToString() + " | "
+                + PropColExtents_X.Value.ToString() + "," + PropColExtents_X.Value.ToString() + "," + PropColExtents_X.Value.ToString() + " | "
+                + PropCustomBlueprint_TB.Text + " | " + PropCustomBlueprintName_TB.Text + " | " + PropADFL_CB.Checked.ToString();
+
+            int existingIndex = -1;
+            for (int i = 0; i < Props_LB.Items.Count; i++)
+            {
+                string item = Props_LB.Items[i].ToString();
+                if (GetSlice(item," | ", 0).Trim() == PropID_TB.Text)
+                {
+                    existingIndex = i;
+                    break;
+                }
+            }
+
+            if (existingIndex >= 0)
+            {
+                Props_LB.Items[existingIndex] = PropEntry;
+                Props_LB.SelectedIndex = existingIndex;
+            }
+            else
+            {
+                Props_LB.Items.Add(PropEntry);
+                Props_LB.SelectedIndex = Props_LB.Items.Count - 1;
+            }
+        }
+
+        private void Props_Remove_Button_Click(object sender, EventArgs e)
+        {
+            if (Props_LB.SelectedIndex != -1)
+            {
+                Props_LB.Items.RemoveAt(Props_LB.SelectedIndex);
+            }
+        }
+
+        private void Props_LB_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (Props_LB.SelectedIndex != -1)
+            {
+                string PropEntry = Props_LB.SelectedItem.ToString();
+                string[] SplitEntry = PropEntry.Split(" | ");
+                PropID_TB.Text = SplitEntry[0];
+                PropName_TB.Text = SplitEntry[1];
+                PropCategory_CB.Text = SplitEntry[2];
+                PropIcon_TB.Text = SplitEntry[3];
+                PropMesh_TB.Text = SplitEntry[4];
+                PropSkelMesh_TB.Text = SplitEntry[5];
+                PropActor_TB.Text = SplitEntry[6];
+                string[] PivotOffset = SplitEntry[7].Split(",");
+                PropPivotOffset_X.Value = Decimal.Parse(PivotOffset[0]);
+                PropPivotOffset_Y.Value = Decimal.Parse(PivotOffset[1]);
+                PropPivotOffset_Z.Value = Decimal.Parse(PivotOffset[2]);
+                string[] PlacementOffset = SplitEntry[8].Split(",");
+                PropPlacementOffset_X.Value = Decimal.Parse(PlacementOffset[0]);
+                PropPlacementOffset_Y.Value = Decimal.Parse(PlacementOffset[1]);
+                PropPlacementOffset_Z.Value = Decimal.Parse(PlacementOffset[2]);
+                PropCollision_CB.Checked = Boolean.Parse(SplitEntry[9]);
+                string[] ColOffset = SplitEntry[10].Split(",");
+                PropColOffset_X.Value = Decimal.Parse(ColOffset[0]);
+                PropColOffset_Y.Value = Decimal.Parse(ColOffset[1]);
+                PropColOffset_Z.Value = Decimal.Parse(ColOffset[2]);
+                string[] ColRotation = SplitEntry[11].Split(",");
+                PropColRotation_Pitch.Value = Decimal.Parse(ColRotation[0]);
+                PropColRotation_Yaw.Value = Decimal.Parse(ColRotation[1]);
+                PropColRotation_Roll.Value = Decimal.Parse(ColRotation[2]);
+                string[] ColExtents = SplitEntry[12].Split(",");
+                PropColExtents_X.Value = Decimal.Parse(ColExtents[0]);
+                PropColExtents_Y.Value = Decimal.Parse(ColExtents[1]);
+                PropColExtents_Z.Value = Decimal.Parse(ColExtents[2]);
+                PropCustomBlueprint_TB.Text = SplitEntry[13];
+                PropCustomBlueprintName_TB.Text = SplitEntry[14];
+                PropADFL_CB.Checked = Boolean.Parse(SplitEntry[15]);
             }
         }
     }

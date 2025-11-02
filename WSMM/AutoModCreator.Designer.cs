@@ -351,6 +351,68 @@
             CurrentlyEditing_LL = new LinkLabel();
             StopEditing_LL = new LinkLabel();
             toolTip1 = new ToolTip(components);
+            PropsGB = new GroupBox();
+            PropADFL_CB = new CheckBox();
+            PropCustomBlueprint_Ex = new LinkLabel();
+            label134 = new Label();
+            PropCustomBlueprint_TB = new TextBox();
+            groupBox13 = new GroupBox();
+            PropColRotation_Roll = new NumericUpDown();
+            label131 = new Label();
+            PropColRotation_Yaw = new NumericUpDown();
+            label132 = new Label();
+            PropColRotation_Pitch = new NumericUpDown();
+            label133 = new Label();
+            groupBox11 = new GroupBox();
+            PropColExtents_Z = new NumericUpDown();
+            label125 = new Label();
+            PropColExtents_Y = new NumericUpDown();
+            label126 = new Label();
+            PropColExtents_X = new NumericUpDown();
+            label127 = new Label();
+            groupBox12 = new GroupBox();
+            PropColOffset_Z = new NumericUpDown();
+            label128 = new Label();
+            PropColOffset_Y = new NumericUpDown();
+            label129 = new Label();
+            PropColOffset_X = new NumericUpDown();
+            label130 = new Label();
+            PropCollision_CB = new CheckBox();
+            groupBox10 = new GroupBox();
+            PropPlacementOffset_Z = new NumericUpDown();
+            label122 = new Label();
+            PropPlacementOffset_Y = new NumericUpDown();
+            label123 = new Label();
+            PropPlacementOffset_X = new NumericUpDown();
+            label124 = new Label();
+            groupBox9 = new GroupBox();
+            PropPivotOffset_Z = new NumericUpDown();
+            label121 = new Label();
+            PropPivotOffset_Y = new NumericUpDown();
+            label120 = new Label();
+            PropPivotOffset_X = new NumericUpDown();
+            label119 = new Label();
+            label118 = new Label();
+            PropActor_TB = new TextBox();
+            label117 = new Label();
+            PropSkelMesh_TB = new TextBox();
+            PropMesh_Ex = new LinkLabel();
+            label116 = new Label();
+            PropMesh_TB = new TextBox();
+            PropIcon_Ex = new LinkLabel();
+            label115 = new Label();
+            PropIcon_TB = new TextBox();
+            PropCategory_CB = new ComboBox();
+            label114 = new Label();
+            label113 = new Label();
+            PropName_TB = new TextBox();
+            label112 = new Label();
+            PropID_TB = new TextBox();
+            Props_Remove_Button = new Button();
+            Props_Add_Button = new Button();
+            Props_LB = new ListBox();
+            label135 = new Label();
+            PropCustomBlueprintName_TB = new TextBox();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             TitlePanel.SuspendLayout();
@@ -377,6 +439,27 @@
             groupBox8.SuspendLayout();
             CharCustomBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_PB).BeginInit();
+            PropsGB.SuspendLayout();
+            groupBox13.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)PropColRotation_Roll).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)PropColRotation_Yaw).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)PropColRotation_Pitch).BeginInit();
+            groupBox11.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)PropColExtents_Z).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)PropColExtents_Y).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)PropColExtents_X).BeginInit();
+            groupBox12.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)PropColOffset_Z).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)PropColOffset_Y).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)PropColOffset_X).BeginInit();
+            groupBox10.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)PropPlacementOffset_Z).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)PropPlacementOffset_Y).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)PropPlacementOffset_X).BeginInit();
+            groupBox9.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)PropPivotOffset_Z).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)PropPivotOffset_Y).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)PropPivotOffset_X).BeginInit();
             SuspendLayout();
             // 
             // Close_Button
@@ -463,7 +546,7 @@
             Variant.FlatStyle = FlatStyle.Popup;
             Variant.ForeColor = SystemColors.ActiveCaption;
             Variant.FormattingEnabled = true;
-            Variant.Items.AddRange(new object[] { "Add", "Port", "Character Customization", "Fur Customization" });
+            Variant.Items.AddRange(new object[] { "Add", "Port", "Character Customization", "Fur Customization", "Props" });
             Variant.Location = new Point(315, 124);
             Variant.Margin = new Padding(4, 3, 4, 3);
             Variant.Name = "Variant";
@@ -4491,6 +4574,825 @@
             toolTip1.IsBalloon = true;
             toolTip1.ReshowDelay = 100;
             // 
+            // PropsGB
+            // 
+            PropsGB.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            PropsGB.Controls.Add(label135);
+            PropsGB.Controls.Add(PropCustomBlueprintName_TB);
+            PropsGB.Controls.Add(PropADFL_CB);
+            PropsGB.Controls.Add(PropCustomBlueprint_Ex);
+            PropsGB.Controls.Add(label134);
+            PropsGB.Controls.Add(PropCustomBlueprint_TB);
+            PropsGB.Controls.Add(groupBox13);
+            PropsGB.Controls.Add(groupBox11);
+            PropsGB.Controls.Add(groupBox12);
+            PropsGB.Controls.Add(PropCollision_CB);
+            PropsGB.Controls.Add(groupBox10);
+            PropsGB.Controls.Add(groupBox9);
+            PropsGB.Controls.Add(label118);
+            PropsGB.Controls.Add(PropActor_TB);
+            PropsGB.Controls.Add(label117);
+            PropsGB.Controls.Add(PropSkelMesh_TB);
+            PropsGB.Controls.Add(PropMesh_Ex);
+            PropsGB.Controls.Add(label116);
+            PropsGB.Controls.Add(PropMesh_TB);
+            PropsGB.Controls.Add(PropIcon_Ex);
+            PropsGB.Controls.Add(label115);
+            PropsGB.Controls.Add(PropIcon_TB);
+            PropsGB.Controls.Add(PropCategory_CB);
+            PropsGB.Controls.Add(label114);
+            PropsGB.Controls.Add(label113);
+            PropsGB.Controls.Add(PropName_TB);
+            PropsGB.Controls.Add(label112);
+            PropsGB.Controls.Add(PropID_TB);
+            PropsGB.Controls.Add(Props_Remove_Button);
+            PropsGB.Controls.Add(Props_Add_Button);
+            PropsGB.Controls.Add(Props_LB);
+            PropsGB.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            PropsGB.ForeColor = Color.White;
+            PropsGB.Location = new Point(5, 208);
+            PropsGB.Margin = new Padding(4, 3, 4, 3);
+            PropsGB.Name = "PropsGB";
+            PropsGB.Padding = new Padding(4, 3, 4, 3);
+            PropsGB.Size = new Size(606, 728);
+            PropsGB.TabIndex = 42;
+            PropsGB.TabStop = false;
+            PropsGB.Text = "Props";
+            PropsGB.Visible = false;
+            // 
+            // PropADFL_CB
+            // 
+            PropADFL_CB.AutoSize = true;
+            PropADFL_CB.Checked = true;
+            PropADFL_CB.CheckState = CheckState.Checked;
+            PropADFL_CB.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            PropADFL_CB.ForeColor = SystemColors.ActiveCaption;
+            PropADFL_CB.Location = new Point(396, 477);
+            PropADFL_CB.Name = "PropADFL_CB";
+            PropADFL_CB.Size = new Size(197, 20);
+            PropADFL_CB.TabIndex = 76;
+            PropADFL_CB.Text = "Affect Distance Field Lighting";
+            PropADFL_CB.UseVisualStyleBackColor = true;
+            // 
+            // PropCustomBlueprint_Ex
+            // 
+            PropCustomBlueprint_Ex.ActiveLinkColor = Color.DeepSkyBlue;
+            PropCustomBlueprint_Ex.AutoSize = true;
+            PropCustomBlueprint_Ex.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            PropCustomBlueprint_Ex.LinkColor = SystemColors.MenuHighlight;
+            PropCustomBlueprint_Ex.Location = new Point(153, 505);
+            PropCustomBlueprint_Ex.Margin = new Padding(4, 0, 4, 0);
+            PropCustomBlueprint_Ex.Name = "PropCustomBlueprint_Ex";
+            PropCustomBlueprint_Ex.Size = new Size(389, 15);
+            PropCustomBlueprint_Ex.TabIndex = 75;
+            PropCustomBlueprint_Ex.TabStop = true;
+            PropCustomBlueprint_Ex.Text = " (ex. /Game/Blueprints/Sandbox/Props/BP_SandboxProp_XPropBase)";
+            PropCustomBlueprint_Ex.VisitedLinkColor = SystemColors.MenuHighlight;
+            PropCustomBlueprint_Ex.LinkClicked += PropCustomBlueprint_Ex_LinkClicked;
+            // 
+            // label134
+            // 
+            label134.AutoSize = true;
+            label134.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label134.ForeColor = SystemColors.ActiveCaption;
+            label134.Location = new Point(21, 505);
+            label134.Margin = new Padding(4, 0, 4, 0);
+            label134.Name = "label134";
+            label134.Size = new Size(132, 15);
+            label134.TabIndex = 74;
+            label134.Text = "Custom Blueprint Path:";
+            // 
+            // PropCustomBlueprint_TB
+            // 
+            PropCustomBlueprint_TB.BackColor = Color.FromArgb(75, 68, 138);
+            PropCustomBlueprint_TB.Font = new Font("Microsoft Sans Serif", 9F);
+            PropCustomBlueprint_TB.ForeColor = SystemColors.ActiveCaption;
+            PropCustomBlueprint_TB.Location = new Point(35, 524);
+            PropCustomBlueprint_TB.Margin = new Padding(4, 3, 4, 3);
+            PropCustomBlueprint_TB.Name = "PropCustomBlueprint_TB";
+            PropCustomBlueprint_TB.Size = new Size(535, 21);
+            PropCustomBlueprint_TB.TabIndex = 73;
+            PropCustomBlueprint_TB.Text = "None";
+            // 
+            // groupBox13
+            // 
+            groupBox13.Controls.Add(PropColRotation_Roll);
+            groupBox13.Controls.Add(label131);
+            groupBox13.Controls.Add(PropColRotation_Yaw);
+            groupBox13.Controls.Add(label132);
+            groupBox13.Controls.Add(PropColRotation_Pitch);
+            groupBox13.Controls.Add(label133);
+            groupBox13.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            groupBox13.ForeColor = SystemColors.ActiveCaption;
+            groupBox13.Location = new Point(40, 447);
+            groupBox13.Name = "groupBox13";
+            groupBox13.Size = new Size(337, 51);
+            groupBox13.TabIndex = 72;
+            groupBox13.TabStop = false;
+            groupBox13.Text = "Collision Rotation";
+            // 
+            // PropColRotation_Roll
+            // 
+            PropColRotation_Roll.BackColor = Color.FromArgb(75, 68, 138);
+            PropColRotation_Roll.ForeColor = SystemColors.ActiveCaption;
+            PropColRotation_Roll.Location = new Point(264, 21);
+            PropColRotation_Roll.Maximum = new decimal(new int[] { 9999, 0, 0, 0 });
+            PropColRotation_Roll.Minimum = new decimal(new int[] { 9999, 0, 0, int.MinValue });
+            PropColRotation_Roll.Name = "PropColRotation_Roll";
+            PropColRotation_Roll.Size = new Size(53, 21);
+            PropColRotation_Roll.TabIndex = 55;
+            // 
+            // label131
+            // 
+            label131.AutoSize = true;
+            label131.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label131.ForeColor = SystemColors.ActiveCaption;
+            label131.Location = new Point(225, 23);
+            label131.Margin = new Padding(4, 0, 4, 0);
+            label131.Name = "label131";
+            label131.Size = new Size(32, 15);
+            label131.TabIndex = 54;
+            label131.Text = "Roll:";
+            // 
+            // PropColRotation_Yaw
+            // 
+            PropColRotation_Yaw.BackColor = Color.FromArgb(75, 68, 138);
+            PropColRotation_Yaw.ForeColor = SystemColors.ActiveCaption;
+            PropColRotation_Yaw.Location = new Point(154, 21);
+            PropColRotation_Yaw.Maximum = new decimal(new int[] { 9999, 0, 0, 0 });
+            PropColRotation_Yaw.Minimum = new decimal(new int[] { 9999, 0, 0, int.MinValue });
+            PropColRotation_Yaw.Name = "PropColRotation_Yaw";
+            PropColRotation_Yaw.Size = new Size(53, 21);
+            PropColRotation_Yaw.TabIndex = 53;
+            // 
+            // label132
+            // 
+            label132.AutoSize = true;
+            label132.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label132.ForeColor = SystemColors.ActiveCaption;
+            label132.Location = new Point(118, 23);
+            label132.Margin = new Padding(4, 0, 4, 0);
+            label132.Name = "label132";
+            label132.Size = new Size(33, 15);
+            label132.TabIndex = 52;
+            label132.Text = "Yaw:";
+            // 
+            // PropColRotation_Pitch
+            // 
+            PropColRotation_Pitch.BackColor = Color.FromArgb(75, 68, 138);
+            PropColRotation_Pitch.ForeColor = SystemColors.ActiveCaption;
+            PropColRotation_Pitch.Location = new Point(47, 21);
+            PropColRotation_Pitch.Maximum = new decimal(new int[] { 9999, 0, 0, 0 });
+            PropColRotation_Pitch.Minimum = new decimal(new int[] { 9999, 0, 0, int.MinValue });
+            PropColRotation_Pitch.Name = "PropColRotation_Pitch";
+            PropColRotation_Pitch.Size = new Size(53, 21);
+            PropColRotation_Pitch.TabIndex = 51;
+            // 
+            // label133
+            // 
+            label133.AutoSize = true;
+            label133.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label133.ForeColor = SystemColors.ActiveCaption;
+            label133.Location = new Point(10, 23);
+            label133.Margin = new Padding(4, 0, 4, 0);
+            label133.Name = "label133";
+            label133.Size = new Size(37, 15);
+            label133.TabIndex = 50;
+            label133.Text = "Pitch:";
+            // 
+            // groupBox11
+            // 
+            groupBox11.Controls.Add(PropColExtents_Z);
+            groupBox11.Controls.Add(label125);
+            groupBox11.Controls.Add(PropColExtents_Y);
+            groupBox11.Controls.Add(label126);
+            groupBox11.Controls.Add(PropColExtents_X);
+            groupBox11.Controls.Add(label127);
+            groupBox11.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            groupBox11.ForeColor = SystemColors.ActiveCaption;
+            groupBox11.Location = new Point(307, 388);
+            groupBox11.Name = "groupBox11";
+            groupBox11.Size = new Size(255, 51);
+            groupBox11.TabIndex = 71;
+            groupBox11.TabStop = false;
+            groupBox11.Text = "Collision Extents";
+            // 
+            // PropColExtents_Z
+            // 
+            PropColExtents_Z.BackColor = Color.FromArgb(75, 68, 138);
+            PropColExtents_Z.ForeColor = SystemColors.ActiveCaption;
+            PropColExtents_Z.Location = new Point(188, 21);
+            PropColExtents_Z.Maximum = new decimal(new int[] { 9999, 0, 0, 0 });
+            PropColExtents_Z.Minimum = new decimal(new int[] { 9999, 0, 0, int.MinValue });
+            PropColExtents_Z.Name = "PropColExtents_Z";
+            PropColExtents_Z.Size = new Size(53, 21);
+            PropColExtents_Z.TabIndex = 55;
+            PropColExtents_Z.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            // 
+            // label125
+            // 
+            label125.AutoSize = true;
+            label125.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label125.ForeColor = SystemColors.ActiveCaption;
+            label125.Location = new Point(168, 23);
+            label125.Margin = new Padding(4, 0, 4, 0);
+            label125.Name = "label125";
+            label125.Size = new Size(17, 15);
+            label125.TabIndex = 54;
+            label125.Text = "Z:";
+            // 
+            // PropColExtents_Y
+            // 
+            PropColExtents_Y.BackColor = Color.FromArgb(75, 68, 138);
+            PropColExtents_Y.ForeColor = SystemColors.ActiveCaption;
+            PropColExtents_Y.Location = new Point(108, 21);
+            PropColExtents_Y.Maximum = new decimal(new int[] { 9999, 0, 0, 0 });
+            PropColExtents_Y.Minimum = new decimal(new int[] { 9999, 0, 0, int.MinValue });
+            PropColExtents_Y.Name = "PropColExtents_Y";
+            PropColExtents_Y.Size = new Size(53, 21);
+            PropColExtents_Y.TabIndex = 53;
+            PropColExtents_Y.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            // 
+            // label126
+            // 
+            label126.AutoSize = true;
+            label126.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label126.ForeColor = SystemColors.ActiveCaption;
+            label126.Location = new Point(88, 23);
+            label126.Margin = new Padding(4, 0, 4, 0);
+            label126.Name = "label126";
+            label126.Size = new Size(17, 15);
+            label126.TabIndex = 52;
+            label126.Text = "Y:";
+            // 
+            // PropColExtents_X
+            // 
+            PropColExtents_X.BackColor = Color.FromArgb(75, 68, 138);
+            PropColExtents_X.ForeColor = SystemColors.ActiveCaption;
+            PropColExtents_X.Location = new Point(30, 21);
+            PropColExtents_X.Maximum = new decimal(new int[] { 9999, 0, 0, 0 });
+            PropColExtents_X.Minimum = new decimal(new int[] { 9999, 0, 0, int.MinValue });
+            PropColExtents_X.Name = "PropColExtents_X";
+            PropColExtents_X.Size = new Size(53, 21);
+            PropColExtents_X.TabIndex = 51;
+            PropColExtents_X.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            // 
+            // label127
+            // 
+            label127.AutoSize = true;
+            label127.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label127.ForeColor = SystemColors.ActiveCaption;
+            label127.Location = new Point(10, 23);
+            label127.Margin = new Padding(4, 0, 4, 0);
+            label127.Name = "label127";
+            label127.Size = new Size(18, 15);
+            label127.TabIndex = 50;
+            label127.Text = "X:";
+            // 
+            // groupBox12
+            // 
+            groupBox12.Controls.Add(PropColOffset_Z);
+            groupBox12.Controls.Add(label128);
+            groupBox12.Controls.Add(PropColOffset_Y);
+            groupBox12.Controls.Add(label129);
+            groupBox12.Controls.Add(PropColOffset_X);
+            groupBox12.Controls.Add(label130);
+            groupBox12.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            groupBox12.ForeColor = SystemColors.ActiveCaption;
+            groupBox12.Location = new Point(40, 387);
+            groupBox12.Name = "groupBox12";
+            groupBox12.Size = new Size(255, 51);
+            groupBox12.TabIndex = 70;
+            groupBox12.TabStop = false;
+            groupBox12.Text = "Collision Offset";
+            // 
+            // PropColOffset_Z
+            // 
+            PropColOffset_Z.BackColor = Color.FromArgb(75, 68, 138);
+            PropColOffset_Z.ForeColor = SystemColors.ActiveCaption;
+            PropColOffset_Z.Location = new Point(188, 21);
+            PropColOffset_Z.Maximum = new decimal(new int[] { 9999, 0, 0, 0 });
+            PropColOffset_Z.Minimum = new decimal(new int[] { 9999, 0, 0, int.MinValue });
+            PropColOffset_Z.Name = "PropColOffset_Z";
+            PropColOffset_Z.Size = new Size(53, 21);
+            PropColOffset_Z.TabIndex = 55;
+            // 
+            // label128
+            // 
+            label128.AutoSize = true;
+            label128.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label128.ForeColor = SystemColors.ActiveCaption;
+            label128.Location = new Point(168, 23);
+            label128.Margin = new Padding(4, 0, 4, 0);
+            label128.Name = "label128";
+            label128.Size = new Size(17, 15);
+            label128.TabIndex = 54;
+            label128.Text = "Z:";
+            // 
+            // PropColOffset_Y
+            // 
+            PropColOffset_Y.BackColor = Color.FromArgb(75, 68, 138);
+            PropColOffset_Y.ForeColor = SystemColors.ActiveCaption;
+            PropColOffset_Y.Location = new Point(108, 21);
+            PropColOffset_Y.Maximum = new decimal(new int[] { 9999, 0, 0, 0 });
+            PropColOffset_Y.Minimum = new decimal(new int[] { 9999, 0, 0, int.MinValue });
+            PropColOffset_Y.Name = "PropColOffset_Y";
+            PropColOffset_Y.Size = new Size(53, 21);
+            PropColOffset_Y.TabIndex = 53;
+            // 
+            // label129
+            // 
+            label129.AutoSize = true;
+            label129.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label129.ForeColor = SystemColors.ActiveCaption;
+            label129.Location = new Point(88, 23);
+            label129.Margin = new Padding(4, 0, 4, 0);
+            label129.Name = "label129";
+            label129.Size = new Size(17, 15);
+            label129.TabIndex = 52;
+            label129.Text = "Y:";
+            // 
+            // PropColOffset_X
+            // 
+            PropColOffset_X.BackColor = Color.FromArgb(75, 68, 138);
+            PropColOffset_X.ForeColor = SystemColors.ActiveCaption;
+            PropColOffset_X.Location = new Point(30, 21);
+            PropColOffset_X.Maximum = new decimal(new int[] { 9999, 0, 0, 0 });
+            PropColOffset_X.Minimum = new decimal(new int[] { 9999, 0, 0, int.MinValue });
+            PropColOffset_X.Name = "PropColOffset_X";
+            PropColOffset_X.Size = new Size(53, 21);
+            PropColOffset_X.TabIndex = 51;
+            // 
+            // label130
+            // 
+            label130.AutoSize = true;
+            label130.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label130.ForeColor = SystemColors.ActiveCaption;
+            label130.Location = new Point(10, 23);
+            label130.Margin = new Padding(4, 0, 4, 0);
+            label130.Name = "label130";
+            label130.Size = new Size(18, 15);
+            label130.TabIndex = 50;
+            label130.Text = "X:";
+            // 
+            // PropCollision_CB
+            // 
+            PropCollision_CB.AutoSize = true;
+            PropCollision_CB.Checked = true;
+            PropCollision_CB.CheckState = CheckState.Checked;
+            PropCollision_CB.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            PropCollision_CB.ForeColor = SystemColors.ActiveCaption;
+            PropCollision_CB.Location = new Point(396, 454);
+            PropCollision_CB.Name = "PropCollision_CB";
+            PropCollision_CB.Size = new Size(77, 20);
+            PropCollision_CB.TabIndex = 69;
+            PropCollision_CB.Text = "Collision";
+            PropCollision_CB.UseVisualStyleBackColor = true;
+            // 
+            // groupBox10
+            // 
+            groupBox10.Controls.Add(PropPlacementOffset_Z);
+            groupBox10.Controls.Add(label122);
+            groupBox10.Controls.Add(PropPlacementOffset_Y);
+            groupBox10.Controls.Add(label123);
+            groupBox10.Controls.Add(PropPlacementOffset_X);
+            groupBox10.Controls.Add(label124);
+            groupBox10.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            groupBox10.ForeColor = SystemColors.ActiveCaption;
+            groupBox10.Location = new Point(307, 323);
+            groupBox10.Name = "groupBox10";
+            groupBox10.Size = new Size(255, 51);
+            groupBox10.TabIndex = 68;
+            groupBox10.TabStop = false;
+            groupBox10.Text = "Placement Offset";
+            // 
+            // PropPlacementOffset_Z
+            // 
+            PropPlacementOffset_Z.BackColor = Color.FromArgb(75, 68, 138);
+            PropPlacementOffset_Z.ForeColor = SystemColors.ActiveCaption;
+            PropPlacementOffset_Z.Location = new Point(188, 21);
+            PropPlacementOffset_Z.Maximum = new decimal(new int[] { 9999, 0, 0, 0 });
+            PropPlacementOffset_Z.Minimum = new decimal(new int[] { 9999, 0, 0, int.MinValue });
+            PropPlacementOffset_Z.Name = "PropPlacementOffset_Z";
+            PropPlacementOffset_Z.Size = new Size(53, 21);
+            PropPlacementOffset_Z.TabIndex = 55;
+            // 
+            // label122
+            // 
+            label122.AutoSize = true;
+            label122.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label122.ForeColor = SystemColors.ActiveCaption;
+            label122.Location = new Point(168, 23);
+            label122.Margin = new Padding(4, 0, 4, 0);
+            label122.Name = "label122";
+            label122.Size = new Size(17, 15);
+            label122.TabIndex = 54;
+            label122.Text = "Z:";
+            // 
+            // PropPlacementOffset_Y
+            // 
+            PropPlacementOffset_Y.BackColor = Color.FromArgb(75, 68, 138);
+            PropPlacementOffset_Y.ForeColor = SystemColors.ActiveCaption;
+            PropPlacementOffset_Y.Location = new Point(108, 21);
+            PropPlacementOffset_Y.Maximum = new decimal(new int[] { 9999, 0, 0, 0 });
+            PropPlacementOffset_Y.Minimum = new decimal(new int[] { 9999, 0, 0, int.MinValue });
+            PropPlacementOffset_Y.Name = "PropPlacementOffset_Y";
+            PropPlacementOffset_Y.Size = new Size(53, 21);
+            PropPlacementOffset_Y.TabIndex = 53;
+            // 
+            // label123
+            // 
+            label123.AutoSize = true;
+            label123.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label123.ForeColor = SystemColors.ActiveCaption;
+            label123.Location = new Point(88, 23);
+            label123.Margin = new Padding(4, 0, 4, 0);
+            label123.Name = "label123";
+            label123.Size = new Size(17, 15);
+            label123.TabIndex = 52;
+            label123.Text = "Y:";
+            // 
+            // PropPlacementOffset_X
+            // 
+            PropPlacementOffset_X.BackColor = Color.FromArgb(75, 68, 138);
+            PropPlacementOffset_X.ForeColor = SystemColors.ActiveCaption;
+            PropPlacementOffset_X.Location = new Point(30, 21);
+            PropPlacementOffset_X.Maximum = new decimal(new int[] { 9999, 0, 0, 0 });
+            PropPlacementOffset_X.Minimum = new decimal(new int[] { 9999, 0, 0, int.MinValue });
+            PropPlacementOffset_X.Name = "PropPlacementOffset_X";
+            PropPlacementOffset_X.Size = new Size(53, 21);
+            PropPlacementOffset_X.TabIndex = 51;
+            // 
+            // label124
+            // 
+            label124.AutoSize = true;
+            label124.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label124.ForeColor = SystemColors.ActiveCaption;
+            label124.Location = new Point(10, 23);
+            label124.Margin = new Padding(4, 0, 4, 0);
+            label124.Name = "label124";
+            label124.Size = new Size(18, 15);
+            label124.TabIndex = 50;
+            label124.Text = "X:";
+            // 
+            // groupBox9
+            // 
+            groupBox9.Controls.Add(PropPivotOffset_Z);
+            groupBox9.Controls.Add(label121);
+            groupBox9.Controls.Add(PropPivotOffset_Y);
+            groupBox9.Controls.Add(label120);
+            groupBox9.Controls.Add(PropPivotOffset_X);
+            groupBox9.Controls.Add(label119);
+            groupBox9.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            groupBox9.ForeColor = SystemColors.ActiveCaption;
+            groupBox9.Location = new Point(40, 322);
+            groupBox9.Name = "groupBox9";
+            groupBox9.Size = new Size(255, 51);
+            groupBox9.TabIndex = 67;
+            groupBox9.TabStop = false;
+            groupBox9.Text = "Pivot Offset";
+            // 
+            // PropPivotOffset_Z
+            // 
+            PropPivotOffset_Z.BackColor = Color.FromArgb(75, 68, 138);
+            PropPivotOffset_Z.ForeColor = SystemColors.ActiveCaption;
+            PropPivotOffset_Z.Location = new Point(188, 21);
+            PropPivotOffset_Z.Maximum = new decimal(new int[] { 9999, 0, 0, 0 });
+            PropPivotOffset_Z.Minimum = new decimal(new int[] { 9999, 0, 0, int.MinValue });
+            PropPivotOffset_Z.Name = "PropPivotOffset_Z";
+            PropPivotOffset_Z.Size = new Size(53, 21);
+            PropPivotOffset_Z.TabIndex = 55;
+            // 
+            // label121
+            // 
+            label121.AutoSize = true;
+            label121.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label121.ForeColor = SystemColors.ActiveCaption;
+            label121.Location = new Point(168, 23);
+            label121.Margin = new Padding(4, 0, 4, 0);
+            label121.Name = "label121";
+            label121.Size = new Size(17, 15);
+            label121.TabIndex = 54;
+            label121.Text = "Z:";
+            // 
+            // PropPivotOffset_Y
+            // 
+            PropPivotOffset_Y.BackColor = Color.FromArgb(75, 68, 138);
+            PropPivotOffset_Y.ForeColor = SystemColors.ActiveCaption;
+            PropPivotOffset_Y.Location = new Point(108, 21);
+            PropPivotOffset_Y.Maximum = new decimal(new int[] { 9999, 0, 0, 0 });
+            PropPivotOffset_Y.Minimum = new decimal(new int[] { 9999, 0, 0, int.MinValue });
+            PropPivotOffset_Y.Name = "PropPivotOffset_Y";
+            PropPivotOffset_Y.Size = new Size(53, 21);
+            PropPivotOffset_Y.TabIndex = 53;
+            // 
+            // label120
+            // 
+            label120.AutoSize = true;
+            label120.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label120.ForeColor = SystemColors.ActiveCaption;
+            label120.Location = new Point(88, 23);
+            label120.Margin = new Padding(4, 0, 4, 0);
+            label120.Name = "label120";
+            label120.Size = new Size(17, 15);
+            label120.TabIndex = 52;
+            label120.Text = "Y:";
+            // 
+            // PropPivotOffset_X
+            // 
+            PropPivotOffset_X.BackColor = Color.FromArgb(75, 68, 138);
+            PropPivotOffset_X.ForeColor = SystemColors.ActiveCaption;
+            PropPivotOffset_X.Location = new Point(30, 21);
+            PropPivotOffset_X.Maximum = new decimal(new int[] { 9999, 0, 0, 0 });
+            PropPivotOffset_X.Minimum = new decimal(new int[] { 9999, 0, 0, int.MinValue });
+            PropPivotOffset_X.Name = "PropPivotOffset_X";
+            PropPivotOffset_X.Size = new Size(53, 21);
+            PropPivotOffset_X.TabIndex = 51;
+            // 
+            // label119
+            // 
+            label119.AutoSize = true;
+            label119.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label119.ForeColor = SystemColors.ActiveCaption;
+            label119.Location = new Point(10, 23);
+            label119.Margin = new Padding(4, 0, 4, 0);
+            label119.Name = "label119";
+            label119.Size = new Size(18, 15);
+            label119.TabIndex = 50;
+            label119.Text = "X:";
+            // 
+            // label118
+            // 
+            label118.AutoSize = true;
+            label118.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label118.ForeColor = SystemColors.ActiveCaption;
+            label118.Location = new Point(21, 273);
+            label118.Margin = new Padding(4, 0, 4, 0);
+            label118.Name = "label118";
+            label118.Size = new Size(65, 15);
+            label118.TabIndex = 65;
+            label118.Text = "Actor Path:";
+            // 
+            // PropActor_TB
+            // 
+            PropActor_TB.BackColor = Color.FromArgb(75, 68, 138);
+            PropActor_TB.Font = new Font("Microsoft Sans Serif", 9F);
+            PropActor_TB.ForeColor = SystemColors.ActiveCaption;
+            PropActor_TB.Location = new Point(35, 292);
+            PropActor_TB.Margin = new Padding(4, 3, 4, 3);
+            PropActor_TB.Name = "PropActor_TB";
+            PropActor_TB.Size = new Size(535, 21);
+            PropActor_TB.TabIndex = 64;
+            PropActor_TB.Text = "None";
+            // 
+            // label117
+            // 
+            label117.AutoSize = true;
+            label117.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label117.ForeColor = SystemColors.ActiveCaption;
+            label117.Location = new Point(21, 222);
+            label117.Margin = new Padding(4, 0, 4, 0);
+            label117.Name = "label117";
+            label117.Size = new Size(116, 15);
+            label117.TabIndex = 62;
+            label117.Text = "Skeletal Mesh Path:";
+            // 
+            // PropSkelMesh_TB
+            // 
+            PropSkelMesh_TB.BackColor = Color.FromArgb(75, 68, 138);
+            PropSkelMesh_TB.Font = new Font("Microsoft Sans Serif", 9F);
+            PropSkelMesh_TB.ForeColor = SystemColors.ActiveCaption;
+            PropSkelMesh_TB.Location = new Point(35, 241);
+            PropSkelMesh_TB.Margin = new Padding(4, 3, 4, 3);
+            PropSkelMesh_TB.Name = "PropSkelMesh_TB";
+            PropSkelMesh_TB.Size = new Size(535, 21);
+            PropSkelMesh_TB.TabIndex = 61;
+            PropSkelMesh_TB.Text = "None";
+            // 
+            // PropMesh_Ex
+            // 
+            PropMesh_Ex.ActiveLinkColor = Color.DeepSkyBlue;
+            PropMesh_Ex.AutoSize = true;
+            PropMesh_Ex.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            PropMesh_Ex.LinkColor = SystemColors.MenuHighlight;
+            PropMesh_Ex.Location = new Point(87, 169);
+            PropMesh_Ex.Margin = new Padding(4, 0, 4, 0);
+            PropMesh_Ex.Name = "PropMesh_Ex";
+            PropMesh_Ex.Size = new Size(482, 15);
+            PropMesh_Ex.TabIndex = 60;
+            PropMesh_Ex.TabStop = true;
+            PropMesh_Ex.Text = " (ex. /Game/Meshes/Environment/Props/X_Props/X_Props_S/SM_Prop_Fried_Meat_F)";
+            PropMesh_Ex.VisitedLinkColor = SystemColors.MenuHighlight;
+            PropMesh_Ex.LinkClicked += PropMesh_Ex_LinkClicked;
+            // 
+            // label116
+            // 
+            label116.AutoSize = true;
+            label116.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label116.ForeColor = SystemColors.ActiveCaption;
+            label116.Location = new Point(21, 169);
+            label116.Margin = new Padding(4, 0, 4, 0);
+            label116.Name = "label116";
+            label116.Size = new Size(69, 15);
+            label116.TabIndex = 59;
+            label116.Text = "Mesh Path:";
+            // 
+            // PropMesh_TB
+            // 
+            PropMesh_TB.BackColor = Color.FromArgb(75, 68, 138);
+            PropMesh_TB.Font = new Font("Microsoft Sans Serif", 9F);
+            PropMesh_TB.ForeColor = SystemColors.ActiveCaption;
+            PropMesh_TB.Location = new Point(35, 188);
+            PropMesh_TB.Margin = new Padding(4, 3, 4, 3);
+            PropMesh_TB.Name = "PropMesh_TB";
+            PropMesh_TB.Size = new Size(535, 21);
+            PropMesh_TB.TabIndex = 58;
+            PropMesh_TB.Text = "None";
+            // 
+            // PropIcon_Ex
+            // 
+            PropIcon_Ex.ActiveLinkColor = Color.DeepSkyBlue;
+            PropIcon_Ex.AutoSize = true;
+            PropIcon_Ex.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            PropIcon_Ex.LinkColor = SystemColors.MenuHighlight;
+            PropIcon_Ex.Location = new Point(106, 115);
+            PropIcon_Ex.Margin = new Padding(4, 0, 4, 0);
+            PropIcon_Ex.Name = "PropIcon_Ex";
+            PropIcon_Ex.Size = new Size(384, 15);
+            PropIcon_Ex.TabIndex = 57;
+            PropIcon_Ex.TabStop = true;
+            PropIcon_Ex.Text = " (ex. /Game/Textures/UI/Icons/Sandbox/PropIcons/T_FriedMeatFIcon)";
+            PropIcon_Ex.VisitedLinkColor = SystemColors.MenuHighlight;
+            PropIcon_Ex.LinkClicked += PropIcon_Ex_LinkClicked;
+            // 
+            // label115
+            // 
+            label115.AutoSize = true;
+            label115.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label115.ForeColor = SystemColors.ActiveCaption;
+            label115.Location = new Point(21, 115);
+            label115.Margin = new Padding(4, 0, 4, 0);
+            label115.Name = "label115";
+            label115.Size = new Size(90, 15);
+            label115.TabIndex = 55;
+            label115.Text = "Prop Icon Path:";
+            // 
+            // PropIcon_TB
+            // 
+            PropIcon_TB.BackColor = Color.FromArgb(75, 68, 138);
+            PropIcon_TB.Font = new Font("Microsoft Sans Serif", 9F);
+            PropIcon_TB.ForeColor = SystemColors.ActiveCaption;
+            PropIcon_TB.Location = new Point(35, 134);
+            PropIcon_TB.Margin = new Padding(4, 3, 4, 3);
+            PropIcon_TB.Name = "PropIcon_TB";
+            PropIcon_TB.Size = new Size(535, 21);
+            PropIcon_TB.TabIndex = 54;
+            PropIcon_TB.Text = "/Game/Textures/UI/Icons/Sandbox/PropIcons/";
+            // 
+            // PropCategory_CB
+            // 
+            PropCategory_CB.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            PropCategory_CB.BackColor = Color.FromArgb(75, 68, 138);
+            PropCategory_CB.FlatStyle = FlatStyle.Popup;
+            PropCategory_CB.Font = new Font("Microsoft Sans Serif", 9F);
+            PropCategory_CB.ForeColor = SystemColors.ActiveCaption;
+            PropCategory_CB.FormattingEnabled = true;
+            PropCategory_CB.Items.AddRange(new object[] { "Rocks", "", "Decorations", "", "Flora", "", "Furniture", "", "Food", "", "Assorted", "", "Effects", "", "Lights", "", "Architecture", "", "Prototype", "", "Weapons", "", "Automation", "", "UI" });
+            PropCategory_CB.Location = new Point(318, 86);
+            PropCategory_CB.Margin = new Padding(4, 3, 4, 3);
+            PropCategory_CB.Name = "PropCategory_CB";
+            PropCategory_CB.Size = new Size(252, 23);
+            PropCategory_CB.TabIndex = 53;
+            PropCategory_CB.Text = "Rocks";
+            // 
+            // label114
+            // 
+            label114.AutoSize = true;
+            label114.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label114.ForeColor = SystemColors.ActiveCaption;
+            label114.Location = new Point(304, 68);
+            label114.Margin = new Padding(4, 0, 4, 0);
+            label114.Name = "label114";
+            label114.Size = new Size(58, 15);
+            label114.TabIndex = 52;
+            label114.Text = "Category:";
+            // 
+            // label113
+            // 
+            label113.AutoSize = true;
+            label113.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label113.ForeColor = SystemColors.ActiveCaption;
+            label113.Location = new Point(304, 22);
+            label113.Margin = new Padding(4, 0, 4, 0);
+            label113.Name = "label113";
+            label113.Size = new Size(73, 15);
+            label113.TabIndex = 50;
+            label113.Text = "Prop Name:";
+            // 
+            // PropName_TB
+            // 
+            PropName_TB.BackColor = Color.FromArgb(75, 68, 138);
+            PropName_TB.Font = new Font("Microsoft Sans Serif", 9F);
+            PropName_TB.ForeColor = SystemColors.ActiveCaption;
+            PropName_TB.Location = new Point(318, 41);
+            PropName_TB.Margin = new Padding(4, 3, 4, 3);
+            PropName_TB.Name = "PropName_TB";
+            PropName_TB.Size = new Size(252, 21);
+            PropName_TB.TabIndex = 49;
+            PropName_TB.Text = "Prop Name";
+            // 
+            // label112
+            // 
+            label112.AutoSize = true;
+            label112.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label112.ForeColor = SystemColors.ActiveCaption;
+            label112.Location = new Point(23, 22);
+            label112.Margin = new Padding(4, 0, 4, 0);
+            label112.Name = "label112";
+            label112.Size = new Size(51, 15);
+            label112.TabIndex = 48;
+            label112.Text = "Prop ID:";
+            // 
+            // PropID_TB
+            // 
+            PropID_TB.BackColor = Color.FromArgb(75, 68, 138);
+            PropID_TB.Font = new Font("Microsoft Sans Serif", 9F);
+            PropID_TB.ForeColor = SystemColors.ActiveCaption;
+            PropID_TB.Location = new Point(37, 41);
+            PropID_TB.Margin = new Padding(4, 3, 4, 3);
+            PropID_TB.Name = "PropID_TB";
+            PropID_TB.Size = new Size(252, 21);
+            PropID_TB.TabIndex = 47;
+            PropID_TB.Text = "Prop_ID";
+            // 
+            // Props_Remove_Button
+            // 
+            Props_Remove_Button.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            Props_Remove_Button.BackColor = Color.FromArgb(75, 68, 138);
+            Props_Remove_Button.FlatStyle = FlatStyle.Popup;
+            Props_Remove_Button.ForeColor = Color.LightCoral;
+            Props_Remove_Button.Location = new Point(368, 593);
+            Props_Remove_Button.Margin = new Padding(4, 3, 4, 3);
+            Props_Remove_Button.Name = "Props_Remove_Button";
+            Props_Remove_Button.Size = new Size(148, 27);
+            Props_Remove_Button.TabIndex = 46;
+            Props_Remove_Button.Text = "Remove";
+            Props_Remove_Button.UseVisualStyleBackColor = false;
+            Props_Remove_Button.Click += Props_Remove_Button_Click;
+            // 
+            // Props_Add_Button
+            // 
+            Props_Add_Button.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            Props_Add_Button.BackColor = Color.FromArgb(75, 68, 138);
+            Props_Add_Button.FlatStyle = FlatStyle.Popup;
+            Props_Add_Button.ForeColor = SystemColors.GradientInactiveCaption;
+            Props_Add_Button.Location = new Point(91, 593);
+            Props_Add_Button.Margin = new Padding(4, 3, 4, 3);
+            Props_Add_Button.Name = "Props_Add_Button";
+            Props_Add_Button.Size = new Size(269, 27);
+            Props_Add_Button.TabIndex = 45;
+            Props_Add_Button.Text = "Add +";
+            Props_Add_Button.UseVisualStyleBackColor = false;
+            Props_Add_Button.Click += Props_Add_Button_Click;
+            // 
+            // Props_LB
+            // 
+            Props_LB.BackColor = Color.FromArgb(75, 68, 138);
+            Props_LB.BorderStyle = BorderStyle.FixedSingle;
+            Props_LB.ForeColor = SystemColors.ActiveCaption;
+            Props_LB.FormattingEnabled = true;
+            Props_LB.ItemHeight = 18;
+            Props_LB.Location = new Point(11, 624);
+            Props_LB.Name = "Props_LB";
+            Props_LB.ScrollAlwaysVisible = true;
+            Props_LB.Size = new Size(583, 92);
+            Props_LB.TabIndex = 44;
+            Props_LB.SelectedIndexChanged += Props_LB_SelectedIndexChanged;
+            // 
+            // label135
+            // 
+            label135.AutoSize = true;
+            label135.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label135.ForeColor = SystemColors.ActiveCaption;
+            label135.Location = new Point(21, 547);
+            label135.Margin = new Padding(4, 0, 4, 0);
+            label135.Name = "label135";
+            label135.Size = new Size(141, 15);
+            label135.TabIndex = 78;
+            label135.Text = "Custom Blueprint Name:";
+            // 
+            // PropCustomBlueprintName_TB
+            // 
+            PropCustomBlueprintName_TB.BackColor = Color.FromArgb(75, 68, 138);
+            PropCustomBlueprintName_TB.Font = new Font("Microsoft Sans Serif", 9F);
+            PropCustomBlueprintName_TB.ForeColor = SystemColors.ActiveCaption;
+            PropCustomBlueprintName_TB.Location = new Point(35, 566);
+            PropCustomBlueprintName_TB.Margin = new Padding(4, 3, 4, 3);
+            PropCustomBlueprintName_TB.Name = "PropCustomBlueprintName_TB";
+            PropCustomBlueprintName_TB.Size = new Size(535, 21);
+            PropCustomBlueprintName_TB.TabIndex = 77;
+            PropCustomBlueprintName_TB.Text = "None";
+            // 
             // AutoModCreator
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
@@ -4498,6 +5400,7 @@
             BackColor = Color.FromArgb(32, 34, 81);
             ClientSize = new Size(615, 997);
             ControlBox = false;
+            Controls.Add(PropsGB);
             Controls.Add(CurrentlyEditing_LL);
             Controls.Add(label106);
             Controls.Add(Icon_PB);
@@ -4565,6 +5468,33 @@
             CharCustomBox.ResumeLayout(false);
             CharCustomBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_PB).EndInit();
+            PropsGB.ResumeLayout(false);
+            PropsGB.PerformLayout();
+            groupBox13.ResumeLayout(false);
+            groupBox13.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)PropColRotation_Roll).EndInit();
+            ((System.ComponentModel.ISupportInitialize)PropColRotation_Yaw).EndInit();
+            ((System.ComponentModel.ISupportInitialize)PropColRotation_Pitch).EndInit();
+            groupBox11.ResumeLayout(false);
+            groupBox11.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)PropColExtents_Z).EndInit();
+            ((System.ComponentModel.ISupportInitialize)PropColExtents_Y).EndInit();
+            ((System.ComponentModel.ISupportInitialize)PropColExtents_X).EndInit();
+            groupBox12.ResumeLayout(false);
+            groupBox12.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)PropColOffset_Z).EndInit();
+            ((System.ComponentModel.ISupportInitialize)PropColOffset_Y).EndInit();
+            ((System.ComponentModel.ISupportInitialize)PropColOffset_X).EndInit();
+            groupBox10.ResumeLayout(false);
+            groupBox10.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)PropPlacementOffset_Z).EndInit();
+            ((System.ComponentModel.ISupportInitialize)PropPlacementOffset_Y).EndInit();
+            ((System.ComponentModel.ISupportInitialize)PropPlacementOffset_X).EndInit();
+            groupBox9.ResumeLayout(false);
+            groupBox9.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)PropPivotOffset_Z).EndInit();
+            ((System.ComponentModel.ISupportInitialize)PropPivotOffset_Y).EndInit();
+            ((System.ComponentModel.ISupportInitialize)PropPivotOffset_X).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -4892,5 +5822,68 @@
         private Button Feet_LoadEntry_Button;
         private Label label111;
         private ComboBox Feet_LoadEntry_CB;
+        private GroupBox PropsGB;
+        private Button Props_Remove_Button;
+        private Button Props_Add_Button;
+        private ListBox Props_LB;
+        private Label label112;
+        private TextBox PropID_TB;
+        private ComboBox PropCategory_CB;
+        private Label label114;
+        private Label label113;
+        private TextBox PropName_TB;
+        private LinkLabel PropIcon_Ex;
+        private Label label115;
+        private TextBox PropIcon_TB;
+        private Label label117;
+        private TextBox PropSkelMesh_TB;
+        private LinkLabel PropMesh_Ex;
+        private Label label116;
+        private TextBox PropMesh_TB;
+        private GroupBox groupBox9;
+        private Label label119;
+        private Label label118;
+        private TextBox PropActor_TB;
+        private GroupBox groupBox13;
+        private NumericUpDown PropColRotation_Roll;
+        private Label label131;
+        private NumericUpDown PropColRotation_Yaw;
+        private Label label132;
+        private NumericUpDown PropColRotation_Pitch;
+        private Label label133;
+        private GroupBox groupBox11;
+        private NumericUpDown PropColExtents_Z;
+        private Label label125;
+        private NumericUpDown PropColExtents_Y;
+        private Label label126;
+        private NumericUpDown PropColExtents_X;
+        private Label label127;
+        private GroupBox groupBox12;
+        private NumericUpDown PropColOffset_Z;
+        private Label label128;
+        private NumericUpDown PropColOffset_Y;
+        private Label label129;
+        private NumericUpDown PropColOffset_X;
+        private Label label130;
+        private CheckBox PropCollision_CB;
+        private GroupBox groupBox10;
+        private NumericUpDown PropPlacementOffset_Z;
+        private Label label122;
+        private NumericUpDown PropPlacementOffset_Y;
+        private Label label123;
+        private NumericUpDown PropPlacementOffset_X;
+        private Label label124;
+        private NumericUpDown PropPivotOffset_Z;
+        private Label label121;
+        private NumericUpDown PropPivotOffset_Y;
+        private Label label120;
+        private NumericUpDown PropPivotOffset_X;
+        private CheckBox PropADFL_CB;
+        private LinkLabel PropCustomBlueprint_Ex;
+        private Label label134;
+        private TextBox PropCustomBlueprint_TB;
+        private LinkLabel linkLabel1;
+        private Label label135;
+        private TextBox PropCustomBlueprintName_TB;
     }
 }

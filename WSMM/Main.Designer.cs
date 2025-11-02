@@ -91,6 +91,8 @@
             folderBrowserDialog1 = new FolderBrowserDialog();
             BuildSettings_Button = new Button();
             BuildSettings_Panel = new Panel();
+            label46 = new Label();
+            BS_BaseGameSandboxPropsFile = new ComboBox();
             BS_LaunchParams = new TextBox();
             label44 = new Label();
             BuildSettingsDTUpdater_Button = new Button();
@@ -1038,6 +1040,8 @@
             // BuildSettings_Panel
             // 
             BuildSettings_Panel.BorderStyle = BorderStyle.FixedSingle;
+            BuildSettings_Panel.Controls.Add(label46);
+            BuildSettings_Panel.Controls.Add(BS_BaseGameSandboxPropsFile);
             BuildSettings_Panel.Controls.Add(BS_LaunchParams);
             BuildSettings_Panel.Controls.Add(label44);
             BuildSettings_Panel.Controls.Add(BuildSettingsDTUpdater_Button);
@@ -1053,17 +1057,40 @@
             BuildSettings_Panel.Controls.Add(BS_BaseGameCharacterOutfitFile);
             BuildSettings_Panel.Controls.Add(label14);
             BuildSettings_Panel.Controls.Add(BS_BaseClothesOutfitFile);
-            BuildSettings_Panel.Location = new Point(898, 255);
+            BuildSettings_Panel.Location = new Point(898, 216);
             BuildSettings_Panel.Name = "BuildSettings_Panel";
-            BuildSettings_Panel.Size = new Size(231, 383);
+            BuildSettings_Panel.Size = new Size(231, 422);
             BuildSettings_Panel.TabIndex = 13;
             BuildSettings_Panel.Visible = false;
+            // 
+            // label46
+            // 
+            label46.AutoSize = true;
+            label46.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label46.ForeColor = SystemColors.ActiveCaption;
+            label46.Location = new Point(56, 143);
+            label46.Name = "label46";
+            label46.Size = new Size(116, 17);
+            label46.TabIndex = 51;
+            label46.Text = "DT_SandboxProps:";
+            // 
+            // BS_BaseGameSandboxPropsFile
+            // 
+            BS_BaseGameSandboxPropsFile.BackColor = Color.FromArgb(32, 34, 81);
+            BS_BaseGameSandboxPropsFile.FlatStyle = FlatStyle.Flat;
+            BS_BaseGameSandboxPropsFile.ForeColor = SystemColors.ActiveCaption;
+            BS_BaseGameSandboxPropsFile.FormattingEnabled = true;
+            BS_BaseGameSandboxPropsFile.Location = new Point(5, 163);
+            BS_BaseGameSandboxPropsFile.Name = "BS_BaseGameSandboxPropsFile";
+            BS_BaseGameSandboxPropsFile.Size = new Size(218, 23);
+            BS_BaseGameSandboxPropsFile.TabIndex = 50;
+            BS_BaseGameSandboxPropsFile.SelectedValueChanged += BS_BaseGameSandboxPropsFile_SelectedValueChanged;
             // 
             // BS_LaunchParams
             // 
             BS_LaunchParams.BackColor = Color.FromArgb(32, 34, 81);
             BS_LaunchParams.ForeColor = SystemColors.ActiveCaption;
-            BS_LaunchParams.Location = new Point(6, 353);
+            BS_LaunchParams.Location = new Point(6, 394);
             BS_LaunchParams.Name = "BS_LaunchParams";
             BS_LaunchParams.Size = new Size(218, 23);
             BS_LaunchParams.TabIndex = 49;
@@ -1073,7 +1100,7 @@
             label44.AutoSize = true;
             label44.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label44.ForeColor = SystemColors.ActiveCaption;
-            label44.Location = new Point(54, 333);
+            label44.Location = new Point(54, 374);
             label44.Name = "label44";
             label44.Size = new Size(121, 17);
             label44.TabIndex = 48;
@@ -1086,7 +1113,7 @@
             BuildSettingsDTUpdater_Button.FlatStyle = FlatStyle.Flat;
             BuildSettingsDTUpdater_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             BuildSettingsDTUpdater_Button.ForeColor = SystemColors.ActiveCaption;
-            BuildSettingsDTUpdater_Button.Location = new Point(35, 182);
+            BuildSettingsDTUpdater_Button.Location = new Point(35, 223);
             BuildSettingsDTUpdater_Button.Name = "BuildSettingsDTUpdater_Button";
             BuildSettingsDTUpdater_Button.Size = new Size(159, 26);
             BuildSettingsDTUpdater_Button.TabIndex = 46;
@@ -1099,7 +1126,7 @@
             BS_AlwaysRunAM_CB.AutoSize = true;
             BS_AlwaysRunAM_CB.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             BS_AlwaysRunAM_CB.ForeColor = SystemColors.ActiveCaption;
-            BS_AlwaysRunAM_CB.Location = new Point(5, 285);
+            BS_AlwaysRunAM_CB.Location = new Point(5, 326);
             BS_AlwaysRunAM_CB.Name = "BS_AlwaysRunAM_CB";
             BS_AlwaysRunAM_CB.Size = new Size(220, 24);
             BS_AlwaysRunAM_CB.TabIndex = 45;
@@ -1111,7 +1138,7 @@
             BS_AllowOutdated_CB.AutoSize = true;
             BS_AllowOutdated_CB.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             BS_AllowOutdated_CB.ForeColor = Color.Firebrick;
-            BS_AllowOutdated_CB.Location = new Point(5, 310);
+            BS_AllowOutdated_CB.Location = new Point(5, 351);
             BS_AllowOutdated_CB.Name = "BS_AllowOutdated_CB";
             BS_AllowOutdated_CB.Size = new Size(227, 24);
             BS_AllowOutdated_CB.TabIndex = 44;
@@ -1126,7 +1153,7 @@
             BS_VerifyFI_CB.CheckState = CheckState.Checked;
             BS_VerifyFI_CB.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             BS_VerifyFI_CB.ForeColor = SystemColors.ActiveCaption;
-            BS_VerifyFI_CB.Location = new Point(5, 261);
+            BS_VerifyFI_CB.Location = new Point(5, 302);
             BS_VerifyFI_CB.Name = "BS_VerifyFI_CB";
             BS_VerifyFI_CB.Size = new Size(224, 24);
             BS_VerifyFI_CB.TabIndex = 43;
@@ -1139,7 +1166,7 @@
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label1.ForeColor = SystemColors.ActiveCaption;
-            label1.Location = new Point(79, 211);
+            label1.Location = new Point(79, 252);
             label1.Name = "label1";
             label1.Size = new Size(70, 17);
             label1.TabIndex = 42;
@@ -1151,7 +1178,7 @@
             BS_Mappings.FlatStyle = FlatStyle.Flat;
             BS_Mappings.ForeColor = SystemColors.ActiveCaption;
             BS_Mappings.FormattingEnabled = true;
-            BS_Mappings.Location = new Point(6, 231);
+            BS_Mappings.Location = new Point(6, 272);
             BS_Mappings.Name = "BS_Mappings";
             BS_Mappings.Size = new Size(218, 23);
             BS_Mappings.TabIndex = 41;
@@ -1164,7 +1191,7 @@
             BuildSettingsDTFolder_Button.FlatStyle = FlatStyle.Flat;
             BuildSettingsDTFolder_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             BuildSettingsDTFolder_Button.ForeColor = SystemColors.ActiveCaption;
-            BuildSettingsDTFolder_Button.Location = new Point(35, 150);
+            BuildSettingsDTFolder_Button.Location = new Point(35, 191);
             BuildSettingsDTFolder_Button.Name = "BuildSettingsDTFolder_Button";
             BuildSettingsDTFolder_Button.Size = new Size(159, 26);
             BuildSettingsDTFolder_Button.TabIndex = 40;
@@ -1177,7 +1204,7 @@
             label16.AutoSize = true;
             label16.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label16.ForeColor = SystemColors.ActiveCaption;
-            label16.Location = new Point(13, 100);
+            label16.Location = new Point(13, 96);
             label16.Name = "label16";
             label16.Size = new Size(203, 17);
             label16.TabIndex = 39;
@@ -1189,7 +1216,7 @@
             BS_BaseGameCharacterCustomizationFile.FlatStyle = FlatStyle.Flat;
             BS_BaseGameCharacterCustomizationFile.ForeColor = SystemColors.ActiveCaption;
             BS_BaseGameCharacterCustomizationFile.FormattingEnabled = true;
-            BS_BaseGameCharacterCustomizationFile.Location = new Point(5, 120);
+            BS_BaseGameCharacterCustomizationFile.Location = new Point(5, 116);
             BS_BaseGameCharacterCustomizationFile.Name = "BS_BaseGameCharacterCustomizationFile";
             BS_BaseGameCharacterCustomizationFile.Size = new Size(218, 23);
             BS_BaseGameCharacterCustomizationFile.TabIndex = 38;
@@ -1200,7 +1227,7 @@
             label15.AutoSize = true;
             label15.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label15.ForeColor = SystemColors.ActiveCaption;
-            label15.Location = new Point(35, 52);
+            label15.Location = new Point(35, 50);
             label15.Name = "label15";
             label15.Size = new Size(159, 17);
             label15.TabIndex = 37;
@@ -1212,7 +1239,7 @@
             BS_BaseGameCharacterOutfitFile.FlatStyle = FlatStyle.Flat;
             BS_BaseGameCharacterOutfitFile.ForeColor = SystemColors.ActiveCaption;
             BS_BaseGameCharacterOutfitFile.FormattingEnabled = true;
-            BS_BaseGameCharacterOutfitFile.Location = new Point(6, 72);
+            BS_BaseGameCharacterOutfitFile.Location = new Point(6, 70);
             BS_BaseGameCharacterOutfitFile.Name = "BS_BaseGameCharacterOutfitFile";
             BS_BaseGameCharacterOutfitFile.Size = new Size(217, 23);
             BS_BaseGameCharacterOutfitFile.TabIndex = 36;
@@ -1223,7 +1250,7 @@
             label14.AutoSize = true;
             label14.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label14.ForeColor = SystemColors.ActiveCaption;
-            label14.Location = new Point(61, 5);
+            label14.Location = new Point(61, 4);
             label14.Name = "label14";
             label14.Size = new Size(106, 17);
             label14.TabIndex = 35;
@@ -1235,7 +1262,7 @@
             BS_BaseClothesOutfitFile.FlatStyle = FlatStyle.Flat;
             BS_BaseClothesOutfitFile.ForeColor = SystemColors.ActiveCaption;
             BS_BaseClothesOutfitFile.FormattingEnabled = true;
-            BS_BaseClothesOutfitFile.Location = new Point(5, 25);
+            BS_BaseClothesOutfitFile.Location = new Point(5, 24);
             BS_BaseClothesOutfitFile.Name = "BS_BaseClothesOutfitFile";
             BS_BaseClothesOutfitFile.Size = new Size(218, 23);
             BS_BaseClothesOutfitFile.TabIndex = 34;
@@ -2858,5 +2885,7 @@
         private LinkLabel DisableTutorial_0;
         private PictureBox pictureBox8;
         private Label label45;
+        private Label label46;
+        private ComboBox BS_BaseGameSandboxPropsFile;
     }
 }
