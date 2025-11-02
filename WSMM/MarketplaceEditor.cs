@@ -89,6 +89,7 @@ namespace WSMM
         {
             AffectedCharacters_CLB.Items.Clear();
             AffectedCharacters_CLB.Items.Add("All");
+            AffectedCharacters_CLB.Items.Add("None");
             if (File.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\Characters.txt"))
             {
                 AffectedCharacters_CLB.Items.AddRange(File.ReadAllLines(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\Characters.txt"));
