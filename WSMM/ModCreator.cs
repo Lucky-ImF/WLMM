@@ -543,10 +543,17 @@ namespace WSMM
             }
             Dependencies = Dependencies.TrimEnd(',');
 
+            string Incompatibilities = "";
+            foreach (string D in Incompat_LB.Items)
+            {
+                Incompatibilities += D.ToString() + ",";
+            }
+            Incompatibilities = Incompatibilities.TrimEnd(',');
+
             string Metadata = "ModName = " + ModName_TB.Text + "\nModAuthor = " + ModAuthor_TB.Text +
                 "\nModVersion = " + ModVersion_TB.Text + "\nSupportedWLVersions = " + SupportedVersions +
                 "\nModURL = " + ModURL_TB.Text + "\nCategories = " + Categories +
-                "\nCharacters = " + Characters + "\nDependencies = " + Dependencies;
+                "\nCharacters = " + Characters + "\nDependencies = " + Dependencies + "\nIncompatibilities = " + Incompatibilities;
             File.WriteAllText(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Staging\Metadata.dat", Metadata);
             File.WriteAllText(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Staging\Enabled.dat", "Checked");
             if (ModIconPath_TB.Text != "Default")
@@ -666,6 +673,7 @@ namespace WSMM
             string Categories = string.Empty;
             string Characters = string.Empty;
             string Dependencies = string.Empty;
+            string Incompatibilities = string.Empty;
             string[] MetaData = File.ReadAllLines(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\Metadata.dat");
             foreach (string meta in MetaData)
             {
@@ -700,6 +708,10 @@ namespace WSMM
                 else if (meta.StartsWith("Dependencies"))
                 {
                     Dependencies = GetSlice(meta, "=", 1);
+                }
+                else if (meta.StartsWith("Incompatibilities"))
+                {
+                    Incompatibilities = GetSlice(meta, "=", 1);
                 }
             }
 
@@ -825,7 +837,26 @@ namespace WSMM
                     Prereqs_LB.Items.Add(TrimmedS);
                 }
             }
-            ManagePrereqs_Button.Text = "Manage Dependencies: " + Prereqs_LB.Items.Count.ToString();
+
+            if (Incompatibilities.Contains(","))
+            {
+                string[] SplitChars = Incompatibilities.Split(",");
+                foreach (string s in SplitChars)
+                {
+                    string TrimmedS = s.Trim();
+                    Incompat_LB.Items.Add(TrimmedS);
+                }
+            }
+            else
+            {
+                string TrimmedS = Incompatibilities.Trim();
+                if (TrimmedS != string.Empty)
+                {
+                    Incompat_LB.Items.Add(TrimmedS);
+                }
+            }
+
+            ManagePrereqs_Button.Text = "Manage Dependencies: " + (Prereqs_LB.Items.Count + Incompat_LB.Items.Count).ToString();
 
 
             if (File.Exists(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\Icon.png"))
@@ -1201,7 +1232,7 @@ namespace WSMM
             if (ModValid == true)
             {
                 Prereqs_LB.Items.Add(PrereqAdd_TB.Text);
-                ManagePrereqs_Button.Text = "Manage Dependencies: " + Prereqs_LB.Items.Count.ToString();
+                ManagePrereqs_Button.Text = "Manage Dependencies: " + (Prereqs_LB.Items.Count + Incompat_LB.Items.Count).ToString();
             }
         }
 
@@ -1211,7 +1242,7 @@ namespace WSMM
             {
                 Prereqs_LB.Items.RemoveAt(Prereqs_LB.SelectedIndex);
             }
-            ManagePrereqs_Button.Text = "Manage Dependencies: " + Prereqs_LB.Items.Count.ToString();
+            ManagePrereqs_Button.Text = "Manage Dependencies: " + (Prereqs_LB.Items.Count + Incompat_LB.Items.Count).ToString();
         }
 
         private void SearchButton_AM_Click(object sender, EventArgs e)
@@ -1279,6 +1310,44 @@ namespace WSMM
         private void SearchTB_Pak_TextChanged(object sender, EventArgs e)
         {
             SearchPak();
+        }
+
+        private void IncompatAdd_Button_Click(object sender, EventArgs e)
+        {
+            bool ModValid = true;
+            string CharPool = @"=,\/:*?""<>|";
+            // Validate Text
+            if (IncompatAdd_TB.Text != "")
+            {
+                foreach (char c in CharPool)
+                {
+                    if (IncompatAdd_TB.Text.Contains(c))
+                    {
+                        toolTip1.Show(@"Mod Name / Wild Life Build is empty or invalid character found =,\/:*?""<>|", IncompatAdd_TB, 3000);
+                        ModValid = false;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                ModValid = false;
+                toolTip1.Show(@"Mod Name / Wild Life Build is empty or invalid character found =,\/:*?""<>|", IncompatAdd_TB, 3000);
+            }
+            if (ModValid == true)
+            {
+                Incompat_LB.Items.Add(IncompatAdd_TB.Text);
+                ManagePrereqs_Button.Text = "Manage Dependencies: " + (Prereqs_LB.Items.Count + Incompat_LB.Items.Count).ToString();
+            }
+        }
+
+        private void IncompatRemove_Button_Click(object sender, EventArgs e)
+        {
+            if (Incompat_LB.SelectedIndex != -1)
+            {
+                Incompat_LB.Items.RemoveAt(Incompat_LB.SelectedIndex);
+            }
+            ManagePrereqs_Button.Text = "Manage Dependencies: " + (Prereqs_LB.Items.Count + Incompat_LB.Items.Count).ToString();
         }
     }
 }

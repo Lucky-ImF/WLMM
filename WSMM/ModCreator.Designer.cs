@@ -86,6 +86,12 @@
             AutoModList_Expand_Button = new Button();
             PaksList_Expand_Button = new Button();
             PrereqManager_Panel = new Panel();
+            IncompatRemove_Button = new Button();
+            label14 = new Label();
+            IncompatAdd_Button = new Button();
+            IncompatAdd_TB = new TextBox();
+            label16 = new Label();
+            Incompat_LB = new ListBox();
             PrereqRemove_Button = new Button();
             label12 = new Label();
             PrereqAdd_Button = new Button();
@@ -836,6 +842,12 @@
             // 
             PrereqManager_Panel.BackColor = Color.FromArgb(75, 68, 138);
             PrereqManager_Panel.BorderStyle = BorderStyle.Fixed3D;
+            PrereqManager_Panel.Controls.Add(IncompatRemove_Button);
+            PrereqManager_Panel.Controls.Add(label14);
+            PrereqManager_Panel.Controls.Add(IncompatAdd_Button);
+            PrereqManager_Panel.Controls.Add(IncompatAdd_TB);
+            PrereqManager_Panel.Controls.Add(label16);
+            PrereqManager_Panel.Controls.Add(Incompat_LB);
             PrereqManager_Panel.Controls.Add(PrereqRemove_Button);
             PrereqManager_Panel.Controls.Add(label12);
             PrereqManager_Panel.Controls.Add(PrereqAdd_Button);
@@ -845,9 +857,85 @@
             PrereqManager_Panel.Controls.Add(linkLabel2);
             PrereqManager_Panel.Location = new Point(265, 507);
             PrereqManager_Panel.Name = "PrereqManager_Panel";
-            PrereqManager_Panel.Size = new Size(336, 158);
+            PrereqManager_Panel.Size = new Size(336, 265);
             PrereqManager_Panel.TabIndex = 47;
             PrereqManager_Panel.Visible = false;
+            // 
+            // IncompatRemove_Button
+            // 
+            IncompatRemove_Button.BackColor = Color.FromArgb(32, 34, 81);
+            IncompatRemove_Button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            IncompatRemove_Button.FlatStyle = FlatStyle.Flat;
+            IncompatRemove_Button.Font = new Font("Segoe UI", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            IncompatRemove_Button.ForeColor = Color.Red;
+            IncompatRemove_Button.Location = new Point(286, 204);
+            IncompatRemove_Button.Name = "IncompatRemove_Button";
+            IncompatRemove_Button.Size = new Size(39, 27);
+            IncompatRemove_Button.TabIndex = 51;
+            IncompatRemove_Button.Text = "X";
+            IncompatRemove_Button.UseVisualStyleBackColor = false;
+            IncompatRemove_Button.Click += IncompatRemove_Button_Click;
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label14.ForeColor = SystemColors.ActiveCaption;
+            label14.Location = new Point(12, 152);
+            label14.Name = "label14";
+            label14.Size = new Size(170, 17);
+            label14.TabIndex = 50;
+            label14.Text = "Mod Name / Wild Life Build";
+            // 
+            // IncompatAdd_Button
+            // 
+            IncompatAdd_Button.BackColor = Color.FromArgb(32, 34, 81);
+            IncompatAdd_Button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            IncompatAdd_Button.FlatStyle = FlatStyle.Flat;
+            IncompatAdd_Button.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            IncompatAdd_Button.ForeColor = SystemColors.ActiveCaption;
+            IncompatAdd_Button.Location = new Point(286, 171);
+            IncompatAdd_Button.Name = "IncompatAdd_Button";
+            IncompatAdd_Button.Size = new Size(39, 27);
+            IncompatAdd_Button.TabIndex = 49;
+            IncompatAdd_Button.Text = "Add";
+            IncompatAdd_Button.UseVisualStyleBackColor = false;
+            IncompatAdd_Button.Click += IncompatAdd_Button_Click;
+            // 
+            // IncompatAdd_TB
+            // 
+            IncompatAdd_TB.BackColor = Color.FromArgb(32, 34, 81);
+            IncompatAdd_TB.BorderStyle = BorderStyle.FixedSingle;
+            IncompatAdd_TB.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            IncompatAdd_TB.ForeColor = SystemColors.ActiveCaption;
+            IncompatAdd_TB.Location = new Point(12, 171);
+            IncompatAdd_TB.Name = "IncompatAdd_TB";
+            IncompatAdd_TB.Size = new Size(268, 27);
+            IncompatAdd_TB.TabIndex = 48;
+            IncompatAdd_TB.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label16
+            // 
+            label16.AutoSize = true;
+            label16.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label16.ForeColor = SystemColors.ActiveCaption;
+            label16.Location = new Point(106, 131);
+            label16.Name = "label16";
+            label16.Size = new Size(120, 21);
+            label16.TabIndex = 47;
+            label16.Text = "Incompatiblities";
+            // 
+            // Incompat_LB
+            // 
+            Incompat_LB.BackColor = Color.FromArgb(32, 34, 81);
+            Incompat_LB.ForeColor = SystemColors.ActiveCaption;
+            Incompat_LB.FormattingEnabled = true;
+            Incompat_LB.ItemHeight = 15;
+            Incompat_LB.Location = new Point(12, 204);
+            Incompat_LB.Name = "Incompat_LB";
+            Incompat_LB.ScrollAlwaysVisible = true;
+            Incompat_LB.Size = new Size(268, 49);
+            Incompat_LB.TabIndex = 46;
             // 
             // PrereqRemove_Button
             // 
@@ -856,7 +944,7 @@
             PrereqRemove_Button.FlatStyle = FlatStyle.Flat;
             PrereqRemove_Button.Font = new Font("Segoe UI", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             PrereqRemove_Button.ForeColor = Color.Red;
-            PrereqRemove_Button.Location = new Point(285, 80);
+            PrereqRemove_Button.Location = new Point(285, 77);
             PrereqRemove_Button.Name = "PrereqRemove_Button";
             PrereqRemove_Button.Size = new Size(39, 27);
             PrereqRemove_Button.TabIndex = 45;
@@ -869,7 +957,7 @@
             label12.AutoSize = true;
             label12.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label12.ForeColor = SystemColors.ActiveCaption;
-            label12.Location = new Point(11, 28);
+            label12.Location = new Point(11, 25);
             label12.Name = "label12";
             label12.Size = new Size(75, 17);
             label12.TabIndex = 44;
@@ -882,7 +970,7 @@
             PrereqAdd_Button.FlatStyle = FlatStyle.Flat;
             PrereqAdd_Button.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             PrereqAdd_Button.ForeColor = SystemColors.ActiveCaption;
-            PrereqAdd_Button.Location = new Point(285, 47);
+            PrereqAdd_Button.Location = new Point(285, 44);
             PrereqAdd_Button.Name = "PrereqAdd_Button";
             PrereqAdd_Button.Size = new Size(39, 27);
             PrereqAdd_Button.TabIndex = 43;
@@ -896,7 +984,7 @@
             PrereqAdd_TB.BorderStyle = BorderStyle.FixedSingle;
             PrereqAdd_TB.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             PrereqAdd_TB.ForeColor = SystemColors.ActiveCaption;
-            PrereqAdd_TB.Location = new Point(11, 47);
+            PrereqAdd_TB.Location = new Point(11, 44);
             PrereqAdd_TB.Name = "PrereqAdd_TB";
             PrereqAdd_TB.Size = new Size(268, 27);
             PrereqAdd_TB.TabIndex = 42;
@@ -919,7 +1007,7 @@
             Prereqs_LB.ForeColor = SystemColors.ActiveCaption;
             Prereqs_LB.FormattingEnabled = true;
             Prereqs_LB.ItemHeight = 15;
-            Prereqs_LB.Location = new Point(11, 80);
+            Prereqs_LB.Location = new Point(11, 77);
             Prereqs_LB.Name = "Prereqs_LB";
             Prereqs_LB.ScrollAlwaysVisible = true;
             Prereqs_LB.Size = new Size(268, 49);
@@ -932,7 +1020,7 @@
             linkLabel2.AutoSize = true;
             linkLabel2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             linkLabel2.LinkColor = SystemColors.MenuHighlight;
-            linkLabel2.Location = new Point(365, 539);
+            linkLabel2.Location = new Point(365, 646);
             linkLabel2.Margin = new Padding(4, 0, 4, 0);
             linkLabel2.Name = "linkLabel2";
             linkLabel2.Size = new Size(86, 16);
@@ -1178,5 +1266,11 @@
         private Button SearchClear_Pak;
         private Label label13;
         private TextBox SearchTB_Pak;
+        private Button IncompatRemove_Button;
+        private Label label14;
+        private Button IncompatAdd_Button;
+        private TextBox IncompatAdd_TB;
+        private Label label16;
+        private ListBox Incompat_LB;
     }
 }

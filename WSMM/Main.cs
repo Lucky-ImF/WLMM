@@ -18,6 +18,7 @@ using System;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using static System.Windows.Forms.AxHost;
 using System.Windows.Forms;
+using UAssetAPI.Kismet.Bytecode.Expressions;
 
 namespace WSMM
 {
@@ -74,6 +75,7 @@ namespace WSMM
         string[] Mod_WLMMPath = new string[100];
         string[] Mod_Categories = new string[100];
         List<string>[] Mod_Dependencies = new List<string>[100];
+        List<string>[] Mod_Incompatibilities = new List<string>[100];
 
         List<int> Mod_Entries = new List<int>();
         int Mod_CurrentEntryID = 0;
@@ -1253,6 +1255,7 @@ namespace WSMM
             // Conflict Check
             ConflictCheck();
             DependenciesCheck();
+            IncompatibilitiesCheck();
 
             GetMarketplaceMods();
             CheckCategories();
@@ -1282,6 +1285,7 @@ namespace WSMM
             string FirstCategory = string.Empty;
             string Characters = string.Empty;
             string Dependencies = string.Empty;
+            string Incompatibilities = string.Empty;
             int PakCount = 0;
             int AutoModCount = 0;
 
@@ -1318,6 +1322,10 @@ namespace WSMM
                 else if (meta.StartsWith("Dependencies"))
                 {
                     Dependencies = GetSlice(meta, "=", 1);
+                }
+                else if (meta.StartsWith("Incompatibilities"))
+                {
+                    Incompatibilities = GetSlice(meta, "=", 1);
                 }
             }
 
@@ -1578,6 +1586,26 @@ namespace WSMM
                 if (TrimmedS != string.Empty)
                 {
                     Mod_Dependencies[EntryID].Add(TrimmedS);
+                }
+            }
+
+            if (Incompatibilities.Contains(","))
+            {
+                Mod_Incompatibilities[EntryID] = new List<string>();
+                string[] SplitChars = Incompatibilities.Split(",");
+                foreach (string s in SplitChars)
+                {
+                    string TrimmedS = s.Trim();
+                    Mod_Incompatibilities[EntryID].Add(TrimmedS);
+                }
+            }
+            else
+            {
+                Mod_Incompatibilities[EntryID] = new List<string>();
+                string TrimmedS = Incompatibilities.Trim();
+                if (TrimmedS != string.Empty)
+                {
+                    Mod_Incompatibilities[EntryID].Add(TrimmedS);
                 }
             }
 
@@ -3781,6 +3809,62 @@ namespace WSMM
                         Mod_ErrorLabel[ModID_X].Invoke((System.Windows.Forms.MethodInvoker)delegate
                         {
                             Mod_ErrorLabel[ModID_X].Text = "Dependencies Missing: " + DependenciesMissing;
+                            Mod_ErrorLabel[ModID_X].ForeColor = System.Drawing.Color.LightCoral;
+                            Mod_ErrorLabel[ModID_X].Visible = true;
+                            Mod_EnabledCB[ModID_X].Enabled = false;
+                            Mod_EnabledCB[ModID_X].Checked = false;
+                            Graphics g = CreateGraphics();
+                            SizeF LabelSize = g.MeasureString(Mod_ErrorLabel[ModID_X].Text, Mod_ErrorLabel[ModID_X].Font);
+                            Mod_ErrorLabel[ModID_X].Location = new Point(Mod_VersionLabel[ModID_X].Left - ((int)LabelSize.Width) - 5, 11);
+                            Mod_ErrorLabel[ModID_X].BringToFront();
+                        });
+                    }
+                    else
+                    {
+                        Mod_ErrorLabel[ModID_X].Visible = false;
+                        Mod_EnabledCB[ModID_X].Enabled = true;
+                    }
+                }
+            }
+        }
+
+        private void IncompatibilitiesCheck()
+        {
+            foreach (int ModID_X in Mod_Entries)
+            {
+                string Conflicts = string.Empty;
+                bool ConflictFound = false;
+
+                if (Mod_Incompatibilities[ModID_X].Count != 0)
+                {
+                    foreach (string Incompat in Mod_Incompatibilities[ModID_X])
+                    {
+                        // Check if loaded build is incompatible
+                        if (Incompat == LoadedWLVersion)
+                        {
+                            Conflicts += "Incompatible with WL Build " + LoadedWLVersion;
+                            ConflictFound = true;
+                            break;
+                        }
+                        if (ConflictFound == false)
+                        {
+                            foreach (int ModID_Y in Mod_Entries)
+                            {
+                                if (Mod_NameLabel[ModID_Y].Text == Incompat)
+                                {
+                                    Conflicts += "Incompatible mod found: " + Incompat;
+                                    ConflictFound = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    if (ConflictFound == true)
+                    {
+                        Mod_ErrorLabel[ModID_X].Invoke((System.Windows.Forms.MethodInvoker)delegate
+                        {
+                            Mod_ErrorLabel[ModID_X].Text = Conflicts;
                             Mod_ErrorLabel[ModID_X].ForeColor = System.Drawing.Color.LightCoral;
                             Mod_ErrorLabel[ModID_X].Visible = true;
                             Mod_EnabledCB[ModID_X].Enabled = false;
