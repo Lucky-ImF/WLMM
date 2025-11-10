@@ -406,7 +406,7 @@ namespace WSMM
 
         private void Main_Load(object sender, EventArgs e)
         {
-            Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
+            Application.SetHighDpiMode(HighDpiMode.DpiUnaware);
             //Set title
             this.Text = "Wild Life Mod Manager - v." + WLMM_Version;
             TitleLabel.Text = "Wild Life Mod Manager - v." + WLMM_Version;
@@ -4650,6 +4650,7 @@ namespace WSMM
                 }
                 else {
                     ToggleButtons(false);
+                    LoadGame_Button.Enabled = true;
                 }
             }
             else
