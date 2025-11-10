@@ -19,6 +19,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 using static System.Windows.Forms.AxHost;
 using System.Windows.Forms;
 using UAssetAPI.Kismet.Bytecode.Expressions;
+using System.Numerics;
 
 namespace WSMM
 {
@@ -35,7 +36,7 @@ namespace WSMM
         private bool StartingUp = true;
         private bool HasOldChanges = false;
 
-        private string WLMM_Version = "1.3.1";
+        private string WLMM_Version = "1.3.2";
         private string Datatable_Version = string.Empty;
         string BuildLog = string.Empty;
 
@@ -406,7 +407,8 @@ namespace WSMM
 
         private void Main_Load(object sender, EventArgs e)
         {
-            Application.SetHighDpiMode(HighDpiMode.DpiUnaware);
+            Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
+            Application.EnableVisualStyles();
             //Set title
             this.Text = "Wild Life Mod Manager - v." + WLMM_Version;
             TitleLabel.Text = "Wild Life Mod Manager - v." + WLMM_Version;
@@ -984,9 +986,13 @@ namespace WSMM
                         BS_LaunchParams.Text = GetSlice(file, "=", 1);
                     }
                 }
-                if (BS_BaseGameSandboxPropsFile.Text == "")
+                if (BS_BaseGameSandboxPropsFile.Text == "" && BS_BaseGameSandboxPropsFile.Items.Count >= 1)
                 {
                     BS_BaseGameSandboxPropsFile.Text = BS_BaseGameSandboxPropsFile.Items[0].ToString();
+                }
+                else
+                {
+                    BS_BaseGameSandboxPropsFile.Text = "Unsupported";
                 }
             }
             else
@@ -1378,7 +1384,8 @@ namespace WSMM
             }
             //Panel[] Mod_Panel = new Panel[50];
             Mod_Panel[EntryID] = new Panel();
-            Mod_Panel[EntryID].Size = new System.Drawing.Size(840, 115);
+            Vector2 PanelSize = new Vector2(ModFlow_Panel.ClientSize.Width - SystemInformation.VerticalScrollBarWidth, 0);
+            Mod_Panel[EntryID].Size = new System.Drawing.Size(ModFlow_Panel.ClientSize.Width - SystemInformation.VerticalScrollBarWidth, 113);
             Mod_Panel[EntryID].BackColor = System.Drawing.Color.FromArgb(32, 34, 81);
             Mod_Panel[EntryID].BorderStyle = BorderStyle.Fixed3D;
             //PictureBox[] Mod_Icon = new PictureBox[50];
