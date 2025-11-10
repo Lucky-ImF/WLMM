@@ -35,7 +35,7 @@ namespace WSMM
         private bool StartingUp = true;
         private bool HasOldChanges = false;
 
-        private string WLMM_Version = "1.3.0";
+        private string WLMM_Version = "1.3.1";
         private string Datatable_Version = string.Empty;
         string BuildLog = string.Empty;
 
@@ -2331,7 +2331,14 @@ namespace WSMM
             }
             catch (Exception)
             {
-                return "Base DT_SandboxProps was not found.";
+                //return "Base DT_SandboxProps was not found.";
+                BuildLog += "+ - DT_SandboxProps not found. Skipping prop mods.\n";
+                SandboxProps = "";
+                //Skipping Props
+                if (File.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_SandboxProps_Generated.json"))
+                {
+                    File.Delete(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_SandboxProps_Generated.json");
+                }
             }
 
             List<string> Entries = new List<string>();
@@ -2389,13 +2396,21 @@ namespace WSMM
             string[] NameMap_ClothesOutfit_Defaults = File.ReadAllLines(ClothesOutfitNameMap_Path);
             string[] NameMap_Defaults = File.ReadAllLines(OutfitFileNameMap_Path);
             string[] CustomNameMap_Defaults = File.ReadAllLines(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GameCharacterCustomization_Default_NameMap.txt");
-            string[] SandboxPropsNameMap_Defaults = File.ReadAllLines(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_SandboxProps_Default_NameMap.txt");
+            string[] SandboxPropsNameMap_Defaults = null;
+            if (SandboxProps != "")
+            {
+                SandboxPropsNameMap_Defaults = File.ReadAllLines(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_SandboxProps_Default_NameMap.txt");
+            }
 
             string Original_Entry = File.ReadAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_ClothesOutfit_Entry_Default.json");
             string Original_FurmaskEntry = File.ReadAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_ClothesOutfit_Entry_FurMask.json");
             string Original_OutfitEntry = File.ReadAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GameCharacterOutfits_Entry_Default.json");
             string Original_CustomEntry = File.ReadAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GameCharacterCustomization_Entry_Default.json");
-            string Original_SandboxPropsEntry = File.ReadAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_SandboxProps_Entry_Default.json");
+            string Original_SandboxPropsEntry = "";
+            if (SandboxProps != "")
+            {
+                Original_SandboxPropsEntry = File.ReadAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_SandboxProps_Entry_Default.json");
+            }
             string Original_CustomHairEntry = "";
             if (File.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GameCharacterCustomization_HairEntry_Default.json"))
             {
@@ -3017,9 +3032,8 @@ namespace WSMM
                         }
                     }
                 }
-                else if (GetCleanString(contents, "Variant") == "Props")
+                else if (GetCleanString(contents, "Variant") == "Props" && SandboxProps != "")
                 {
-
                     foreach (string S in contents)
                     {
                         string CleanString = GetSlice(S, ":", 1).Trim();
@@ -3098,38 +3112,6 @@ namespace WSMM
                             SandboxPropsNameMap.Add(temp);
                         }
                     }
-
-                    //PropID_TB.Text = SplitEntry[0];
-                    //PropName_TB.Text = SplitEntry[1];
-                    //PropCategory_CB.Text = SplitEntry[2];
-                    //PropIcon_TB.Text = SplitEntry[3];
-                    //PropMesh_TB.Text = SplitEntry[4];
-                    //PropSkelMesh_TB.Text = SplitEntry[5];
-                    //PropActor_TB.Text = SplitEntry[6];
-                    //string[] PivotOffset = SplitEntry[7].Split(",");
-                    //PropPivotOffset_X.Value = Decimal.Parse(PivotOffset[0]);
-                    //PropPivotOffset_Y.Value = Decimal.Parse(PivotOffset[1]);
-                    //PropPivotOffset_Z.Value = Decimal.Parse(PivotOffset[2]);
-                    //string[] PlacementOffset = SplitEntry[8].Split(",");
-                    //PropPlacementOffset_X.Value = Decimal.Parse(PlacementOffset[0]);
-                    //PropPlacementOffset_Y.Value = Decimal.Parse(PlacementOffset[1]);
-                    //PropPlacementOffset_Z.Value = Decimal.Parse(PlacementOffset[2]);
-                    //PropCollision_CB.Checked = Boolean.Parse(SplitEntry[9]);
-                    //string[] ColOffset = SplitEntry[10].Split(",");
-                    //PropColOffset_X.Value = Decimal.Parse(ColOffset[0]);
-                    //PropColOffset_Y.Value = Decimal.Parse(ColOffset[1]);
-                    //PropColOffset_Z.Value = Decimal.Parse(ColOffset[2]);
-                    //string[] ColRotation = SplitEntry[11].Split(",");
-                    //PropColRotation_Pitch.Value = Decimal.Parse(ColRotation[0]);
-                    //PropColRotation_Yaw.Value = Decimal.Parse(ColRotation[1]);
-                    //PropColRotation_Roll.Value = Decimal.Parse(ColRotation[2]);
-                    //string[] ColExtents = SplitEntry[12].Split(",");
-                    //PropColExtents_X.Value = Decimal.Parse(ColExtents[0]);
-                    //PropColExtents_Y.Value = Decimal.Parse(ColExtents[1]);
-                    //PropColExtents_Z.Value = Decimal.Parse(ColExtents[2]);
-                    //PropCustomBlueprint_TB.Text = SplitEntry[13];
-                    //PropCustomBlueprintName_TB.Text = SplitEntry[14];
-                    //PropADFL_CB.Checked = Boolean.Parse(SplitEntry[15]);
                 }
             }
 
@@ -3383,32 +3365,35 @@ namespace WSMM
 
             string CompiledPropEntries = string.Empty;
             string CompiledPropNameMap = string.Empty;
-            try
+            if (SandboxProps != "")
             {
-                foreach (string Ent in Props)
+                try
                 {
-                    CompiledPropEntries += Ent + ",\n";
-                }
-                CompiledPropEntries = CompiledPropEntries.TrimEnd('\n');
-                CompiledPropEntries = CompiledPropEntries.TrimEnd(',');
+                    foreach (string Ent in Props)
+                    {
+                        CompiledPropEntries += Ent + ",\n";
+                    }
+                    CompiledPropEntries = CompiledPropEntries.TrimEnd('\n');
+                    CompiledPropEntries = CompiledPropEntries.TrimEnd(',');
 
-                foreach (string Ent in SandboxPropsNameMap)
+                    foreach (string Ent in SandboxPropsNameMap)
+                    {
+                        CompiledPropNameMap += "\"" + Ent + "\"" + "," + "\n";
+                    }
+                    CompiledPropNameMap = CompiledPropNameMap.TrimEnd('\n');
+                    CompiledPropNameMap = CompiledPropNameMap.TrimEnd(',');
+
+                    SandboxProps = SandboxProps.Replace("[ENTRYSTART]", CompiledPropEntries);
+                    SandboxProps = SandboxProps.Replace("[NAMEMAPSTART]", CompiledPropNameMap);
+                    File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_SandboxProps_Debug.json", SandboxProps);
+                    dynamic PropsArray = JsonConvert.DeserializeObject(SandboxProps);
+                    string PropsjsonString = JsonConvert.SerializeObject(PropsArray, Newtonsoft.Json.Formatting.Indented);
+                    File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_SandboxProps_Generated.json", PropsjsonString);
+                }
+                catch (Exception ex)
                 {
-                    CompiledPropNameMap += "\"" + Ent + "\"" + "," + "\n";
+                    return "DT_SandboxProps json error: " + ex.Message;
                 }
-                CompiledPropNameMap = CompiledPropNameMap.TrimEnd('\n');
-                CompiledPropNameMap = CompiledPropNameMap.TrimEnd(',');
-
-                SandboxProps = SandboxProps.Replace("[ENTRYSTART]", CompiledPropEntries);
-                SandboxProps = SandboxProps.Replace("[NAMEMAPSTART]", CompiledPropNameMap);
-                File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_SandboxProps_Debug.json", SandboxProps);
-                dynamic PropsArray = JsonConvert.DeserializeObject(SandboxProps);
-                string PropsjsonString = JsonConvert.SerializeObject(PropsArray, Newtonsoft.Json.Formatting.Indented);
-                File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_SandboxProps_Generated.json", PropsjsonString);
-            }
-            catch (Exception ex)
-            {
-                return "DT_SandboxProps json error: " + ex.Message;
             }
 
             return "Success";
@@ -4659,7 +4644,13 @@ namespace WSMM
                 IncrementDownloadAmount(DTVersion);
 
                 MessageBox.Show("DataTables updated!", "Wild Life Mod Manager", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                ToggleButtons(true);
+                if (LoadedWLVersion != string.Empty)
+                {
+                    ToggleButtons(true);
+                }
+                else {
+                    ToggleButtons(false);
+                }
             }
             else
             {
