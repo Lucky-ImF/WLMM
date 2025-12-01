@@ -1,25 +1,23 @@
 using Microsoft.VisualBasic;
+using Newtonsoft.Json;
+using System;
 using System.Diagnostics;
+using System.IO;
 using System.IO.Compression;
+using System.Net;
+using System.Numerics;
 using System.Reflection;
 using System.Resources;
+using System.Security.Cryptography;
+using System.Security.Policy;
 using System.Text;
+using System.Windows.Forms;
 using System.Xml;
+using System.Xml.Linq;
 using UAssetAPI;
-using Newtonsoft.Json;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using UAssetAPI.Kismet.Bytecode.Expressions;
 using UAssetAPI.UnrealTypes;
 using UAssetAPI.Unversioned;
-using System.Net;
-using System.Security.Cryptography;
-using static System.Windows.Forms.LinkLabel;
-using System.Xml.Linq;
-using System;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using static System.Windows.Forms.AxHost;
-using System.Windows.Forms;
-using UAssetAPI.Kismet.Bytecode.Expressions;
-using System.Numerics;
 
 namespace WSMM
 {
@@ -36,7 +34,7 @@ namespace WSMM
         private bool StartingUp = true;
         private bool HasOldChanges = false;
 
-        private string WLMM_Version = "1.3.2";
+        private string WLMM_Version = "1.3.3";
         private string Datatable_Version = string.Empty;
         string BuildLog = string.Empty;
 
@@ -51,6 +49,9 @@ namespace WSMM
         string DTLink = "";
 
         bool MMMode = false;
+
+        string LuckyUpdateLink = "";
+        string UpdateDataLink = "";
 
         string ModPackPath = string.Empty;
 
@@ -540,7 +541,7 @@ namespace WSMM
                 string[] TempArray = VersionInfo.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.TrimEntries);
                 if (ThisVersion != TempArray[0])
                 {
-                    UpdateLink.Text = "New version " + TempArray[0] + " available! Click here to download!";
+                    UpdateLink.Text = "New version " + TempArray[0] + " available! Click here to update!";
                     UpdateLink.Tag = TempArray[1];
                     UpdateLink.Show();
                     WildSanctum_Link.Tag = TempArray[2];
@@ -552,6 +553,16 @@ namespace WSMM
                     MM = TempArray[8];
                     MMInfo = TempArray[9];
                     MMMessage = TempArray[10];
+                    LuckyUpdateLink = TempArray[11];
+                    UpdateDataLink = TempArray[12];
+                    if (!File.Exists("LuckyUpdater.exe")) 
+                    {
+                        await DownloadFileAsync(LuckyUpdateLink, "LuckyUpdater.exe");
+                    }
+                    if (!File.Exists("UpdateData.ini"))
+                    {
+                        await DownloadFileAsync(UpdateDataLink, "UpdateData.ini");
+                    }
                 }
                 else
                 {
@@ -564,6 +575,16 @@ namespace WSMM
                     MM = TempArray[8];
                     MMInfo = TempArray[9];
                     MMMessage = TempArray[10];
+                    LuckyUpdateLink = TempArray[11];
+                    UpdateDataLink = TempArray[12];
+                    if (File.Exists("LuckyUpdater.exe"))
+                    {
+                        File.Delete("LuckyUpdater.exe");
+                    }
+                    if (File.Exists("UpdateData.ini"))
+                    {
+                        File.Delete("UpdateData.ini");
+                    }
                 }
 
                 DT_Updater_ChangesTB.Text = DTChanges.Replace("*", "\r\n");
@@ -1365,6 +1386,7 @@ namespace WSMM
             PakCount = Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\Paks", "*.pak").Count();
             AutoModCount = Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\AutoMod", "*.txt").Count();
             AutoModCount += Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\AutoMod", "*.collection").Count();
+            // Perhaps add a check if directories exist
 
             int EntryID = Mod_CurrentEntryID;
 
@@ -3586,18 +3608,35 @@ namespace WSMM
             }
         }
 
-        private void UpdateLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private async void UpdateLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            try
+            if (File.Exists("LuckyUpdater.exe") && File.Exists("UpdateData.ini"))
             {
-                if (UpdateLink.Tag.ToString() != "null")
+                using (Process p = new Process())
                 {
-                    Process.Start("explorer", UpdateLink.Tag.ToString().Trim('\r'));
+                    p.StartInfo = new ProcessStartInfo("LuckyUpdater.exe") { UseShellExecute = true };
+                    p.StartInfo.WorkingDirectory = Application.StartupPath;
+                    p.Start();
                 }
+                Application.Exit();
             }
-            catch
+            else
             {
-                MessageBox.Show("Error: Could not open your default webbrowser.");
+                if (!File.Exists("LuckyUpdater.exe"))
+                {
+                    await DownloadFileAsync(LuckyUpdateLink, "LuckyUpdater.exe");
+                }
+                if (!File.Exists("UpdateData.ini"))
+                {
+                    await DownloadFileAsync(UpdateDataLink, "UpdateData.ini");
+                }
+                using (Process p = new Process())
+                {
+                    p.StartInfo = new ProcessStartInfo("LuckyUpdater.exe") { UseShellExecute = true };
+                    p.StartInfo.WorkingDirectory = Application.StartupPath;
+                    p.Start();
+                }
+                Application.Exit();
             }
         }
 
@@ -4859,6 +4898,29 @@ namespace WSMM
             if (StartingUp == false)
             {
                 SaveBuildSettings();
+            }
+        }
+
+        private async Task DownloadFileAsync(string fileUrl, string destinationPath)
+        {
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    var response = await client.GetAsync(fileUrl);
+                    response.EnsureSuccessStatusCode();
+
+                    using (var fs = new FileStream(destinationPath, FileMode.Create))
+                    {
+                        await response.Content.CopyToAsync(fs);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MM_Panel.Show();
+                MM_Info.Text = "Unable to download file.";
+                MM_Message.Text = "Is your network down or firewall blocking WLMM?\r\nIf not, check the WLMM post on Discord for info/help.\r\nException:\r\n" + ex.Message;
             }
         }
     }
