@@ -58,6 +58,8 @@ namespace WSMM
 
         private int DownloadsRemaining = 50;
 
+        List<string> HiddenMods = new List<string>();
+
         public Marketplace()
         {
             InitializeComponent();
@@ -76,7 +78,27 @@ namespace WSMM
             Filter_CB.Items.Add("Most Popular");
             Filter_CB.Items.AddRange(Main_Form.Categories_List.ToArray());
 
+            LoadHiddenMods();
+
             GetMarketplaceMods();
+        }
+
+        private void LoadHiddenMods()
+        {
+            HiddenMods.Clear();
+            if (File.Exists(Application.StartupPath + @"System\HiddenMods.ini"))
+            {
+                string[] TempArray = File.ReadAllLines(Application.StartupPath + @"System\HiddenMods.ini");
+                foreach (string line in TempArray)
+                {
+                    HiddenMods.Add(line.Trim());
+                }
+            }
+        }
+
+        private void SaveHiddenMods()
+        {
+            File.WriteAllLines(Application.StartupPath + @"System\HiddenMods.ini", HiddenMods);
         }
 
         private string GetSlice(string Txt, string Delimiter, int slice)
@@ -296,6 +318,16 @@ namespace WSMM
             }
             GetAllDownloadAmounts();
             ApplyFilter();
+            
+            if (HiddenMods.Count == 0)
+            {
+                ResetHiddenMods_LL.Hide();
+            }
+            else
+            {
+                ResetHiddenMods_LL.Text = "Reset Hidden Mods: " + HiddenMods.Count.ToString();
+                ResetHiddenMods_LL.Show();
+            }
         }
 
         private void CreateModEntry(string ModString)
@@ -373,6 +405,19 @@ namespace WSMM
             }
 
             if (isVersionValid(SupportedVersions) == false)
+            {
+                return;
+            }
+            bool isHidden = false;
+            foreach (string MN in HiddenMods)
+            {
+                if (MN == ModName)
+                {
+                    isHidden = true;
+                    break;
+                }
+            }
+            if (isHidden == true)
             {
                 return;
             }
@@ -908,7 +953,7 @@ namespace WSMM
             else
             {
                 ApplyFilter();
-            } 
+            }
         }
 
         private void ApplyFilter()
@@ -973,6 +1018,32 @@ namespace WSMM
             {
                 Main_Form.DeleteWLMMAfterDownload = DeleteAfterDownload_CB.Checked;
             }
+        }
+
+        private void HideModButton_MouseEnter(object sender, EventArgs e)
+        {
+            HideModButton.Image = Properties.Resources.Eye_Icon_Hover;
+        }
+
+        private void HideModButton_MouseLeave(object sender, EventArgs e)
+        {
+            HideModButton.Image = Properties.Resources.Eye_Icon;
+        }
+
+        private void HideModButton_Click(object sender, EventArgs e)
+        {
+            HiddenMods.Add(ModName_Label.Text);
+            SaveHiddenMods();
+            LoadMarketplaceMods();
+            ModPanel_Panel.Hide();
+        }
+
+        private void ResetHiddenMods_LL_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            HiddenMods.Clear();
+            SaveHiddenMods();
+            ResetHiddenMods_LL.Hide();
+            LoadMarketplaceMods();
         }
     }
 }
