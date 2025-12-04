@@ -193,6 +193,26 @@ namespace WSMM.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Web_Icon {
+            get {
+                object obj = ResourceManager.GetObject("Web_Icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Web_Icon_Hover {
+            get {
+                object obj = ResourceManager.GetObject("Web_Icon_Hover", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap WLMM_Small_Icon {
             get {
                 object obj = ResourceManager.GetObject("WLMM_Small_Icon", resourceCulture);

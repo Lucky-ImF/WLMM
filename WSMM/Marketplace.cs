@@ -60,6 +60,8 @@ namespace WSMM
 
         List<string> HiddenMods = new List<string>();
 
+        string MarketplaceWebURL = "https://marketplace.luckybot.one/Assets/";
+
         public Marketplace()
         {
             InitializeComponent();
@@ -318,7 +320,7 @@ namespace WSMM
             }
             GetAllDownloadAmounts();
             ApplyFilter();
-            
+
             if (HiddenMods.Count == 0)
             {
                 ResetHiddenMods_LL.Hide();
@@ -1044,6 +1046,21 @@ namespace WSMM
             SaveHiddenMods();
             ResetHiddenMods_LL.Hide();
             LoadMarketplaceMods();
+        }
+
+        private void Website_Button_MouseEnter(object sender, EventArgs e)
+        {
+            Website_Button.Image = Properties.Resources.Web_Icon_Hover;
+        }
+
+        private void Website_Button_MouseLeave(object sender, EventArgs e)
+        {
+            Website_Button.Image = Properties.Resources.Web_Icon;
+        }
+
+        private void Website_Button_Click(object sender, EventArgs e)
+        {
+            Process.Start("explorer", MarketplaceWebURL + ModName_Label.Text.Replace(" ", ""));
         }
     }
 }

@@ -33,10 +33,12 @@
             Icon_PB = new PictureBox();
             Close_Button = new PictureBox();
             TitlePanel = new Panel();
+            ResetHiddenMods_LL = new LinkLabel();
             TitleLabel = new Label();
             Separator_1 = new PictureBox();
             ModMain_Panel = new Panel();
             ModPanel_Panel = new Panel();
+            Website_Button = new PictureBox();
             HideModButton = new PictureBox();
             DeleteAfterDownload_CB = new CheckBox();
             ModAuthor_Label = new Label();
@@ -71,13 +73,14 @@
             Filter_CB = new ComboBox();
             Search_TB = new TextBox();
             RefreshDelay = new System.Windows.Forms.Timer(components);
-            ResetHiddenMods_LL = new LinkLabel();
+            toolTip1 = new ToolTip(components);
             ((System.ComponentModel.ISupportInitialize)Icon_PB).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
             TitlePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             ModMain_Panel.SuspendLayout();
             ModPanel_Panel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)Website_Button).BeginInit();
             ((System.ComponentModel.ISupportInitialize)HideModButton).BeginInit();
             ((System.ComponentModel.ISupportInitialize)CloseModPanel_Button).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Screenshot).BeginInit();
@@ -122,6 +125,24 @@
             TitlePanel.MouseMove += TitlePanel_MouseMove;
             TitlePanel.MouseUp += TitlePanel_MouseUp;
             // 
+            // ResetHiddenMods_LL
+            // 
+            ResetHiddenMods_LL.ActiveLinkColor = SystemColors.ActiveCaption;
+            ResetHiddenMods_LL.AutoEllipsis = true;
+            ResetHiddenMods_LL.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            ResetHiddenMods_LL.LinkColor = SystemColors.Highlight;
+            ResetHiddenMods_LL.Location = new Point(607, 8);
+            ResetHiddenMods_LL.Name = "ResetHiddenMods_LL";
+            ResetHiddenMods_LL.Size = new Size(190, 25);
+            ResetHiddenMods_LL.TabIndex = 22;
+            ResetHiddenMods_LL.TabStop = true;
+            ResetHiddenMods_LL.Tag = "";
+            ResetHiddenMods_LL.Text = "Reset Hidden Mods: 0";
+            ResetHiddenMods_LL.TextAlign = ContentAlignment.MiddleCenter;
+            ResetHiddenMods_LL.Visible = false;
+            ResetHiddenMods_LL.VisitedLinkColor = SystemColors.Highlight;
+            ResetHiddenMods_LL.LinkClicked += ResetHiddenMods_LL_LinkClicked;
+            // 
             // TitleLabel
             // 
             TitleLabel.AutoSize = true;
@@ -163,6 +184,7 @@
             // ModPanel_Panel
             // 
             ModPanel_Panel.BorderStyle = BorderStyle.Fixed3D;
+            ModPanel_Panel.Controls.Add(Website_Button);
             ModPanel_Panel.Controls.Add(HideModButton);
             ModPanel_Panel.Controls.Add(DeleteAfterDownload_CB);
             ModPanel_Panel.Controls.Add(ModAuthor_Label);
@@ -190,6 +212,20 @@
             ModPanel_Panel.TabIndex = 14;
             ModPanel_Panel.Visible = false;
             // 
+            // Website_Button
+            // 
+            Website_Button.Image = Properties.Resources.Web_Icon;
+            Website_Button.Location = new Point(6, 44);
+            Website_Button.Name = "Website_Button";
+            Website_Button.Size = new Size(30, 30);
+            Website_Button.SizeMode = PictureBoxSizeMode.Zoom;
+            Website_Button.TabIndex = 33;
+            Website_Button.TabStop = false;
+            toolTip1.SetToolTip(Website_Button, "Open in browser.");
+            Website_Button.Click += Website_Button_Click;
+            Website_Button.MouseEnter += Website_Button_MouseEnter;
+            Website_Button.MouseLeave += Website_Button_MouseLeave;
+            // 
             // HideModButton
             // 
             HideModButton.Image = Properties.Resources.Eye_Icon;
@@ -199,6 +235,7 @@
             HideModButton.SizeMode = PictureBoxSizeMode.Zoom;
             HideModButton.TabIndex = 32;
             HideModButton.TabStop = false;
+            toolTip1.SetToolTip(HideModButton, "Hide mod.");
             HideModButton.Click += HideModButton_Click;
             HideModButton.MouseEnter += HideModButton_MouseEnter;
             HideModButton.MouseLeave += HideModButton_MouseLeave;
@@ -612,23 +649,14 @@
             RefreshDelay.Interval = 5000;
             RefreshDelay.Tick += RefreshDelay_Tick;
             // 
-            // ResetHiddenMods_LL
+            // toolTip1
             // 
-            ResetHiddenMods_LL.ActiveLinkColor = SystemColors.ActiveCaption;
-            ResetHiddenMods_LL.AutoEllipsis = true;
-            ResetHiddenMods_LL.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            ResetHiddenMods_LL.LinkColor = SystemColors.Highlight;
-            ResetHiddenMods_LL.Location = new Point(607, 8);
-            ResetHiddenMods_LL.Name = "ResetHiddenMods_LL";
-            ResetHiddenMods_LL.Size = new Size(190, 25);
-            ResetHiddenMods_LL.TabIndex = 22;
-            ResetHiddenMods_LL.TabStop = true;
-            ResetHiddenMods_LL.Tag = "";
-            ResetHiddenMods_LL.Text = "Reset Hidden Mods: 0";
-            ResetHiddenMods_LL.TextAlign = ContentAlignment.MiddleCenter;
-            ResetHiddenMods_LL.Visible = false;
-            ResetHiddenMods_LL.VisitedLinkColor = SystemColors.Highlight;
-            ResetHiddenMods_LL.LinkClicked += ResetHiddenMods_LL_LinkClicked;
+            toolTip1.AutomaticDelay = 100;
+            toolTip1.AutoPopDelay = 4000;
+            toolTip1.BackColor = Color.FromArgb(75, 68, 138);
+            toolTip1.ForeColor = SystemColors.GradientInactiveCaption;
+            toolTip1.InitialDelay = 100;
+            toolTip1.ReshowDelay = 20;
             // 
             // Marketplace
             // 
@@ -657,6 +685,7 @@
             ModMain_Panel.PerformLayout();
             ModPanel_Panel.ResumeLayout(false);
             ModPanel_Panel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)Website_Button).EndInit();
             ((System.ComponentModel.ISupportInitialize)HideModButton).EndInit();
             ((System.ComponentModel.ISupportInitialize)CloseModPanel_Button).EndInit();
             ((System.ComponentModel.ISupportInitialize)Screenshot).EndInit();
@@ -711,5 +740,7 @@
         private CheckBox DeleteAfterDownload_CB;
         private PictureBox HideModButton;
         private LinkLabel ResetHiddenMods_LL;
+        private PictureBox Website_Button;
+        private ToolTip toolTip1;
     }
 }

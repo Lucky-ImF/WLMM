@@ -118,11 +118,26 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="WLMM_Small_Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\WLMM_Small_Icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Refresh_Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Refresh_Icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ArrowSmall_D" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ArrowSmall_D.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Close_Icon_Hover" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Close_Icon_Hover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Tut_Arrow_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Tut_Arrow_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Eye_Icon_Hover" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Eye_Icon_Hover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Eye_Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Eye_Icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Tut_Arrow_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Tut_Arrow_1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -130,17 +145,14 @@
   <data name="Tut_Arrow_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Tut_Arrow_3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Refresh_Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Refresh_Icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Close_Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Close_Icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="DragDrop_Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DragDrop_Icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="AutoMod_Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\AutoMod_Icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ArrowSmall_D" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ArrowSmall_D.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ArrowSmall_R" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ArrowSmall_R.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -148,16 +160,10 @@
   <data name="Download_Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Download_Icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="WLMM_Small_Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\WLMM_Small_Icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Web_Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Web_Icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="DragDrop_Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\DragDrop_Icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Eye_Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Eye_Icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Eye_Icon_Hover" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Eye_Icon_Hover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Web_Icon_Hover" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Web_Icon_Hover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
