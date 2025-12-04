@@ -3612,31 +3612,37 @@ namespace WSMM
         {
             if (File.Exists("LuckyUpdater.exe") && File.Exists("UpdateData.ini"))
             {
-                using (Process p = new Process())
+                if (MessageBox.Show("An update is available. Clicking \"Yes\" will close WLMM and open Lucky Updater.", "Update Available", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                 {
-                    p.StartInfo = new ProcessStartInfo("LuckyUpdater.exe") { UseShellExecute = true };
-                    p.StartInfo.WorkingDirectory = Application.StartupPath;
-                    p.Start();
+                    using (Process p = new Process())
+                    {
+                        p.StartInfo = new ProcessStartInfo("LuckyUpdater.exe") { UseShellExecute = true };
+                        p.StartInfo.WorkingDirectory = Application.StartupPath;
+                        p.Start();
+                    }
+                    Application.Exit();
                 }
-                Application.Exit();
             }
             else
             {
-                if (!File.Exists("LuckyUpdater.exe"))
+                if (MessageBox.Show("An update is available. Clicking \"Yes\" will close WLMM and open Lucky Updater.", "Update Available", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                 {
-                    await DownloadFileAsync(LuckyUpdateLink, "LuckyUpdater.exe");
+                    if (!File.Exists("LuckyUpdater.exe"))
+                    {
+                        await DownloadFileAsync(LuckyUpdateLink, "LuckyUpdater.exe");
+                    }
+                    if (!File.Exists("UpdateData.ini"))
+                    {
+                        await DownloadFileAsync(UpdateDataLink, "UpdateData.ini");
+                    }
+                    using (Process p = new Process())
+                    {
+                        p.StartInfo = new ProcessStartInfo("LuckyUpdater.exe") { UseShellExecute = true };
+                        p.StartInfo.WorkingDirectory = Application.StartupPath;
+                        p.Start();
+                    }
+                    Application.Exit();
                 }
-                if (!File.Exists("UpdateData.ini"))
-                {
-                    await DownloadFileAsync(UpdateDataLink, "UpdateData.ini");
-                }
-                using (Process p = new Process())
-                {
-                    p.StartInfo = new ProcessStartInfo("LuckyUpdater.exe") { UseShellExecute = true };
-                    p.StartInfo.WorkingDirectory = Application.StartupPath;
-                    p.Start();
-                }
-                Application.Exit();
             }
         }
 
