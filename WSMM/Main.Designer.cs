@@ -210,6 +210,7 @@
             DisableTutorial_0 = new LinkLabel();
             pictureBox8 = new PictureBox();
             label45 = new Label();
+            toolTip1 = new ToolTip(components);
             TitlePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
@@ -2591,6 +2592,13 @@
             label45.TabIndex = 2;
             label45.Text = "Click here to download datatables";
             // 
+            // toolTip1
+            // 
+            toolTip1.AutomaticDelay = 100;
+            toolTip1.AutoPopDelay = 5000;
+            toolTip1.InitialDelay = 100;
+            toolTip1.ReshowDelay = 20;
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
@@ -2887,5 +2895,6 @@
         private Label label45;
         private Label label46;
         private ComboBox BS_BaseGameSandboxPropsFile;
+        private ToolTip toolTip1;
     }
 }

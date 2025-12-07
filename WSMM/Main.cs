@@ -34,7 +34,7 @@ namespace WSMM
         private bool StartingUp = true;
         private bool HasOldChanges = false;
 
-        private string WLMM_Version = "1.3.3";
+        private string WLMM_Version = "1.3.4";
         private string Datatable_Version = string.Empty;
         string BuildLog = string.Empty;
 
@@ -425,7 +425,8 @@ namespace WSMM
             LoadDatatableVersion();
 
             //Version Check
-            CheckForUpdate();
+            //CheckForUpdate();
+
 
             LoadSupportedVersions();
 
@@ -1219,9 +1220,9 @@ namespace WSMM
             {
                 Cat_Button[Cat_CurrentEntryID] = new System.Windows.Forms.Button();
                 Cat_Button[Cat_CurrentEntryID].Text = cat;
-                Cat_Button[Cat_CurrentEntryID].Size = new System.Drawing.Size(840, 37);
                 Cat_Button[Cat_CurrentEntryID].BackColor = Color.FromArgb(75, 68, 138);
                 Cat_Button[Cat_CurrentEntryID].FlatStyle = FlatStyle.Flat;
+                Cat_Button[Cat_CurrentEntryID].Size = new System.Drawing.Size(ModFlow_Panel.Width - SystemInformation.VerticalScrollBarWidth - ModFlow_Panel.Margin.Right * 3, ModFlow_Panel.ClientSize.Height / 16);
                 Cat_Button[Cat_CurrentEntryID].ForeColor = SystemColors.ActiveCaption;
                 Cat_Button[Cat_CurrentEntryID].Font = new Font(Cat_Button[Cat_CurrentEntryID].Font.FontFamily, 14, FontStyle.Bold);
                 Cat_Button[Cat_CurrentEntryID].ImageAlign = ContentAlignment.MiddleLeft;
@@ -1406,14 +1407,15 @@ namespace WSMM
             }
             //Panel[] Mod_Panel = new Panel[50];
             Mod_Panel[EntryID] = new Panel();
-            Vector2 PanelSize = new Vector2(ModFlow_Panel.ClientSize.Width - SystemInformation.VerticalScrollBarWidth, 0);
-            Mod_Panel[EntryID].Size = new System.Drawing.Size(ModFlow_Panel.ClientSize.Width - SystemInformation.VerticalScrollBarWidth, 113);
+            Size PanelSize = new Size(ModFlow_Panel.Width - SystemInformation.VerticalScrollBarWidth - ModFlow_Panel.Margin.Right *6, (int)Math.Floor(ModFlow_Panel.Height * 0.2));
+            Mod_Panel[EntryID].Size = new System.Drawing.Size(PanelSize.Width, PanelSize.Height);
             Mod_Panel[EntryID].BackColor = System.Drawing.Color.FromArgb(32, 34, 81);
             Mod_Panel[EntryID].BorderStyle = BorderStyle.Fixed3D;
             //PictureBox[] Mod_Icon = new PictureBox[50];
             Mod_Icon[EntryID] = new PictureBox();
-            Mod_Icon[EntryID].Size = new System.Drawing.Size(100, 100);
-            Mod_Icon[EntryID].Location = new Point(3, 5);
+            int IconSize = (int)Math.Floor(PanelSize.Height - PanelSize.Height * 0.1);
+            Mod_Icon[EntryID].Size = new System.Drawing.Size(IconSize, IconSize);
+            Mod_Icon[EntryID].Location = new Point(5, 5);
             Mod_Icon[EntryID].BackColor = System.Drawing.Color.FromArgb(32, 34, 81);
             Mod_Icon[EntryID].BorderStyle = BorderStyle.FixedSingle;
             Mod_Icon[EntryID].SizeMode = PictureBoxSizeMode.Zoom;
@@ -1432,7 +1434,7 @@ namespace WSMM
             Mod_NameLabel[EntryID].Font = new Font(Mod_NameLabel[EntryID].Font.FontFamily, 16);
             Mod_NameLabel[EntryID].Text = ModName;
             Mod_NameLabel[EntryID].AutoSize = true;
-            Mod_NameLabel[EntryID].Location = new Point(117, 4);
+            Mod_NameLabel[EntryID].Location = new Point(Mod_Icon[EntryID].Left + IconSize, Mod_Icon[EntryID].Top);
             //Label[] Mod_VersionLabel = new Label[50];
             Mod_VersionLabel[EntryID] = new Label();
             Mod_VersionLabel[EntryID].BackColor = System.Drawing.Color.FromArgb(32, 34, 81);
@@ -1442,7 +1444,7 @@ namespace WSMM
             Mod_VersionLabel[EntryID].AutoSize = true;
             Graphics g = CreateGraphics();
             SizeF LabelSize = g.MeasureString(Mod_VersionLabel[EntryID].Text, Mod_VersionLabel[EntryID].Font);
-            Mod_VersionLabel[EntryID].Location = new Point(Mod_Panel[EntryID].Size.Width - ((int)LabelSize.Width) - 20, 4);
+            Mod_VersionLabel[EntryID].Location = new Point(PanelSize.Width - (int)Math.Floor(LabelSize.Width * 1.25), Mod_Icon[EntryID].Top);
             //Label[] Mod_ErrorLabel = new Label[50];
             Mod_ErrorLabel[EntryID] = new Label();
             Mod_ErrorLabel[EntryID].BackColor = System.Drawing.Color.FromArgb(32, 34, 81);
@@ -1453,12 +1455,67 @@ namespace WSMM
             Mod_ErrorLabel[EntryID].AutoSize = true;
             //Mod_ErrorLabel[EntryID].Location = new Point(533, 11);
             LabelSize = g.MeasureString(Mod_ErrorLabel[EntryID].Text, Mod_ErrorLabel[EntryID].Font);
-            Mod_ErrorLabel[EntryID].Location = new Point(Mod_VersionLabel[EntryID].Left - ((int)LabelSize.Width) - 10, 11);
+            Mod_ErrorLabel[EntryID].Location = new Point(Mod_VersionLabel[EntryID].Left - (int)Math.Floor(LabelSize.Width * 1.05), Mod_Icon[EntryID].Top + (int)Math.Floor(LabelSize.Width * 0.5));
+            //LinkLabel[] Mod_RemoveButton = new LinkLabel[50];
+            
+            Mod_RemoveButton[EntryID] = new LinkLabel();
+            Mod_RemoveButton[EntryID].Text = "Remove";
+            Mod_RemoveButton[EntryID].LinkColor = System.Drawing.Color.LightCoral;
+            Mod_RemoveButton[EntryID].VisitedLinkColor = System.Drawing.Color.LightCoral;
+            Mod_RemoveButton[EntryID].ActiveLinkColor = System.Drawing.Color.Red;
+            Mod_RemoveButton[EntryID].Tag = EntryID;
+            Mod_RemoveButton[EntryID].Click += Mod_RemoveButton_Click;
+            Mod_RemoveButton[EntryID].AutoSize = true;
+            Mod_RemoveButton[EntryID].Font = new Font(Mod_RemoveButton[EntryID].Font.FontFamily, 12);
+            LabelSize = g.MeasureString(Mod_RemoveButton[EntryID].Text, Mod_RemoveButton[EntryID].Font);
+            int ButtonSpacing = (int)Math.Floor(LabelSize.Width * 0.1);
+            Mod_RemoveButton[EntryID].Location = new System.Drawing.Point(Mod_NameLabel[EntryID].Left, (int) Math.Floor(Mod_Icon[EntryID].Top + IconSize - LabelSize.Height));
+            //LinkLabel[] Mod_ReloadButton = new LinkLabel[50];
+            Mod_ReloadButton[EntryID] = new LinkLabel();
+            Mod_ReloadButton[EntryID].Text = "Reload";
+            Mod_ReloadButton[EntryID].LinkColor = System.Drawing.SystemColors.Highlight;
+            Mod_ReloadButton[EntryID].VisitedLinkColor = System.Drawing.SystemColors.Highlight;
+            Mod_ReloadButton[EntryID].ActiveLinkColor = System.Drawing.SystemColors.ActiveCaption;
+            Mod_ReloadButton[EntryID].Tag = EntryID;
+            Mod_ReloadButton[EntryID].Click += Mod_ReloadButton_Click;
+            Mod_ReloadButton[EntryID].AutoSize = true;
+            Mod_ReloadButton[EntryID].Font = new Font(Mod_ReloadButton[EntryID].Font.FontFamily, 12);
+            Mod_ReloadButton[EntryID].Location = new System.Drawing.Point((int)Math.Floor(Mod_RemoveButton[EntryID].Left + LabelSize.Width + ButtonSpacing), Mod_RemoveButton[EntryID].Top);
+            LabelSize = g.MeasureString(Mod_ReloadButton[EntryID].Text, Mod_ReloadButton[EntryID].Font);
+            if (Mod_WLMMPath[EntryID] != string.Empty && File.Exists(Mod_WLMMPath[EntryID]))
+            {
+                Mod_ReloadButton[EntryID].Enabled = true;
+            }
+            else
+            {
+                Mod_ReloadButton[EntryID].Enabled = false;
+            }
+            //LinkLabel[] Mod_EditButton = new LinkLabel[50];
+            Mod_EditButton[EntryID] = new LinkLabel();
+            Mod_EditButton[EntryID].Text = "Edit";
+            Mod_EditButton[EntryID].LinkColor = System.Drawing.SystemColors.Highlight;
+            Mod_EditButton[EntryID].VisitedLinkColor = System.Drawing.SystemColors.Highlight;
+            Mod_EditButton[EntryID].ActiveLinkColor = System.Drawing.SystemColors.ActiveCaption;
+            Mod_EditButton[EntryID].Tag = EntryID;
+            Mod_EditButton[EntryID].LinkClicked += Mod_EditButton_Click;
+            Mod_EditButton[EntryID].AutoSize = true;
+            Mod_EditButton[EntryID].Font = new Font(Mod_EditButton[EntryID].Font.FontFamily, 12);
+            Mod_EditButton[EntryID].Location = new System.Drawing.Point((int)Math.Floor(Mod_ReloadButton[EntryID].Left + LabelSize.Width + ButtonSpacing), Mod_RemoveButton[EntryID].Top);
+            LabelSize = g.MeasureString(Mod_EditButton[EntryID].Text, Mod_EditButton[EntryID].Font);
+
+            if (Mod_WLMMPath[EntryID] != string.Empty && File.Exists(Mod_WLMMPath[EntryID]))
+            {
+                Mod_EditButton[EntryID].Enabled = true;
+            }
+            else
+            {
+                Mod_EditButton[EntryID].Enabled = false;
+            }
             //Label[] Mod_ContainsLabel = new Label[50];
             Mod_ContainsLabel[EntryID] = new LinkLabel();
             Mod_ContainsLabel[EntryID].Font = new Font(Mod_NameLabel[EntryID].Font.FontFamily, 10);
             Mod_ContainsLabel[EntryID].AutoSize = true;
-            Mod_ContainsLabel[EntryID].Location = new Point(290, 82);
+            Mod_ContainsLabel[EntryID].Location = new System.Drawing.Point((int)Math.Floor(Mod_EditButton[EntryID].Left + LabelSize.Width + ButtonSpacing*2), (int)Math.Floor(Mod_RemoveButton[EntryID].Top + LabelSize.Height *0.1));
             Mod_ContainsLabel[EntryID].Tag = EntryID;
             Mod_ContainsLabel[EntryID].Click += Mod_ContainsLabel_Click;
             if (File.Exists(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName + @"\LoadEdit_Mod.dat"))
@@ -1490,64 +1547,14 @@ namespace WSMM
                 Mod_ContainsLabel[EntryID].ActiveLinkColor = System.Drawing.SystemColors.Highlight;
                 Mod_ContainsLabel[EntryID].Text = "| Paks: " + PakCount.ToString() + " | AutoMod: " + AutoModCount.ToString() + " |";
             }
-
-
-            //LinkLabel[] Mod_RemoveButton = new LinkLabel[50];
-            Mod_RemoveButton[EntryID] = new LinkLabel();
-            Mod_RemoveButton[EntryID].Text = "Remove";
-            Mod_RemoveButton[EntryID].LinkColor = System.Drawing.Color.LightCoral;
-            Mod_RemoveButton[EntryID].VisitedLinkColor = System.Drawing.Color.LightCoral;
-            Mod_RemoveButton[EntryID].ActiveLinkColor = System.Drawing.Color.Red;
-            Mod_RemoveButton[EntryID].Location = new System.Drawing.Point(117, 80);
-            Mod_RemoveButton[EntryID].Tag = EntryID;
-            Mod_RemoveButton[EntryID].Click += Mod_RemoveButton_Click;
-            Mod_RemoveButton[EntryID].AutoSize = true;
-            Mod_RemoveButton[EntryID].Font = new Font(Mod_RemoveButton[EntryID].Font.FontFamily, 12);
-            //LinkLabel[] Mod_ReloadButton = new LinkLabel[50];
-            Mod_ReloadButton[EntryID] = new LinkLabel();
-            Mod_ReloadButton[EntryID].Text = "Reload";
-            Mod_ReloadButton[EntryID].LinkColor = System.Drawing.SystemColors.Highlight;
-            Mod_ReloadButton[EntryID].VisitedLinkColor = System.Drawing.SystemColors.Highlight;
-            Mod_ReloadButton[EntryID].ActiveLinkColor = System.Drawing.SystemColors.ActiveCaption;
-            Mod_ReloadButton[EntryID].Location = new System.Drawing.Point(191, 80);
-            Mod_ReloadButton[EntryID].Tag = EntryID;
-            Mod_ReloadButton[EntryID].Click += Mod_ReloadButton_Click;
-            Mod_ReloadButton[EntryID].AutoSize = true;
-            Mod_ReloadButton[EntryID].Font = new Font(Mod_ReloadButton[EntryID].Font.FontFamily, 12);
-            if (Mod_WLMMPath[EntryID] != string.Empty && File.Exists(Mod_WLMMPath[EntryID]))
-            {
-                Mod_ReloadButton[EntryID].Enabled = true;
-            }
-            else
-            {
-                Mod_ReloadButton[EntryID].Enabled = false;
-            }
-            //LinkLabel[] Mod_EditButton = new LinkLabel[50];
-            Mod_EditButton[EntryID] = new LinkLabel();
-            Mod_EditButton[EntryID].Text = "Edit";
-            Mod_EditButton[EntryID].LinkColor = System.Drawing.SystemColors.Highlight;
-            Mod_EditButton[EntryID].VisitedLinkColor = System.Drawing.SystemColors.Highlight;
-            Mod_EditButton[EntryID].ActiveLinkColor = System.Drawing.SystemColors.ActiveCaption;
-            Mod_EditButton[EntryID].Location = new System.Drawing.Point(255, 80);
-            Mod_EditButton[EntryID].Tag = EntryID;
-            Mod_EditButton[EntryID].LinkClicked += Mod_EditButton_Click;
-            Mod_EditButton[EntryID].AutoSize = true;
-            Mod_EditButton[EntryID].Font = new Font(Mod_EditButton[EntryID].Font.FontFamily, 12);
-            if (Mod_WLMMPath[EntryID] != string.Empty && File.Exists(Mod_WLMMPath[EntryID]))
-            {
-                Mod_EditButton[EntryID].Enabled = true;
-            }
-            else
-            {
-                Mod_EditButton[EntryID].Enabled = false;
-            }
+            LabelSize = g.MeasureString(Mod_ContainsLabel[EntryID].Text, Mod_ContainsLabel[EntryID].Font);
             //LinkLabel[] Mod_LinkButton = new LinkLabel[50];
             Mod_LinkButton[EntryID] = new LinkLabel();
             Mod_LinkButton[EntryID].Text = "Link";
             Mod_LinkButton[EntryID].LinkColor = System.Drawing.SystemColors.Highlight;
             Mod_LinkButton[EntryID].VisitedLinkColor = System.Drawing.SystemColors.Highlight;
             Mod_LinkButton[EntryID].ActiveLinkColor = System.Drawing.SystemColors.ActiveCaption;
-            Mod_LinkButton[EntryID].Location = new System.Drawing.Point(480, 80);
+            Mod_LinkButton[EntryID].Location = new System.Drawing.Point((int)Math.Floor(Mod_ContainsLabel[EntryID].Left + LabelSize.Width + ButtonSpacing*3), Mod_RemoveButton[EntryID].Top);
             Mod_LinkButton[EntryID].Tag = ModURL;
             Mod_LinkButton[EntryID].Click += Mod_LinkButton_Click;
             Mod_LinkButton[EntryID].AutoSize = true;
@@ -1568,10 +1575,11 @@ namespace WSMM
             }
             Mod_EnabledCB[EntryID].ForeColor = SystemColors.ActiveCaption;
             Mod_EnabledCB[EntryID].Font = new Font(Mod_EnabledCB[EntryID].Font.FontFamily, 12);
-            Mod_EnabledCB[EntryID].Location = new System.Drawing.Point(741, 80);
             Mod_EnabledCB[EntryID].AutoSize = true;
             Mod_EnabledCB[EntryID].Text = "Enabled";
             Mod_EnabledCB[EntryID].Tag = EntryID;
+            LabelSize = g.MeasureString(Mod_EnabledCB[EntryID].Text, Mod_EnabledCB[EntryID].Font);
+            Mod_EnabledCB[EntryID].Location = new Point(PanelSize.Width - (int)Math.Floor( LabelSize.Width * 1.4), Mod_RemoveButton[EntryID].Top);
             Mod_EnabledCB[EntryID].CheckStateChanged += ModEnabledCB_CheckStateChanged;
             //Label[] Mod_AuthorLabel = new Label[50];
             Mod_AuthorLabel[EntryID] = new Label();
@@ -1581,7 +1589,7 @@ namespace WSMM
             Mod_AuthorLabel[EntryID].Text = "By: " + ModAuthor;
             Mod_AuthorLabel[EntryID].AutoSize = true;
             LabelSize = g.MeasureString(Mod_AuthorLabel[EntryID].Text, Mod_AuthorLabel[EntryID].Font);
-            Mod_AuthorLabel[EntryID].Location = new Point(Mod_EnabledCB[EntryID].Left - (int)LabelSize.Width - 5, 80);
+            Mod_AuthorLabel[EntryID].Location = new Point(Mod_EnabledCB[EntryID].Left - (int)Math.Floor(LabelSize.Width + ButtonSpacing*2), Mod_RemoveButton[EntryID].Top);
             //Label[] Mod_SupportedVersionsLabel = new Label[50];
             Mod_SupportedVersionsLabel[EntryID] = new Label();
             Mod_SupportedVersionsLabel[EntryID].BackColor = System.Drawing.Color.FromArgb(32, 34, 81);
@@ -1589,7 +1597,8 @@ namespace WSMM
             Mod_SupportedVersionsLabel[EntryID].Font = new Font(Mod_NameLabel[EntryID].Font.FontFamily, 10);
             Mod_SupportedVersionsLabel[EntryID].Text = SupportedVersions;
             Mod_SupportedVersionsLabel[EntryID].AutoSize = true;
-            Mod_SupportedVersionsLabel[EntryID].Location = new Point(117, 34);
+            Mod_SupportedVersionsLabel[EntryID].Location = new Point(Mod_NameLabel[EntryID].Left, Mod_NameLabel[EntryID].Bottom + ButtonSpacing*2);
+            toolTip1.SetToolTip(Mod_SupportedVersionsLabel[EntryID], Mod_SupportedVersionsLabel[EntryID].Text);
             if (isVersionValid(SupportedVersions) == false)
             {
                 Mod_ErrorLabel[EntryID].Text = "Version Mismatch";
@@ -1599,14 +1608,16 @@ namespace WSMM
                 Mod_EnabledCB[EntryID].Enabled = false;
                 Mod_EnabledCB[EntryID].Checked = false;
             }
+            
             //Label[] Mod_CharactersLabel = new Label[50];
             Mod_CharactersLabel[EntryID] = new Label();
             Mod_CharactersLabel[EntryID].BackColor = System.Drawing.Color.FromArgb(32, 34, 81);
             Mod_CharactersLabel[EntryID].ForeColor = System.Drawing.SystemColors.GradientActiveCaption;
             Mod_CharactersLabel[EntryID].Font = new Font(Mod_NameLabel[EntryID].Font.FontFamily, 10);
             Mod_CharactersLabel[EntryID].Text = Characters;
+            toolTip1.SetToolTip(Mod_CharactersLabel[EntryID], Mod_CharactersLabel[EntryID].Text);
             Mod_CharactersLabel[EntryID].AutoSize = true;
-            Mod_CharactersLabel[EntryID].Location = new Point(117, 54);
+            Mod_CharactersLabel[EntryID].Location = new Point(Mod_NameLabel[EntryID].Left, Mod_SupportedVersionsLabel[EntryID].Bottom);
 
             Mod_Panel[EntryID].Controls.Add(Mod_Icon[EntryID]);
             Mod_Panel[EntryID].Controls.Add(Mod_NameLabel[EntryID]);
