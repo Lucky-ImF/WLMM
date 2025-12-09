@@ -47,6 +47,8 @@ namespace WSMM
 
         string DTVersion = "";
         string DTLink = "";
+        string SupVers = "";
+        bool SkippedDTs = false;
 
         bool MMMode = false;
 
@@ -328,10 +330,6 @@ namespace WSMM
                 Cat_CurrentEntryID = 0;
 
                 NoModsFound_Label.Show();
-                if (TutorialEnabled == true)
-                {
-                    Tutorial_2.Show();
-                }
 
                 LoadGameVersion(Path.GetDirectoryName(SelectWLVersionPath_TB.Text), SelectWLVersion_CB.Text, SelectWLVersionUEV_TB.Text);
             }
@@ -346,7 +344,7 @@ namespace WSMM
             // Check UE version if empty
             if (LoadedUEVersion == string.Empty)
             {
-                LoadedUEVersion = GetUEVersion(LoadedWLVersion);
+                LoadedUEVersion = GetVersionInfo(LoadedWLVersion, "Engine");
             }
 
             WLVersionLoaded_Label.Text = LoadedWLVersion + " - " + LoadedUEVersion;
@@ -422,36 +420,35 @@ namespace WSMM
 
             CreateMissingFolders();
 
-            LoadDatatableVersion();
+            //LoadDatatableVersion();
 
             //Version Check
-            //CheckForUpdate();
+            CheckForUpdate();
 
-
-            LoadSupportedVersions();
+            //LoadSupportedVersions();
 
             //Load previous game version if it exists
-            LoadSession();
+            //LoadSession();
 
-            if (HasOldChanges == false)
-            {
-                ChangesMade_Label.Text = "No changes made.";
-                ChangesMade = 0;
-            }
+            //if (HasOldChanges == false)
+            //{
+            //    ChangesMade_Label.Text = "No changes made.";
+            //    ChangesMade = 0;
+            //}
 
-            if (LoadedWLVersion != "" && LoadedWLVersion != string.Empty && DT_Updater_Panel.Visible == false)
-            {
-                BuildMods_Button.Enabled = true;
-                ModCreator_Button.Enabled = true;
-            }
-            else
-            {
-                BuildMods_Button.Enabled = false;
-                ModCreator_Button.Enabled = false;
-            }
+            //if (LoadedWLVersion != "" && LoadedWLVersion != string.Empty && DT_Updater_Panel.Visible == false)
+            //{
+            //    BuildMods_Button.Enabled = true;
+            //    ModCreator_Button.Enabled = true;
+            //}
+            //else
+            //{
+            //    BuildMods_Button.Enabled = false;
+            //    ModCreator_Button.Enabled = false;
+            //}
 
-            StartingUp = false;
-            HasOldChanges = false;
+            //StartingUp = false;
+            //HasOldChanges = false;
         }
 
         private void LoadSupportedVersions()
@@ -459,7 +456,11 @@ namespace WSMM
             if (File.Exists(Application.StartupPath + @"System\SupportedVersions.ini"))
             {
                 SelectWLVersion_CB.Items.Clear();
-                SelectWLVersion_CB.Items.AddRange(File.ReadAllLines(Application.StartupPath + @"System\SupportedVersions.ini"));
+                string[] Temp = File.ReadAllLines(Application.StartupPath + @"System\SupportedVersions.ini");
+                foreach (string s in Temp)
+                {
+                    SelectWLVersion_CB.Items.Add(GetSlice(s, "#", 0));
+                }
             }
             else
             {
@@ -524,38 +525,112 @@ namespace WSMM
             try
             {
                 string ThisVersion = WLMM_Version;
-                string VersionInfo = "";
-                string DTChanges = "";
-                string DTSupVers = "";
+                string Data = "";
+                string LatestVersion = "";
                 string MM = "";
                 string MMInfo = "";
                 string MMMessage = "";
-
+                string GithubLink = "";
+                string Categories = "";
                 using (HttpClient client = new HttpClient())
                 {
                     client.DefaultRequestHeaders.UserAgent.ParseAdd("WildLifeModManager");
-                    HttpResponseMessage response = await client.GetAsync("https://gist.githubusercontent.com/Lucky-ImF/cb6aa813b89cb5f73708a487968efeac/raw/WLMM_Data.txt");
+                    HttpResponseMessage response = await client.GetAsync("https://gist.githubusercontent.com/Lucky-ImF/cb6aa813b89cb5f73708a487968efeac/raw/WLMM_Data2.0.txt");
                     response.EnsureSuccessStatusCode();
-                    VersionInfo = await response.Content.ReadAsStringAsync();
+                    Data = await response.Content.ReadAsStringAsync();
                 }
 
-                string[] TempArray = VersionInfo.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.TrimEntries);
-                if (ThisVersion != TempArray[0])
+                string[] TempArray = Data.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.TrimEntries);
+                foreach (string line in TempArray)
                 {
-                    UpdateLink.Text = "New version " + TempArray[0] + " available! Click here to update!";
-                    UpdateLink.Tag = TempArray[1];
+                    if (line.StartsWith("LatestVersion:"))
+                    {
+                        LatestVersion = line.Replace("LatestVersion:", "").Trim();
+                    }
+                    else if(line.StartsWith("LatestGithub:"))
+                    {
+                        GithubLink = line.Replace("LatestGithub:", "").Trim();
+                    }
+                    else if (line.StartsWith("WS_Invite:"))
+                    {
+                        WildSanctum_Link.Tag = line.Replace("WS_Invite:", "").Trim();
+                    }
+                    else if (line.StartsWith("WS_Post:"))
+                    {
+                        WLMMPost_Link.Tag = line.Replace("WS_Post:", "").Trim();
+                    }
+                    else if (line.StartsWith("Maintenance:"))
+                    {
+                        MM = line.Replace("Maintenance:", "").Trim();
+                    }
+                    else if (line.StartsWith("MaintenanceTitle:"))
+                    {
+                        MMInfo = line.Replace("MaintenanceTitle:", "").Trim();
+                    }
+                    else if (line.StartsWith("MaintenanceMsg:"))
+                    {
+                        MMMessage = line.Replace("MaintenanceMsg:", "").Trim();
+                    }
+                    else if (line.StartsWith("SupportedVersions:"))
+                    {
+                        SupVers = line.Replace("SupportedVersions:", "").Trim();
+                        // Check if supported versions file is same or exists
+                        string LiveVersions = "";
+                        foreach (string s in SupVers.Split("*", StringSplitOptions.TrimEntries))
+                        {
+                            LiveVersions += s + "\r\n";
+                        }
+                        LiveVersions = LiveVersions.Trim();
+                        if (File.Exists(Application.StartupPath + @"System\SupportedVersions.ini"))
+                        {
+                            string CurrentVersionFile = File.ReadAllText(Application.StartupPath + @"System\SupportedVersions.ini");
+                            if (LiveVersions != CurrentVersionFile)
+                            {
+                                File.WriteAllText(Application.StartupPath + @"System\SupportedVersions.ini", LiveVersions);
+                            }
+                        }
+                        else
+                        {
+                            File.WriteAllText(Application.StartupPath + @"System\SupportedVersions.ini", LiveVersions);
+                        }
+                    }
+                    else if (line.StartsWith("UpdaterDownload:"))
+                    {
+                        LuckyUpdateLink = line.Replace("UpdaterDownload:", "").Trim();
+                    }
+                    else if (line.StartsWith("UpdaterData:"))
+                    {
+                        UpdateDataLink = line.Replace("UpdaterData:", "").Trim();
+                    }
+                    else if (line.StartsWith("Categories:"))
+                    {
+                        Categories = line.Replace("Categories:", "").Trim();
+                        // Check if categories are same
+                        string LiveCategories = "";
+                        foreach (string s in Categories.Split("*", StringSplitOptions.TrimEntries))
+                        {
+                            LiveCategories += s + "\r\n";
+                        }
+                        LiveCategories = LiveCategories.Trim();
+                        if (File.Exists(Application.StartupPath + @"System\Categories.ini"))
+                        {
+                            string CurrentCatFile = File.ReadAllText(Application.StartupPath + @"System\Categories.ini");
+                            if (LiveCategories != CurrentCatFile)
+                            {
+                                File.WriteAllText(Application.StartupPath + @"System\Categories.ini", LiveCategories);
+                            }
+                        }
+                        else
+                        {
+                            File.WriteAllText(Application.StartupPath + @"System\Categories.ini", LiveCategories);
+                        }
+                    }
+                }
+
+                if (ThisVersion != LatestVersion)
+                {
+                    UpdateLink.Text = "New version " + LatestVersion + " available! Click here to update!";
                     UpdateLink.Show();
-                    WildSanctum_Link.Tag = TempArray[2];
-                    WLMMPost_Link.Tag = TempArray[3];
-                    DTVersion = TempArray[4];
-                    DTLink = TempArray[5];
-                    DTChanges = TempArray[6];
-                    DTSupVers = TempArray[7];
-                    MM = TempArray[8];
-                    MMInfo = TempArray[9];
-                    MMMessage = TempArray[10];
-                    LuckyUpdateLink = TempArray[11];
-                    UpdateDataLink = TempArray[12];
                     if (!File.Exists("LuckyUpdater.exe")) 
                     {
                         await DownloadFileAsync(LuckyUpdateLink, "LuckyUpdater.exe");
@@ -567,17 +642,6 @@ namespace WSMM
                 }
                 else
                 {
-                    WildSanctum_Link.Tag = TempArray[2];
-                    WLMMPost_Link.Tag = TempArray[3];
-                    DTVersion = TempArray[4];
-                    DTLink = TempArray[5];
-                    DTChanges = TempArray[6];
-                    DTSupVers = TempArray[7];
-                    MM = TempArray[8];
-                    MMInfo = TempArray[9];
-                    MMMessage = TempArray[10];
-                    LuckyUpdateLink = TempArray[11];
-                    UpdateDataLink = TempArray[12];
                     if (File.Exists("LuckyUpdater.exe"))
                     {
                         File.Delete("LuckyUpdater.exe");
@@ -588,47 +652,43 @@ namespace WSMM
                     }
                 }
 
-                DT_Updater_ChangesTB.Text = DTChanges.Replace("*", "\r\n");
-                DT_Updater_SupVerLB.Items.Clear();
-                DT_Updater_SupVerLB.Items.AddRange(DTSupVers.Split('*'));
+                //if (Datatable_Version == string.Empty)
+                //{
+                //    // No Datatables
+                //    GetDTDownloadAmount(DTVersion);
+                //    ToggleButtons(false);
+                //    DT_Updater_Panel.Show();
+                //    DT_Updater_Panel.BringToFront();
+                //    DT_Updater_VersionLabel.Text = "None > " + DTVersion;
+                //    DT_Updater_CloseButton.Enabled = false;
+                //    if (TutorialEnabled == true)
+                //    {
+                //        Tutorial_0.Show();
+                //        Tutorial_0.BringToFront();
+                //        Tutorial_1.Hide();
+                //    }
+                //}
+                //else if (DTVersion != Datatable_Version)
+                //{
+                //    // Datatables outdated
+                //    GetDTDownloadAmount(DTVersion);
+                //    ToggleButtons(false);
+                //    DT_Updater_Panel.Show();
+                //    DT_Updater_Panel.BringToFront();
+                //    DT_Updater_VersionLabel.Text = Datatable_Version + " > " + DTVersion;
+                //    if (TutorialEnabled == true)
+                //    {
+                //        Tutorial_0.Show();
+                //        Tutorial_0.BringToFront();
+                //        Tutorial_1.Hide();
+                //    }
+                //}
+                //else
+                //{
+                //    DT_Updater_VersionLabel.Text = Datatable_Version + " = " + DTVersion;
+                //}
 
-                if (Datatable_Version == string.Empty)
-                {
-                    // No Datatables
-                    GetDTDownloadAmount(DTVersion);
-                    ToggleButtons(false);
-                    DT_Updater_Panel.Show();
-                    DT_Updater_Panel.BringToFront();
-                    DT_Updater_VersionLabel.Text = "None > " + DTVersion;
-                    DT_Updater_CloseButton.Enabled = false;
-                    if (TutorialEnabled == true)
-                    {
-                        Tutorial_0.Show();
-                        Tutorial_0.BringToFront();
-                        Tutorial_1.Hide();
-                    }
-                }
-                else if (DTVersion != Datatable_Version)
-                {
-                    // Datatables outdated
-                    GetDTDownloadAmount(DTVersion);
-                    ToggleButtons(false);
-                    DT_Updater_Panel.Show();
-                    DT_Updater_Panel.BringToFront();
-                    DT_Updater_VersionLabel.Text = Datatable_Version + " > " + DTVersion;
-                    if (TutorialEnabled == true)
-                    {
-                        Tutorial_0.Show();
-                        Tutorial_0.BringToFront();
-                        Tutorial_1.Hide();
-                    }
-                }
-                else
-                {
-                    DT_Updater_VersionLabel.Text = Datatable_Version + " = " + DTVersion;
-                }
-
-                if (MM == "MM=True")
+                if (MM == "True")
                 {
                     MM_Panel.Show();
                     MM_Info.Text = MMInfo;
@@ -649,6 +709,10 @@ namespace WSMM
                 MM_Info.Text = "Unable to check for new version.";
                 MM_Message.Text = "Is your network down or firewall blocking WLMM?\r\nIf not, check the WLMM post on Discord for info/help.\r\nException:\r\n" + ex.Message;
             }
+
+            LoadSupportedVersions();
+
+            LoadSession();
         }
 
         private void ToggleButtons(bool State)
@@ -691,7 +755,7 @@ namespace WSMM
             DTDownload_Progress.Value = 0;
             DT_Updater_ProgressLabel.Text = "Downloading DataTables..";
 
-            string DTFileName = "WLMM_" + version + ".zip";
+            string DTFileName = "DT_" + LoadedWLVersion + ".zip";
             try
             {
                 if (Directory.Exists(Application.StartupPath + @"Temp") == false)
@@ -711,16 +775,6 @@ namespace WSMM
                     wc.Headers.Add("User-Agent: WLMM");
                     wc.DownloadProgressChanged += DT_DownloadProgressChanged;
                     wc.DownloadFileAsync(fileLink, Application.StartupPath + @"Temp\" + DTFileName);
-                }
-
-                if (Directory.Exists(Application.StartupPath + @"Temp\" + Path.GetFileNameWithoutExtension(DTFileName)))
-                {
-                    Directory.Delete(Application.StartupPath + @"Temp\" + Path.GetFileNameWithoutExtension(DTFileName), true);
-                }
-
-                if (TutorialEnabled == true)
-                {
-                    Tutorial_1.Show();
                 }
             }
             catch (Exception ex)
@@ -745,8 +799,11 @@ namespace WSMM
                 DT_Updater_ProgressLabel.Text = "Installing DataTables..";
                 DTDownload_Progress.Value = 100;
                 Application.DoEvents();
-                Thread.Sleep(500);
-                string DTFileName = "WLMM_" + DTVersion + ".zip";
+                string DTFileName = "DT_" + LoadedWLVersion + ".zip";
+                while (IsFileLocked(new FileInfo(Application.StartupPath + @"Temp\" + DTFileName)))
+                {
+                    Thread.Sleep(100);
+                }
                 if (File.Exists(Application.StartupPath + @"Temp\" + DTFileName))
                 {
                     InstallDatatables(Application.StartupPath + @"Temp\" + DTFileName, DTVersion);
@@ -797,64 +854,119 @@ namespace WSMM
             BS_BaseGameCharacterCustomizationFile.Items.Clear();
             BS_Mappings.Items.Clear();
 
-            try
+            string CurrentDTVersion = "None";
+            string LatestDTVersion = "None";
+
+            if (Directory.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion))
             {
-                foreach (string file in Directory.EnumerateFiles(Application.StartupPath + @"DataTables\" + LoadedWLVersion, "DT_ClothesOutfit_*.json"))
+                if (File.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\Version.dat"))
                 {
-                    if (file.Contains("DT_ClothesOutfit_Generated") == false && file.Contains("DT_ClothesOutfit_Entry_Default") == false && file.Contains("DT_ClothesOutfit_Entry_FurMask") == false && file.Contains("DT_ClothesOutfit_Debug") == false)
+                    CurrentDTVersion = File.ReadAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\Version.dat");
+                }
+                if (File.Exists(Application.StartupPath + @"System\SupportedVersions.ini"))
+                {
+                    LatestDTVersion = GetVersionInfo(LoadedWLVersion, "DataTableVersion");
+                    DTLink = GetVersionInfo(LoadedWLVersion, "DataTableURL");
+                    DTVersion = LatestDTVersion;
+                }
+                if (CurrentDTVersion != LatestDTVersion && SkippedDTs == false)
+                {
+                    GetDTDownloadAmount("DT_" + LoadedWLVersion);
+                    ToggleButtons(false);
+                    DT_Updater_Panel.Show();
+                    DT_Updater_Panel.BringToFront();
+                    DT_Updater_VersionLabel.Text = CurrentDTVersion + " > " + LatestDTVersion;
+                    if (TutorialEnabled == true)
                     {
-                        BS_BaseClothesOutfitFile.Items.Add(Path.GetFileName(file));
+                        Tutorial_0.Show();
+                        Tutorial_0.BringToFront();
+                        Tutorial_1.Hide();
+                    }
+                    return;
+                }
+
+                try
+                {
+                    foreach (string file in Directory.EnumerateFiles(Application.StartupPath + @"DataTables\" + LoadedWLVersion, "DT_ClothesOutfit_*.json"))
+                    {
+                        if (file.Contains("DT_ClothesOutfit_Generated") == false && file.Contains("DT_ClothesOutfit_Entry_Default") == false && file.Contains("DT_ClothesOutfit_Entry_FurMask") == false && file.Contains("DT_ClothesOutfit_Debug") == false)
+                        {
+                            BS_BaseClothesOutfitFile.Items.Add(Path.GetFileName(file));
+                        }
                     }
                 }
-            }
-            catch (Exception)
-            {
-
-            }
-
-            try
-            {
-                foreach (string file in Directory.EnumerateFiles(Application.StartupPath + @"DataTables\" + LoadedWLVersion, "DT_GameCharacterOutfits_*.json"))
+                catch (Exception)
                 {
-                    if (file.Contains("DT_GameCharacterOutfits_Generated") == false && file.Contains("DT_GameCharacterOutfits_Entry_Default") == false && file.Contains("DT_GameCharacterOutfits_Debug") == false)
+
+                }
+
+                try
+                {
+                    foreach (string file in Directory.EnumerateFiles(Application.StartupPath + @"DataTables\" + LoadedWLVersion, "DT_GameCharacterOutfits_*.json"))
                     {
-                        BS_BaseGameCharacterOutfitFile.Items.Add(Path.GetFileName(file));
+                        if (file.Contains("DT_GameCharacterOutfits_Generated") == false && file.Contains("DT_GameCharacterOutfits_Entry_Default") == false && file.Contains("DT_GameCharacterOutfits_Debug") == false)
+                        {
+                            BS_BaseGameCharacterOutfitFile.Items.Add(Path.GetFileName(file));
+                        }
                     }
                 }
-            }
-            catch (Exception)
-            {
-
-            }
-
-            try
-            {
-                foreach (string file in Directory.EnumerateFiles(Application.StartupPath + @"DataTables\" + LoadedWLVersion, "DT_GameCharacterCustomization_*.json"))
+                catch (Exception)
                 {
-                    if (file.Contains("DT_GameCharacterCustomization_Generated") == false && file.Contains("DT_GameCharacterCustomization_Entry_Default") == false && file.Contains("DT_GameCharacterCustomization_Debug") == false)
+
+                }
+
+                try
+                {
+                    foreach (string file in Directory.EnumerateFiles(Application.StartupPath + @"DataTables\" + LoadedWLVersion, "DT_GameCharacterCustomization_*.json"))
                     {
-                        BS_BaseGameCharacterCustomizationFile.Items.Add(Path.GetFileName(file));
+                        if (file.Contains("DT_GameCharacterCustomization_Generated") == false && file.Contains("DT_GameCharacterCustomization_Entry_Default") == false && file.Contains("DT_GameCharacterCustomization_Debug") == false)
+                        {
+                            BS_BaseGameCharacterCustomizationFile.Items.Add(Path.GetFileName(file));
+                        }
                     }
                 }
-            }
-            catch (Exception)
-            {
-
-            }
-
-            try
-            {
-                foreach (string file in Directory.EnumerateFiles(Application.StartupPath + @"DataTables\" + LoadedWLVersion, "DT_SandboxProps_*.json"))
+                catch (Exception)
                 {
-                    if (file.Contains("DT_SandboxProps_Generated") == false && file.Contains("DT_SandboxProps_Entry_Default") == false && file.Contains("DT_SandboxProps_Debug") == false)
+
+                }
+
+                try
+                {
+                    foreach (string file in Directory.EnumerateFiles(Application.StartupPath + @"DataTables\" + LoadedWLVersion, "DT_SandboxProps_*.json"))
                     {
-                        BS_BaseGameSandboxPropsFile.Items.Add(Path.GetFileName(file));
+                        if (file.Contains("DT_SandboxProps_Generated") == false && file.Contains("DT_SandboxProps_Entry_Default") == false && file.Contains("DT_SandboxProps_Debug") == false)
+                        {
+                            BS_BaseGameSandboxPropsFile.Items.Add(Path.GetFileName(file));
+                        }
                     }
                 }
-            }
-            catch (Exception)
-            {
+                catch (Exception)
+                {
 
+                }
+            }
+            else
+            {
+                if (SkippedDTs == false)
+                {
+                    if (File.Exists(Application.StartupPath + @"System\SupportedVersions.ini"))
+                    {
+                        LatestDTVersion = GetVersionInfo(LoadedWLVersion, "DataTableVersion");
+                        DTLink = GetVersionInfo(LoadedWLVersion, "DataTableURL");
+                        DTVersion = LatestDTVersion;
+                    }
+                    GetDTDownloadAmount("DT_" + LoadedWLVersion);
+                    ToggleButtons(false);
+                    DT_Updater_Panel.Show();
+                    DT_Updater_Panel.BringToFront();
+                    DT_Updater_VersionLabel.Text = CurrentDTVersion + " > " + LatestDTVersion;
+                    if (TutorialEnabled == true)
+                    {
+                        Tutorial_0.Show();
+                        Tutorial_0.BringToFront();
+                        Tutorial_1.Hide();
+                    }
+                }
             }
         }
 
@@ -878,6 +990,10 @@ namespace WSMM
                     else if (file.StartsWith("UE_Version"))
                     {
                         LoadedUEVersion = GetSlice(file, "=", 1);
+                        if (LoadedUEVersion.Contains("_"))
+                        {
+                            LoadedUEVersion = LoadedUEVersion.Replace("_", ".");
+                        }
                     }
                     else if (file.StartsWith("ChangesMade"))
                     {
@@ -926,6 +1042,17 @@ namespace WSMM
                             DeleteWLMMAfterDownload = false;
                         }
                     }
+                    else if (file.StartsWith("SkippedDTs"))
+                    {
+                        if (GetSlice(file, "=", 1) == "True")
+                        {
+                            SkippedDTs = true;
+                        }
+                        else
+                        {
+                            SkippedDTs = false;
+                        }
+                    }
                 }
 
                 if (LoadedWLPath != "" && LoadedWLPath != string.Empty)
@@ -955,13 +1082,14 @@ namespace WSMM
                 if (TutorialEnabled == true)
                 {
                     Tutorial_1.Show();
+                    Tutorial_1.BringToFront();
                 }
             }
         }
 
         private void SaveSession()
         {
-            string SaveFile = "WL_Path = " + LoadedWLPath + "\nWL_Version = " + LoadedWLVersion + "\nUE_Version = " + LoadedUEVersion + "\nChangesMade = " + ChangesMade.ToString() + "\nprevIconPath = " + prevIconPath + "\nprevPakPath = " + prevPakPath + "\nprevAutoModPath = " + prevAutoModPath + "\nprevModPath = " + prevModPath + "\nTutorial = " + TutorialEnabled.ToString() + "\nDeleteAfterDownload = " + DeleteWLMMAfterDownload.ToString();
+            string SaveFile = "WL_Path = " + LoadedWLPath + "\nWL_Version = " + LoadedWLVersion + "\nUE_Version = " + LoadedUEVersion + "\nChangesMade = " + ChangesMade.ToString() + "\nprevIconPath = " + prevIconPath + "\nprevPakPath = " + prevPakPath + "\nprevAutoModPath = " + prevAutoModPath + "\nprevModPath = " + prevModPath + "\nTutorial = " + TutorialEnabled.ToString() + "\nDeleteAfterDownload = " + DeleteWLMMAfterDownload.ToString() + "\nSkippedDTs = " + SkippedDTs.ToString();
             File.WriteAllText(Application.StartupPath + @"System\Session.dat", SaveFile);
         }
 
@@ -1035,7 +1163,11 @@ namespace WSMM
                 }
                 catch (Exception)
                 {
-                    MessageBox.Show("DataTable error.", "Wild Life Mod Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    BS_BaseClothesOutfitFile.Text = "";
+                    BS_BaseGameCharacterOutfitFile.Text = "";
+                    BS_BaseGameCharacterCustomizationFile.Text = "";
+                    BS_BaseGameSandboxPropsFile.Text = "";
+                    //MessageBox.Show("DataTable error.", "Wild Life Mod Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -1453,11 +1585,7 @@ namespace WSMM
             Mod_ErrorLabel[EntryID].Text = string.Empty;
             Mod_ErrorLabel[EntryID].Visible = false;
             Mod_ErrorLabel[EntryID].AutoSize = true;
-            //Mod_ErrorLabel[EntryID].Location = new Point(533, 11);
-            LabelSize = g.MeasureString(Mod_ErrorLabel[EntryID].Text, Mod_ErrorLabel[EntryID].Font);
-            Mod_ErrorLabel[EntryID].Location = new Point(Mod_VersionLabel[EntryID].Left - (int)Math.Floor(LabelSize.Width * 1.05), Mod_Icon[EntryID].Top + (int)Math.Floor(LabelSize.Width * 0.5));
             //LinkLabel[] Mod_RemoveButton = new LinkLabel[50];
-            
             Mod_RemoveButton[EntryID] = new LinkLabel();
             Mod_RemoveButton[EntryID].Text = "Remove";
             Mod_RemoveButton[EntryID].LinkColor = System.Drawing.Color.LightCoral;
@@ -1608,7 +1736,21 @@ namespace WSMM
                 Mod_EnabledCB[EntryID].Enabled = false;
                 Mod_EnabledCB[EntryID].Checked = false;
             }
-            
+            else if (RequiresDataTables(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + ModName) == true)
+            {
+                if (SkippedDTs == true)
+                {
+                    Mod_ErrorLabel[EntryID].Text = "Missing DataTables";
+                    Mod_ErrorLabel[EntryID].Visible = true;
+                    Mod_ErrorLabel[EntryID].BringToFront();
+                    Mod_SupportedVersionsLabel[EntryID].ForeColor = System.Drawing.Color.LightCoral;
+                    Mod_EnabledCB[EntryID].Enabled = false;
+                    Mod_EnabledCB[EntryID].Checked = false;
+                }
+            }
+            LabelSize = g.MeasureString(Mod_ErrorLabel[EntryID].Text, Mod_ErrorLabel[EntryID].Font);
+            Mod_ErrorLabel[EntryID].Location = new Point(Mod_VersionLabel[EntryID].Left - (int)Math.Floor(LabelSize.Width * 1.05), Mod_Icon[EntryID].Top + (int)Math.Floor(LabelSize.Height * 0.25));
+
             //Label[] Mod_CharactersLabel = new Label[50];
             Mod_CharactersLabel[EntryID] = new Label();
             Mod_CharactersLabel[EntryID].BackColor = System.Drawing.Color.FromArgb(32, 34, 81);
@@ -1695,6 +1837,18 @@ namespace WSMM
                 return true;
             }
             else { return false; }
+        }
+
+        private bool RequiresDataTables(string Path)
+        {
+            if (Directory.GetFiles(Path + @"\AutoMod").Length != 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private void ModFlow_Panel_DragEnter(object sender, DragEventArgs e)
@@ -2478,7 +2632,6 @@ namespace WSMM
 
             foreach (string file in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\AutoMod", "*.txt"))
             {
-                //Debug.WriteLine(file.ToString());
                 string Entry = Original_Entry;
                 string OutfitEntry = Original_OutfitEntry;
                 string CustomEntry = Original_CustomEntry;
@@ -3833,24 +3986,47 @@ namespace WSMM
 
         private string GetUEVersion(string version)
         {
-            if (File.Exists(Application.StartupPath + @"System\EngineVersions.ini"))
+            if (File.Exists(Application.StartupPath + @"System\SupportedVersions.ini"))
             {
-                foreach (string line in File.ReadLines(Application.StartupPath + @"System\EngineVersions.ini"))
+                foreach (string line in File.ReadLines(Application.StartupPath + @"System\SupportedVersions.ini"))
                 {
-                    string[] versions = GetSlice(line, "#", 1).Split("*");
-                    if (versions.Length > 0)
+                    if (version == GetSlice(line, "#", 0))
                     {
-                        foreach (string vers in versions)
-                        {
-                            if (version == vers)
-                            {
-                                return GetSlice(line, "#", 0);
-                            }
-                        }
+                        return GetSlice(line, "#", 1);
                     }
                 }
             }
             return "None";
+        }
+
+        private string GetVersionInfo(string WLBuild, string Info)
+        {
+            if (File.Exists(Application.StartupPath + @"System\SupportedVersions.ini"))
+            {
+                foreach (string line in File.ReadLines(Application.StartupPath + @"System\SupportedVersions.ini"))
+                {
+                    if (WLBuild == GetSlice(line, "#", 0))
+                    {
+                        if (Info == "Engine")
+                        {
+                            return GetSlice(line, "#", 1);
+                        }
+                        else if (Info == "DataTableURL")
+                        {
+                            return GetSlice(line, "#", 2);
+                        }
+                        else if (Info == "DataTableSize")
+                        {
+                            return GetSlice(line, "#", 3);
+                        }
+                        else if (Info == "DataTableVersion")
+                        {
+                            return GetSlice(line, "#", 4);
+                        }
+                    }
+                }
+            }
+            return "";
         }
 
         private void SelectWLVersion_CB_TextChanged(object sender, EventArgs e)
@@ -3861,7 +4037,7 @@ namespace WSMM
                 SelectWLVersionUEV_TB.Text = "All";
                 return;
             }
-            SelectWLVersionUEV_TB.Text = GetUEVersion(SelectWLVersion_CB.Text);
+            SelectWLVersionUEV_TB.Text = GetVersionInfo(SelectWLVersion_CB.Text, "Engine");
         }
 
         public string GetActiveModByName(string ModName)
@@ -3942,7 +4118,7 @@ namespace WSMM
 
         private void TransferModsFrom_CB_SelectedIndexChanged(object sender, EventArgs e)
         {
-            TransferModsFromUEV_TB.Text = GetUEVersion(TransferModsFrom_CB.Text);
+            TransferModsFromUEV_TB.Text = GetVersionInfo(TransferModsFrom_CB.Text, "Engine");
             TransferModsList_LB.Items.Clear();
             TransferMods_Button.Enabled = false;
 
@@ -4035,10 +4211,10 @@ namespace WSMM
                 }
                 if (ConflictFound == false)
                 {
-                    Mod_ErrorLabel[ModID_X].Invoke((System.Windows.Forms.MethodInvoker)delegate
-                    {
-                        Mod_ErrorLabel[ModID_X].Visible = false;
-                    });
+                    //Mod_ErrorLabel[ModID_X].Invoke((System.Windows.Forms.MethodInvoker)delegate
+                    //{
+                    //    Mod_ErrorLabel[ModID_X].Visible = false;
+                    //});
                 }
             }
         }
@@ -4088,8 +4264,11 @@ namespace WSMM
                     }
                     else
                     {
-                        Mod_ErrorLabel[ModID_X].Visible = false;
-                        Mod_EnabledCB[ModID_X].Enabled = true;
+                        if (Mod_ErrorLabel[ModID_X].Visible == false)
+                        {
+                            Mod_ErrorLabel[ModID_X].Visible = false;
+                            Mod_EnabledCB[ModID_X].Enabled = true;
+                        }
                     }
                 }
             }
@@ -4144,8 +4323,11 @@ namespace WSMM
                     }
                     else
                     {
-                        Mod_ErrorLabel[ModID_X].Visible = false;
-                        Mod_EnabledCB[ModID_X].Enabled = true;
+                        if (Mod_ErrorLabel[ModID_X].Visible == false)
+                        {
+                            Mod_ErrorLabel[ModID_X].Visible = false;
+                            Mod_EnabledCB[ModID_X].Enabled = true;
+                        }
                     }
                 }
             }
@@ -4432,19 +4614,24 @@ namespace WSMM
         private void DT_Updater_DownloadButton_Click(object sender, EventArgs e)
         {
             DT_Updater_DownloadButton.Hide();
-            DT_Updater_MDownloadButton.Hide();
-            DT_Updater_MInstallButton.Hide();
             DT_Updater_CloseButton.Hide();
             DTDownload_Progress.Show();
             DT_Updater_ProgressLabel.Show();
             Tutorial_0.Hide();
             DownloadDatatables(DTLink, DTVersion);
+            SkippedDTs = false;
         }
 
         private void DT_Updater_CloseButton_Click(object sender, EventArgs e)
         {
             DT_Updater_Panel.Hide();
             ToggleButtons(true);
+            if (!Directory.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion))
+            {
+                SkippedDTs = true;
+            }
+            LoadMods();
+            Tutorial_0.Hide();
         }
 
         private void DT_Updater_CloseButton_MouseEnter(object sender, EventArgs e)
@@ -4616,122 +4803,87 @@ namespace WSMM
             MM_CloseButton.Image = Properties.Resources.Close_Icon;
         }
 
-        private void DT_Updater_MInstallButton_Click(object sender, EventArgs e)
-        {
-            if (openFileDialog3.ShowDialog() == DialogResult.OK)
-            {
-                if (File.Exists(openFileDialog3.FileName) && Path.GetFileName(openFileDialog3.FileName).StartsWith("WLMM_DT_"))
-                {
-                    InstallDatatables(openFileDialog3.FileName, DTVersion);
-                }
-            }
-        }
-
-        private void DT_Updater_MDownloadButton_Click(object sender, EventArgs e)
-        {
-            Process.Start("explorer", DTLink.Trim('\r'));
-        }
-
         private void InstallDatatables(string filename, string version)
         {
             bool Valid = true;
-            string DTName = Path.GetFileNameWithoutExtension(filename);
-            ZipFile.ExtractToDirectory(filename, Application.StartupPath + @"Temp\" + DTName, true);
+            ZipFile.ExtractToDirectory(filename, Application.StartupPath, true);
 
-            // Replace System\SupportedVersions.ini
-            if (File.Exists(Application.StartupPath + @"Temp\" + DTName + @"\System\SupportedVersions.ini"))
-            {
-                File.Copy(Application.StartupPath + @"Temp\" + DTName + @"\System\SupportedVersions.ini", Application.StartupPath + @"System\SupportedVersions.ini", true);
-            }
-            else
-            {
-                Valid = false;
-            }
+            // Update Version.dat
+            File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\Version.dat", version);
 
-            // Replace System\EngineVersions.ini
-            if (File.Exists(Application.StartupPath + @"Temp\" + DTName + @"\System\EngineVersions.ini"))
+            while (IsFileLocked(new FileInfo(filename)))
             {
-                File.Copy(Application.StartupPath + @"Temp\" + DTName + @"\System\EngineVersions.ini", Application.StartupPath + @"System\EngineVersions.ini", true);
+                Thread.Sleep(100);
             }
-            else
-            {
-                Valid = false;
-            }
-
-            // Replace System\Categories.ini
-            if (File.Exists(Application.StartupPath + @"Temp\" + DTName + @"\System\Categories.ini"))
-            {
-                File.Copy(Application.StartupPath + @"Temp\" + DTName + @"\System\Categories.ini", Application.StartupPath + @"System\Categories.ini", true);
-            }
-            else
-            {
-                Valid = false;
-            }
-
-            if (Valid)
-            {
-                // Copy/Replace Mappings
-                foreach (string mapping in Directory.EnumerateFiles(Application.StartupPath + @"Temp\" + DTName + @"\Mappings", "*.usmap"))
-                {
-                    File.Copy(mapping, Application.StartupPath + @"Mappings\" + Path.GetFileName(mapping), true);
-                }
-                // Copy/Replace DataTables
-                foreach (string DTS in Directory.EnumerateDirectories(Application.StartupPath + @"Temp\" + DTName + @"\DataTables", "*"))
-                {
-                    CopyDirectory(DTS, Application.StartupPath + @"DataTables\" + Path.GetFileName(DTS));
-                }
-            }
-
-            // Remove Temp Files
             Directory.Delete(Application.StartupPath + @"Temp", true);
-            if (Valid)
+
+            DT_Updater_Panel.Hide();
+            DT_Updater_CloseButton.Enabled = true;
+            DTDownload_Progress.Value = 0;
+            DT_Updater_DownloadButton.Show();
+            DT_Updater_CloseButton.Show();
+            DTDownload_Progress.Hide();
+            DT_Updater_ProgressLabel.Hide();
+
+            DT_Updater_DownloadButton.Enabled = false;
+            DTUpdateCooldown.Start();
+
+            IncrementDownloadAmount("DT_" + LoadedWLVersion);
+
+            MessageBox.Show("DataTables updated!", "Wild Life Mod Manager", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (LoadedWLVersion != string.Empty)
             {
-                // Update DatatableVersion.ini
-                File.WriteAllText(Application.StartupPath + @"System\DatatableVersion.ini", version);
-                LoadSupportedVersions();
-                LoadCategories();
-
-                DT_Updater_Panel.Hide();
-                DT_Updater_CloseButton.Enabled = true;
-                DTDownload_Progress.Value = 0;
-                DT_Updater_DownloadButton.Show();
-                DT_Updater_MDownloadButton.Show();
-                DT_Updater_MInstallButton.Show();
-                DT_Updater_CloseButton.Show();
-                DTDownload_Progress.Hide();
-                DT_Updater_ProgressLabel.Hide();
-
-                DT_Updater_DownloadButton.Enabled = false;
-                DTUpdateCooldown.Start();
-
-                IncrementDownloadAmount(DTVersion);
-
-                MessageBox.Show("DataTables updated!", "Wild Life Mod Manager", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                if (LoadedWLVersion != string.Empty)
-                {
-                    ToggleButtons(true);
-                }
-                else {
-                    ToggleButtons(false);
-                    LoadGame_Button.Enabled = true;
-                }
+                ToggleButtons(true);
             }
-            else
-            {
-                MessageBox.Show("DataTable updated failed.", "Wild Life Mod Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else {
                 ToggleButtons(false);
+                LoadGame_Button.Enabled = true;
             }
+
+            LoadMods();
         }
 
         private void BuildSettingsDTUpdater_Button_Click(object sender, EventArgs e)
         {
-            GetDTDownloadAmount(DTVersion);
+            GetDTDownloadAmount("DT_" + LoadedWLVersion);
+
+            string CurrentDTVersion = "None";
+            string LatestDTVersion = "None";
+
+            if (File.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\Version.dat"))
+            {
+                CurrentDTVersion = File.ReadAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\Version.dat");
+            }
+            if (File.Exists(Application.StartupPath + @"System\SupportedVersions.ini"))
+            {
+                LatestDTVersion = GetVersionInfo(LoadedWLVersion, "DataTableVersion");
+                DTLink = GetVersionInfo(LoadedWLVersion, "DataTableURL");
+                DTVersion = LatestDTVersion;
+            }
+            if (CurrentDTVersion != LatestDTVersion)
+            {
+                GetDTDownloadAmount("DT_" + LoadedWLVersion);
+                ToggleButtons(false);
+                DT_Updater_Panel.Show();
+                DT_Updater_Panel.BringToFront();
+                DT_Updater_VersionLabel.Text = CurrentDTVersion + " > " + LatestDTVersion;
+                DT_Updater_DownloadButton.Enabled = true;
+            }
+            else
+            {
+                DT_Updater_Header.Text = "You are up to date.";
+                DT_Updater_VersionLabel.Text = CurrentDTVersion + " = " + LatestDTVersion;
+                DT_Updater_DownloadButton.Enabled = false;
+            }
+
             DT_Updater_Panel.Show();
             DT_Updater_Panel.BringToFront();
 
             if (TutorialEnabled == true)
             {
                 Tutorial_0.Show();
+                Tutorial_0.BringToFront();
+                Tutorial_1.Hide();
             }
         }
 
@@ -4917,7 +5069,6 @@ namespace WSMM
                 SaveBuildSettings();
             }
         }
-
         private async Task DownloadFileAsync(string fileUrl, string destinationPath)
         {
             try
@@ -4939,6 +5090,27 @@ namespace WSMM
                 MM_Info.Text = "Unable to download file.";
                 MM_Message.Text = "Is your network down or firewall blocking WLMM?\r\nIf not, check the WLMM post on Discord for info/help.\r\nException:\r\n" + ex.Message;
             }
+        }
+        private bool IsFileLocked(FileInfo file)
+        {
+            FileStream stream = null;
+
+            try
+            {
+                stream = file.Open(FileMode.Open, FileAccess.ReadWrite, FileShare.None);
+            }
+            catch (IOException)
+            {
+                return true;
+            }
+            finally
+            {
+                if (stream != null)
+                    stream.Close();
+            }
+
+            //file is not locked
+            return false;
         }
     }
 }
