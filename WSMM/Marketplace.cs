@@ -863,7 +863,10 @@ namespace WSMM
                 Application.DoEvents();
                 try
                 {
-                    Thread.Sleep(500); //Potential crash fix
+                    while (IsFileLocked(new FileInfo(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Downloads\" + CurrentlyDownloadingModName + ".wlmm")))
+                    {
+                        Thread.Sleep(100);
+                    }
                     //Add Mod to active mods
                     List<string> mods = new List<string>();
                     mods.Add(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Downloads\" + CurrentlyDownloadingModName + ".wlmm");
@@ -1065,6 +1068,28 @@ namespace WSMM
         private void Website_Button_Click(object sender, EventArgs e)
         {
             Process.Start("explorer", MarketplaceWebURL + ModName_Label.Text.Replace(" ", ""));
+        }
+
+        private bool IsFileLocked(FileInfo file)
+        {
+            FileStream stream = null;
+
+            try
+            {
+                stream = file.Open(FileMode.Open, FileAccess.ReadWrite, FileShare.None);
+            }
+            catch (IOException)
+            {
+                return true;
+            }
+            finally
+            {
+                if (stream != null)
+                    stream.Close();
+            }
+
+            //file is not locked
+            return false;
         }
     }
 }

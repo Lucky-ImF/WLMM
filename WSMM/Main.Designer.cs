@@ -91,6 +91,7 @@
             folderBrowserDialog1 = new FolderBrowserDialog();
             BuildSettings_Button = new Button();
             BuildSettings_Panel = new Panel();
+            BuildSettingsBuildManager_Button = new Button();
             label46 = new Label();
             BS_BaseGameSandboxPropsFile = new ComboBox();
             BS_LaunchParams = new TextBox();
@@ -205,7 +206,6 @@
             pictureBox8 = new PictureBox();
             label45 = new Label();
             toolTip1 = new ToolTip(components);
-            BuildSettingsBuildManager_Button = new Button();
             TitlePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
@@ -1059,6 +1059,20 @@
             BuildSettings_Panel.Size = new Size(231, 454);
             BuildSettings_Panel.TabIndex = 13;
             BuildSettings_Panel.Visible = false;
+            // 
+            // BuildSettingsBuildManager_Button
+            // 
+            BuildSettingsBuildManager_Button.BackColor = Color.FromArgb(75, 68, 138);
+            BuildSettingsBuildManager_Button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            BuildSettingsBuildManager_Button.FlatStyle = FlatStyle.Flat;
+            BuildSettingsBuildManager_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BuildSettingsBuildManager_Button.ForeColor = SystemColors.ActiveCaption;
+            BuildSettingsBuildManager_Button.Location = new Point(35, 255);
+            BuildSettingsBuildManager_Button.Name = "BuildSettingsBuildManager_Button";
+            BuildSettingsBuildManager_Button.Size = new Size(159, 26);
+            BuildSettingsBuildManager_Button.TabIndex = 52;
+            BuildSettingsBuildManager_Button.Text = "Build Manager";
+            BuildSettingsBuildManager_Button.UseVisualStyleBackColor = false;
             // 
             // label46
             // 
@@ -2511,20 +2525,6 @@
             toolTip1.AutoPopDelay = 5000;
             toolTip1.InitialDelay = 100;
             toolTip1.ReshowDelay = 20;
-            // 
-            // BuildSettingsBuildManager_Button
-            // 
-            BuildSettingsBuildManager_Button.BackColor = Color.FromArgb(75, 68, 138);
-            BuildSettingsBuildManager_Button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            BuildSettingsBuildManager_Button.FlatStyle = FlatStyle.Flat;
-            BuildSettingsBuildManager_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            BuildSettingsBuildManager_Button.ForeColor = SystemColors.ActiveCaption;
-            BuildSettingsBuildManager_Button.Location = new Point(35, 255);
-            BuildSettingsBuildManager_Button.Name = "BuildSettingsBuildManager_Button";
-            BuildSettingsBuildManager_Button.Size = new Size(159, 26);
-            BuildSettingsBuildManager_Button.TabIndex = 52;
-            BuildSettingsBuildManager_Button.Text = "Build Manager";
-            BuildSettingsBuildManager_Button.UseVisualStyleBackColor = false;
             // 
             // Main
             // 
