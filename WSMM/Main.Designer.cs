@@ -206,6 +206,22 @@
             pictureBox8 = new PictureBox();
             label45 = new Label();
             toolTip1 = new ToolTip(components);
+            BuildManager_Panel = new Panel();
+            BuildManager_BuildSettingsDelete = new LinkLabel();
+            BuildManager_DTsDelete = new LinkLabel();
+            BuildManager_ModsDelete = new LinkLabel();
+            BuildManager_BuildSettingsLB = new LinkLabel();
+            label49 = new Label();
+            BuildManager_SessionDelete = new LinkLabel();
+            BuildManager_DTsLB = new LinkLabel();
+            label47 = new Label();
+            BuildManager_ModsLB = new LinkLabel();
+            BuildManager_BuildList = new ListBox();
+            label32 = new Label();
+            BuildManager_Delete = new Button();
+            BuildManager_Close = new PictureBox();
+            label33 = new Label();
+            label35 = new Label();
             TitlePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
@@ -246,6 +262,8 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox9).BeginInit();
             Tutorial_0.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).BeginInit();
+            BuildManager_Panel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)BuildManager_Close).BeginInit();
             SuspendLayout();
             // 
             // TitlePanel
@@ -1073,6 +1091,7 @@
             BuildSettingsBuildManager_Button.TabIndex = 52;
             BuildSettingsBuildManager_Button.Text = "Build Manager";
             BuildSettingsBuildManager_Button.UseVisualStyleBackColor = false;
+            BuildSettingsBuildManager_Button.Click += BuildSettingsBuildManager_Button_Click;
             // 
             // label46
             // 
@@ -2526,6 +2545,231 @@
             toolTip1.InitialDelay = 100;
             toolTip1.ReshowDelay = 20;
             // 
+            // BuildManager_Panel
+            // 
+            BuildManager_Panel.BackColor = Color.FromArgb(75, 68, 138);
+            BuildManager_Panel.BorderStyle = BorderStyle.FixedSingle;
+            BuildManager_Panel.Controls.Add(BuildManager_BuildSettingsDelete);
+            BuildManager_Panel.Controls.Add(BuildManager_DTsDelete);
+            BuildManager_Panel.Controls.Add(BuildManager_ModsDelete);
+            BuildManager_Panel.Controls.Add(BuildManager_BuildSettingsLB);
+            BuildManager_Panel.Controls.Add(label49);
+            BuildManager_Panel.Controls.Add(BuildManager_SessionDelete);
+            BuildManager_Panel.Controls.Add(BuildManager_DTsLB);
+            BuildManager_Panel.Controls.Add(label47);
+            BuildManager_Panel.Controls.Add(BuildManager_ModsLB);
+            BuildManager_Panel.Controls.Add(BuildManager_BuildList);
+            BuildManager_Panel.Controls.Add(label32);
+            BuildManager_Panel.Controls.Add(BuildManager_Delete);
+            BuildManager_Panel.Controls.Add(BuildManager_Close);
+            BuildManager_Panel.Controls.Add(label33);
+            BuildManager_Panel.Controls.Add(label35);
+            BuildManager_Panel.Location = new Point(316, 236);
+            BuildManager_Panel.Name = "BuildManager_Panel";
+            BuildManager_Panel.Size = new Size(503, 306);
+            BuildManager_Panel.TabIndex = 67;
+            BuildManager_Panel.Visible = false;
+            // 
+            // BuildManager_BuildSettingsDelete
+            // 
+            BuildManager_BuildSettingsDelete.ActiveLinkColor = Color.MistyRose;
+            BuildManager_BuildSettingsDelete.AutoSize = true;
+            BuildManager_BuildSettingsDelete.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BuildManager_BuildSettingsDelete.LinkColor = Color.LightCoral;
+            BuildManager_BuildSettingsDelete.Location = new Point(436, 217);
+            BuildManager_BuildSettingsDelete.Name = "BuildManager_BuildSettingsDelete";
+            BuildManager_BuildSettingsDelete.Size = new Size(54, 21);
+            BuildManager_BuildSettingsDelete.TabIndex = 51;
+            BuildManager_BuildSettingsDelete.TabStop = true;
+            BuildManager_BuildSettingsDelete.Text = "Delete";
+            BuildManager_BuildSettingsDelete.VisitedLinkColor = Color.LightCoral;
+            BuildManager_BuildSettingsDelete.LinkClicked += BuildManager_BuildSettingsDelete_LinkClicked;
+            // 
+            // BuildManager_DTsDelete
+            // 
+            BuildManager_DTsDelete.ActiveLinkColor = Color.MistyRose;
+            BuildManager_DTsDelete.AutoSize = true;
+            BuildManager_DTsDelete.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BuildManager_DTsDelete.LinkColor = Color.LightCoral;
+            BuildManager_DTsDelete.Location = new Point(436, 187);
+            BuildManager_DTsDelete.Name = "BuildManager_DTsDelete";
+            BuildManager_DTsDelete.Size = new Size(54, 21);
+            BuildManager_DTsDelete.TabIndex = 49;
+            BuildManager_DTsDelete.TabStop = true;
+            BuildManager_DTsDelete.Text = "Delete";
+            BuildManager_DTsDelete.VisitedLinkColor = Color.LightCoral;
+            BuildManager_DTsDelete.LinkClicked += BuildManager_DTsDelete_LinkClicked;
+            // 
+            // BuildManager_ModsDelete
+            // 
+            BuildManager_ModsDelete.ActiveLinkColor = Color.MistyRose;
+            BuildManager_ModsDelete.AutoSize = true;
+            BuildManager_ModsDelete.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BuildManager_ModsDelete.LinkColor = Color.LightCoral;
+            BuildManager_ModsDelete.Location = new Point(436, 158);
+            BuildManager_ModsDelete.Name = "BuildManager_ModsDelete";
+            BuildManager_ModsDelete.Size = new Size(54, 21);
+            BuildManager_ModsDelete.TabIndex = 48;
+            BuildManager_ModsDelete.TabStop = true;
+            BuildManager_ModsDelete.Text = "Delete";
+            BuildManager_ModsDelete.VisitedLinkColor = Color.LightCoral;
+            BuildManager_ModsDelete.LinkClicked += BuildManager_ModsDelete_LinkClicked;
+            // 
+            // BuildManager_BuildSettingsLB
+            // 
+            BuildManager_BuildSettingsLB.ActiveLinkColor = Color.MistyRose;
+            BuildManager_BuildSettingsLB.AutoSize = true;
+            BuildManager_BuildSettingsLB.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BuildManager_BuildSettingsLB.LinkColor = SystemColors.GradientInactiveCaption;
+            BuildManager_BuildSettingsLB.Location = new Point(97, 218);
+            BuildManager_BuildSettingsLB.Name = "BuildManager_BuildSettingsLB";
+            BuildManager_BuildSettingsLB.Size = new Size(31, 21);
+            BuildManager_BuildSettingsLB.TabIndex = 47;
+            BuildManager_BuildSettingsLB.TabStop = true;
+            BuildManager_BuildSettingsLB.Text = "No";
+            BuildManager_BuildSettingsLB.VisitedLinkColor = Color.LightCoral;
+            BuildManager_BuildSettingsLB.LinkClicked += BuildManager_BuildSettingsLB_LinkClicked;
+            // 
+            // label49
+            // 
+            label49.AutoSize = true;
+            label49.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label49.ForeColor = SystemColors.ActiveCaption;
+            label49.Location = new Point(10, 220);
+            label49.Name = "label49";
+            label49.Size = new Size(89, 17);
+            label49.TabIndex = 46;
+            label49.Text = "Build Settings:";
+            // 
+            // BuildManager_SessionDelete
+            // 
+            BuildManager_SessionDelete.ActiveLinkColor = Color.MistyRose;
+            BuildManager_SessionDelete.AutoSize = true;
+            BuildManager_SessionDelete.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BuildManager_SessionDelete.LinkColor = Color.LightCoral;
+            BuildManager_SessionDelete.Location = new Point(119, 265);
+            BuildManager_SessionDelete.Name = "BuildManager_SessionDelete";
+            BuildManager_SessionDelete.Size = new Size(105, 21);
+            BuildManager_SessionDelete.TabIndex = 50;
+            BuildManager_SessionDelete.TabStop = true;
+            BuildManager_SessionDelete.Text = "Reset Session";
+            BuildManager_SessionDelete.VisitedLinkColor = Color.LightCoral;
+            BuildManager_SessionDelete.LinkClicked += BuildManager_SessionDelete_LinkClicked;
+            // 
+            // BuildManager_DTsLB
+            // 
+            BuildManager_DTsLB.ActiveLinkColor = Color.MistyRose;
+            BuildManager_DTsLB.AutoSize = true;
+            BuildManager_DTsLB.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BuildManager_DTsLB.LinkColor = SystemColors.GradientInactiveCaption;
+            BuildManager_DTsLB.Location = new Point(98, 187);
+            BuildManager_DTsLB.Name = "BuildManager_DTsLB";
+            BuildManager_DTsLB.Size = new Size(104, 21);
+            BuildManager_DTsLB.TabIndex = 43;
+            BuildManager_DTsLB.TabStop = true;
+            BuildManager_DTsLB.Text = "0 Files - 0 MB";
+            BuildManager_DTsLB.VisitedLinkColor = Color.LightCoral;
+            BuildManager_DTsLB.LinkClicked += BuildManager_DTsLB_LinkClicked;
+            // 
+            // label47
+            // 
+            label47.AutoSize = true;
+            label47.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label47.ForeColor = SystemColors.ActiveCaption;
+            label47.Location = new Point(24, 190);
+            label47.Name = "label47";
+            label47.Size = new Size(75, 17);
+            label47.TabIndex = 42;
+            label47.Text = "DataTables:";
+            // 
+            // BuildManager_ModsLB
+            // 
+            BuildManager_ModsLB.ActiveLinkColor = Color.MistyRose;
+            BuildManager_ModsLB.AutoSize = true;
+            BuildManager_ModsLB.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BuildManager_ModsLB.LinkColor = SystemColors.GradientInactiveCaption;
+            BuildManager_ModsLB.Location = new Point(98, 157);
+            BuildManager_ModsLB.Name = "BuildManager_ModsLB";
+            BuildManager_ModsLB.Size = new Size(104, 21);
+            BuildManager_ModsLB.TabIndex = 41;
+            BuildManager_ModsLB.TabStop = true;
+            BuildManager_ModsLB.Text = "0 Files - 0 MB";
+            BuildManager_ModsLB.VisitedLinkColor = Color.LightCoral;
+            BuildManager_ModsLB.LinkClicked += BuildManager_ModsLB_LinkClicked;
+            // 
+            // BuildManager_BuildList
+            // 
+            BuildManager_BuildList.BackColor = Color.FromArgb(32, 34, 81);
+            BuildManager_BuildList.ForeColor = SystemColors.GradientInactiveCaption;
+            BuildManager_BuildList.FormattingEnabled = true;
+            BuildManager_BuildList.ItemHeight = 15;
+            BuildManager_BuildList.Location = new Point(13, 53);
+            BuildManager_BuildList.Name = "BuildManager_BuildList";
+            BuildManager_BuildList.Size = new Size(477, 94);
+            BuildManager_BuildList.TabIndex = 40;
+            BuildManager_BuildList.SelectedIndexChanged += BuildManager_BuildList_SelectedIndexChanged;
+            // 
+            // label32
+            // 
+            label32.AutoSize = true;
+            label32.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label32.ForeColor = SystemColors.ActiveCaption;
+            label32.Location = new Point(54, 161);
+            label32.Name = "label32";
+            label32.Size = new Size(45, 17);
+            label32.TabIndex = 39;
+            label32.Text = "Mods:";
+            // 
+            // BuildManager_Delete
+            // 
+            BuildManager_Delete.BackColor = Color.FromArgb(75, 68, 138);
+            BuildManager_Delete.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            BuildManager_Delete.FlatStyle = FlatStyle.Flat;
+            BuildManager_Delete.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BuildManager_Delete.ForeColor = SystemColors.ActiveCaption;
+            BuildManager_Delete.Location = new Point(253, 260);
+            BuildManager_Delete.Name = "BuildManager_Delete";
+            BuildManager_Delete.Size = new Size(128, 30);
+            BuildManager_Delete.TabIndex = 35;
+            BuildManager_Delete.Text = "Delete Selected";
+            BuildManager_Delete.UseVisualStyleBackColor = false;
+            BuildManager_Delete.Click += BuildManager_Delete_Click;
+            // 
+            // BuildManager_Close
+            // 
+            BuildManager_Close.Image = Properties.Resources.Close_Icon;
+            BuildManager_Close.Location = new Point(460, 4);
+            BuildManager_Close.Name = "BuildManager_Close";
+            BuildManager_Close.Size = new Size(37, 39);
+            BuildManager_Close.SizeMode = PictureBoxSizeMode.Zoom;
+            BuildManager_Close.TabIndex = 34;
+            BuildManager_Close.TabStop = false;
+            BuildManager_Close.Click += BuildManager_Close_Click;
+            BuildManager_Close.MouseEnter += BuildManager_Close_MouseEnter;
+            BuildManager_Close.MouseLeave += BuildManager_Close_MouseLeave;
+            // 
+            // label33
+            // 
+            label33.AutoSize = true;
+            label33.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label33.ForeColor = SystemColors.ActiveCaption;
+            label33.Location = new Point(13, 33);
+            label33.Name = "label33";
+            label33.Size = new Size(97, 17);
+            label33.TabIndex = 33;
+            label33.Text = "Installed Builds:";
+            // 
+            // label35
+            // 
+            label35.AutoSize = true;
+            label35.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label35.ForeColor = SystemColors.ActiveCaption;
+            label35.Location = new Point(176, 4);
+            label35.Name = "label35";
+            label35.Size = new Size(148, 30);
+            label35.TabIndex = 2;
+            label35.Text = "Build Manager";
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
@@ -2533,6 +2777,7 @@
             BackColor = Color.FromArgb(32, 34, 81);
             ClientSize = new Size(1134, 761);
             ControlBox = false;
+            Controls.Add(BuildManager_Panel);
             Controls.Add(DT_Updater_Panel);
             Controls.Add(BugReport_Panel);
             Controls.Add(Tutorial_0);
@@ -2636,6 +2881,9 @@
             Tutorial_0.ResumeLayout(false);
             Tutorial_0.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).EndInit();
+            BuildManager_Panel.ResumeLayout(false);
+            BuildManager_Panel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)BuildManager_Close).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -2818,5 +3066,21 @@
         private ComboBox BS_BaseGameSandboxPropsFile;
         private ToolTip toolTip1;
         private Button BuildSettingsBuildManager_Button;
+        private Panel BuildManager_Panel;
+        private ListBox BuildManager_BuildList;
+        private Label label32;
+        private Button BuildManager_Delete;
+        private PictureBox BuildManager_Close;
+        private Label label33;
+        private Label label35;
+        private LinkLabel BuildManager_DTsLB;
+        private Label label47;
+        private LinkLabel BuildManager_ModsLB;
+        private LinkLabel BuildManager_BuildSettingsLB;
+        private Label label49;
+        private LinkLabel BuildManager_BuildSettingsDelete;
+        private LinkLabel BuildManager_SessionDelete;
+        private LinkLabel BuildManager_DTsDelete;
+        private LinkLabel BuildManager_ModsDelete;
     }
 }

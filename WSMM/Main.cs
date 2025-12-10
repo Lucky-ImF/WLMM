@@ -60,6 +60,7 @@ namespace WSMM
         bool TutorialEnabled = true;
 
         public bool DeleteWLMMAfterDownload = false;
+        bool SaveSessionOnExit = true;
 
         //Panel, Picturebox, Label(Name), Label(Error), Label(Version), Label(SupportedVersions), Label(Author), LinkLabel(Remove), LinkLabel(Link), Checkbox
         Panel[] Mod_Panel = new Panel[100];
@@ -3812,7 +3813,10 @@ namespace WSMM
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
-            SaveSession();
+            if (SaveSessionOnExit == true)
+            {
+                SaveSession();
+            }
             SaveBuildSettings();
         }
 
@@ -5112,6 +5116,252 @@ namespace WSMM
 
             //file is not locked
             return false;
+        }
+
+        private void BuildManager_Close_Click(object sender, EventArgs e)
+        {
+            BuildManager_Panel.Hide();
+            BuildManager_BuildList.Items.Clear();
+            BuildManager_ModsLB.Text = "0 Files - 0 MB";
+            BuildManager_DTsLB.Text = "0 Files - 0 MB";
+            BuildManager_BuildSettingsLB.Text = "No";
+        }
+
+        private void BuildManager_Close_MouseEnter(object sender, EventArgs e)
+        {
+            BuildManager_Close.Image = Properties.Resources.Close_Icon_Hover;
+        }
+
+        private void BuildManager_Close_MouseLeave(object sender, EventArgs e)
+        {
+            BuildManager_Close.Image = Properties.Resources.Close_Icon;
+        }
+
+        private void BuildSettingsBuildManager_Button_Click(object sender, EventArgs e)
+        {
+            BuildManager_Panel.Show();
+
+            BuildManager_LoadBuilds();
+
+            BuildManager_BuildList.SelectedIndex = BuildManager_BuildList.FindStringExact(LoadedWLVersion);
+        }
+
+        private void BuildManager_LoadBuilds()
+        {
+            BuildManager_BuildList.Items.Clear();
+            BuildManager_ModsLB.Text = "0 Files - 0 MB";
+            BuildManager_DTsLB.Text = "0 Files - 0 MB";
+            BuildManager_BuildSettingsLB.Text = "No";
+
+            string[] Mods = Directory.GetDirectories(Application.StartupPath + @"Mods");
+            foreach (var mod in Mods)
+            {
+                BuildManager_BuildList.Items.Add(Path.GetFileName(mod));
+            }
+            string[] Dts = Directory.GetDirectories(Application.StartupPath + @"DataTables");
+            foreach (var dt in Dts)
+            {
+                if (!BuildManager_BuildList.Items.Contains(Path.GetFileName(dt)))
+                {
+                    BuildManager_BuildList.Items.Add(Path.GetFileName(dt));
+                }
+            }
+            string[] Bss = Directory.GetFiles(Application.StartupPath + @"System");
+            foreach (var bs in Bss)
+            {
+                if (bs.EndsWith("_BuildSettings.ini") == false) { continue; }
+                if (!BuildManager_BuildList.Items.Contains(Path.GetFileName(bs).Replace("_BuildSettings.ini", "")))
+                {
+                    BuildManager_BuildList.Items.Add(Path.GetFileName(bs).Replace("_BuildSettings.ini", ""));
+                }
+            }
+        }
+
+        private void ProcessDirectory(DirectoryInfo dir, ref int count, ref long size)
+        {
+            try
+            {
+                foreach (FileInfo file in dir.EnumerateFiles())
+                {
+                    count++;
+                    size += file.Length;
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+
+            try
+            {
+                foreach (DirectoryInfo subDir in dir.EnumerateDirectories())
+                {
+                    ProcessDirectory(subDir, ref count, ref size);
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+
+        }
+
+        private string FormatBytes(long bytes)
+        {
+            string[] suffixes = { "B", "KB", "MB", "GB", "TB" };
+            int counter = 0;
+            decimal number = (decimal)bytes;
+
+            while (Math.Round(number / 1024) >= 1)
+            {
+                number = number / 1024;
+                counter++;
+            }
+            return string.Format("{0:n1} {1}", number, suffixes[counter]);
+        }
+
+        private void BuildManager_SessionDelete_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want to reset the current session and restart?", "Reset Session?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                SaveSessionOnExit = false;
+                if (File.Exists(Application.StartupPath + @"System\Session.dat"))
+                {
+                    File.Delete(Application.StartupPath + @"System\Session.dat");
+                }
+                Application.Restart();
+            }
+        }
+
+        private void BuildManager_BuildList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int ModCount = 0;
+            long ModSize = 0;
+            int DTCount = 0;
+            long DTSize = 0;
+            if (BuildManager_BuildList.SelectedIndex == -1)
+            {
+                return;
+            }
+            ProcessDirectory(new DirectoryInfo(Application.StartupPath + @"Mods\" + BuildManager_BuildList.SelectedItem.ToString()), ref ModCount, ref ModSize);
+            ProcessDirectory(new DirectoryInfo(Application.StartupPath + @"DataTables\" + BuildManager_BuildList.SelectedItem.ToString()), ref DTCount, ref DTSize);
+            BuildManager_ModsLB.Text = ModCount.ToString() + " Files - " + FormatBytes(ModSize);
+            BuildManager_DTsLB.Text = DTCount.ToString() + " Files - " + FormatBytes(DTSize);
+            if (File.Exists(Application.StartupPath + @"System\" + BuildManager_BuildList.SelectedItem.ToString() + "_BuildSettings.ini"))
+            {
+                BuildManager_BuildSettingsLB.Text = "Yes";
+            }
+            else
+            {
+                BuildManager_BuildSettingsLB.Text = "No";
+            }
+        }
+
+        private void BuildManager_ModsLB_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("explorer.exe", Application.StartupPath + @"Mods\" + LoadedWLVersion);
+        }
+
+        private void BuildManager_DTsLB_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("explorer.exe", Application.StartupPath + @"DataTables\" + LoadedWLVersion);
+        }
+
+        private void BuildManager_BuildSettingsLB_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("explorer.exe", Application.StartupPath + @"System");
+        }
+
+        private void BuildManager_ModsDelete_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want to delete all Mods for '" + BuildManager_BuildList.SelectedItem.ToString() + "'?", "Delete All Mods?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                string SelectedBuild = BuildManager_BuildList.SelectedItem.ToString();
+                if (Directory.Exists(Application.StartupPath + @"Mods\" + SelectedBuild))
+                {
+                    Directory.Delete(Application.StartupPath + @"Mods\" + SelectedBuild, true);
+                }
+                if (SelectedBuild == LoadedWLVersion)
+                {
+                    LoadMods();
+                }
+                BuildManager_LoadBuilds();
+
+                BuildManager_BuildList.SelectedIndex = BuildManager_BuildList.FindStringExact(SelectedBuild);
+            }
+        }
+
+        private void BuildManager_DTsDelete_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want to delete all DataTables for '" + BuildManager_BuildList.SelectedItem.ToString() + "'?", "Delete All DataTables?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                string SelectedBuild = BuildManager_BuildList.SelectedItem.ToString();
+                if (Directory.Exists(Application.StartupPath + @"DataTables\" + SelectedBuild))
+                {
+                    Directory.Delete(Application.StartupPath + @"DataTables\" + SelectedBuild, true);
+                }
+                if (SelectedBuild == LoadedWLVersion)
+                {
+                    BuildManager_Panel.Hide();
+                    LoadDataTables();
+                    SkippedDTs = true;
+                    LoadMods();
+                }
+                BuildManager_LoadBuilds();
+
+                BuildManager_BuildList.SelectedIndex = BuildManager_BuildList.FindStringExact(SelectedBuild);
+            }
+        }
+
+        private void BuildManager_BuildSettingsDelete_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want to delete the Build Settings for '" + BuildManager_BuildList.SelectedItem.ToString() + "'?", "Delete Build Settings?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                string SelectedBuild = BuildManager_BuildList.SelectedItem.ToString();
+                if (File.Exists(Application.StartupPath + @"System\" + SelectedBuild + "_BuildSettings.ini"))
+                {
+                    File.Delete(Application.StartupPath + @"System\" + SelectedBuild + "_BuildSettings.ini");
+                }
+                if (SelectedBuild == LoadedWLVersion)
+                {
+                    LoadBuildSettings();
+                }
+                BuildManager_LoadBuilds();
+
+                BuildManager_BuildList.SelectedIndex = BuildManager_BuildList.FindStringExact(SelectedBuild);
+            }
+        }
+
+        private void BuildManager_Delete_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want to delete EVERYTHING for '" + BuildManager_BuildList.SelectedItem.ToString() + "'?", "Delete Everything?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                string SelectedBuild = BuildManager_BuildList.SelectedItem.ToString();
+                if (Directory.Exists(Application.StartupPath + @"Mods\" + SelectedBuild))
+                {
+                    Directory.Delete(Application.StartupPath + @"Mods\" + SelectedBuild, true);
+                }
+                if (Directory.Exists(Application.StartupPath + @"DataTables\" + SelectedBuild))
+                {
+                    Directory.Delete(Application.StartupPath + @"DataTables\" + SelectedBuild, true);
+                }
+                if (File.Exists(Application.StartupPath + @"System\" + SelectedBuild + "_BuildSettings.ini"))
+                {
+                    File.Delete(Application.StartupPath + @"System\" + SelectedBuild + "_BuildSettings.ini");
+                }
+                if (SelectedBuild == LoadedWLVersion)
+                {
+                    SaveSessionOnExit = false;
+                    if (File.Exists(Application.StartupPath + @"System\Session.dat"))
+                    {
+                        File.Delete(Application.StartupPath + @"System\Session.dat");
+                    }
+                    Application.Restart();
+                }
+                BuildManager_BuildList.Items.Remove(SelectedBuild);
+
+                BuildManager_BuildList.SelectedIndex = BuildManager_BuildList.FindStringExact(LoadedWLVersion);
+            }
         }
     }
 }
