@@ -421,35 +421,8 @@ namespace WSMM
 
             CreateMissingFolders();
 
-            //LoadDatatableVersion();
-
             //Version Check
             CheckForUpdate();
-
-            //LoadSupportedVersions();
-
-            //Load previous game version if it exists
-            //LoadSession();
-
-            //if (HasOldChanges == false)
-            //{
-            //    ChangesMade_Label.Text = "No changes made.";
-            //    ChangesMade = 0;
-            //}
-
-            //if (LoadedWLVersion != "" && LoadedWLVersion != string.Empty && DT_Updater_Panel.Visible == false)
-            //{
-            //    BuildMods_Button.Enabled = true;
-            //    ModCreator_Button.Enabled = true;
-            //}
-            //else
-            //{
-            //    BuildMods_Button.Enabled = false;
-            //    ModCreator_Button.Enabled = false;
-            //}
-
-            //StartingUp = false;
-            //HasOldChanges = false;
         }
 
         private void LoadSupportedVersions()
@@ -588,11 +561,13 @@ namespace WSMM
                             if (LiveVersions != CurrentVersionFile)
                             {
                                 File.WriteAllText(Application.StartupPath + @"System\SupportedVersions.ini", LiveVersions);
+                                Debug.WriteLine("Writing new SupportedVersions.ini");
                             }
                         }
                         else
                         {
                             File.WriteAllText(Application.StartupPath + @"System\SupportedVersions.ini", LiveVersions);
+                            Debug.WriteLine("Creating new SupportedVersions.ini");
                         }
                     }
                     else if (line.StartsWith("UpdaterDownload:"))
@@ -619,11 +594,13 @@ namespace WSMM
                             if (LiveCategories != CurrentCatFile)
                             {
                                 File.WriteAllText(Application.StartupPath + @"System\Categories.ini", LiveCategories);
+                                Debug.WriteLine("Writing new Categories.ini");
                             }
                         }
                         else
                         {
                             File.WriteAllText(Application.StartupPath + @"System\Categories.ini", LiveCategories);
+                            Debug.WriteLine("Creating new Categories.ini");
                         }
                     }
                 }
@@ -652,42 +629,6 @@ namespace WSMM
                         File.Delete("UpdateData.ini");
                     }
                 }
-
-                //if (Datatable_Version == string.Empty)
-                //{
-                //    // No Datatables
-                //    GetDTDownloadAmount(DTVersion);
-                //    ToggleButtons(false);
-                //    DT_Updater_Panel.Show();
-                //    DT_Updater_Panel.BringToFront();
-                //    DT_Updater_VersionLabel.Text = "None > " + DTVersion;
-                //    DT_Updater_CloseButton.Enabled = false;
-                //    if (TutorialEnabled == true)
-                //    {
-                //        Tutorial_0.Show();
-                //        Tutorial_0.BringToFront();
-                //        Tutorial_1.Hide();
-                //    }
-                //}
-                //else if (DTVersion != Datatable_Version)
-                //{
-                //    // Datatables outdated
-                //    GetDTDownloadAmount(DTVersion);
-                //    ToggleButtons(false);
-                //    DT_Updater_Panel.Show();
-                //    DT_Updater_Panel.BringToFront();
-                //    DT_Updater_VersionLabel.Text = Datatable_Version + " > " + DTVersion;
-                //    if (TutorialEnabled == true)
-                //    {
-                //        Tutorial_0.Show();
-                //        Tutorial_0.BringToFront();
-                //        Tutorial_1.Hide();
-                //    }
-                //}
-                //else
-                //{
-                //    DT_Updater_VersionLabel.Text = Datatable_Version + " = " + DTVersion;
-                //}
 
                 if (MM == "True")
                 {
