@@ -34,7 +34,7 @@ namespace WSMM
         private bool StartingUp = true;
         private bool HasOldChanges = false;
 
-        private string WLMM_Version = "1.3.4";
+        private string WLMM_Version = "1.4.0";
         private string Datatable_Version = string.Empty;
         string BuildLog = string.Empty;
 
@@ -363,15 +363,12 @@ namespace WSMM
             NoGameLoaded_Panel.Visible = false;
             ModFlow_Panel.AllowDrop = true;
 
+            StartingUp = false;
             SaveSession();
             SaveBuildSettings();
 
             //Load Mods
             NoModsFound_Label.Visible = true;
-            if (TutorialEnabled == true)
-            {
-                Tutorial_2.Show();
-            }
             LoadMods();
 
             if (DT_Updater_Panel.Visible == true)
@@ -423,6 +420,8 @@ namespace WSMM
 
             //Version Check
             CheckForUpdate();
+
+            StartingUp = false;
         }
 
         private void LoadSupportedVersions()
@@ -776,25 +775,35 @@ namespace WSMM
 
         private void LoadMappings()
         {
+            BS_Mappings.Items.Clear();
+            BS_Mappings.Text = "";
             try
             {
                 foreach (string file in Directory.EnumerateFiles(Application.StartupPath + @"Mappings", "*.usmap"))
                 {
                     BS_Mappings.Items.Add(Path.GetFileName(file));
+                    if (BS_Mappings.Text == "" && Path.GetFileName(file) == LoadedWLVersion + ".usmap")
+                    {
+                        BS_Mappings.Text = Path.GetFileName(file);
+                        SaveBuildSettings();
+                    }
                 }
             }
             catch (Exception)
             {
-
+                BS_Mappings.Text = "";
             }
         }
 
         private void LoadDataTables()
         {
+            bool OverwriteExistingBS = false;
             BS_BaseClothesOutfitFile.Items.Clear();
+            BS_BaseClothesOutfitFile.Text = "";
             BS_BaseGameCharacterOutfitFile.Items.Clear();
+            BS_BaseGameCharacterOutfitFile.Text = "";
             BS_BaseGameCharacterCustomizationFile.Items.Clear();
-            BS_Mappings.Items.Clear();
+            BS_BaseGameCharacterCustomizationFile.Text = "";
 
             string CurrentDTVersion = "None";
             string LatestDTVersion = "None";
@@ -836,10 +845,15 @@ namespace WSMM
                             BS_BaseClothesOutfitFile.Items.Add(Path.GetFileName(file));
                         }
                     }
+                    if (BS_BaseClothesOutfitFile.Items.Count >= 1 && BS_BaseClothesOutfitFile.Text == "")
+                    {
+                        BS_BaseClothesOutfitFile.Text = BS_BaseClothesOutfitFile.Items[0].ToString();
+                        OverwriteExistingBS = true;
+                    }
                 }
                 catch (Exception)
                 {
-
+                    BS_BaseClothesOutfitFile.Text = "";
                 }
 
                 try
@@ -851,10 +865,15 @@ namespace WSMM
                             BS_BaseGameCharacterOutfitFile.Items.Add(Path.GetFileName(file));
                         }
                     }
+                    if (BS_BaseGameCharacterOutfitFile.Items.Count >= 1 && BS_BaseGameCharacterOutfitFile.Text == "")
+                    {
+                        BS_BaseGameCharacterOutfitFile.Text = BS_BaseGameCharacterOutfitFile.Items[0].ToString();
+                        OverwriteExistingBS = true;
+                    }
                 }
                 catch (Exception)
                 {
-
+                    BS_BaseGameCharacterOutfitFile.Text = "";
                 }
 
                 try
@@ -866,10 +885,15 @@ namespace WSMM
                             BS_BaseGameCharacterCustomizationFile.Items.Add(Path.GetFileName(file));
                         }
                     }
+                    if (BS_BaseGameCharacterCustomizationFile.Items.Count >= 1 && BS_BaseGameCharacterCustomizationFile.Text == "")
+                    {
+                        BS_BaseGameCharacterCustomizationFile.Text = BS_BaseGameCharacterCustomizationFile.Items[0].ToString();
+                        OverwriteExistingBS = true;
+                    }
                 }
                 catch (Exception)
                 {
-
+                    BS_BaseGameCharacterCustomizationFile.Text = "";
                 }
 
                 try
@@ -881,10 +905,20 @@ namespace WSMM
                             BS_BaseGameSandboxPropsFile.Items.Add(Path.GetFileName(file));
                         }
                     }
+                    if (BS_BaseGameSandboxPropsFile.Items.Count >= 1 && BS_BaseGameSandboxPropsFile.Text == "")
+                    {
+                        BS_BaseGameSandboxPropsFile.Text = BS_BaseGameSandboxPropsFile.Items[0].ToString();
+                        OverwriteExistingBS = true;
+                    }
                 }
                 catch (Exception)
                 {
+                    BS_BaseGameSandboxPropsFile.Text = "";
+                }
 
+                if (OverwriteExistingBS == true)
+                {
+                    SaveBuildSettings();
                 }
             }
             else
@@ -1103,19 +1137,23 @@ namespace WSMM
                         }
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     BS_BaseClothesOutfitFile.Text = "";
                     BS_BaseGameCharacterOutfitFile.Text = "";
                     BS_BaseGameCharacterCustomizationFile.Text = "";
                     BS_BaseGameSandboxPropsFile.Text = "";
-                    //MessageBox.Show("DataTable error.", "Wild Life Mod Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //MessageBox.Show("DataTable error. " + ex.Message, "Wild Life Mod Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
 
         private void SaveBuildSettings()
         {
+            if (StartingUp == true)
+            {
+                return;
+            }
             string SaveFile = "DT_ClothesOutfit = " + BS_BaseClothesOutfitFile.Text + "\nDT_GameCharacterOutfits = " + BS_BaseGameCharacterOutfitFile.Text +
                 "\nDT_GameCharacterCustomization = " + BS_BaseGameCharacterCustomizationFile.Text + "\nMappings = " + BS_Mappings.Text + "\nVerifyIntegrity = " + BS_VerifyFI_CB.CheckState.ToString() +
                 "\nLaunchParams = " + BS_LaunchParams.Text + "\nDT_SandboxProps = " + BS_BaseGameSandboxPropsFile.Text;
@@ -1289,6 +1327,11 @@ namespace WSMM
                 Cat_Entries.Clear();
             });
 
+            if (TutorialEnabled == true && Tutorial_0.Visible == false)
+            {
+                Tutorial_2.Show();
+            }
+
             // Create Categories
             foreach (string cat in Categories_List)
             {
@@ -1371,7 +1414,7 @@ namespace WSMM
                 {
                     NoModsFound_Label.Hide();
                     Tutorial_2.Hide();
-                    if (TutorialEnabled == true)
+                    if (TutorialEnabled == true && Tutorial_0.Visible == false)
                     {
                         Tutorial_3.Show();
                     }
@@ -4769,6 +4812,7 @@ namespace WSMM
             DT_Updater_CloseButton.Show();
             DTDownload_Progress.Hide();
             DT_Updater_ProgressLabel.Hide();
+            DT_Updater_DownloadsLabel.Text = "Downloaded many times";
 
             DT_Updater_DownloadButton.Enabled = false;
             DTUpdateCooldown.Start();
@@ -4785,6 +4829,8 @@ namespace WSMM
                 ToggleButtons(false);
                 LoadGame_Button.Enabled = true;
             }
+            LoadDataTables();
+            LoadMappings();
 
             LoadMods();
         }
