@@ -292,6 +292,7 @@
             Name = "ModPackCreator";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Mod Pack Creator";
+            Load += ModPackCreator_Load;
             ((System.ComponentModel.ISupportInitialize)Icon_PB).EndInit();
             ((System.ComponentModel.ISupportInitialize)Separator_1).EndInit();
             TitlePanel.ResumeLayout(false);
