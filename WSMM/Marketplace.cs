@@ -895,7 +895,10 @@ namespace WSMM
                     IncrementDownloadAmount(CurrentlyDownloadingModName);
                     ModFileSize_Label.Text = GetSlice(ModFileSize_Label.Text, "|", 0) + " | Downloads: " + ModDownloadsDict.GetValueOrDefault(CurrentlyDownloadingModName.Replace(" ", "_")).ToString();
 
-                    LoadMarketplaceMods();
+                    //Update to show as downloaded
+                    //Perhaps recheck each mod if they are downloaded?
+                    //LoadMarketplaceMods(); Disabled to prevent auto-scrolling
+                    CheckModState();
                 }
                 catch (Exception ex)
                 {
@@ -1090,6 +1093,33 @@ namespace WSMM
 
             //file is not locked
             return false;
+        }
+
+        private void CheckModState()
+        {
+            Graphics g = CreateGraphics();
+            foreach (int ModID in Mod_Entries)
+            {
+                string ActiveModVersion = Main_Form.GetActiveModByName(Mod_NameLabel[ModID].Text);
+                if (ActiveModVersion == Mod_VersionLabel[ModID].Text)
+                {
+                    Mod_InfoLabel[ModID].Text = "[Downloaded]";
+                    Mod_InfoLabel[ModID].Visible = true;
+                }
+                else if (ActiveModVersion != Mod_VersionLabel[ModID].Text && ActiveModVersion != string.Empty)
+                {
+                    Mod_InfoLabel[ModID].Text = "[Update Available]";
+                    Mod_InfoLabel[ModID].ForeColor = Color.OliveDrab;
+                    Mod_InfoLabel[ModID].Visible = true;
+                }
+                else
+                {
+                    Mod_InfoLabel[ModID].Text = "";
+                    Mod_InfoLabel[ModID].Visible = false;
+                }
+                SizeF LabelSize = g.MeasureString(Mod_InfoLabel[ModID].Text, Mod_InfoLabel[ModID].Font);
+                Mod_InfoLabel[ModID].Location = new Point(Mod_Panel[ModID].Size.Width / 2 - ((int)LabelSize.Width / 2), 3);
+            }
         }
     }
 }

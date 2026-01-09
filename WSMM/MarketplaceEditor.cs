@@ -59,17 +59,15 @@ namespace WSMM
         private void LoadSupportedVersions()
         {
             SupportedWLVersions_CLB.Items.Clear();
-            if (File.Exists(Application.StartupPath + @"System\EngineVersions.ini"))
+            SupportedWLVersions_CLB.Items.Add("UE5.4");
+            if (File.Exists(Application.StartupPath + @"System\SupportedVersions.ini"))
             {
-                foreach (string line in File.ReadLines(Application.StartupPath + @"System\EngineVersions.ini"))
+                foreach (string line in File.ReadLines(Application.StartupPath + @"System\SupportedVersions.ini"))
                 {
                     SupportedWLVersions_CLB.Items.Add(GetSlice(line, "#", 0));
                 }
             }
-            if (File.Exists(Application.StartupPath + @"System\SupportedVersions.ini"))
-            {
-                SupportedWLVersions_CLB.Items.AddRange(File.ReadAllLines(Application.StartupPath + @"System\SupportedVersions.ini"));
-            }
+            SupportedWLVersions_CLB.Items.Add("All Versions");
         }
 
         private void LoadCategories()
