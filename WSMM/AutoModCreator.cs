@@ -741,6 +741,9 @@ namespace WSMM
                     {
                         ModString += "Prop: " + s + "\n";
                         AddToNameMap(GetSlice(s, " | ", 0)); // ID
+                        string IconPath = GetSlice(s, " | ", 3);
+                        AddToNameMap(GetSlice(IconPath, "/", 999)); // Icon Name
+                        AddToNameMap(IconPath); // Icon Path
                         string MeshPath = GetSlice(s, " | ", 4);
                         AddToNameMap(GetSlice(MeshPath, "/", 999)); // Mesh Name
                         AddToNameMap(MeshPath); // Mesh Path
