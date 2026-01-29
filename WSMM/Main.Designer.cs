@@ -1324,6 +1324,7 @@
             // Icon_PB
             // 
             Icon_PB.Image = Properties.Resources.WLMM_Small_Icon;
+            Icon_PB.ImageLocation = "";
             Icon_PB.Location = new Point(5, 5);
             Icon_PB.Name = "Icon_PB";
             Icon_PB.Size = new Size(70, 70);

@@ -333,7 +333,7 @@ namespace WSMM
         private void ScreenshotAdd_Button_Click(object sender, EventArgs e)
         {
             ScreenshotAdd_TB.ForeColor = SystemColors.ActiveCaption;
-            if (ScreenshotAdd_TB.Text.ToLower().EndsWith(".jpg") || ScreenshotAdd_TB.Text.ToLower().EndsWith(".jpeg") || ScreenshotAdd_TB.Text.ToLower().EndsWith(".png"))
+            if (ScreenshotAdd_TB.Text.ToLower().EndsWith(".jpg") || ScreenshotAdd_TB.Text.ToLower().EndsWith(".jpeg") || ScreenshotAdd_TB.Text.ToLower().EndsWith(".png") || ScreenshotAdd_TB.Text.ToLower().EndsWith(".gif"))
             {
                 if (ScreenshotAdd_TB.Text.ToLower().StartsWith("https://") || ScreenshotAdd_TB.Text.ToLower().StartsWith("http://"))
                 {
@@ -348,7 +348,7 @@ namespace WSMM
             else
             {
                 ScreenshotAdd_TB.ForeColor = Color.LightCoral;
-                toolTip1.Show("Filetype not supported. Must be .jpg, .jpeg or .png.", ScreenshotAdd_TB, 3000);
+                toolTip1.Show("Filetype not supported. Must be .jpg, .jpeg, .png or .gif.", ScreenshotAdd_TB, 3000);
             }
         }
 

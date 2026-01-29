@@ -634,9 +634,9 @@
             label2.ForeColor = SystemColors.ActiveCaption;
             label2.Location = new Point(145, 2);
             label2.Name = "label2";
-            label2.Size = new Size(279, 17);
+            label2.Size = new Size(304, 17);
             label2.TabIndex = 41;
-            label2.Text = "Screenshots (Must end with PNG, JPG or JPEG)";
+            label2.Text = "Screenshots (Must end with PNG, JPG, JPEG or GIF)";
             // 
             // Screenshots_LB
             // 

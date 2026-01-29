@@ -34,7 +34,7 @@ namespace WSMM
         private bool StartingUp = true;
         private bool HasOldChanges = false;
 
-        private string WLMM_Version = "1.4.1";
+        private string WLMM_Version = "1.4.2";
         private string Datatable_Version = string.Empty;
         string BuildLog = string.Empty;
 
