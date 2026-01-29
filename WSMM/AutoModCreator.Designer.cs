@@ -352,6 +352,8 @@
             StopEditing_LL = new LinkLabel();
             toolTip1 = new ToolTip(components);
             PropsGB = new GroupBox();
+            label135 = new Label();
+            PropCustomBlueprintName_TB = new TextBox();
             PropADFL_CB = new CheckBox();
             PropCustomBlueprint_Ex = new LinkLabel();
             label134 = new Label();
@@ -411,8 +413,6 @@
             Props_Remove_Button = new Button();
             Props_Add_Button = new Button();
             Props_LB = new ListBox();
-            label135 = new Label();
-            PropCustomBlueprintName_TB = new TextBox();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             TitlePanel.SuspendLayout();
@@ -4620,6 +4620,30 @@
             PropsGB.Text = "Props";
             PropsGB.Visible = false;
             // 
+            // label135
+            // 
+            label135.AutoSize = true;
+            label135.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label135.ForeColor = SystemColors.ActiveCaption;
+            label135.Location = new Point(21, 547);
+            label135.Margin = new Padding(4, 0, 4, 0);
+            label135.Name = "label135";
+            label135.Size = new Size(141, 15);
+            label135.TabIndex = 78;
+            label135.Text = "Custom Blueprint Name:";
+            // 
+            // PropCustomBlueprintName_TB
+            // 
+            PropCustomBlueprintName_TB.BackColor = Color.FromArgb(75, 68, 138);
+            PropCustomBlueprintName_TB.Font = new Font("Microsoft Sans Serif", 9F);
+            PropCustomBlueprintName_TB.ForeColor = SystemColors.ActiveCaption;
+            PropCustomBlueprintName_TB.Location = new Point(35, 566);
+            PropCustomBlueprintName_TB.Margin = new Padding(4, 3, 4, 3);
+            PropCustomBlueprintName_TB.Name = "PropCustomBlueprintName_TB";
+            PropCustomBlueprintName_TB.Size = new Size(535, 21);
+            PropCustomBlueprintName_TB.TabIndex = 77;
+            PropCustomBlueprintName_TB.Text = "None";
+            // 
             // PropADFL_CB
             // 
             PropADFL_CB.AutoSize = true;
@@ -5257,7 +5281,7 @@
             PropCategory_CB.Font = new Font("Microsoft Sans Serif", 9F);
             PropCategory_CB.ForeColor = SystemColors.ActiveCaption;
             PropCategory_CB.FormattingEnabled = true;
-            PropCategory_CB.Items.AddRange(new object[] { "Rocks", "", "Decorations", "", "Flora", "", "Furniture", "", "Food", "", "Assorted", "", "Effects", "", "Lights", "", "Architecture", "", "Prototype", "", "Weapons", "", "Automation", "", "UI" });
+            PropCategory_CB.Items.AddRange(new object[] { "Rocks", "Decorations", "Flora", "Furniture", "Food", "Assorted", "Effects", "Lights", "Architecture", "Prototype", "Weapons", "Automation", "UI" });
             PropCategory_CB.Location = new Point(318, 86);
             PropCategory_CB.Margin = new Padding(4, 3, 4, 3);
             PropCategory_CB.Name = "PropCategory_CB";
@@ -5368,30 +5392,6 @@
             Props_LB.Size = new Size(583, 92);
             Props_LB.TabIndex = 44;
             Props_LB.SelectedIndexChanged += Props_LB_SelectedIndexChanged;
-            // 
-            // label135
-            // 
-            label135.AutoSize = true;
-            label135.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label135.ForeColor = SystemColors.ActiveCaption;
-            label135.Location = new Point(21, 547);
-            label135.Margin = new Padding(4, 0, 4, 0);
-            label135.Name = "label135";
-            label135.Size = new Size(141, 15);
-            label135.TabIndex = 78;
-            label135.Text = "Custom Blueprint Name:";
-            // 
-            // PropCustomBlueprintName_TB
-            // 
-            PropCustomBlueprintName_TB.BackColor = Color.FromArgb(75, 68, 138);
-            PropCustomBlueprintName_TB.Font = new Font("Microsoft Sans Serif", 9F);
-            PropCustomBlueprintName_TB.ForeColor = SystemColors.ActiveCaption;
-            PropCustomBlueprintName_TB.Location = new Point(35, 566);
-            PropCustomBlueprintName_TB.Margin = new Padding(4, 3, 4, 3);
-            PropCustomBlueprintName_TB.Name = "PropCustomBlueprintName_TB";
-            PropCustomBlueprintName_TB.Size = new Size(535, 21);
-            PropCustomBlueprintName_TB.TabIndex = 77;
-            PropCustomBlueprintName_TB.Text = "None";
             // 
             // AutoModCreator
             // 
