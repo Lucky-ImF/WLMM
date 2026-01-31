@@ -34,7 +34,7 @@ namespace WSMM
         private bool StartingUp = true;
         private bool HasOldChanges = false;
 
-        private string WLMM_Version = "1.4.3";
+        private string WLMM_Version = "1.4.4";
         private string Datatable_Version = string.Empty;
         string BuildLog = string.Empty;
 
@@ -1114,7 +1114,7 @@ namespace WSMM
                 {
                     BS_BaseGameSandboxPropsFile.Text = BS_BaseGameSandboxPropsFile.Items[0].ToString();
                 }
-                else
+                else if (BS_BaseGameSandboxPropsFile.Text == "" || BS_BaseGameSandboxPropsFile.Text == "Unsupported")
                 {
                     BS_BaseGameSandboxPropsFile.Text = "Unsupported";
                 }
