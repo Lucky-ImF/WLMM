@@ -420,8 +420,6 @@ namespace WSMM
 
             //Version Check
             CheckForUpdate();
-
-            StartingUp = false;
         }
 
         private void LoadSupportedVersions()
@@ -1112,7 +1110,7 @@ namespace WSMM
                         BS_LaunchParams.Text = GetSlice(file, "=", 1);
                     }
                 }
-                if (BS_BaseGameSandboxPropsFile.Text == "" && BS_BaseGameSandboxPropsFile.Items.Count >= 1)
+                if (BS_BaseGameSandboxPropsFile.Text == "" && BS_BaseGameSandboxPropsFile.Items.Count >= 1 || BS_BaseGameSandboxPropsFile.Text == "Unsupported" && BS_BaseGameSandboxPropsFile.Items.Count >= 1)
                 {
                     BS_BaseGameSandboxPropsFile.Text = BS_BaseGameSandboxPropsFile.Items[0].ToString();
                 }
