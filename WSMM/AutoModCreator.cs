@@ -609,6 +609,7 @@ namespace WSMM
 
                     File.WriteAllText(SavePath, ModString);
                     ModCreator_Form.AddToAutoModList(SavePath);
+                    EditNewFile(SavePath);
                 }
                 else if (Variant.Text == "Port")
                 {
@@ -635,6 +636,7 @@ namespace WSMM
 
                     File.WriteAllText(SavePath, ModString);
                     ModCreator_Form.AddToAutoModList(SavePath);
+                    EditNewFile(SavePath);
                 }
                 else if (Variant.Text == "Character Customization")
                 {
@@ -688,6 +690,7 @@ namespace WSMM
 
                     File.WriteAllText(SavePath, ModString);
                     ModCreator_Form.AddToAutoModList(SavePath);
+                    EditNewFile(SavePath);
                 }
                 else if (Variant.Text == "Fur Customization")
                 {
@@ -732,6 +735,7 @@ namespace WSMM
 
                     File.WriteAllText(SavePath, ModString);
                     ModCreator_Form.AddToAutoModList(SavePath);
+                    EditNewFile(SavePath);
                 }
                 else if (Variant.Text == "Props")
                 {
@@ -786,6 +790,7 @@ namespace WSMM
 
                     File.WriteAllText(SavePath, ModString);
                     ModCreator_Form.AddToAutoModList(SavePath);
+                    EditNewFile(SavePath);
                 }
                 MessageBox.Show("Mod file created!", "AutoMod");
             }
@@ -2703,6 +2708,14 @@ namespace WSMM
                 PropCustomBlueprintName_TB.Text = SplitEntry[14];
                 PropADFL_CB.Checked = Boolean.Parse(SplitEntry[15]);
             }
+        }
+
+        private void EditNewFile(string Path)
+        {
+            CurrentlyEditing_Path = Path;
+            CurrentlyEditing_LL.Text = Path;
+            WriteMod.Text = "Edit Mod File";
+            StopEditing_LL.Show();
         }
     }
 }

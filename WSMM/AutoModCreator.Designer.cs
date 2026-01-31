@@ -352,12 +352,20 @@
             StopEditing_LL = new LinkLabel();
             toolTip1 = new ToolTip(components);
             PropsGB = new GroupBox();
+            panel1 = new Panel();
+            label112 = new Label();
             label135 = new Label();
+            Props_LB = new ListBox();
             PropCustomBlueprintName_TB = new TextBox();
+            Props_Add_Button = new Button();
             PropADFL_CB = new CheckBox();
+            Props_Remove_Button = new Button();
             PropCustomBlueprint_Ex = new LinkLabel();
+            PropID_TB = new TextBox();
             label134 = new Label();
+            PropName_TB = new TextBox();
             PropCustomBlueprint_TB = new TextBox();
+            label113 = new Label();
             groupBox13 = new GroupBox();
             PropColRotation_Roll = new NumericUpDown();
             label131 = new Label();
@@ -365,6 +373,7 @@
             label132 = new Label();
             PropColRotation_Pitch = new NumericUpDown();
             label133 = new Label();
+            label114 = new Label();
             groupBox11 = new GroupBox();
             PropColExtents_Z = new NumericUpDown();
             label125 = new Label();
@@ -372,6 +381,7 @@
             label126 = new Label();
             PropColExtents_X = new NumericUpDown();
             label127 = new Label();
+            PropCategory_CB = new ComboBox();
             groupBox12 = new GroupBox();
             PropColOffset_Z = new NumericUpDown();
             label128 = new Label();
@@ -379,7 +389,9 @@
             label129 = new Label();
             PropColOffset_X = new NumericUpDown();
             label130 = new Label();
+            PropIcon_TB = new TextBox();
             PropCollision_CB = new CheckBox();
+            label115 = new Label();
             groupBox10 = new GroupBox();
             PropPlacementOffset_Z = new NumericUpDown();
             label122 = new Label();
@@ -387,6 +399,7 @@
             label123 = new Label();
             PropPlacementOffset_X = new NumericUpDown();
             label124 = new Label();
+            PropIcon_Ex = new LinkLabel();
             groupBox9 = new GroupBox();
             PropPivotOffset_Z = new NumericUpDown();
             label121 = new Label();
@@ -394,25 +407,13 @@
             label120 = new Label();
             PropPivotOffset_X = new NumericUpDown();
             label119 = new Label();
+            PropMesh_TB = new TextBox();
             label118 = new Label();
+            label116 = new Label();
             PropActor_TB = new TextBox();
+            PropMesh_Ex = new LinkLabel();
             label117 = new Label();
             PropSkelMesh_TB = new TextBox();
-            PropMesh_Ex = new LinkLabel();
-            label116 = new Label();
-            PropMesh_TB = new TextBox();
-            PropIcon_Ex = new LinkLabel();
-            label115 = new Label();
-            PropIcon_TB = new TextBox();
-            PropCategory_CB = new ComboBox();
-            label114 = new Label();
-            label113 = new Label();
-            PropName_TB = new TextBox();
-            label112 = new Label();
-            PropID_TB = new TextBox();
-            Props_Remove_Button = new Button();
-            Props_Add_Button = new Button();
-            Props_LB = new ListBox();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             TitlePanel.SuspendLayout();
@@ -440,6 +441,7 @@
             CharCustomBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_PB).BeginInit();
             PropsGB.SuspendLayout();
+            panel1.SuspendLayout();
             groupBox13.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)PropColRotation_Roll).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PropColRotation_Yaw).BeginInit();
@@ -4577,37 +4579,7 @@
             // PropsGB
             // 
             PropsGB.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            PropsGB.Controls.Add(label135);
-            PropsGB.Controls.Add(PropCustomBlueprintName_TB);
-            PropsGB.Controls.Add(PropADFL_CB);
-            PropsGB.Controls.Add(PropCustomBlueprint_Ex);
-            PropsGB.Controls.Add(label134);
-            PropsGB.Controls.Add(PropCustomBlueprint_TB);
-            PropsGB.Controls.Add(groupBox13);
-            PropsGB.Controls.Add(groupBox11);
-            PropsGB.Controls.Add(groupBox12);
-            PropsGB.Controls.Add(PropCollision_CB);
-            PropsGB.Controls.Add(groupBox10);
-            PropsGB.Controls.Add(groupBox9);
-            PropsGB.Controls.Add(label118);
-            PropsGB.Controls.Add(PropActor_TB);
-            PropsGB.Controls.Add(label117);
-            PropsGB.Controls.Add(PropSkelMesh_TB);
-            PropsGB.Controls.Add(PropMesh_Ex);
-            PropsGB.Controls.Add(label116);
-            PropsGB.Controls.Add(PropMesh_TB);
-            PropsGB.Controls.Add(PropIcon_Ex);
-            PropsGB.Controls.Add(label115);
-            PropsGB.Controls.Add(PropIcon_TB);
-            PropsGB.Controls.Add(PropCategory_CB);
-            PropsGB.Controls.Add(label114);
-            PropsGB.Controls.Add(label113);
-            PropsGB.Controls.Add(PropName_TB);
-            PropsGB.Controls.Add(label112);
-            PropsGB.Controls.Add(PropID_TB);
-            PropsGB.Controls.Add(Props_Remove_Button);
-            PropsGB.Controls.Add(Props_Add_Button);
-            PropsGB.Controls.Add(Props_LB);
+            PropsGB.Controls.Add(panel1);
             PropsGB.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             PropsGB.ForeColor = Color.White;
             PropsGB.Location = new Point(5, 208);
@@ -4620,29 +4592,111 @@
             PropsGB.Text = "Props";
             PropsGB.Visible = false;
             // 
+            // panel1
+            // 
+            panel1.AutoScroll = true;
+            panel1.Controls.Add(label112);
+            panel1.Controls.Add(label135);
+            panel1.Controls.Add(Props_LB);
+            panel1.Controls.Add(PropCustomBlueprintName_TB);
+            panel1.Controls.Add(Props_Add_Button);
+            panel1.Controls.Add(PropADFL_CB);
+            panel1.Controls.Add(Props_Remove_Button);
+            panel1.Controls.Add(PropCustomBlueprint_Ex);
+            panel1.Controls.Add(PropID_TB);
+            panel1.Controls.Add(label134);
+            panel1.Controls.Add(PropName_TB);
+            panel1.Controls.Add(PropCustomBlueprint_TB);
+            panel1.Controls.Add(label113);
+            panel1.Controls.Add(groupBox13);
+            panel1.Controls.Add(label114);
+            panel1.Controls.Add(groupBox11);
+            panel1.Controls.Add(PropCategory_CB);
+            panel1.Controls.Add(groupBox12);
+            panel1.Controls.Add(PropIcon_TB);
+            panel1.Controls.Add(PropCollision_CB);
+            panel1.Controls.Add(label115);
+            panel1.Controls.Add(groupBox10);
+            panel1.Controls.Add(PropIcon_Ex);
+            panel1.Controls.Add(groupBox9);
+            panel1.Controls.Add(PropMesh_TB);
+            panel1.Controls.Add(label118);
+            panel1.Controls.Add(label116);
+            panel1.Controls.Add(PropActor_TB);
+            panel1.Controls.Add(PropMesh_Ex);
+            panel1.Controls.Add(label117);
+            panel1.Controls.Add(PropSkelMesh_TB);
+            panel1.Dock = DockStyle.Fill;
+            panel1.Location = new Point(4, 20);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(598, 705);
+            panel1.TabIndex = 79;
+            // 
+            // label112
+            // 
+            label112.AutoSize = true;
+            label112.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label112.ForeColor = SystemColors.ActiveCaption;
+            label112.Location = new Point(8, 0);
+            label112.Margin = new Padding(4, 0, 4, 0);
+            label112.Name = "label112";
+            label112.Size = new Size(51, 15);
+            label112.TabIndex = 48;
+            label112.Text = "Prop ID:";
+            // 
             // label135
             // 
             label135.AutoSize = true;
             label135.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label135.ForeColor = SystemColors.ActiveCaption;
-            label135.Location = new Point(21, 547);
+            label135.Location = new Point(6, 492);
             label135.Margin = new Padding(4, 0, 4, 0);
             label135.Name = "label135";
             label135.Size = new Size(141, 15);
             label135.TabIndex = 78;
             label135.Text = "Custom Blueprint Name:";
             // 
+            // Props_LB
+            // 
+            Props_LB.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            Props_LB.BackColor = Color.FromArgb(75, 68, 138);
+            Props_LB.BorderStyle = BorderStyle.FixedSingle;
+            Props_LB.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Props_LB.ForeColor = SystemColors.ActiveCaption;
+            Props_LB.FormattingEnabled = true;
+            Props_LB.ItemHeight = 15;
+            Props_LB.Location = new Point(20, 569);
+            Props_LB.Name = "Props_LB";
+            Props_LB.ScrollAlwaysVisible = true;
+            Props_LB.Size = new Size(556, 92);
+            Props_LB.TabIndex = 44;
+            Props_LB.SelectedIndexChanged += Props_LB_SelectedIndexChanged;
+            // 
             // PropCustomBlueprintName_TB
             // 
             PropCustomBlueprintName_TB.BackColor = Color.FromArgb(75, 68, 138);
             PropCustomBlueprintName_TB.Font = new Font("Microsoft Sans Serif", 9F);
             PropCustomBlueprintName_TB.ForeColor = SystemColors.ActiveCaption;
-            PropCustomBlueprintName_TB.Location = new Point(35, 566);
+            PropCustomBlueprintName_TB.Location = new Point(20, 511);
             PropCustomBlueprintName_TB.Margin = new Padding(4, 3, 4, 3);
             PropCustomBlueprintName_TB.Name = "PropCustomBlueprintName_TB";
             PropCustomBlueprintName_TB.Size = new Size(535, 21);
             PropCustomBlueprintName_TB.TabIndex = 77;
             PropCustomBlueprintName_TB.Text = "None";
+            // 
+            // Props_Add_Button
+            // 
+            Props_Add_Button.BackColor = Color.FromArgb(75, 68, 138);
+            Props_Add_Button.FlatStyle = FlatStyle.Popup;
+            Props_Add_Button.ForeColor = SystemColors.GradientInactiveCaption;
+            Props_Add_Button.Location = new Point(76, 538);
+            Props_Add_Button.Margin = new Padding(4, 3, 4, 3);
+            Props_Add_Button.Name = "Props_Add_Button";
+            Props_Add_Button.Size = new Size(269, 27);
+            Props_Add_Button.TabIndex = 45;
+            Props_Add_Button.Text = "Add +";
+            Props_Add_Button.UseVisualStyleBackColor = false;
+            Props_Add_Button.Click += Props_Add_Button_Click;
             // 
             // PropADFL_CB
             // 
@@ -4651,12 +4705,27 @@
             PropADFL_CB.CheckState = CheckState.Checked;
             PropADFL_CB.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             PropADFL_CB.ForeColor = SystemColors.ActiveCaption;
-            PropADFL_CB.Location = new Point(396, 477);
+            PropADFL_CB.Location = new Point(381, 422);
             PropADFL_CB.Name = "PropADFL_CB";
             PropADFL_CB.Size = new Size(197, 20);
             PropADFL_CB.TabIndex = 76;
             PropADFL_CB.Text = "Affect Distance Field Lighting";
             PropADFL_CB.UseVisualStyleBackColor = true;
+            // 
+            // Props_Remove_Button
+            // 
+            Props_Remove_Button.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            Props_Remove_Button.BackColor = Color.FromArgb(75, 68, 138);
+            Props_Remove_Button.FlatStyle = FlatStyle.Popup;
+            Props_Remove_Button.ForeColor = Color.LightCoral;
+            Props_Remove_Button.Location = new Point(370, 538);
+            Props_Remove_Button.Margin = new Padding(4, 3, 4, 3);
+            Props_Remove_Button.Name = "Props_Remove_Button";
+            Props_Remove_Button.Size = new Size(148, 27);
+            Props_Remove_Button.TabIndex = 46;
+            Props_Remove_Button.Text = "Remove";
+            Props_Remove_Button.UseVisualStyleBackColor = false;
+            Props_Remove_Button.Click += Props_Remove_Button_Click;
             // 
             // PropCustomBlueprint_Ex
             // 
@@ -4664,7 +4733,7 @@
             PropCustomBlueprint_Ex.AutoSize = true;
             PropCustomBlueprint_Ex.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             PropCustomBlueprint_Ex.LinkColor = SystemColors.MenuHighlight;
-            PropCustomBlueprint_Ex.Location = new Point(153, 505);
+            PropCustomBlueprint_Ex.Location = new Point(138, 450);
             PropCustomBlueprint_Ex.Margin = new Padding(4, 0, 4, 0);
             PropCustomBlueprint_Ex.Name = "PropCustomBlueprint_Ex";
             PropCustomBlueprint_Ex.Size = new Size(389, 15);
@@ -4674,29 +4743,65 @@
             PropCustomBlueprint_Ex.VisitedLinkColor = SystemColors.MenuHighlight;
             PropCustomBlueprint_Ex.LinkClicked += PropCustomBlueprint_Ex_LinkClicked;
             // 
+            // PropID_TB
+            // 
+            PropID_TB.BackColor = Color.FromArgb(75, 68, 138);
+            PropID_TB.Font = new Font("Microsoft Sans Serif", 9F);
+            PropID_TB.ForeColor = SystemColors.ActiveCaption;
+            PropID_TB.Location = new Point(22, 19);
+            PropID_TB.Margin = new Padding(4, 3, 4, 3);
+            PropID_TB.Name = "PropID_TB";
+            PropID_TB.Size = new Size(252, 21);
+            PropID_TB.TabIndex = 47;
+            PropID_TB.Text = "Prop_ID";
+            // 
             // label134
             // 
             label134.AutoSize = true;
             label134.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label134.ForeColor = SystemColors.ActiveCaption;
-            label134.Location = new Point(21, 505);
+            label134.Location = new Point(6, 450);
             label134.Margin = new Padding(4, 0, 4, 0);
             label134.Name = "label134";
             label134.Size = new Size(132, 15);
             label134.TabIndex = 74;
             label134.Text = "Custom Blueprint Path:";
             // 
+            // PropName_TB
+            // 
+            PropName_TB.BackColor = Color.FromArgb(75, 68, 138);
+            PropName_TB.Font = new Font("Microsoft Sans Serif", 9F);
+            PropName_TB.ForeColor = SystemColors.ActiveCaption;
+            PropName_TB.Location = new Point(303, 19);
+            PropName_TB.Margin = new Padding(4, 3, 4, 3);
+            PropName_TB.Name = "PropName_TB";
+            PropName_TB.Size = new Size(252, 21);
+            PropName_TB.TabIndex = 49;
+            PropName_TB.Text = "Prop Name";
+            // 
             // PropCustomBlueprint_TB
             // 
             PropCustomBlueprint_TB.BackColor = Color.FromArgb(75, 68, 138);
             PropCustomBlueprint_TB.Font = new Font("Microsoft Sans Serif", 9F);
             PropCustomBlueprint_TB.ForeColor = SystemColors.ActiveCaption;
-            PropCustomBlueprint_TB.Location = new Point(35, 524);
+            PropCustomBlueprint_TB.Location = new Point(20, 469);
             PropCustomBlueprint_TB.Margin = new Padding(4, 3, 4, 3);
             PropCustomBlueprint_TB.Name = "PropCustomBlueprint_TB";
             PropCustomBlueprint_TB.Size = new Size(535, 21);
             PropCustomBlueprint_TB.TabIndex = 73;
             PropCustomBlueprint_TB.Text = "None";
+            // 
+            // label113
+            // 
+            label113.AutoSize = true;
+            label113.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label113.ForeColor = SystemColors.ActiveCaption;
+            label113.Location = new Point(289, 0);
+            label113.Margin = new Padding(4, 0, 4, 0);
+            label113.Name = "label113";
+            label113.Size = new Size(73, 15);
+            label113.TabIndex = 50;
+            label113.Text = "Prop Name:";
             // 
             // groupBox13
             // 
@@ -4708,7 +4813,7 @@
             groupBox13.Controls.Add(label133);
             groupBox13.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             groupBox13.ForeColor = SystemColors.ActiveCaption;
-            groupBox13.Location = new Point(40, 447);
+            groupBox13.Location = new Point(25, 392);
             groupBox13.Name = "groupBox13";
             groupBox13.Size = new Size(337, 51);
             groupBox13.TabIndex = 72;
@@ -4784,6 +4889,18 @@
             label133.TabIndex = 50;
             label133.Text = "Pitch:";
             // 
+            // label114
+            // 
+            label114.AutoSize = true;
+            label114.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label114.ForeColor = SystemColors.ActiveCaption;
+            label114.Location = new Point(289, 43);
+            label114.Margin = new Padding(4, 0, 4, 0);
+            label114.Name = "label114";
+            label114.Size = new Size(58, 15);
+            label114.TabIndex = 52;
+            label114.Text = "Category:";
+            // 
             // groupBox11
             // 
             groupBox11.Controls.Add(PropColExtents_Z);
@@ -4794,7 +4911,7 @@
             groupBox11.Controls.Add(label127);
             groupBox11.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             groupBox11.ForeColor = SystemColors.ActiveCaption;
-            groupBox11.Location = new Point(307, 388);
+            groupBox11.Location = new Point(292, 333);
             groupBox11.Name = "groupBox11";
             groupBox11.Size = new Size(255, 51);
             groupBox11.TabIndex = 71;
@@ -4873,6 +4990,21 @@
             label127.TabIndex = 50;
             label127.Text = "X:";
             // 
+            // PropCategory_CB
+            // 
+            PropCategory_CB.BackColor = Color.FromArgb(75, 68, 138);
+            PropCategory_CB.FlatStyle = FlatStyle.Popup;
+            PropCategory_CB.Font = new Font("Microsoft Sans Serif", 9F);
+            PropCategory_CB.ForeColor = SystemColors.ActiveCaption;
+            PropCategory_CB.FormattingEnabled = true;
+            PropCategory_CB.Items.AddRange(new object[] { "Rocks", "Decorations", "Flora", "Furniture", "Food", "Assorted", "Effects", "Lights", "Architecture", "Prototype", "Weapons", "Automation", "UI" });
+            PropCategory_CB.Location = new Point(303, 63);
+            PropCategory_CB.Margin = new Padding(4, 3, 4, 3);
+            PropCategory_CB.Name = "PropCategory_CB";
+            PropCategory_CB.Size = new Size(252, 23);
+            PropCategory_CB.TabIndex = 53;
+            PropCategory_CB.Text = "Rocks";
+            // 
             // groupBox12
             // 
             groupBox12.Controls.Add(PropColOffset_Z);
@@ -4883,7 +5015,7 @@
             groupBox12.Controls.Add(label130);
             groupBox12.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             groupBox12.ForeColor = SystemColors.ActiveCaption;
-            groupBox12.Location = new Point(40, 387);
+            groupBox12.Location = new Point(25, 332);
             groupBox12.Name = "groupBox12";
             groupBox12.Size = new Size(255, 51);
             groupBox12.TabIndex = 70;
@@ -4959,6 +5091,18 @@
             label130.TabIndex = 50;
             label130.Text = "X:";
             // 
+            // PropIcon_TB
+            // 
+            PropIcon_TB.BackColor = Color.FromArgb(75, 68, 138);
+            PropIcon_TB.Font = new Font("Microsoft Sans Serif", 9F);
+            PropIcon_TB.ForeColor = SystemColors.ActiveCaption;
+            PropIcon_TB.Location = new Point(20, 109);
+            PropIcon_TB.Margin = new Padding(4, 3, 4, 3);
+            PropIcon_TB.Name = "PropIcon_TB";
+            PropIcon_TB.Size = new Size(535, 21);
+            PropIcon_TB.TabIndex = 54;
+            PropIcon_TB.Text = "/Game/Textures/UI/Icons/Sandbox/PropIcons/";
+            // 
             // PropCollision_CB
             // 
             PropCollision_CB.AutoSize = true;
@@ -4966,12 +5110,24 @@
             PropCollision_CB.CheckState = CheckState.Checked;
             PropCollision_CB.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             PropCollision_CB.ForeColor = SystemColors.ActiveCaption;
-            PropCollision_CB.Location = new Point(396, 454);
+            PropCollision_CB.Location = new Point(381, 399);
             PropCollision_CB.Name = "PropCollision_CB";
             PropCollision_CB.Size = new Size(77, 20);
             PropCollision_CB.TabIndex = 69;
             PropCollision_CB.Text = "Collision";
             PropCollision_CB.UseVisualStyleBackColor = true;
+            // 
+            // label115
+            // 
+            label115.AutoSize = true;
+            label115.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label115.ForeColor = SystemColors.ActiveCaption;
+            label115.Location = new Point(6, 90);
+            label115.Margin = new Padding(4, 0, 4, 0);
+            label115.Name = "label115";
+            label115.Size = new Size(90, 15);
+            label115.TabIndex = 55;
+            label115.Text = "Prop Icon Path:";
             // 
             // groupBox10
             // 
@@ -4983,7 +5139,7 @@
             groupBox10.Controls.Add(label124);
             groupBox10.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             groupBox10.ForeColor = SystemColors.ActiveCaption;
-            groupBox10.Location = new Point(307, 323);
+            groupBox10.Location = new Point(292, 268);
             groupBox10.Name = "groupBox10";
             groupBox10.Size = new Size(255, 51);
             groupBox10.TabIndex = 68;
@@ -5059,6 +5215,22 @@
             label124.TabIndex = 50;
             label124.Text = "X:";
             // 
+            // PropIcon_Ex
+            // 
+            PropIcon_Ex.ActiveLinkColor = Color.DeepSkyBlue;
+            PropIcon_Ex.AutoSize = true;
+            PropIcon_Ex.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            PropIcon_Ex.LinkColor = SystemColors.MenuHighlight;
+            PropIcon_Ex.Location = new Point(91, 90);
+            PropIcon_Ex.Margin = new Padding(4, 0, 4, 0);
+            PropIcon_Ex.Name = "PropIcon_Ex";
+            PropIcon_Ex.Size = new Size(384, 15);
+            PropIcon_Ex.TabIndex = 57;
+            PropIcon_Ex.TabStop = true;
+            PropIcon_Ex.Text = " (ex. /Game/Textures/UI/Icons/Sandbox/PropIcons/T_FriedMeatFIcon)";
+            PropIcon_Ex.VisitedLinkColor = SystemColors.MenuHighlight;
+            PropIcon_Ex.LinkClicked += PropIcon_Ex_LinkClicked;
+            // 
             // groupBox9
             // 
             groupBox9.Controls.Add(PropPivotOffset_Z);
@@ -5069,7 +5241,7 @@
             groupBox9.Controls.Add(label119);
             groupBox9.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             groupBox9.ForeColor = SystemColors.ActiveCaption;
-            groupBox9.Location = new Point(40, 322);
+            groupBox9.Location = new Point(25, 267);
             groupBox9.Name = "groupBox9";
             groupBox9.Size = new Size(255, 51);
             groupBox9.TabIndex = 67;
@@ -5145,36 +5317,76 @@
             label119.TabIndex = 50;
             label119.Text = "X:";
             // 
+            // PropMesh_TB
+            // 
+            PropMesh_TB.BackColor = Color.FromArgb(75, 68, 138);
+            PropMesh_TB.Font = new Font("Microsoft Sans Serif", 9F);
+            PropMesh_TB.ForeColor = SystemColors.ActiveCaption;
+            PropMesh_TB.Location = new Point(20, 154);
+            PropMesh_TB.Margin = new Padding(4, 3, 4, 3);
+            PropMesh_TB.Name = "PropMesh_TB";
+            PropMesh_TB.Size = new Size(535, 21);
+            PropMesh_TB.TabIndex = 58;
+            PropMesh_TB.Text = "None";
+            // 
             // label118
             // 
             label118.AutoSize = true;
             label118.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label118.ForeColor = SystemColors.ActiveCaption;
-            label118.Location = new Point(21, 273);
+            label118.Location = new Point(6, 222);
             label118.Margin = new Padding(4, 0, 4, 0);
             label118.Name = "label118";
             label118.Size = new Size(65, 15);
             label118.TabIndex = 65;
             label118.Text = "Actor Path:";
             // 
+            // label116
+            // 
+            label116.AutoSize = true;
+            label116.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label116.ForeColor = SystemColors.ActiveCaption;
+            label116.Location = new Point(6, 135);
+            label116.Margin = new Padding(4, 0, 4, 0);
+            label116.Name = "label116";
+            label116.Size = new Size(69, 15);
+            label116.TabIndex = 59;
+            label116.Text = "Mesh Path:";
+            // 
             // PropActor_TB
             // 
             PropActor_TB.BackColor = Color.FromArgb(75, 68, 138);
             PropActor_TB.Font = new Font("Microsoft Sans Serif", 9F);
             PropActor_TB.ForeColor = SystemColors.ActiveCaption;
-            PropActor_TB.Location = new Point(35, 292);
+            PropActor_TB.Location = new Point(20, 241);
             PropActor_TB.Margin = new Padding(4, 3, 4, 3);
             PropActor_TB.Name = "PropActor_TB";
             PropActor_TB.Size = new Size(535, 21);
             PropActor_TB.TabIndex = 64;
             PropActor_TB.Text = "None";
             // 
+            // PropMesh_Ex
+            // 
+            PropMesh_Ex.ActiveLinkColor = Color.DeepSkyBlue;
+            PropMesh_Ex.AutoSize = true;
+            PropMesh_Ex.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            PropMesh_Ex.LinkColor = SystemColors.MenuHighlight;
+            PropMesh_Ex.Location = new Point(72, 135);
+            PropMesh_Ex.Margin = new Padding(4, 0, 4, 0);
+            PropMesh_Ex.Name = "PropMesh_Ex";
+            PropMesh_Ex.Size = new Size(482, 15);
+            PropMesh_Ex.TabIndex = 60;
+            PropMesh_Ex.TabStop = true;
+            PropMesh_Ex.Text = " (ex. /Game/Meshes/Environment/Props/X_Props/X_Props_S/SM_Prop_Fried_Meat_F)";
+            PropMesh_Ex.VisitedLinkColor = SystemColors.MenuHighlight;
+            PropMesh_Ex.LinkClicked += PropMesh_Ex_LinkClicked;
+            // 
             // label117
             // 
             label117.AutoSize = true;
             label117.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label117.ForeColor = SystemColors.ActiveCaption;
-            label117.Location = new Point(21, 222);
+            label117.Location = new Point(6, 179);
             label117.Margin = new Padding(4, 0, 4, 0);
             label117.Name = "label117";
             label117.Size = new Size(116, 15);
@@ -5186,212 +5398,12 @@
             PropSkelMesh_TB.BackColor = Color.FromArgb(75, 68, 138);
             PropSkelMesh_TB.Font = new Font("Microsoft Sans Serif", 9F);
             PropSkelMesh_TB.ForeColor = SystemColors.ActiveCaption;
-            PropSkelMesh_TB.Location = new Point(35, 241);
+            PropSkelMesh_TB.Location = new Point(20, 198);
             PropSkelMesh_TB.Margin = new Padding(4, 3, 4, 3);
             PropSkelMesh_TB.Name = "PropSkelMesh_TB";
             PropSkelMesh_TB.Size = new Size(535, 21);
             PropSkelMesh_TB.TabIndex = 61;
             PropSkelMesh_TB.Text = "None";
-            // 
-            // PropMesh_Ex
-            // 
-            PropMesh_Ex.ActiveLinkColor = Color.DeepSkyBlue;
-            PropMesh_Ex.AutoSize = true;
-            PropMesh_Ex.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            PropMesh_Ex.LinkColor = SystemColors.MenuHighlight;
-            PropMesh_Ex.Location = new Point(87, 169);
-            PropMesh_Ex.Margin = new Padding(4, 0, 4, 0);
-            PropMesh_Ex.Name = "PropMesh_Ex";
-            PropMesh_Ex.Size = new Size(482, 15);
-            PropMesh_Ex.TabIndex = 60;
-            PropMesh_Ex.TabStop = true;
-            PropMesh_Ex.Text = " (ex. /Game/Meshes/Environment/Props/X_Props/X_Props_S/SM_Prop_Fried_Meat_F)";
-            PropMesh_Ex.VisitedLinkColor = SystemColors.MenuHighlight;
-            PropMesh_Ex.LinkClicked += PropMesh_Ex_LinkClicked;
-            // 
-            // label116
-            // 
-            label116.AutoSize = true;
-            label116.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label116.ForeColor = SystemColors.ActiveCaption;
-            label116.Location = new Point(21, 169);
-            label116.Margin = new Padding(4, 0, 4, 0);
-            label116.Name = "label116";
-            label116.Size = new Size(69, 15);
-            label116.TabIndex = 59;
-            label116.Text = "Mesh Path:";
-            // 
-            // PropMesh_TB
-            // 
-            PropMesh_TB.BackColor = Color.FromArgb(75, 68, 138);
-            PropMesh_TB.Font = new Font("Microsoft Sans Serif", 9F);
-            PropMesh_TB.ForeColor = SystemColors.ActiveCaption;
-            PropMesh_TB.Location = new Point(35, 188);
-            PropMesh_TB.Margin = new Padding(4, 3, 4, 3);
-            PropMesh_TB.Name = "PropMesh_TB";
-            PropMesh_TB.Size = new Size(535, 21);
-            PropMesh_TB.TabIndex = 58;
-            PropMesh_TB.Text = "None";
-            // 
-            // PropIcon_Ex
-            // 
-            PropIcon_Ex.ActiveLinkColor = Color.DeepSkyBlue;
-            PropIcon_Ex.AutoSize = true;
-            PropIcon_Ex.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            PropIcon_Ex.LinkColor = SystemColors.MenuHighlight;
-            PropIcon_Ex.Location = new Point(106, 115);
-            PropIcon_Ex.Margin = new Padding(4, 0, 4, 0);
-            PropIcon_Ex.Name = "PropIcon_Ex";
-            PropIcon_Ex.Size = new Size(384, 15);
-            PropIcon_Ex.TabIndex = 57;
-            PropIcon_Ex.TabStop = true;
-            PropIcon_Ex.Text = " (ex. /Game/Textures/UI/Icons/Sandbox/PropIcons/T_FriedMeatFIcon)";
-            PropIcon_Ex.VisitedLinkColor = SystemColors.MenuHighlight;
-            PropIcon_Ex.LinkClicked += PropIcon_Ex_LinkClicked;
-            // 
-            // label115
-            // 
-            label115.AutoSize = true;
-            label115.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label115.ForeColor = SystemColors.ActiveCaption;
-            label115.Location = new Point(21, 115);
-            label115.Margin = new Padding(4, 0, 4, 0);
-            label115.Name = "label115";
-            label115.Size = new Size(90, 15);
-            label115.TabIndex = 55;
-            label115.Text = "Prop Icon Path:";
-            // 
-            // PropIcon_TB
-            // 
-            PropIcon_TB.BackColor = Color.FromArgb(75, 68, 138);
-            PropIcon_TB.Font = new Font("Microsoft Sans Serif", 9F);
-            PropIcon_TB.ForeColor = SystemColors.ActiveCaption;
-            PropIcon_TB.Location = new Point(35, 134);
-            PropIcon_TB.Margin = new Padding(4, 3, 4, 3);
-            PropIcon_TB.Name = "PropIcon_TB";
-            PropIcon_TB.Size = new Size(535, 21);
-            PropIcon_TB.TabIndex = 54;
-            PropIcon_TB.Text = "/Game/Textures/UI/Icons/Sandbox/PropIcons/";
-            // 
-            // PropCategory_CB
-            // 
-            PropCategory_CB.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            PropCategory_CB.BackColor = Color.FromArgb(75, 68, 138);
-            PropCategory_CB.FlatStyle = FlatStyle.Popup;
-            PropCategory_CB.Font = new Font("Microsoft Sans Serif", 9F);
-            PropCategory_CB.ForeColor = SystemColors.ActiveCaption;
-            PropCategory_CB.FormattingEnabled = true;
-            PropCategory_CB.Items.AddRange(new object[] { "Rocks", "Decorations", "Flora", "Furniture", "Food", "Assorted", "Effects", "Lights", "Architecture", "Prototype", "Weapons", "Automation", "UI" });
-            PropCategory_CB.Location = new Point(318, 86);
-            PropCategory_CB.Margin = new Padding(4, 3, 4, 3);
-            PropCategory_CB.Name = "PropCategory_CB";
-            PropCategory_CB.Size = new Size(252, 23);
-            PropCategory_CB.TabIndex = 53;
-            PropCategory_CB.Text = "Rocks";
-            // 
-            // label114
-            // 
-            label114.AutoSize = true;
-            label114.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label114.ForeColor = SystemColors.ActiveCaption;
-            label114.Location = new Point(304, 68);
-            label114.Margin = new Padding(4, 0, 4, 0);
-            label114.Name = "label114";
-            label114.Size = new Size(58, 15);
-            label114.TabIndex = 52;
-            label114.Text = "Category:";
-            // 
-            // label113
-            // 
-            label113.AutoSize = true;
-            label113.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label113.ForeColor = SystemColors.ActiveCaption;
-            label113.Location = new Point(304, 22);
-            label113.Margin = new Padding(4, 0, 4, 0);
-            label113.Name = "label113";
-            label113.Size = new Size(73, 15);
-            label113.TabIndex = 50;
-            label113.Text = "Prop Name:";
-            // 
-            // PropName_TB
-            // 
-            PropName_TB.BackColor = Color.FromArgb(75, 68, 138);
-            PropName_TB.Font = new Font("Microsoft Sans Serif", 9F);
-            PropName_TB.ForeColor = SystemColors.ActiveCaption;
-            PropName_TB.Location = new Point(318, 41);
-            PropName_TB.Margin = new Padding(4, 3, 4, 3);
-            PropName_TB.Name = "PropName_TB";
-            PropName_TB.Size = new Size(252, 21);
-            PropName_TB.TabIndex = 49;
-            PropName_TB.Text = "Prop Name";
-            // 
-            // label112
-            // 
-            label112.AutoSize = true;
-            label112.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label112.ForeColor = SystemColors.ActiveCaption;
-            label112.Location = new Point(23, 22);
-            label112.Margin = new Padding(4, 0, 4, 0);
-            label112.Name = "label112";
-            label112.Size = new Size(51, 15);
-            label112.TabIndex = 48;
-            label112.Text = "Prop ID:";
-            // 
-            // PropID_TB
-            // 
-            PropID_TB.BackColor = Color.FromArgb(75, 68, 138);
-            PropID_TB.Font = new Font("Microsoft Sans Serif", 9F);
-            PropID_TB.ForeColor = SystemColors.ActiveCaption;
-            PropID_TB.Location = new Point(37, 41);
-            PropID_TB.Margin = new Padding(4, 3, 4, 3);
-            PropID_TB.Name = "PropID_TB";
-            PropID_TB.Size = new Size(252, 21);
-            PropID_TB.TabIndex = 47;
-            PropID_TB.Text = "Prop_ID";
-            // 
-            // Props_Remove_Button
-            // 
-            Props_Remove_Button.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            Props_Remove_Button.BackColor = Color.FromArgb(75, 68, 138);
-            Props_Remove_Button.FlatStyle = FlatStyle.Popup;
-            Props_Remove_Button.ForeColor = Color.LightCoral;
-            Props_Remove_Button.Location = new Point(368, 593);
-            Props_Remove_Button.Margin = new Padding(4, 3, 4, 3);
-            Props_Remove_Button.Name = "Props_Remove_Button";
-            Props_Remove_Button.Size = new Size(148, 27);
-            Props_Remove_Button.TabIndex = 46;
-            Props_Remove_Button.Text = "Remove";
-            Props_Remove_Button.UseVisualStyleBackColor = false;
-            Props_Remove_Button.Click += Props_Remove_Button_Click;
-            // 
-            // Props_Add_Button
-            // 
-            Props_Add_Button.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            Props_Add_Button.BackColor = Color.FromArgb(75, 68, 138);
-            Props_Add_Button.FlatStyle = FlatStyle.Popup;
-            Props_Add_Button.ForeColor = SystemColors.GradientInactiveCaption;
-            Props_Add_Button.Location = new Point(91, 593);
-            Props_Add_Button.Margin = new Padding(4, 3, 4, 3);
-            Props_Add_Button.Name = "Props_Add_Button";
-            Props_Add_Button.Size = new Size(269, 27);
-            Props_Add_Button.TabIndex = 45;
-            Props_Add_Button.Text = "Add +";
-            Props_Add_Button.UseVisualStyleBackColor = false;
-            Props_Add_Button.Click += Props_Add_Button_Click;
-            // 
-            // Props_LB
-            // 
-            Props_LB.BackColor = Color.FromArgb(75, 68, 138);
-            Props_LB.BorderStyle = BorderStyle.FixedSingle;
-            Props_LB.ForeColor = SystemColors.ActiveCaption;
-            Props_LB.FormattingEnabled = true;
-            Props_LB.ItemHeight = 18;
-            Props_LB.Location = new Point(11, 624);
-            Props_LB.Name = "Props_LB";
-            Props_LB.ScrollAlwaysVisible = true;
-            Props_LB.Size = new Size(583, 92);
-            Props_LB.TabIndex = 44;
-            Props_LB.SelectedIndexChanged += Props_LB_SelectedIndexChanged;
             // 
             // AutoModCreator
             // 
@@ -5469,7 +5481,8 @@
             CharCustomBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_PB).EndInit();
             PropsGB.ResumeLayout(false);
-            PropsGB.PerformLayout();
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             groupBox13.ResumeLayout(false);
             groupBox13.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)PropColRotation_Roll).EndInit();
@@ -5885,5 +5898,6 @@
         private LinkLabel linkLabel1;
         private Label label135;
         private TextBox PropCustomBlueprintName_TB;
+        private Panel panel1;
     }
 }
