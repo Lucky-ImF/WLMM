@@ -576,6 +576,7 @@ namespace WSMM
                     File.Delete(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Mod Creator\" + ModName_TB.Text + ".wlmm");
                 }
                 ZipFile.CreateFromDirectory(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Staging", Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Mod Creator\" + ModName_TB.Text + ".wlmm");
+                EditNewFile(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Mod Creator\" + ModName_TB.Text + ".wlmm");
             }
             else
             {
@@ -1347,6 +1348,17 @@ namespace WSMM
                 Incompat_LB.Items.RemoveAt(Incompat_LB.SelectedIndex);
             }
             ManagePrereqs_Button.Text = "Manage Dependencies: " + (Prereqs_LB.Items.Count + Incompat_LB.Items.Count).ToString();
+        }
+
+        private void EditNewFile(string Path)
+        {
+            BuildMods_Button.Invoke((System.Windows.Forms.MethodInvoker)delegate
+            {
+                CurrentlyEditing_Path = Path;
+                CurrentlyEditing_LL.Text = Path;
+                BuildMods_Button.Text = "Edit Mod";
+                StopEditing_LL.Show();
+            });
         }
     }
 }
