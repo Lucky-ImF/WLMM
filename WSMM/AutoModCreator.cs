@@ -759,6 +759,7 @@ namespace WSMM
                         AddToNameMap(ActorPath); // Actor Path
                         string Blueprint = GetSlice(s, " | ", 13);
                         AddToNameMap(Blueprint); // Blueprint
+                        AddToNameMap(GetSlice(s, " | ", 14));
                     }
                     ModString = ModString.TrimEnd('\n');
 
