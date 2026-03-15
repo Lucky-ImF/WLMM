@@ -34,7 +34,7 @@ namespace WSMM
         private bool StartingUp = true;
         private bool HasOldChanges = false;
 
-        private string WLMM_Version = "1.4.4";
+        private string WLMM_Version = "1.4.5";
         private string Datatable_Version = string.Empty;
         string BuildLog = string.Empty;
 
@@ -42,6 +42,8 @@ namespace WSMM
         public string prevPakPath = string.Empty;
         public string prevAutoModPath = string.Empty;
         public string prevModPath = string.Empty;
+        List <string> LoadedMods = new List<string>();
+        List<string> SavedChanges = new List<string>();
 
         int SelectedModID = 0;
 
@@ -299,6 +301,8 @@ namespace WSMM
                 //Clear Mods
                 foreach (int EntryID in Mod_Entries)
                 {
+                    AddChange("Cleared mod: " + Mod_NameLabel[EntryID].Text);
+
                     Mod_Icon[EntryID].Dispose();
                     Mod_NameLabel[EntryID].Dispose();
                     Mod_ErrorLabel[EntryID].Dispose();
@@ -315,8 +319,6 @@ namespace WSMM
                     Mod_Panel[EntryID].Dispose();
                     Mod_WLMMPath[EntryID] = string.Empty;
                     Mod_Categories[EntryID] = string.Empty;
-
-                    AddChange();
                 }
                 Mod_Entries.Clear();
                 Mod_CurrentEntryID = 0;
@@ -974,7 +976,7 @@ namespace WSMM
                         ChangesMade = int.Parse(GetSlice(file, "=", 1));
                         if (ChangesMade > 0)
                         {
-                            HasOldChanges = true;
+                            //HasOldChanges = true;
                             ChangesMade_Label.Text = "Changes Made: " + ChangesMade.ToString();
                         }
                     }
@@ -1027,6 +1029,11 @@ namespace WSMM
                             SkippedDTs = false;
                         }
                     }
+                    else if (file.StartsWith("SavedChanges"))
+                    {
+                        SavedChanges = new List<string>(GetSlice(file, "=", 1).Split(','));
+                        ChangesLB.Items.AddRange(SavedChanges.ToArray());
+                    }
                 }
 
                 if (LoadedWLPath != "" && LoadedWLPath != string.Empty)
@@ -1063,7 +1070,13 @@ namespace WSMM
 
         private void SaveSession()
         {
-            string SaveFile = "WL_Path = " + LoadedWLPath + "\nWL_Version = " + LoadedWLVersion + "\nUE_Version = " + LoadedUEVersion + "\nChangesMade = " + ChangesMade.ToString() + "\nprevIconPath = " + prevIconPath + "\nprevPakPath = " + prevPakPath + "\nprevAutoModPath = " + prevAutoModPath + "\nprevModPath = " + prevModPath + "\nTutorial = " + TutorialEnabled.ToString() + "\nDeleteAfterDownload = " + DeleteWLMMAfterDownload.ToString() + "\nSkippedDTs = " + SkippedDTs.ToString();
+            string ChangesMadeString = "";
+            foreach (string save in ChangesLB.Items)
+            {
+                ChangesMadeString += save + ",";
+            }
+            ChangesMadeString = ChangesMadeString.TrimEnd(',');
+            string SaveFile = "WL_Path = " + LoadedWLPath + "\nWL_Version = " + LoadedWLVersion + "\nUE_Version = " + LoadedUEVersion + "\nChangesMade = " + ChangesMade.ToString() + "\nprevIconPath = " + prevIconPath + "\nprevPakPath = " + prevPakPath + "\nprevAutoModPath = " + prevAutoModPath + "\nprevModPath = " + prevModPath + "\nTutorial = " + TutorialEnabled.ToString() + "\nDeleteAfterDownload = " + DeleteWLMMAfterDownload.ToString() + "\nSkippedDTs = " + SkippedDTs.ToString() + "\nSavedChanges = " + ChangesMadeString; 
             File.WriteAllText(Application.StartupPath + @"System\Session.dat", SaveFile);
         }
 
@@ -1264,7 +1277,11 @@ namespace WSMM
                 {
                     BuildModProgress_PB.Value++;
                 });
-            }
+
+                Debug.WriteLine("Adding new mod: " + Mod);
+                LoadedMods.Add(Path.GetFileNameWithoutExtension(Mod));
+                AddChange("Added mod: " + Path.GetFileNameWithoutExtension(Mod));
+                }            
             //Load Mods
             ProgressPanel.Invoke((System.Windows.Forms.MethodInvoker)delegate
             {
@@ -1809,7 +1826,6 @@ namespace WSMM
                 GetCategoryFlow(FirstCategory).Controls.Add(Mod_Panel[EntryID]);
                 Mod_Entries.Add(EntryID);
                 Mod_CurrentEntryID += 1;
-                AddChange();
             });
         }
 
@@ -1890,6 +1906,8 @@ namespace WSMM
                     File.Delete(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + Mod_NameLabel[EntryID].Text + ".wlmm");
                 }
 
+                AddChange("Removed mod: " + Mod_NameLabel[EntryID].Text);
+
                 Mod_Icon[EntryID].Dispose();
                 Mod_NameLabel[EntryID].Dispose();
                 Mod_ErrorLabel[EntryID].Dispose();
@@ -1914,7 +1932,7 @@ namespace WSMM
                     Mod_CurrentEntryID = 0;
                     NoModsFound_Label.Show();
                 }
-                AddChange();
+                
                 ConflictCheck();
                 DependenciesCheck();
             }
@@ -1971,7 +1989,7 @@ namespace WSMM
             CheckBox Casted = sender as CheckBox;
             int EntryID = int.Parse(Casted.Tag.ToString());
             File.WriteAllText(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + Mod_NameLabel[EntryID].Text + @"\Enabled.dat", Casted.CheckState.ToString());
-            AddChange();
+            AddChange("Changed " + Mod_NameLabel[EntryID].Text + " Enabled to: " + Casted.CheckState.ToString());
         }
 
         private void Cat_Button_Click(object sender, EventArgs e)
@@ -1996,6 +2014,7 @@ namespace WSMM
             DialogResult dialogResult = MessageBox.Show("Are you sure you want to remove ALL mods?", "Wild Life Mod Manager", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
+                AddChange("Removing all mods.");
                 foreach (int EntryID in Mod_Entries)
                 {
                     //Remove the mod files
@@ -2004,6 +2023,7 @@ namespace WSMM
                     {
                         File.Delete(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + Mod_NameLabel[EntryID].Text + ".wlmm");
                     }
+                    AddChange("Removed mod: " + Mod_NameLabel[EntryID].Text);
 
                     Mod_Icon[EntryID].Dispose();
                     Mod_NameLabel[EntryID].Dispose();
@@ -2021,8 +2041,6 @@ namespace WSMM
                     Mod_Panel[EntryID].Dispose();
                     Mod_WLMMPath[EntryID] = string.Empty;
                     Mod_Categories[EntryID] = string.Empty;
-
-                    AddChange();
                 }
                 Mod_Entries.Clear();
                 Mod_CurrentEntryID = 0;
@@ -2040,7 +2058,7 @@ namespace WSMM
             }
         }
 
-        private void AddChange()
+        private void AddChange(String ChangeString)
         {
             this.Invoke((System.Windows.Forms.MethodInvoker)delegate
             {
@@ -2049,8 +2067,12 @@ namespace WSMM
                     ChangesMade++;
                     BuildMods_Button.Enabled = true;
                     ChangesMade_Label.Text = "Changes Made: " + ChangesMade.ToString();
+                    ChangesLB.Items.Insert(0, ChangeString);
+                    Debug.WriteLine(ChangeString);
                 }
             });
+
+            SaveSession();
         }
 
         private void BuildMods_Button_Click(object sender, EventArgs e)
@@ -2212,7 +2234,7 @@ namespace WSMM
                         BuildLog += "+ - Failed deploying mod: " + ModName + "\n";
                         BuildLog += "+ - ex: " + FileCopyMessage + "\n";
                         MessageBox.Show("Failed deploying mod: " + ModName + "\nCheck build log for detailed info.", "Wild Life Mod Manager");
-                        ResetFromBuilding();
+                        ResetFromBuilding("Failure");
                         return;
                     }
                 }
@@ -2323,7 +2345,7 @@ namespace WSMM
                         BuildLog += "- Failed removing inactive .pak: " + Path.GetFileName(pak) + "\n";
                         BuildLog += "- ex: " + FileCopyMessage + "\n";
                         MessageBox.Show("Failed removing inactive .pak: " + Path.GetFileName(pak) + "\nIs the file in use?", "Wild Life Mod Manager");
-                        ResetFromBuilding();
+                        ResetFromBuilding("Failure");
                         return;
                     }
                 }
@@ -2345,7 +2367,7 @@ namespace WSMM
                     BuildLog += "+ - Failed .JSON generation.\n";
                     BuildLog += "+ - ex: " + JSON_Message + "\n";
                     MessageBox.Show(JSON_Message, "Wild Life Mod Manager");
-                    ResetFromBuilding();
+                    ResetFromBuilding("Failure");
                     return;
                 }
                 BuildLog += "+ + " + JSON_Message + ".\n";
@@ -2361,7 +2383,7 @@ namespace WSMM
                     BuildLog += "+ - Failed serialization.\n";
                     BuildLog += "+ - ex: " + UAsset_Message + "\n";
                     MessageBox.Show(UAsset_Message, "Wild Life Mod Manager");
-                    ResetFromBuilding();
+                    ResetFromBuilding("Failure");
                     return;
                 }
                 BuildLog += "+ + " + UAsset_Message + ".\n";
@@ -2377,7 +2399,7 @@ namespace WSMM
                     BuildLog += "+ - Failed packaging.\n";
                     BuildLog += "+ - ex: " + Repak_Message + "\n";
                     MessageBox.Show(Repak_Message, "Wild Life Mod Manager");
-                    ResetFromBuilding();
+                    ResetFromBuilding("Failure");
                     return;
                 }
                 BuildLog += "+ + " + Repak_Message + ".\n";
@@ -2393,7 +2415,7 @@ namespace WSMM
                     BuildLog += "- Failed moving AutoMod_P.pak to Game Directory\n";
                     BuildLog += "- ex: " + FileCopyMessage + "\n";
                     MessageBox.Show("Failed moving AutoMod_P.pak to Game Directory\nIs the file in use?", "Wild Life Mod Manager");
-                    ResetFromBuilding();
+                    ResetFromBuilding("Failure");
                     return;
                 }
                 BuildLog += "+ AutoMod Process Success.\n";
@@ -2439,10 +2461,13 @@ namespace WSMM
 
             BuildLog += "Mods successfully deployed.\n";
 
-            ResetFromBuilding();
+            ChangesMade = 0;
+            ChangesLB.Items.Clear();
+
+            ResetFromBuilding("Success");
         }
 
-        private void ResetFromBuilding()
+        private void ResetFromBuilding(string Status)
         {
             this.Invoke((System.Windows.Forms.MethodInvoker)delegate
             {
@@ -2451,8 +2476,9 @@ namespace WSMM
                 ProgressInfo_Label.Text = "Initializing...";
                 BuildModProgress_PB.Value = 0;
                 BuildModProgress_PB.Maximum = 100;
-                ChangesMade_Label.Text = "Build Completed.";
+                ChangesMade_Label.Text = "Build Finished: " + Status;
                 ChangesMade = 0;
+                ChangesLB.Items.Clear();
                 BuildMods_Button.Enabled = true;
 
                 File.WriteAllText(Application.StartupPath + @"System\LatestBuildLog.txt", BuildLog);
@@ -3572,6 +3598,11 @@ namespace WSMM
                 }
             }
 
+            ClothesOutfit = string.Empty;
+            GameCharacterOutfits = string.Empty;
+            GameCharacterCustom = string.Empty;
+            SandboxProps = string.Empty;
+
             return "Success";
         }
 
@@ -3738,6 +3769,7 @@ namespace WSMM
 
         private void EnableMods_Button_Click(object sender, EventArgs e)
         {
+            AddChange("Enabling All Mods.");
             foreach (int EntryID in Mod_Entries)
             {
                 if (Mod_EnabledCB[EntryID].Enabled == true)
@@ -3749,6 +3781,7 @@ namespace WSMM
 
         private void DisableMods_Button_Click(object sender, EventArgs e)
         {
+            AddChange("Disabling All Mods.");
             foreach (int EntryID in Mod_Entries)
             {
                 Mod_EnabledCB[EntryID].Checked = false;
@@ -4567,7 +4600,7 @@ namespace WSMM
                 Mod_ContainsLabel[SelectedModID].Text = "| Paks: " + LoadEdit_Paks_CLB.CheckedItems.Count.ToString() + "(" + LoadEdit_Paks_CLB.Items.Count.ToString() + ") | AutoMod: " + LoadEdit_AutoMod_CLB.CheckedItems.Count.ToString() + "(" + LoadEdit_AutoMod_CLB.Items.Count.ToString() + ") |";
                 LoadEdit_Panel.Hide();
 
-                AddChange();
+                AddChange("Modified Mod Specific Pak/AutoMod: " + LoadEdit_ModName_Label.Text);
             }
             else
             {
@@ -4580,7 +4613,7 @@ namespace WSMM
                 Mod_ContainsLabel[SelectedModID].ActiveLinkColor = System.Drawing.SystemColors.Highlight;
                 Mod_ContainsLabel[SelectedModID].Text = "| Paks: " + LoadEdit_Paks_CLB.CheckedItems.Count.ToString() + " | AutoMod: " + LoadEdit_AutoMod_CLB.CheckedItems.Count.ToString() + " |";
                 LoadEdit_Panel.Hide();
-                AddChange();
+                AddChange("Modified Mod Specific Pak/AutoMod: " + LoadEdit_ModName_Label.Text);
             }
         }
 
@@ -4728,6 +4761,8 @@ namespace WSMM
                             File.Delete(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + Mod_NameLabel[EntryID].Text + ".wlmm");
                         }
 
+                        AddChange("Removed mod: " + Mod_NameLabel[EntryID].Text);
+
                         Mod_Icon[EntryID].Dispose();
                         Mod_NameLabel[EntryID].Dispose();
                         Mod_ErrorLabel[EntryID].Dispose();
@@ -4744,8 +4779,6 @@ namespace WSMM
                         Mod_Panel[EntryID].Dispose();
                         Mod_WLMMPath[EntryID] = string.Empty;
                         Mod_Categories[EntryID] = string.Empty;
-
-                        AddChange();
                     }
                     Mod_Entries.Clear();
                     Mod_CurrentEntryID = 0;
@@ -5346,6 +5379,33 @@ namespace WSMM
                 BuildManager_BuildList.Items.Remove(SelectedBuild);
 
                 BuildManager_BuildList.SelectedIndex = BuildManager_BuildList.FindStringExact(LoadedWLVersion);
+            }
+        }
+
+        private void Changes_Close_Click(object sender, EventArgs e)
+        {
+            ChangesPanel.Hide();
+        }
+
+        private void Changes_Close_MouseEnter(object sender, EventArgs e)
+        {
+            Changes_Close.Image = Properties.Resources.Close_Icon_Hover;
+        }
+
+        private void Changes_Close_MouseLeave(object sender, EventArgs e)
+        {
+            Changes_Close.Image = Properties.Resources.Close_Icon;
+        }
+
+        private void ChangesMade_Label_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (ChangesPanel.Visible == true)
+            {
+                ChangesPanel.Hide();
+            }
+            else
+            {
+                ChangesPanel.Show();
             }
         }
     }

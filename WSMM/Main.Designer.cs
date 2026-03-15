@@ -71,7 +71,6 @@
             label11 = new Label();
             BuildMods_Button = new Button();
             pictureBox1 = new PictureBox();
-            ChangesMade_Label = new Label();
             ModCreator_Button = new Button();
             ProgressPanel = new Panel();
             ProgressInfo_Label = new Label();
@@ -222,6 +221,11 @@
             BuildManager_Close = new PictureBox();
             label33 = new Label();
             label35 = new Label();
+            ChangesPanel = new Panel();
+            ChangesLB = new ListBox();
+            Changes_Close = new PictureBox();
+            label53 = new Label();
+            ChangesMade_Label = new LinkLabel();
             TitlePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
@@ -264,6 +268,8 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox8).BeginInit();
             BuildManager_Panel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)BuildManager_Close).BeginInit();
+            ChangesPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)Changes_Close).BeginInit();
             SuspendLayout();
             // 
             // TitlePanel
@@ -814,17 +820,6 @@
             pictureBox1.Size = new Size(200, 2);
             pictureBox1.TabIndex = 5;
             pictureBox1.TabStop = false;
-            // 
-            // ChangesMade_Label
-            // 
-            ChangesMade_Label.AutoSize = true;
-            ChangesMade_Label.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            ChangesMade_Label.ForeColor = SystemColors.ActiveCaption;
-            ChangesMade_Label.Location = new Point(956, 681);
-            ChangesMade_Label.Name = "ChangesMade_Label";
-            ChangesMade_Label.Size = new Size(118, 17);
-            ChangesMade_Label.TabIndex = 6;
-            ChangesMade_Label.Text = "No changes made.";
             // 
             // ModCreator_Button
             // 
@@ -2771,6 +2766,73 @@
             label35.TabIndex = 2;
             label35.Text = "Build Manager";
             // 
+            // ChangesPanel
+            // 
+            ChangesPanel.BackColor = Color.FromArgb(75, 68, 138);
+            ChangesPanel.BorderStyle = BorderStyle.FixedSingle;
+            ChangesPanel.Controls.Add(ChangesLB);
+            ChangesPanel.Controls.Add(Changes_Close);
+            ChangesPanel.Controls.Add(label53);
+            ChangesPanel.Location = new Point(772, 507);
+            ChangesPanel.Name = "ChangesPanel";
+            ChangesPanel.Size = new Size(347, 174);
+            ChangesPanel.TabIndex = 68;
+            ChangesPanel.Visible = false;
+            // 
+            // ChangesLB
+            // 
+            ChangesLB.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            ChangesLB.BackColor = Color.FromArgb(32, 34, 81);
+            ChangesLB.BorderStyle = BorderStyle.FixedSingle;
+            ChangesLB.ForeColor = SystemColors.GradientInactiveCaption;
+            ChangesLB.FormattingEnabled = true;
+            ChangesLB.ItemHeight = 15;
+            ChangesLB.Location = new Point(4, 32);
+            ChangesLB.Name = "ChangesLB";
+            ChangesLB.ScrollAlwaysVisible = true;
+            ChangesLB.SelectionMode = SelectionMode.None;
+            ChangesLB.Size = new Size(338, 137);
+            ChangesLB.TabIndex = 40;
+            // 
+            // Changes_Close
+            // 
+            Changes_Close.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            Changes_Close.Image = Properties.Resources.Close_Icon;
+            Changes_Close.Location = new Point(305, 3);
+            Changes_Close.Name = "Changes_Close";
+            Changes_Close.Size = new Size(37, 28);
+            Changes_Close.SizeMode = PictureBoxSizeMode.Zoom;
+            Changes_Close.TabIndex = 34;
+            Changes_Close.TabStop = false;
+            Changes_Close.Click += Changes_Close_Click;
+            Changes_Close.MouseEnter += Changes_Close_MouseEnter;
+            Changes_Close.MouseLeave += Changes_Close_MouseLeave;
+            // 
+            // label53
+            // 
+            label53.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label53.ForeColor = SystemColors.ActiveCaption;
+            label53.Location = new Point(4, -1);
+            label53.Name = "label53";
+            label53.Size = new Size(339, 30);
+            label53.TabIndex = 2;
+            label53.Text = "Changes:";
+            label53.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // ChangesMade_Label
+            // 
+            ChangesMade_Label.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            ChangesMade_Label.LinkColor = SystemColors.ActiveCaption;
+            ChangesMade_Label.Location = new Point(907, 680);
+            ChangesMade_Label.Name = "ChangesMade_Label";
+            ChangesMade_Label.Size = new Size(213, 20);
+            ChangesMade_Label.TabIndex = 69;
+            ChangesMade_Label.TabStop = true;
+            ChangesMade_Label.Text = "No changes made.";
+            ChangesMade_Label.TextAlign = ContentAlignment.MiddleCenter;
+            ChangesMade_Label.VisitedLinkColor = SystemColors.ActiveCaption;
+            ChangesMade_Label.LinkClicked += ChangesMade_Label_LinkClicked;
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
@@ -2778,6 +2840,8 @@
             BackColor = Color.FromArgb(32, 34, 81);
             ClientSize = new Size(1134, 761);
             ControlBox = false;
+            Controls.Add(ChangesMade_Label);
+            Controls.Add(ChangesPanel);
             Controls.Add(BuildManager_Panel);
             Controls.Add(DT_Updater_Panel);
             Controls.Add(BugReport_Panel);
@@ -2806,7 +2870,6 @@
             Controls.Add(BuildSettings_Button);
             Controls.Add(ProgressPanel);
             Controls.Add(ModCreator_Button);
-            Controls.Add(ChangesMade_Label);
             Controls.Add(pictureBox1);
             Controls.Add(BuildMods_Button);
             Controls.Add(ModMain_Panel);
@@ -2885,6 +2948,8 @@
             BuildManager_Panel.ResumeLayout(false);
             BuildManager_Panel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)BuildManager_Close).EndInit();
+            ChangesPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)Changes_Close).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -2912,7 +2977,6 @@
         private LinkLabel linkLabel1;
         private Label label5;
         private Label label4;
-        private Label ChangesMade_Label;
         private Label label6;
         private Button RemoveMods_Button;
         private Button ModCreator_Button;
@@ -3083,5 +3147,20 @@
         private LinkLabel BuildManager_SessionDelete;
         private LinkLabel BuildManager_DTsDelete;
         private LinkLabel BuildManager_ModsDelete;
+        private Panel ChangesPanel;
+        private LinkLabel linkLabel5;
+        private LinkLabel linkLabel8;
+        private Label label48;
+        private LinkLabel linkLabel9;
+        private LinkLabel linkLabel10;
+        private Label label50;
+        private LinkLabel linkLabel11;
+        private ListBox ChangesLB;
+        private Label label51;
+        private Button button2;
+        private PictureBox Changes_Close;
+        private Label label52;
+        private Label label53;
+        private LinkLabel ChangesMade_Label;
     }
 }
