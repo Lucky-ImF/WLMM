@@ -64,6 +64,8 @@ namespace WSMM
         public bool DeleteWLMMAfterDownload = false;
         bool SaveSessionOnExit = true;
 
+        string LastSuccessfullBuild = "Never";
+
         //Panel, Picturebox, Label(Name), Label(Error), Label(Version), Label(SupportedVersions), Label(Author), LinkLabel(Remove), LinkLabel(Link), Checkbox
         Panel[] Mod_Panel = new Panel[100];
         PictureBox[] Mod_Icon = new PictureBox[100];
@@ -1034,6 +1036,11 @@ namespace WSMM
                         SavedChanges = new List<string>(GetSlice(file, "=", 1).Split(','));
                         ChangesLB.Items.AddRange(SavedChanges.ToArray());
                     }
+                    else if (file.StartsWith("LastBuild"))
+                    {
+                        LastSuccessfullBuild = GetSlice(file, "=", 1);
+                        ChangesPanel_LastBuildLabel.Text = "Last Build: " + LastSuccessfullBuild;
+                    }
                 }
 
                 if (LoadedWLPath != "" && LoadedWLPath != string.Empty)
@@ -1076,7 +1083,7 @@ namespace WSMM
                 ChangesMadeString += save + ",";
             }
             ChangesMadeString = ChangesMadeString.TrimEnd(',');
-            string SaveFile = "WL_Path = " + LoadedWLPath + "\nWL_Version = " + LoadedWLVersion + "\nUE_Version = " + LoadedUEVersion + "\nChangesMade = " + ChangesMade.ToString() + "\nprevIconPath = " + prevIconPath + "\nprevPakPath = " + prevPakPath + "\nprevAutoModPath = " + prevAutoModPath + "\nprevModPath = " + prevModPath + "\nTutorial = " + TutorialEnabled.ToString() + "\nDeleteAfterDownload = " + DeleteWLMMAfterDownload.ToString() + "\nSkippedDTs = " + SkippedDTs.ToString() + "\nSavedChanges = " + ChangesMadeString; 
+            string SaveFile = "WL_Path = " + LoadedWLPath + "\nWL_Version = " + LoadedWLVersion + "\nUE_Version = " + LoadedUEVersion + "\nChangesMade = " + ChangesMade.ToString() + "\nprevIconPath = " + prevIconPath + "\nprevPakPath = " + prevPakPath + "\nprevAutoModPath = " + prevAutoModPath + "\nprevModPath = " + prevModPath + "\nTutorial = " + TutorialEnabled.ToString() + "\nDeleteAfterDownload = " + DeleteWLMMAfterDownload.ToString() + "\nSkippedDTs = " + SkippedDTs.ToString() + "\nSavedChanges = " + ChangesMadeString + "\nLastBuild = " + LastSuccessfullBuild; 
             File.WriteAllText(Application.StartupPath + @"System\Session.dat", SaveFile);
         }
 
@@ -2462,7 +2469,13 @@ namespace WSMM
             BuildLog += "Mods successfully deployed.\n";
 
             ChangesMade = 0;
-            ChangesLB.Items.Clear();
+            LastSuccessfullBuild = DateTime.Now.ToString();
+            
+            ChangesPanel_LastBuildLabel.Invoke((System.Windows.Forms.MethodInvoker)delegate
+            {
+                ChangesPanel_LastBuildLabel.Text = "Last Build: " + LastSuccessfullBuild;
+                ChangesLB.Items.Clear();
+            });
 
             ResetFromBuilding("Success");
         }

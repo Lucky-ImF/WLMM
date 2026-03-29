@@ -226,6 +226,7 @@
             Changes_Close = new PictureBox();
             label53 = new Label();
             ChangesMade_Label = new LinkLabel();
+            ChangesPanel_LastBuildLabel = new Label();
             TitlePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
@@ -2773,9 +2774,10 @@
             ChangesPanel.Controls.Add(ChangesLB);
             ChangesPanel.Controls.Add(Changes_Close);
             ChangesPanel.Controls.Add(label53);
-            ChangesPanel.Location = new Point(772, 507);
+            ChangesPanel.Controls.Add(ChangesPanel_LastBuildLabel);
+            ChangesPanel.Location = new Point(772, 472);
             ChangesPanel.Name = "ChangesPanel";
-            ChangesPanel.Size = new Size(347, 174);
+            ChangesPanel.Size = new Size(347, 209);
             ChangesPanel.TabIndex = 68;
             ChangesPanel.Visible = false;
             // 
@@ -2787,11 +2789,11 @@
             ChangesLB.ForeColor = SystemColors.GradientInactiveCaption;
             ChangesLB.FormattingEnabled = true;
             ChangesLB.ItemHeight = 15;
-            ChangesLB.Location = new Point(4, 32);
+            ChangesLB.Location = new Point(4, 51);
             ChangesLB.Name = "ChangesLB";
             ChangesLB.ScrollAlwaysVisible = true;
             ChangesLB.SelectionMode = SelectionMode.None;
-            ChangesLB.Size = new Size(338, 137);
+            ChangesLB.Size = new Size(338, 152);
             ChangesLB.TabIndex = 40;
             // 
             // Changes_Close
@@ -2810,6 +2812,7 @@
             // 
             // label53
             // 
+            label53.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             label53.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label53.ForeColor = SystemColors.ActiveCaption;
             label53.Location = new Point(4, -1);
@@ -2832,6 +2835,18 @@
             ChangesMade_Label.TextAlign = ContentAlignment.MiddleCenter;
             ChangesMade_Label.VisitedLinkColor = SystemColors.ActiveCaption;
             ChangesMade_Label.LinkClicked += ChangesMade_Label_LinkClicked;
+            // 
+            // ChangesPanel_LastBuildLabel
+            // 
+            ChangesPanel_LastBuildLabel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            ChangesPanel_LastBuildLabel.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            ChangesPanel_LastBuildLabel.ForeColor = SystemColors.ActiveCaption;
+            ChangesPanel_LastBuildLabel.Location = new Point(3, 30);
+            ChangesPanel_LastBuildLabel.Name = "ChangesPanel_LastBuildLabel";
+            ChangesPanel_LastBuildLabel.Size = new Size(339, 18);
+            ChangesPanel_LastBuildLabel.TabIndex = 41;
+            ChangesPanel_LastBuildLabel.Text = "Last Build: Never";
+            ChangesPanel_LastBuildLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // Main
             // 
@@ -3162,5 +3177,6 @@
         private Label label52;
         private Label label53;
         private LinkLabel ChangesMade_Label;
+        private Label ChangesPanel_LastBuildLabel;
     }
 }
