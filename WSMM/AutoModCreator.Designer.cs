@@ -414,6 +414,9 @@
             PropMesh_Ex = new LinkLabel();
             label117 = new Label();
             PropSkelMesh_TB = new TextBox();
+            TattoosGB = new GroupBox();
+            TattoosAdd = new LinkLabel();
+            TattoosFlow = new FlowLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             TitlePanel.SuspendLayout();
@@ -462,6 +465,7 @@
             ((System.ComponentModel.ISupportInitialize)PropPivotOffset_Z).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PropPivotOffset_Y).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PropPivotOffset_X).BeginInit();
+            TattoosGB.SuspendLayout();
             SuspendLayout();
             // 
             // Close_Button
@@ -548,7 +552,7 @@
             Variant.FlatStyle = FlatStyle.Popup;
             Variant.ForeColor = SystemColors.ActiveCaption;
             Variant.FormattingEnabled = true;
-            Variant.Items.AddRange(new object[] { "Add", "Port", "Character Customization", "Fur Customization", "Props" });
+            Variant.Items.AddRange(new object[] { "Add", "Port", "Character Customization", "Fur Customization", "Props", "Tattoos" });
             Variant.Location = new Point(315, 124);
             Variant.Margin = new Padding(4, 3, 4, 3);
             Variant.Name = "Variant";
@@ -4505,7 +4509,7 @@
             CharCustomFlow.Location = new Point(4, 20);
             CharCustomFlow.Margin = new Padding(4, 3, 4, 3);
             CharCustomFlow.Name = "CharCustomFlow";
-            CharCustomFlow.Size = new Size(596, 705);
+            CharCustomFlow.Size = new Size(596, 701);
             CharCustomFlow.TabIndex = 42;
             // 
             // Icon_PB
@@ -5405,6 +5409,51 @@
             PropSkelMesh_TB.TabIndex = 61;
             PropSkelMesh_TB.Text = "None";
             // 
+            // TattoosGB
+            // 
+            TattoosGB.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            TattoosGB.Controls.Add(TattoosAdd);
+            TattoosGB.Controls.Add(TattoosFlow);
+            TattoosGB.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            TattoosGB.ForeColor = Color.White;
+            TattoosGB.Location = new Point(5, 211);
+            TattoosGB.Margin = new Padding(4, 3, 4, 3);
+            TattoosGB.Name = "TattoosGB";
+            TattoosGB.Padding = new Padding(4, 3, 4, 3);
+            TattoosGB.Size = new Size(606, 728);
+            TattoosGB.TabIndex = 43;
+            TattoosGB.TabStop = false;
+            TattoosGB.Text = "Tattoos";
+            TattoosGB.Visible = false;
+            // 
+            // TattoosAdd
+            // 
+            TattoosAdd.ActiveLinkColor = Color.DeepSkyBlue;
+            TattoosAdd.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            TattoosAdd.AutoSize = true;
+            TattoosAdd.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            TattoosAdd.LinkColor = Color.Lime;
+            TattoosAdd.Location = new Point(510, -1);
+            TattoosAdd.Margin = new Padding(4, 0, 4, 0);
+            TattoosAdd.Name = "TattoosAdd";
+            TattoosAdd.Size = new Size(51, 20);
+            TattoosAdd.TabIndex = 43;
+            TattoosAdd.TabStop = true;
+            TattoosAdd.Text = "Add +";
+            TattoosAdd.VisitedLinkColor = Color.DarkTurquoise;
+            TattoosAdd.LinkClicked += TattoosAdd_LinkClicked;
+            // 
+            // TattoosFlow
+            // 
+            TattoosFlow.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            TattoosFlow.AutoScroll = true;
+            TattoosFlow.ForeColor = SystemColors.ActiveCaption;
+            TattoosFlow.Location = new Point(5, 20);
+            TattoosFlow.Margin = new Padding(4, 3, 4, 3);
+            TattoosFlow.Name = "TattoosFlow";
+            TattoosFlow.Size = new Size(596, 701);
+            TattoosFlow.TabIndex = 42;
+            // 
             // AutoModCreator
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
@@ -5412,7 +5461,7 @@
             BackColor = Color.FromArgb(32, 34, 81);
             ClientSize = new Size(615, 997);
             ControlBox = false;
-            Controls.Add(PropsGB);
+            Controls.Add(TattoosGB);
             Controls.Add(CurrentlyEditing_LL);
             Controls.Add(label106);
             Controls.Add(Icon_PB);
@@ -5426,6 +5475,7 @@
             Controls.Add(CharCustomBox);
             Controls.Add(FurCustomizationGB);
             Controls.Add(tabControl1);
+            Controls.Add(PropsGB);
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.SizableToolWindow;
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -5508,6 +5558,8 @@
             ((System.ComponentModel.ISupportInitialize)PropPivotOffset_Z).EndInit();
             ((System.ComponentModel.ISupportInitialize)PropPivotOffset_Y).EndInit();
             ((System.ComponentModel.ISupportInitialize)PropPivotOffset_X).EndInit();
+            TattoosGB.ResumeLayout(false);
+            TattoosGB.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -5895,9 +5947,11 @@
         private LinkLabel PropCustomBlueprint_Ex;
         private Label label134;
         private TextBox PropCustomBlueprint_TB;
-        private LinkLabel linkLabel1;
         private Label label135;
         private TextBox PropCustomBlueprintName_TB;
         private Panel panel1;
+        private GroupBox TattoosGB;
+        private LinkLabel TattoosAdd;
+        private FlowLayoutPanel TattoosFlow;
     }
 }

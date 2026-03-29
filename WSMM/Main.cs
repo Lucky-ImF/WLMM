@@ -34,7 +34,7 @@ namespace WSMM
         private bool StartingUp = true;
         private bool HasOldChanges = false;
 
-        private string WLMM_Version = "1.4.5";
+        private string WLMM_Version = "1.4.6";
         private string Datatable_Version = string.Empty;
         string BuildLog = string.Empty;
 
@@ -42,7 +42,7 @@ namespace WSMM
         public string prevPakPath = string.Empty;
         public string prevAutoModPath = string.Empty;
         public string prevModPath = string.Empty;
-        List <string> LoadedMods = new List<string>();
+        List<string> LoadedMods = new List<string>();
         List<string> SavedChanges = new List<string>();
 
         int SelectedModID = 0;
@@ -806,6 +806,10 @@ namespace WSMM
             BS_BaseGameCharacterOutfitFile.Text = "";
             BS_BaseGameCharacterCustomizationFile.Items.Clear();
             BS_BaseGameCharacterCustomizationFile.Text = "";
+            BS_BaseGameSandboxPropsFile.Items.Clear();
+            BS_BaseGameSandboxPropsFile.Text = "";
+            BS_BaseGameTattooFile.Items.Clear();
+            BS_BaseGameTattooFile.Text = "";
 
             string CurrentDTVersion = "None";
             string LatestDTVersion = "None";
@@ -916,6 +920,26 @@ namespace WSMM
                 catch (Exception)
                 {
                     BS_BaseGameSandboxPropsFile.Text = "";
+                }
+
+                try
+                {
+                    foreach (string file in Directory.EnumerateFiles(Application.StartupPath + @"DataTables\" + LoadedWLVersion, "DT_Tattoo_*.json"))
+                    {
+                        if (file.Contains("DT_Tattoo_Generated") == false && file.Contains("DT_Tattoo_Entry_Default") == false && file.Contains("DT_Tattoo_Debug") == false)
+                        {
+                            BS_BaseGameTattooFile.Items.Add(Path.GetFileName(file));
+                        }
+                    }
+                    if (BS_BaseGameTattooFile.Items.Count >= 1 && BS_BaseGameTattooFile.Text == "")
+                    {
+                        BS_BaseGameTattooFile.Text = BS_BaseGameTattooFile.Items[0].ToString();
+                        OverwriteExistingBS = true;
+                    }
+                }
+                catch (Exception)
+                {
+                    BS_BaseGameTattooFile.Text = "";
                 }
 
                 if (OverwriteExistingBS == true)
@@ -1083,7 +1107,7 @@ namespace WSMM
                 ChangesMadeString += save + ",";
             }
             ChangesMadeString = ChangesMadeString.TrimEnd(',');
-            string SaveFile = "WL_Path = " + LoadedWLPath + "\nWL_Version = " + LoadedWLVersion + "\nUE_Version = " + LoadedUEVersion + "\nChangesMade = " + ChangesMade.ToString() + "\nprevIconPath = " + prevIconPath + "\nprevPakPath = " + prevPakPath + "\nprevAutoModPath = " + prevAutoModPath + "\nprevModPath = " + prevModPath + "\nTutorial = " + TutorialEnabled.ToString() + "\nDeleteAfterDownload = " + DeleteWLMMAfterDownload.ToString() + "\nSkippedDTs = " + SkippedDTs.ToString() + "\nSavedChanges = " + ChangesMadeString + "\nLastBuild = " + LastSuccessfullBuild; 
+            string SaveFile = "WL_Path = " + LoadedWLPath + "\nWL_Version = " + LoadedWLVersion + "\nUE_Version = " + LoadedUEVersion + "\nChangesMade = " + ChangesMade.ToString() + "\nprevIconPath = " + prevIconPath + "\nprevPakPath = " + prevPakPath + "\nprevAutoModPath = " + prevAutoModPath + "\nprevModPath = " + prevModPath + "\nTutorial = " + TutorialEnabled.ToString() + "\nDeleteAfterDownload = " + DeleteWLMMAfterDownload.ToString() + "\nSkippedDTs = " + SkippedDTs.ToString() + "\nSavedChanges = " + ChangesMadeString + "\nLastBuild = " + LastSuccessfullBuild;
             File.WriteAllText(Application.StartupPath + @"System\Session.dat", SaveFile);
         }
 
@@ -1109,6 +1133,10 @@ namespace WSMM
                     else if (file.StartsWith("DT_SandboxProps"))
                     {
                         BS_BaseGameSandboxPropsFile.Text = GetSlice(file, "=", 1);
+                    }
+                    else if (file.StartsWith("DT_Tattoo"))
+                    {
+                        BS_BaseGameTattooFile.Text = GetSlice(file, "=", 1);
                     }
                     else if (file.StartsWith("Mappings"))
                     {
@@ -1138,6 +1166,15 @@ namespace WSMM
                 {
                     BS_BaseGameSandboxPropsFile.Text = "Unsupported";
                 }
+
+                if (BS_BaseGameTattooFile.Text == "" && BS_BaseGameTattooFile.Items.Count >= 1 || BS_BaseGameTattooFile.Text == "Unsupported" && BS_BaseGameTattooFile.Items.Count >= 1)
+                {
+                    BS_BaseGameTattooFile.Text = BS_BaseGameTattooFile.Items[0].ToString();
+                }
+                else if (BS_BaseGameTattooFile.Text == "" || BS_BaseGameTattooFile.Text == "Unsupported")
+                {
+                    BS_BaseGameTattooFile.Text = "Unsupported";
+                }
             }
             else
             {
@@ -1147,6 +1184,7 @@ namespace WSMM
                     BS_BaseGameCharacterOutfitFile.Text = BS_BaseGameCharacterOutfitFile.Items[0].ToString();
                     BS_BaseGameCharacterCustomizationFile.Text = BS_BaseGameCharacterCustomizationFile.Items[0].ToString();
                     BS_BaseGameSandboxPropsFile.Text = BS_BaseGameSandboxPropsFile.Items[0].ToString();
+                    BS_BaseGameTattooFile.Text = BS_BaseGameTattooFile.Items[0].ToString();
                     foreach (string M in BS_Mappings.Items)
                     {
                         if (M.Contains(LoadedWLVersion))
@@ -1161,6 +1199,7 @@ namespace WSMM
                     BS_BaseGameCharacterOutfitFile.Text = "";
                     BS_BaseGameCharacterCustomizationFile.Text = "";
                     BS_BaseGameSandboxPropsFile.Text = "";
+                    BS_BaseGameTattooFile.Text = "";
                     //MessageBox.Show("DataTable error. " + ex.Message, "Wild Life Mod Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
@@ -1174,7 +1213,7 @@ namespace WSMM
             }
             string SaveFile = "DT_ClothesOutfit = " + BS_BaseClothesOutfitFile.Text + "\nDT_GameCharacterOutfits = " + BS_BaseGameCharacterOutfitFile.Text +
                 "\nDT_GameCharacterCustomization = " + BS_BaseGameCharacterCustomizationFile.Text + "\nMappings = " + BS_Mappings.Text + "\nVerifyIntegrity = " + BS_VerifyFI_CB.CheckState.ToString() +
-                "\nLaunchParams = " + BS_LaunchParams.Text + "\nDT_SandboxProps = " + BS_BaseGameSandboxPropsFile.Text;
+                "\nLaunchParams = " + BS_LaunchParams.Text + "\nDT_SandboxProps = " + BS_BaseGameSandboxPropsFile.Text + "\nDT_Tattoo = " + BS_BaseGameTattooFile.Text;
             File.WriteAllText(Application.StartupPath + @"System\" + LoadedWLVersion + @"_BuildSettings.ini", SaveFile);
         }
 
@@ -1288,7 +1327,7 @@ namespace WSMM
                 Debug.WriteLine("Adding new mod: " + Mod);
                 LoadedMods.Add(Path.GetFileNameWithoutExtension(Mod));
                 AddChange("Added mod: " + Path.GetFileNameWithoutExtension(Mod));
-                }            
+            }
             //Load Mods
             ProgressPanel.Invoke((System.Windows.Forms.MethodInvoker)delegate
             {
@@ -1939,7 +1978,7 @@ namespace WSMM
                     Mod_CurrentEntryID = 0;
                     NoModsFound_Label.Show();
                 }
-                
+
                 ConflictCheck();
                 DependenciesCheck();
             }
@@ -2470,7 +2509,7 @@ namespace WSMM
 
             ChangesMade = 0;
             LastSuccessfullBuild = DateTime.Now.ToString();
-            
+
             ChangesPanel_LastBuildLabel.Invoke((System.Windows.Forms.MethodInvoker)delegate
             {
                 ChangesPanel_LastBuildLabel.Text = "Last Build: " + LastSuccessfullBuild;
@@ -2508,6 +2547,7 @@ namespace WSMM
             string GameCharacterOutfits = string.Empty;
             string GameCharacterCustom = string.Empty;
             string SandboxProps = string.Empty;
+            string Tattoos = string.Empty;
 
             BS_BaseGameCharacterCustomizationFile.Invoke((System.Windows.Forms.MethodInvoker)delegate
             {
@@ -2540,14 +2580,23 @@ namespace WSMM
 
             try
             {
-                BS_BaseGameSandboxPropsFile.Invoke((System.Windows.Forms.MethodInvoker)delegate
+                if (File.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\" + BS_BaseGameSandboxPropsFile.Text))
                 {
                     SandboxProps = File.ReadAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\" + BS_BaseGameSandboxPropsFile.Text);
-                });
+                }
+                else
+                {
+                    BuildLog += "+ - DT_SandboxProps not found. Skipping prop mods.\n";
+                    SandboxProps = "";
+                    //Skipping Props
+                    if (File.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_SandboxProps_Generated.json"))
+                    {
+                        File.Delete(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_SandboxProps_Generated.json");
+                    }
+                }
             }
             catch (Exception)
             {
-                //return "Base DT_SandboxProps was not found.";
                 BuildLog += "+ - DT_SandboxProps not found. Skipping prop mods.\n";
                 SandboxProps = "";
                 //Skipping Props
@@ -2557,11 +2606,40 @@ namespace WSMM
                 }
             }
 
+            try
+            {
+                if (File.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\" + BS_BaseGameTattooFile.Text))
+                {
+                    Tattoos = File.ReadAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\" + BS_BaseGameTattooFile.Text);
+                }
+                else
+                {
+                    BuildLog += "+ - DT_Tattoo not found. Skipping tattoo mods.\n";
+                    Tattoos = "";
+                    //Skipping Tattoos
+                    if (File.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_Tattoo_Generated.json"))
+                    {
+                        File.Delete(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_Tattoo_Generated.json");
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                BuildLog += "+ - DT_Tattoo not found. Skipping tattoo mods.\n";
+                Tattoos = "";
+                //Skipping Tattoos
+                if (File.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_Tattoo_Generated.json"))
+                {
+                    File.Delete(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_Tattoo_Generated.json");
+                }
+            }
+
             List<string> Entries = new List<string>();
             List<string> NameMap = new List<string>();
             List<string> OutfitsNameMap = new List<string>();
             List<string> CustomNameMap = new List<string>();
             List<string> SandboxPropsNameMap = new List<string>();
+            List<string> TattoosNameMap = new List<string>();
             List<string> Outfits = new List<string>();
             List<string> Hair = new List<string>();
             List<string> Beard = new List<string>();
@@ -2573,6 +2651,7 @@ namespace WSMM
             List<string> Lipstick = new List<string>();
             List<string> Tanlines = new List<string>();
             List<string> Props = new List<string>();
+            List<string> TattoosList = new List<string>();
             bool CustomEdited = false;
             bool FurEdited = false;
             bool UseNewHairJSON = true;
@@ -2617,6 +2696,11 @@ namespace WSMM
             {
                 SandboxPropsNameMap_Defaults = File.ReadAllLines(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_SandboxProps_Default_NameMap.txt");
             }
+            string[] TattooNameMap_Defaults = null;
+            if (Tattoos != "")
+            {
+                TattooNameMap_Defaults = File.ReadAllLines(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_Tattoo_Default_NameMap.txt");
+            }
 
             string Original_Entry = File.ReadAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_ClothesOutfit_Entry_Default.json");
             string Original_FurmaskEntry = File.ReadAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_ClothesOutfit_Entry_FurMask.json");
@@ -2626,6 +2710,11 @@ namespace WSMM
             if (SandboxProps != "")
             {
                 Original_SandboxPropsEntry = File.ReadAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_SandboxProps_Entry_Default.json");
+            }
+            string Original_TattooEntry = "";
+            if (Tattoos != "")
+            {
+                Original_TattooEntry = File.ReadAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_Tattoo_Entry_Default.json");
             }
             string Original_CustomHairEntry = "";
             if (File.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GameCharacterCustomization_HairEntry_Default.json"))
@@ -2658,6 +2747,7 @@ namespace WSMM
                 string OutfitEntry = Original_OutfitEntry;
                 string CustomEntry = Original_CustomEntry;
                 string SandboxPropsEntry = Original_SandboxPropsEntry;
+                string TattooEntry = Original_TattooEntry;
                 string[] contents;
                 bool UsingFurMask = false;
                 contents = File.ReadAllLines(file);
@@ -3328,6 +3418,54 @@ namespace WSMM
                         }
                     }
                 }
+                else if (GetCleanString(contents, "Variant") == "Tattoos" && Tattoos != "")
+                {
+                    foreach (string S in contents)
+                    {
+                        string CleanString = GetSlice(S, ":", 1).Trim();
+                        if (GetSlice(S, ":", 0).Trim() == "Tattoo")
+                        {
+                            TattooEntry = Original_TattooEntry;
+                            TattooEntry = TattooEntry.Replace("[TATTOO_ID]", GetSlice(CleanString, ",", 0));
+                            TattooEntry = TattooEntry.Replace("[TATTOO_NAME]", GetSlice(CleanString, ",", 1));
+                            TattooEntry = TattooEntry.Replace("[TATTOO_TEXTURE_PATH]", GetSlice(CleanString, ",", 2));
+                            TattooEntry = TattooEntry.Replace("[TATTOO_TEXTURE_NAME]", GetSlice(CleanString, ",", 3));
+                            TattooEntry = TattooEntry.Replace("[TATTOO_ICON_PATH]", GetSlice(CleanString, ",", 4));
+                            TattooEntry = TattooEntry.Replace("[TATTOO_ICON_NAME]", GetSlice(CleanString, ",", 5));
+
+                            TattoosList.Add(TattooEntry);
+                        }
+                    }
+                    string NM = GetCleanString(contents, "NameMap");
+                    string[] TempArray = NM.Split(',');
+                    foreach (string temp in TempArray)
+                    {
+                        bool isDupe = false;
+                        foreach (string itm in TattoosNameMap)
+                        {
+                            if (itm == temp)
+                            {
+                                isDupe = true;
+                                break;
+                            }
+                        }
+                        if (isDupe == false)
+                        {
+                            foreach (string itm in TattooNameMap_Defaults)
+                            {
+                                if (itm == temp)
+                                {
+                                    isDupe = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if (isDupe == false)
+                        {
+                            TattoosNameMap.Add(temp);
+                        }
+                    }
+                }
             }
 
             //Remove Temp files
@@ -3611,10 +3749,44 @@ namespace WSMM
                 }
             }
 
+            string CompiledTattooEntries = string.Empty;
+            string CompiledTattooNameMap = string.Empty;
+            if (Tattoos != "")
+            {
+                try
+                {
+                    foreach (string Ent in TattoosList)
+                    {
+                        CompiledTattooEntries += Ent + ",\n";
+                    }
+                    CompiledTattooEntries = CompiledTattooEntries.TrimEnd('\n');
+                    CompiledTattooEntries = CompiledTattooEntries.TrimEnd(',');
+
+                    foreach (string Ent in TattoosNameMap)
+                    {
+                        CompiledTattooNameMap += "\"" + Ent + "\"" + "," + "\n";
+                    }
+                    CompiledTattooNameMap = CompiledTattooNameMap.TrimEnd('\n');
+                    CompiledTattooNameMap = CompiledTattooNameMap.TrimEnd(',');
+
+                    Tattoos = Tattoos.Replace("[ENTRYSTART]", CompiledTattooEntries);
+                    Tattoos = Tattoos.Replace("[NAMEMAPSTART]", CompiledTattooNameMap);
+                    File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_Tattoo_Debug.json", Tattoos);
+                    dynamic TattooArray = JsonConvert.DeserializeObject(Tattoos);
+                    string TattoojsonString = JsonConvert.SerializeObject(TattooArray, Newtonsoft.Json.Formatting.Indented);
+                    File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_Tattoo_Generated.json", TattoojsonString);
+                }
+                catch (Exception ex)
+                {
+                    return "DT_Tattoo json error: " + ex.Message;
+                }
+            }
+
             ClothesOutfit = string.Empty;
             GameCharacterOutfits = string.Empty;
             GameCharacterCustom = string.Empty;
             SandboxProps = string.Empty;
+            Tattoos = string.Empty;
 
             return "Success";
         }
@@ -3734,6 +3906,25 @@ namespace WSMM
                 }
             }
 
+            if (File.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_Tattoo_Generated.json"))
+            {
+                var DT_Tattoo = new UAsset();
+                try
+                {
+                    using (var sr = new FileStream(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_Tattoo_Generated.json", FileMode.Open))
+                    {
+                        DT_Tattoo = UAsset.DeserializeJson(sr);
+                    }
+                    DT_Tattoo.Mappings = mappings;
+
+                    DT_Tattoo.Write(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P\WildLifeC\Content\DataTables\DT_Tattoo.uasset");
+                }
+                catch (Exception ex)
+                {
+                    return "DT_Tattoo Serialization Error: " + ex.Message;
+                }
+            }
+
             return "Success";
         }
 
@@ -3768,6 +3959,11 @@ namespace WSMM
                     {
                         pak_writer.WriteFile("WildLifeC/Content/DataTables/Sandbox/DT_SandboxProps.uasset", File.ReadAllBytes(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P\WildLifeC\Content\DataTables\Sandbox\DT_SandboxProps.uasset"));
                         pak_writer.WriteFile("WildLifeC/Content/DataTables/Sandbox/DT_SandboxProps.uexp", File.ReadAllBytes(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P\WildLifeC\Content\DataTables\Sandbox\DT_SandboxProps.uexp"));
+                    }
+                    if (File.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_Tattoo_Generated.json"))
+                    {
+                        pak_writer.WriteFile("WildLifeC/Content/DataTables/DT_Tattoo.uasset", File.ReadAllBytes(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P\WildLifeC\Content\DataTables\DT_Tattoo.uasset"));
+                        pak_writer.WriteFile("WildLifeC/Content/DataTables/DT_Tattoo.uexp", File.ReadAllBytes(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P\WildLifeC\Content\DataTables\DT_Tattoo.uexp"));
                     }
                     pak_writer.WriteIndex();
                 }
@@ -5419,6 +5615,14 @@ namespace WSMM
             else
             {
                 ChangesPanel.Show();
+            }
+        }
+
+        private void BS_BaseGameTattooFile_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (StartingUp == false)
+            {
+                SaveBuildSettings();
             }
         }
     }

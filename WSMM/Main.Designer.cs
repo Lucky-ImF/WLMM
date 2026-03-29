@@ -90,6 +90,8 @@
             folderBrowserDialog1 = new FolderBrowserDialog();
             BuildSettings_Button = new Button();
             BuildSettings_Panel = new Panel();
+            label54 = new Label();
+            BS_BaseGameTattooFile = new ComboBox();
             BuildSettingsBuildManager_Button = new Button();
             label46 = new Label();
             BS_BaseGameSandboxPropsFile = new ComboBox();
@@ -225,8 +227,8 @@
             ChangesLB = new ListBox();
             Changes_Close = new PictureBox();
             label53 = new Label();
-            ChangesMade_Label = new LinkLabel();
             ChangesPanel_LastBuildLabel = new Label();
+            ChangesMade_Label = new LinkLabel();
             TitlePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
@@ -1050,6 +1052,8 @@
             // BuildSettings_Panel
             // 
             BuildSettings_Panel.BorderStyle = BorderStyle.FixedSingle;
+            BuildSettings_Panel.Controls.Add(label54);
+            BuildSettings_Panel.Controls.Add(BS_BaseGameTattooFile);
             BuildSettings_Panel.Controls.Add(BuildSettingsBuildManager_Button);
             BuildSettings_Panel.Controls.Add(label46);
             BuildSettings_Panel.Controls.Add(BS_BaseGameSandboxPropsFile);
@@ -1068,11 +1072,34 @@
             BuildSettings_Panel.Controls.Add(BS_BaseGameCharacterOutfitFile);
             BuildSettings_Panel.Controls.Add(label14);
             BuildSettings_Panel.Controls.Add(BS_BaseClothesOutfitFile);
-            BuildSettings_Panel.Location = new Point(898, 184);
+            BuildSettings_Panel.Location = new Point(898, 126);
             BuildSettings_Panel.Name = "BuildSettings_Panel";
-            BuildSettings_Panel.Size = new Size(231, 454);
+            BuildSettings_Panel.Size = new Size(231, 512);
             BuildSettings_Panel.TabIndex = 13;
             BuildSettings_Panel.Visible = false;
+            // 
+            // label54
+            // 
+            label54.AutoSize = true;
+            label54.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label54.ForeColor = SystemColors.ActiveCaption;
+            label54.Location = new Point(80, 191);
+            label54.Name = "label54";
+            label54.Size = new Size(68, 17);
+            label54.TabIndex = 54;
+            label54.Text = "DT_Tattoo:";
+            // 
+            // BS_BaseGameTattooFile
+            // 
+            BS_BaseGameTattooFile.BackColor = Color.FromArgb(32, 34, 81);
+            BS_BaseGameTattooFile.FlatStyle = FlatStyle.Flat;
+            BS_BaseGameTattooFile.ForeColor = SystemColors.ActiveCaption;
+            BS_BaseGameTattooFile.FormattingEnabled = true;
+            BS_BaseGameTattooFile.Location = new Point(5, 211);
+            BS_BaseGameTattooFile.Name = "BS_BaseGameTattooFile";
+            BS_BaseGameTattooFile.Size = new Size(218, 23);
+            BS_BaseGameTattooFile.TabIndex = 53;
+            BS_BaseGameTattooFile.SelectedValueChanged += BS_BaseGameTattooFile_SelectedValueChanged;
             // 
             // BuildSettingsBuildManager_Button
             // 
@@ -1081,7 +1108,7 @@
             BuildSettingsBuildManager_Button.FlatStyle = FlatStyle.Flat;
             BuildSettingsBuildManager_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             BuildSettingsBuildManager_Button.ForeColor = SystemColors.ActiveCaption;
-            BuildSettingsBuildManager_Button.Location = new Point(35, 255);
+            BuildSettingsBuildManager_Button.Location = new Point(35, 312);
             BuildSettingsBuildManager_Button.Name = "BuildSettingsBuildManager_Button";
             BuildSettingsBuildManager_Button.Size = new Size(159, 26);
             BuildSettingsBuildManager_Button.TabIndex = 52;
@@ -1116,7 +1143,7 @@
             // 
             BS_LaunchParams.BackColor = Color.FromArgb(32, 34, 81);
             BS_LaunchParams.ForeColor = SystemColors.ActiveCaption;
-            BS_LaunchParams.Location = new Point(6, 426);
+            BS_LaunchParams.Location = new Point(6, 483);
             BS_LaunchParams.Name = "BS_LaunchParams";
             BS_LaunchParams.Size = new Size(218, 23);
             BS_LaunchParams.TabIndex = 49;
@@ -1126,7 +1153,7 @@
             label44.AutoSize = true;
             label44.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label44.ForeColor = SystemColors.ActiveCaption;
-            label44.Location = new Point(54, 406);
+            label44.Location = new Point(54, 463);
             label44.Name = "label44";
             label44.Size = new Size(121, 17);
             label44.TabIndex = 48;
@@ -1139,7 +1166,7 @@
             BuildSettingsDTUpdater_Button.FlatStyle = FlatStyle.Flat;
             BuildSettingsDTUpdater_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             BuildSettingsDTUpdater_Button.ForeColor = SystemColors.ActiveCaption;
-            BuildSettingsDTUpdater_Button.Location = new Point(35, 223);
+            BuildSettingsDTUpdater_Button.Location = new Point(35, 280);
             BuildSettingsDTUpdater_Button.Name = "BuildSettingsDTUpdater_Button";
             BuildSettingsDTUpdater_Button.Size = new Size(159, 26);
             BuildSettingsDTUpdater_Button.TabIndex = 46;
@@ -1152,7 +1179,7 @@
             BS_AlwaysRunAM_CB.AutoSize = true;
             BS_AlwaysRunAM_CB.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             BS_AlwaysRunAM_CB.ForeColor = SystemColors.ActiveCaption;
-            BS_AlwaysRunAM_CB.Location = new Point(5, 358);
+            BS_AlwaysRunAM_CB.Location = new Point(5, 415);
             BS_AlwaysRunAM_CB.Name = "BS_AlwaysRunAM_CB";
             BS_AlwaysRunAM_CB.Size = new Size(220, 24);
             BS_AlwaysRunAM_CB.TabIndex = 45;
@@ -1164,7 +1191,7 @@
             BS_AllowOutdated_CB.AutoSize = true;
             BS_AllowOutdated_CB.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             BS_AllowOutdated_CB.ForeColor = Color.Firebrick;
-            BS_AllowOutdated_CB.Location = new Point(5, 383);
+            BS_AllowOutdated_CB.Location = new Point(5, 440);
             BS_AllowOutdated_CB.Name = "BS_AllowOutdated_CB";
             BS_AllowOutdated_CB.Size = new Size(227, 24);
             BS_AllowOutdated_CB.TabIndex = 44;
@@ -1179,7 +1206,7 @@
             BS_VerifyFI_CB.CheckState = CheckState.Checked;
             BS_VerifyFI_CB.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             BS_VerifyFI_CB.ForeColor = SystemColors.ActiveCaption;
-            BS_VerifyFI_CB.Location = new Point(5, 334);
+            BS_VerifyFI_CB.Location = new Point(5, 391);
             BS_VerifyFI_CB.Name = "BS_VerifyFI_CB";
             BS_VerifyFI_CB.Size = new Size(224, 24);
             BS_VerifyFI_CB.TabIndex = 43;
@@ -1192,7 +1219,7 @@
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label1.ForeColor = SystemColors.ActiveCaption;
-            label1.Location = new Point(79, 284);
+            label1.Location = new Point(79, 341);
             label1.Name = "label1";
             label1.Size = new Size(70, 17);
             label1.TabIndex = 42;
@@ -1204,7 +1231,7 @@
             BS_Mappings.FlatStyle = FlatStyle.Flat;
             BS_Mappings.ForeColor = SystemColors.ActiveCaption;
             BS_Mappings.FormattingEnabled = true;
-            BS_Mappings.Location = new Point(6, 304);
+            BS_Mappings.Location = new Point(6, 361);
             BS_Mappings.Name = "BS_Mappings";
             BS_Mappings.Size = new Size(218, 23);
             BS_Mappings.TabIndex = 41;
@@ -1217,7 +1244,7 @@
             BuildSettingsDTFolder_Button.FlatStyle = FlatStyle.Flat;
             BuildSettingsDTFolder_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             BuildSettingsDTFolder_Button.ForeColor = SystemColors.ActiveCaption;
-            BuildSettingsDTFolder_Button.Location = new Point(35, 191);
+            BuildSettingsDTFolder_Button.Location = new Point(35, 248);
             BuildSettingsDTFolder_Button.Name = "BuildSettingsDTFolder_Button";
             BuildSettingsDTFolder_Button.Size = new Size(159, 26);
             BuildSettingsDTFolder_Button.TabIndex = 40;
@@ -2822,6 +2849,18 @@
             label53.Text = "Changes:";
             label53.TextAlign = ContentAlignment.MiddleCenter;
             // 
+            // ChangesPanel_LastBuildLabel
+            // 
+            ChangesPanel_LastBuildLabel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            ChangesPanel_LastBuildLabel.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            ChangesPanel_LastBuildLabel.ForeColor = SystemColors.ActiveCaption;
+            ChangesPanel_LastBuildLabel.Location = new Point(3, 30);
+            ChangesPanel_LastBuildLabel.Name = "ChangesPanel_LastBuildLabel";
+            ChangesPanel_LastBuildLabel.Size = new Size(339, 18);
+            ChangesPanel_LastBuildLabel.TabIndex = 41;
+            ChangesPanel_LastBuildLabel.Text = "Last Build: Never";
+            ChangesPanel_LastBuildLabel.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // ChangesMade_Label
             // 
             ChangesMade_Label.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -2836,18 +2875,6 @@
             ChangesMade_Label.VisitedLinkColor = SystemColors.ActiveCaption;
             ChangesMade_Label.LinkClicked += ChangesMade_Label_LinkClicked;
             // 
-            // ChangesPanel_LastBuildLabel
-            // 
-            ChangesPanel_LastBuildLabel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            ChangesPanel_LastBuildLabel.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            ChangesPanel_LastBuildLabel.ForeColor = SystemColors.ActiveCaption;
-            ChangesPanel_LastBuildLabel.Location = new Point(3, 30);
-            ChangesPanel_LastBuildLabel.Name = "ChangesPanel_LastBuildLabel";
-            ChangesPanel_LastBuildLabel.Size = new Size(339, 18);
-            ChangesPanel_LastBuildLabel.TabIndex = 41;
-            ChangesPanel_LastBuildLabel.Text = "Last Build: Never";
-            ChangesPanel_LastBuildLabel.TextAlign = ContentAlignment.MiddleCenter;
-            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
@@ -2855,13 +2882,13 @@
             BackColor = Color.FromArgb(32, 34, 81);
             ClientSize = new Size(1134, 761);
             ControlBox = false;
+            Controls.Add(BuildSettings_Panel);
             Controls.Add(ChangesMade_Label);
             Controls.Add(ChangesPanel);
             Controls.Add(BuildManager_Panel);
             Controls.Add(DT_Updater_Panel);
             Controls.Add(BugReport_Panel);
             Controls.Add(Tutorial_0);
-            Controls.Add(BuildSettings_Panel);
             Controls.Add(Tutorial_3);
             Controls.Add(Tutorial_2);
             Controls.Add(Tutorial_1);
@@ -3178,5 +3205,7 @@
         private Label label53;
         private LinkLabel ChangesMade_Label;
         private Label ChangesPanel_LastBuildLabel;
+        private Label label54;
+        private ComboBox BS_BaseGameTattooFile;
     }
 }

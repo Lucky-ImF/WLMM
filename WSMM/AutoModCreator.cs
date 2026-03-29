@@ -52,6 +52,25 @@ namespace WSMM
         List<int> CharCust_Entries = new List<int>();
         int CharCust_CurrentEntryID = 0;
 
+        GroupBox[] Tattoo_GB = new GroupBox[100];
+        Label[] Tattoo_IDLabel = new Label[100];
+        TextBox[] Tattoo_ID = new TextBox[100];
+        Label[] Tattoo_NameLabel = new Label[100];
+        TextBox[] Tattoo_Name = new TextBox[100];
+        Label[] Tattoo_TexturePathLabel = new Label[100];
+        TextBox[] Tattoo_TexturePath = new TextBox[100];
+        Label[] Tattoo_IconPathLabel = new Label[100];
+        TextBox[] Tattoo_IconPath = new TextBox[100];
+        Label[] Tattoo_TextureNameLabel = new Label[100];
+        TextBox[] Tattoo_TextureName = new TextBox[100];
+        Label[] Tattoo_IconNameLabel = new Label[100];
+        TextBox[] Tattoo_IconName = new TextBox[100];
+        LinkLabel[] Tattoo_Dupe = new LinkLabel[100];
+        LinkLabel[] Tattoo_Remove = new LinkLabel[100];
+
+        List<int> Tattoo_Entries = new List<int>();
+        int Tattoo_CurrentEntryID = 0;
+
         public AutoModCreator()
         {
             InitializeComponent();
@@ -793,6 +812,52 @@ namespace WSMM
                     ModCreator_Form.AddToAutoModList(SavePath);
                     EditNewFile(SavePath);
                 }
+                else if (Variant.Text == "Tattoos")
+                {
+                    ModString += "NameMap: [NAMEMAPREPLACE]" + "\n";
+
+                    foreach (int i in Tattoo_Entries)
+                    {
+                        ModString += "Tattoo: " + Tattoo_ID[i].Text + "," + Tattoo_Name[i].Text + "," + Tattoo_TexturePath[i].Text + "," + Tattoo_TextureName[i].Text + "," + Tattoo_IconPath[i].Text + "," + Tattoo_IconName[i].Text + "\n";
+                        AddToNameMap(Tattoo_ID[i].Text);
+                        AddToNameMap(Tattoo_Name[i].Text);
+                        AddToNameMap(Tattoo_TexturePath[i].Text);
+                        AddToNameMap(Tattoo_TextureName[i].Text);
+                        AddToNameMap(Tattoo_IconPath[i].Text);
+                        AddToNameMap(Tattoo_IconName[i].Text);
+                    }
+                    ModString = ModString.TrimEnd('\n');
+
+                    string NameMapString = string.Empty;
+                    foreach (string itm in NameMap)
+                    {
+                        NameMapString += itm + ",";
+                    }
+                    NameMapString = NameMapString.TrimEnd(',');
+                    ModString = ModString.Replace("[NAMEMAPREPLACE]", NameMapString);
+
+                    string SavePath = string.Empty;
+                    if (CurrentlyEditing_Path == string.Empty)
+                    {
+                        SavePath = Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Mod Creator\AutoMod\" + ModName.Text + "_Tattoos.txt";
+                    }
+                    else
+                    {
+                        if (File.Exists(CurrentlyEditing_Path))
+                        {
+                            SavePath = CurrentlyEditing_Path;
+                        }
+                        else
+                        {
+                            MessageBox.Show("The file you are editing could not be found.\nMod write was unsuccessful.", "Wild Life Mod Manager");
+                            return;
+                        }
+                    }
+
+                    File.WriteAllText(SavePath, ModString);
+                    ModCreator_Form.AddToAutoModList(SavePath);
+                    EditNewFile(SavePath);
+                }
                 MessageBox.Show("Mod file created!", "AutoMod");
             }
             catch (Exception)
@@ -836,6 +901,7 @@ namespace WSMM
                 Character.SelectedIndex = 0;
                 PropsGB.Visible = false;
                 Character.Enabled = true;
+                TattoosGB.Visible = false;
             }
             else if (Variant.Text == "Port")
             {
@@ -850,6 +916,7 @@ namespace WSMM
                 Character.SelectedIndex = 0;
                 PropsGB.Visible = false;
                 Character.Enabled = true;
+                TattoosGB.Visible = false;
             }
             else if (Variant.Text == "Character Customization")
             {
@@ -863,6 +930,7 @@ namespace WSMM
                 OutfitName.Enabled = false;
                 PropsGB.Visible = false;
                 Character.Enabled = true;
+                TattoosGB.Visible = false;
             }
             else if (Variant.Text == "Fur Customization")
             {
@@ -876,6 +944,7 @@ namespace WSMM
                 OutfitName.Enabled = false;
                 PropsGB.Visible = false;
                 Character.Enabled = true;
+                TattoosGB.Visible = false;
             }
             else if (Variant.Text == "Props")
             {
@@ -887,6 +956,19 @@ namespace WSMM
                 OutfitID.Enabled = false;
                 OutfitName.Enabled = false;
                 PropsGB.Visible = true;
+                TattoosGB.Visible = false;
+            }
+            else if (Variant.Text == "Tattoos")
+            {
+                tabControl1.Visible = false;
+                FurCustomizationGB.Visible = false;
+                Character.Items.Clear();
+                Character.Enabled = false;
+                CharCustomBox.Visible = false;
+                OutfitID.Enabled = false;
+                OutfitName.Enabled = false;
+                PropsGB.Visible = false;
+                TattoosGB.Visible = true;
             }
         }
 
@@ -1022,8 +1104,13 @@ namespace WSMM
                 else if (TempArray[0].Trim() == "ReferenceHairBias") { Fur_RefHairBias.Text = TempArray[1].Trim(); }
                 else if (TempArray[0].Trim() == "HairLengthForceUniformity") { Fur_HairLengthForceUniformity.Text = TempArray[1].Trim(); }
                 else if (TempArray[0].Trim() == "Prop")
-                { 
+                {
                     Props_LB.Items.Add(TempArray[1].Trim());
+                }
+                else if (TempArray[0].Trim() == "Tattoo")
+                {
+                    string[] TempArray2 = TempArray[1].Trim().Split(',');
+                    CreateTattooEntry(999, TempArray2[0], TempArray2[1], TempArray2[2], TempArray2[3], TempArray2[4], TempArray2[5]);
                 }
                 else
                 {
@@ -2644,7 +2731,7 @@ namespace WSMM
             for (int i = 0; i < Props_LB.Items.Count; i++)
             {
                 string item = Props_LB.Items[i].ToString();
-                if (GetSlice(item," | ", 0).Trim() == PropID_TB.Text)
+                if (GetSlice(item, " | ", 0).Trim() == PropID_TB.Text)
                 {
                     existingIndex = i;
                     break;
@@ -2717,6 +2804,188 @@ namespace WSMM
             CurrentlyEditing_LL.Text = Path;
             WriteMod.Text = "Edit Mod File";
             StopEditing_LL.Show();
+        }
+
+        private void TattoosAdd_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            CreateTattooEntry();
+        }
+
+        private void CreateTattooEntry(int Dupe = 999, string setID = "TattooID", string setName = "None", string setTexturePath = "/Game/Textures/...", string setTextureName = "None", string setIconPath = "/Game/Textures/...", string setIconName = "None")
+        {
+            int EntryID = Tattoo_CurrentEntryID;
+
+            Tattoo_GB[EntryID] = new GroupBox();
+            Tattoo_GB[EntryID].Text = "Entry #" + EntryID.ToString();
+            Tattoo_GB[EntryID].Size = new System.Drawing.Size(495, 280);
+            Tattoo_GB[EntryID].ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            Tattoo_GB[EntryID].Font = new Font(Tattoo_GB[EntryID].Font.FontFamily, 8);
+            Tattoo_GB[EntryID].BackColor = System.Drawing.Color.FromArgb(75, 68, 138);
+
+            Tattoo_IDLabel[EntryID] = new Label();
+            Tattoo_IDLabel[EntryID].Text = "Tattoo ID:";
+            Tattoo_IDLabel[EntryID].ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            Tattoo_IDLabel[EntryID].AutoSize = true;
+            Tattoo_IDLabel[EntryID].Location = new System.Drawing.Point(6, 16);
+
+            Tattoo_NameLabel[EntryID] = new Label();
+            Tattoo_NameLabel[EntryID].Text = "Tattoo Name:";
+            Tattoo_NameLabel[EntryID].ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            Tattoo_NameLabel[EntryID].AutoSize = true;
+            Tattoo_NameLabel[EntryID].Location = new System.Drawing.Point(6, 57);
+
+            Tattoo_TexturePathLabel[EntryID] = new Label();
+            Tattoo_TexturePathLabel[EntryID].Text = "Texture Path:";
+            Tattoo_TexturePathLabel[EntryID].ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            Tattoo_TexturePathLabel[EntryID].AutoSize = true;
+            Tattoo_TexturePathLabel[EntryID].Location = new System.Drawing.Point(6, 107);
+
+            Tattoo_TextureNameLabel[EntryID] = new Label();
+            Tattoo_TextureNameLabel[EntryID].Text = "Texture Name: (Usually the filename in Path)";
+            Tattoo_TextureNameLabel[EntryID].ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            Tattoo_TextureNameLabel[EntryID].AutoSize = true;
+            Tattoo_TextureNameLabel[EntryID].Location = new System.Drawing.Point(6, 146);
+
+            Tattoo_IconPathLabel[EntryID] = new Label();
+            Tattoo_IconPathLabel[EntryID].Text = "Icon Path:";
+            Tattoo_IconPathLabel[EntryID].ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            Tattoo_IconPathLabel[EntryID].AutoSize = true;
+            Tattoo_IconPathLabel[EntryID].Location = new System.Drawing.Point(6, 196);
+
+            Tattoo_IconNameLabel[EntryID] = new Label();
+            Tattoo_IconNameLabel[EntryID].Text = "Icon Name: (Usually the filename in Path)";
+            Tattoo_IconNameLabel[EntryID].ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            Tattoo_IconNameLabel[EntryID].AutoSize = true;
+            Tattoo_IconNameLabel[EntryID].Location = new System.Drawing.Point(6, 235);
+
+            Tattoo_ID[EntryID] = new TextBox();
+            Tattoo_ID[EntryID].BackColor = System.Drawing.Color.FromArgb(75, 68, 138);
+            Tattoo_ID[EntryID].ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            Tattoo_ID[EntryID].Size = new System.Drawing.Size(464, 21);
+            Tattoo_ID[EntryID].Location = new System.Drawing.Point(14, 32);
+            Tattoo_ID[EntryID].Text = setID.ToString();
+            Tattoo_ID[EntryID].Tag = EntryID;
+
+            Tattoo_Name[EntryID] = new TextBox();
+            Tattoo_Name[EntryID].BackColor = System.Drawing.Color.FromArgb(75, 68, 138);
+            Tattoo_Name[EntryID].ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            Tattoo_Name[EntryID].Size = new System.Drawing.Size(464, 20);
+            Tattoo_Name[EntryID].Location = new System.Drawing.Point(14, 74);
+            Tattoo_Name[EntryID].Text = setName.ToString();
+
+            Tattoo_TexturePath[EntryID] = new TextBox();
+            Tattoo_TexturePath[EntryID].BackColor = System.Drawing.Color.FromArgb(75, 68, 138);
+            Tattoo_TexturePath[EntryID].ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            Tattoo_TexturePath[EntryID].Size = new System.Drawing.Size(464, 20);
+            Tattoo_TexturePath[EntryID].Location = new System.Drawing.Point(14, 123);
+            Tattoo_TexturePath[EntryID].Text = setTexturePath.ToString();
+
+            Tattoo_TextureName[EntryID] = new TextBox();
+            Tattoo_TextureName[EntryID].BackColor = System.Drawing.Color.FromArgb(75, 68, 138);
+            Tattoo_TextureName[EntryID].ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            Tattoo_TextureName[EntryID].Size = new System.Drawing.Size(464, 20);
+            Tattoo_TextureName[EntryID].Location = new System.Drawing.Point(14, 162);
+            Tattoo_TextureName[EntryID].Text = setTextureName.ToString();
+
+            Tattoo_IconPath[EntryID] = new TextBox();
+            Tattoo_IconPath[EntryID].BackColor = System.Drawing.Color.FromArgb(75, 68, 138);
+            Tattoo_IconPath[EntryID].ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            Tattoo_IconPath[EntryID].Size = new System.Drawing.Size(464, 20);
+            Tattoo_IconPath[EntryID].Location = new System.Drawing.Point(14, 212);
+            Tattoo_IconPath[EntryID].Text = setIconPath.ToString();
+
+            Tattoo_IconName[EntryID] = new TextBox();
+            Tattoo_IconName[EntryID].BackColor = System.Drawing.Color.FromArgb(75, 68, 138);
+            Tattoo_IconName[EntryID].ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            Tattoo_IconName[EntryID].Size = new System.Drawing.Size(464, 20);
+            Tattoo_IconName[EntryID].Location = new System.Drawing.Point(14, 251);
+            Tattoo_IconName[EntryID].Text = setIconName.ToString();
+
+            Tattoo_Dupe[EntryID] = new LinkLabel();
+            Tattoo_Dupe[EntryID].AutoSize = true;
+            Tattoo_Dupe[EntryID].Text = "Duplicate";
+            Tattoo_Dupe[EntryID].LinkColor = System.Drawing.SystemColors.MenuHighlight;
+            Tattoo_Dupe[EntryID].VisitedLinkColor = System.Drawing.SystemColors.MenuHighlight;
+            Tattoo_Dupe[EntryID].ActiveLinkColor = System.Drawing.Color.DeepSkyBlue;
+            Tattoo_Dupe[EntryID].Location = new System.Drawing.Point(322, 0);
+            Tattoo_Dupe[EntryID].Tag = EntryID;
+            Tattoo_Dupe[EntryID].Click += Tattoo_DupeClick;
+            Tattoo_Dupe[EntryID].Font = new Font(Tattoo_Dupe[EntryID].Font.FontFamily, 10);
+
+            Tattoo_Remove[EntryID] = new LinkLabel();
+            Tattoo_Remove[EntryID].AutoSize = true;
+            Tattoo_Remove[EntryID].Text = "Remove";
+            Tattoo_Remove[EntryID].LinkColor = System.Drawing.Color.LightCoral;
+            Tattoo_Remove[EntryID].VisitedLinkColor = System.Drawing.Color.LightCoral;
+            Tattoo_Remove[EntryID].ActiveLinkColor = System.Drawing.Color.Red;
+            Tattoo_Remove[EntryID].Location = new System.Drawing.Point(407, 0);
+            Tattoo_Remove[EntryID].Tag = EntryID;
+            Tattoo_Remove[EntryID].Click += Tattoo_RemoveClick;
+            Tattoo_Remove[EntryID].Font = new Font(Tattoo_Remove[EntryID].Font.FontFamily, 10);
+
+            Tattoo_GB[EntryID].Controls.Add(Tattoo_IDLabel[EntryID]);
+            Tattoo_GB[EntryID].Controls.Add(Tattoo_TexturePathLabel[EntryID]);
+            Tattoo_GB[EntryID].Controls.Add(Tattoo_TextureNameLabel[EntryID]);
+            Tattoo_GB[EntryID].Controls.Add(Tattoo_NameLabel[EntryID]);
+            Tattoo_GB[EntryID].Controls.Add(Tattoo_IconPathLabel[EntryID]);
+            Tattoo_GB[EntryID].Controls.Add(Tattoo_IconNameLabel[EntryID]);
+            Tattoo_GB[EntryID].Controls.Add(Tattoo_ID[EntryID]);
+            Tattoo_GB[EntryID].Controls.Add(Tattoo_TexturePath[EntryID]);
+            Tattoo_GB[EntryID].Controls.Add(Tattoo_TextureName[EntryID]);
+            Tattoo_GB[EntryID].Controls.Add(Tattoo_Name[EntryID]);
+            Tattoo_GB[EntryID].Controls.Add(Tattoo_IconPath[EntryID]);
+            Tattoo_GB[EntryID].Controls.Add(Tattoo_IconName[EntryID]);
+            Tattoo_GB[EntryID].Controls.Add(Tattoo_Dupe[EntryID]);
+            Tattoo_GB[EntryID].Controls.Add(Tattoo_Remove[EntryID]);
+
+            if (Dupe != 999)
+            {
+                Tattoo_ID[EntryID].Text = Tattoo_ID[Dupe].Text;
+                Tattoo_Name[EntryID].Text = Tattoo_Name[Dupe].Text;
+                Tattoo_TexturePath[EntryID].Text = Tattoo_TexturePath[Dupe].Text;
+                Tattoo_TextureName[EntryID].Text = Tattoo_TextureName[Dupe].Text;
+                Tattoo_IconPath[EntryID].Text = Tattoo_TexturePath[Dupe].Text;
+                Tattoo_IconName[EntryID].Text = Tattoo_TextureName[Dupe].Text;
+            }
+
+            TattoosFlow.Controls.Add(Tattoo_GB[EntryID]);
+            Tattoo_Entries.Add(EntryID);
+            Tattoo_CurrentEntryID += 1;
+        }
+
+        private void Tattoo_DupeClick(object sender, EventArgs e)
+        {
+            LinkLabel Casted = sender as LinkLabel;
+            CreateTattooEntry(int.Parse(Casted.Tag.ToString()));
+        }
+
+        private void Tattoo_RemoveClick(object sender, EventArgs e)
+        {
+            LinkLabel Casted = sender as LinkLabel;
+            int EntryID = int.Parse(Casted.Tag.ToString());
+
+            Tattoo_IDLabel[EntryID].Dispose();
+            Tattoo_TexturePathLabel[EntryID].Dispose();
+            Tattoo_TextureNameLabel[EntryID].Dispose();
+            Tattoo_IconPathLabel[EntryID].Dispose();
+            Tattoo_IconNameLabel[EntryID].Dispose();
+
+            Tattoo_ID[EntryID].Dispose();
+            Tattoo_TexturePath[EntryID].Dispose();
+            Tattoo_TextureName[EntryID].Dispose();
+            Tattoo_IconPath[EntryID].Dispose();
+            Tattoo_IconName[EntryID].Dispose();
+
+            Tattoo_Dupe[EntryID].Dispose();
+            Tattoo_Remove[EntryID].Dispose();
+
+            Tattoo_GB[EntryID].Dispose();
+            Tattoo_Entries.Remove(EntryID);
+
+            if (Tattoo_Entries.Count == 0)
+            {
+                Tattoo_CurrentEntryID = 0;
+            }
         }
     }
 }
