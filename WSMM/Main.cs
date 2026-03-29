@@ -65,6 +65,7 @@ namespace WSMM
         bool SaveSessionOnExit = true;
 
         string LastSuccessfullBuild = "Never";
+        bool MoviesDisabled = false;
 
         //Panel, Picturebox, Label(Name), Label(Error), Label(Version), Label(SupportedVersions), Label(Author), LinkLabel(Remove), LinkLabel(Link), Checkbox
         Panel[] Mod_Panel = new Panel[100];
@@ -1157,6 +1158,19 @@ namespace WSMM
                     {
                         BS_LaunchParams.Text = GetSlice(file, "=", 1);
                     }
+                    else if (file.StartsWith("MoviesDisabled"))
+                    {
+                        if (GetSlice(file, "=", 1) == "Checked")
+                        {
+                            DisableIntroMovies.Checked = true;
+                            ToggleIntroMovies(true);
+                        }
+                        else
+                        {
+                            DisableIntroMovies.Checked = false;
+                            ToggleIntroMovies(false);
+                        }
+                    }
                 }
                 if (BS_BaseGameSandboxPropsFile.Text == "" && BS_BaseGameSandboxPropsFile.Items.Count >= 1 || BS_BaseGameSandboxPropsFile.Text == "Unsupported" && BS_BaseGameSandboxPropsFile.Items.Count >= 1)
                 {
@@ -1213,7 +1227,7 @@ namespace WSMM
             }
             string SaveFile = "DT_ClothesOutfit = " + BS_BaseClothesOutfitFile.Text + "\nDT_GameCharacterOutfits = " + BS_BaseGameCharacterOutfitFile.Text +
                 "\nDT_GameCharacterCustomization = " + BS_BaseGameCharacterCustomizationFile.Text + "\nMappings = " + BS_Mappings.Text + "\nVerifyIntegrity = " + BS_VerifyFI_CB.CheckState.ToString() +
-                "\nLaunchParams = " + BS_LaunchParams.Text + "\nDT_SandboxProps = " + BS_BaseGameSandboxPropsFile.Text + "\nDT_Tattoo = " + BS_BaseGameTattooFile.Text;
+                "\nLaunchParams = " + BS_LaunchParams.Text + "\nDT_SandboxProps = " + BS_BaseGameSandboxPropsFile.Text + "\nDT_Tattoo = " + BS_BaseGameTattooFile.Text + "\nMoviesDisabled = " + DisableIntroMovies.CheckState.ToString();
             File.WriteAllText(Application.StartupPath + @"System\" + LoadedWLVersion + @"_BuildSettings.ini", SaveFile);
         }
 
@@ -5623,6 +5637,51 @@ namespace WSMM
             if (StartingUp == false)
             {
                 SaveBuildSettings();
+            }
+        }
+
+        private void DisableIntroMovies_CheckedChanged(object sender, EventArgs e)
+        {
+            MoviesDisabled = DisableIntroMovies.Checked;
+            ToggleIntroMovies(DisableIntroMovies.Checked);
+        }
+
+        private void ToggleIntroMovies(bool toggle)
+        {
+            bool IncludeInChanges = false;
+            if (toggle == true)
+            {
+                if (File.Exists(LoadedWLPath + @"\WildLifeC\Content\Movies\cvn-splash.mp4") == true)
+                {
+                    File.Move(LoadedWLPath + @"\WildLifeC\Content\Movies\cvn-splash.mp4", LoadedWLPath + @"\WildLifeC\Content\Movies\cvn-splash.mp4_DISABLED");
+                    IncludeInChanges = true;
+                }
+                if (File.Exists(LoadedWLPath + @"\WildLifeC\Content\Movies\UE_moving_logo_v04_4k.mp4") == true)
+                {
+                    File.Move(LoadedWLPath + @"\WildLifeC\Content\Movies\UE_moving_logo_v04_4k.mp4", LoadedWLPath + @"\WildLifeC\Content\Movies\UE_moving_logo_v04_4k.mp4_DISABLED");
+                    IncludeInChanges = true;
+                }
+                if (IncludeInChanges == true)
+                {
+                    AddChange("Disabled intro movies.");
+                }
+            }
+            else
+            {
+                if (File.Exists(LoadedWLPath + @"\WildLifeC\Content\Movies\cvn-splash.mp4_DISABLED") == true)
+                {
+                    File.Move(LoadedWLPath + @"\WildLifeC\Content\Movies\cvn-splash.mp4_DISABLED", LoadedWLPath + @"\WildLifeC\Content\Movies\cvn-splash.mp4");
+                    IncludeInChanges = true;
+                }
+                if (File.Exists(LoadedWLPath + @"\WildLifeC\Content\Movies\UE_moving_logo_v04_4k.mp4_DISABLED") == true)
+                {
+                    File.Move(LoadedWLPath + @"\WildLifeC\Content\Movies\UE_moving_logo_v04_4k.mp4_DISABLED", LoadedWLPath + @"\WildLifeC\Content\Movies\UE_moving_logo_v04_4k.mp4");
+                    IncludeInChanges = true;
+                }
+                if (IncludeInChanges == true)
+                {
+                    AddChange("Enabled intro movies.");
+                }
             }
         }
     }

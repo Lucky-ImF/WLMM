@@ -229,6 +229,7 @@
             label53 = new Label();
             ChangesPanel_LastBuildLabel = new Label();
             ChangesMade_Label = new LinkLabel();
+            DisableIntroMovies = new CheckBox();
             TitlePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
@@ -1052,6 +1053,7 @@
             // BuildSettings_Panel
             // 
             BuildSettings_Panel.BorderStyle = BorderStyle.FixedSingle;
+            BuildSettings_Panel.Controls.Add(DisableIntroMovies);
             BuildSettings_Panel.Controls.Add(label54);
             BuildSettings_Panel.Controls.Add(BS_BaseGameTattooFile);
             BuildSettings_Panel.Controls.Add(BuildSettingsBuildManager_Button);
@@ -1072,9 +1074,9 @@
             BuildSettings_Panel.Controls.Add(BS_BaseGameCharacterOutfitFile);
             BuildSettings_Panel.Controls.Add(label14);
             BuildSettings_Panel.Controls.Add(BS_BaseClothesOutfitFile);
-            BuildSettings_Panel.Location = new Point(898, 126);
+            BuildSettings_Panel.Location = new Point(898, 98);
             BuildSettings_Panel.Name = "BuildSettings_Panel";
-            BuildSettings_Panel.Size = new Size(231, 512);
+            BuildSettings_Panel.Size = new Size(231, 540);
             BuildSettings_Panel.TabIndex = 13;
             BuildSettings_Panel.Visible = false;
             // 
@@ -1143,7 +1145,7 @@
             // 
             BS_LaunchParams.BackColor = Color.FromArgb(32, 34, 81);
             BS_LaunchParams.ForeColor = SystemColors.ActiveCaption;
-            BS_LaunchParams.Location = new Point(6, 483);
+            BS_LaunchParams.Location = new Point(6, 511);
             BS_LaunchParams.Name = "BS_LaunchParams";
             BS_LaunchParams.Size = new Size(218, 23);
             BS_LaunchParams.TabIndex = 49;
@@ -1153,7 +1155,7 @@
             label44.AutoSize = true;
             label44.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label44.ForeColor = SystemColors.ActiveCaption;
-            label44.Location = new Point(54, 463);
+            label44.Location = new Point(54, 491);
             label44.Name = "label44";
             label44.Size = new Size(121, 17);
             label44.TabIndex = 48;
@@ -1191,7 +1193,7 @@
             BS_AllowOutdated_CB.AutoSize = true;
             BS_AllowOutdated_CB.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             BS_AllowOutdated_CB.ForeColor = Color.Firebrick;
-            BS_AllowOutdated_CB.Location = new Point(5, 440);
+            BS_AllowOutdated_CB.Location = new Point(5, 464);
             BS_AllowOutdated_CB.Name = "BS_AllowOutdated_CB";
             BS_AllowOutdated_CB.Size = new Size(227, 24);
             BS_AllowOutdated_CB.TabIndex = 44;
@@ -2875,6 +2877,19 @@
             ChangesMade_Label.VisitedLinkColor = SystemColors.ActiveCaption;
             ChangesMade_Label.LinkClicked += ChangesMade_Label_LinkClicked;
             // 
+            // DisableIntroMovies
+            // 
+            DisableIntroMovies.AutoSize = true;
+            DisableIntroMovies.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            DisableIntroMovies.ForeColor = SystemColors.ActiveCaption;
+            DisableIntroMovies.Location = new Point(5, 440);
+            DisableIntroMovies.Name = "DisableIntroMovies";
+            DisableIntroMovies.Size = new Size(164, 24);
+            DisableIntroMovies.TabIndex = 55;
+            DisableIntroMovies.Text = "Disable Intro Movies";
+            DisableIntroMovies.UseVisualStyleBackColor = true;
+            DisableIntroMovies.CheckedChanged += DisableIntroMovies_CheckedChanged;
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
@@ -3207,5 +3222,6 @@
         private Label ChangesPanel_LastBuildLabel;
         private Label label54;
         private ComboBox BS_BaseGameTattooFile;
+        private CheckBox DisableIntroMovies;
     }
 }
