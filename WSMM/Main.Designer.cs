@@ -90,6 +90,7 @@
             folderBrowserDialog1 = new FolderBrowserDialog();
             BuildSettings_Button = new Button();
             BuildSettings_Panel = new Panel();
+            DisableIntroMovies = new CheckBox();
             label54 = new Label();
             BS_BaseGameTattooFile = new ComboBox();
             BuildSettingsBuildManager_Button = new Button();
@@ -229,7 +230,6 @@
             label53 = new Label();
             ChangesPanel_LastBuildLabel = new Label();
             ChangesMade_Label = new LinkLabel();
-            DisableIntroMovies = new CheckBox();
             TitlePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
@@ -1080,6 +1080,19 @@
             BuildSettings_Panel.TabIndex = 13;
             BuildSettings_Panel.Visible = false;
             // 
+            // DisableIntroMovies
+            // 
+            DisableIntroMovies.AutoSize = true;
+            DisableIntroMovies.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            DisableIntroMovies.ForeColor = SystemColors.ActiveCaption;
+            DisableIntroMovies.Location = new Point(5, 440);
+            DisableIntroMovies.Name = "DisableIntroMovies";
+            DisableIntroMovies.Size = new Size(164, 24);
+            DisableIntroMovies.TabIndex = 55;
+            DisableIntroMovies.Text = "Disable Intro Movies";
+            DisableIntroMovies.UseVisualStyleBackColor = true;
+            DisableIntroMovies.CheckedChanged += DisableIntroMovies_CheckedChanged;
+            // 
             // label54
             // 
             label54.AutoSize = true;
@@ -1343,7 +1356,7 @@
             // openFileDialog1
             // 
             openFileDialog1.FileName = "openFileDialog1";
-            openFileDialog1.Filter = "wlmm & wlmp files (*.wlmm;*.wlmp)|*.wlmm;*.wlmp|All files (*.*)|*.*";
+            openFileDialog1.Filter = "wlmm, wlmp & mod files (*.wlmm;*.wlmp;*.mod)|*.wlmm;*.wlmp;*.mod|All files (*.*)|*.*";
             openFileDialog1.Multiselect = true;
             // 
             // Icon_PB
@@ -2876,19 +2889,6 @@
             ChangesMade_Label.TextAlign = ContentAlignment.MiddleCenter;
             ChangesMade_Label.VisitedLinkColor = SystemColors.ActiveCaption;
             ChangesMade_Label.LinkClicked += ChangesMade_Label_LinkClicked;
-            // 
-            // DisableIntroMovies
-            // 
-            DisableIntroMovies.AutoSize = true;
-            DisableIntroMovies.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            DisableIntroMovies.ForeColor = SystemColors.ActiveCaption;
-            DisableIntroMovies.Location = new Point(5, 440);
-            DisableIntroMovies.Name = "DisableIntroMovies";
-            DisableIntroMovies.Size = new Size(164, 24);
-            DisableIntroMovies.TabIndex = 55;
-            DisableIntroMovies.Text = "Disable Intro Movies";
-            DisableIntroMovies.UseVisualStyleBackColor = true;
-            DisableIntroMovies.CheckedChanged += DisableIntroMovies_CheckedChanged;
             // 
             // Main
             // 
