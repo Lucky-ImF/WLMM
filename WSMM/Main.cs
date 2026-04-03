@@ -893,7 +893,7 @@ namespace WSMM
                 {
                     foreach (string file in Directory.EnumerateFiles(Application.StartupPath + @"DataTables\" + LoadedWLVersion, "DT_GameCharacterCustomization_*.json"))
                     {
-                        if (file.Contains("DT_GameCharacterCustomization_Generated") == false && file.Contains("DT_GameCharacterCustomization_Entry_Default") == false && file.Contains("DT_GameCharacterCustomization_Debug") == false)
+                        if (file.Contains("DT_GameCharacterCustomization_Generated") == false && file.Contains("DT_GameCharacterCustomization_Entry_Default") == false && file.Contains("DT_GameCharacterCustomization_Debug") == false && file.Contains("DT_GameCharacterCustomization_HairEntry_Default") == false)
                         {
                             BS_BaseGameCharacterCustomizationFile.Items.Add(Path.GetFileName(file));
                         }
