@@ -230,6 +230,7 @@
             label53 = new Label();
             ChangesPanel_LastBuildLabel = new Label();
             ChangesMade_Label = new LinkLabel();
+            BS_WriteDebugFiles = new CheckBox();
             TitlePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
@@ -1053,6 +1054,7 @@
             // BuildSettings_Panel
             // 
             BuildSettings_Panel.BorderStyle = BorderStyle.FixedSingle;
+            BuildSettings_Panel.Controls.Add(BS_WriteDebugFiles);
             BuildSettings_Panel.Controls.Add(DisableIntroMovies);
             BuildSettings_Panel.Controls.Add(label54);
             BuildSettings_Panel.Controls.Add(BS_BaseGameTattooFile);
@@ -1074,9 +1076,9 @@
             BuildSettings_Panel.Controls.Add(BS_BaseGameCharacterOutfitFile);
             BuildSettings_Panel.Controls.Add(label14);
             BuildSettings_Panel.Controls.Add(BS_BaseClothesOutfitFile);
-            BuildSettings_Panel.Location = new Point(898, 98);
+            BuildSettings_Panel.Location = new Point(898, 70);
             BuildSettings_Panel.Name = "BuildSettings_Panel";
-            BuildSettings_Panel.Size = new Size(231, 540);
+            BuildSettings_Panel.Size = new Size(231, 568);
             BuildSettings_Panel.TabIndex = 13;
             BuildSettings_Panel.Visible = false;
             // 
@@ -1085,7 +1087,7 @@
             DisableIntroMovies.AutoSize = true;
             DisableIntroMovies.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             DisableIntroMovies.ForeColor = SystemColors.ActiveCaption;
-            DisableIntroMovies.Location = new Point(5, 440);
+            DisableIntroMovies.Location = new Point(5, 439);
             DisableIntroMovies.Name = "DisableIntroMovies";
             DisableIntroMovies.Size = new Size(164, 24);
             DisableIntroMovies.TabIndex = 55;
@@ -1158,7 +1160,7 @@
             // 
             BS_LaunchParams.BackColor = Color.FromArgb(32, 34, 81);
             BS_LaunchParams.ForeColor = SystemColors.ActiveCaption;
-            BS_LaunchParams.Location = new Point(6, 511);
+            BS_LaunchParams.Location = new Point(6, 537);
             BS_LaunchParams.Name = "BS_LaunchParams";
             BS_LaunchParams.Size = new Size(218, 23);
             BS_LaunchParams.TabIndex = 49;
@@ -1168,7 +1170,7 @@
             label44.AutoSize = true;
             label44.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label44.ForeColor = SystemColors.ActiveCaption;
-            label44.Location = new Point(54, 491);
+            label44.Location = new Point(54, 517);
             label44.Name = "label44";
             label44.Size = new Size(121, 17);
             label44.TabIndex = 48;
@@ -1206,7 +1208,7 @@
             BS_AllowOutdated_CB.AutoSize = true;
             BS_AllowOutdated_CB.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             BS_AllowOutdated_CB.ForeColor = Color.Firebrick;
-            BS_AllowOutdated_CB.Location = new Point(5, 464);
+            BS_AllowOutdated_CB.Location = new Point(5, 487);
             BS_AllowOutdated_CB.Name = "BS_AllowOutdated_CB";
             BS_AllowOutdated_CB.Size = new Size(227, 24);
             BS_AllowOutdated_CB.TabIndex = 44;
@@ -2890,6 +2892,19 @@
             ChangesMade_Label.VisitedLinkColor = SystemColors.ActiveCaption;
             ChangesMade_Label.LinkClicked += ChangesMade_Label_LinkClicked;
             // 
+            // BS_WriteDebugFiles
+            // 
+            BS_WriteDebugFiles.AutoSize = true;
+            BS_WriteDebugFiles.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BS_WriteDebugFiles.ForeColor = SystemColors.ActiveCaption;
+            BS_WriteDebugFiles.Location = new Point(5, 463);
+            BS_WriteDebugFiles.Name = "BS_WriteDebugFiles";
+            BS_WriteDebugFiles.Size = new Size(146, 24);
+            BS_WriteDebugFiles.TabIndex = 56;
+            BS_WriteDebugFiles.Text = "Write Debug Files";
+            BS_WriteDebugFiles.UseVisualStyleBackColor = true;
+            BS_WriteDebugFiles.CheckedChanged += BS_WriteDebugFiles_CheckedChanged;
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
@@ -3223,5 +3238,6 @@
         private Label label54;
         private ComboBox BS_BaseGameTattooFile;
         private CheckBox DisableIntroMovies;
+        private CheckBox BS_WriteDebugFiles;
     }
 }

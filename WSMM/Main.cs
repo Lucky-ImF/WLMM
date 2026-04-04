@@ -72,6 +72,15 @@ namespace WSMM
 
         string LastSuccessfullBuild = "Never";
         bool MoviesDisabled = false;
+        bool WriteDebugFiles = false;
+
+        // In memory DT Generation
+        string InMem_ClothesJSON = string.Empty;
+        string InMem_OutfitsJSON = string.Empty;
+        string InMem_CustomizationJSON = string.Empty;
+        string InMem_GFurJSON = string.Empty;
+        string InMem_PropsJSON = string.Empty;
+        string InMem_TattoosJSON = string.Empty;
 
         //Panel, Picturebox, Label(Name), Label(Error), Label(Version), Label(SupportedVersions), Label(Author), LinkLabel(Remove), LinkLabel(Link), Checkbox
         Panel[] Mod_Panel = new Panel[100];
@@ -795,11 +804,12 @@ namespace WSMM
                 string tempDir = Path.Combine(Application.StartupPath, "Temp");
                 if (Directory.Exists(tempDir))
                 {
-                    try 
-                    { 
-                        Directory.Delete(tempDir, true); 
-                    } catch 
-                    {  
+                    try
+                    {
+                        Directory.Delete(tempDir, true);
+                    }
+                    catch
+                    {
 
                     }
                 }
@@ -1226,6 +1236,19 @@ namespace WSMM
                             ToggleIntroMovies(false);
                         }
                     }
+                    else if (file.StartsWith("WriteDebugFiles"))
+                    {
+                        if (GetSlice(file, "=", 1) == "Checked")
+                        {
+                            BS_WriteDebugFiles.Checked = true;
+                            WriteDebugFiles = true;
+                        }
+                        else
+                        {
+                            BS_WriteDebugFiles.Checked = false;
+                            WriteDebugFiles = false;
+                        }
+                    }
                 }
                 if (BS_BaseGameSandboxPropsFile.Text == "" && BS_BaseGameSandboxPropsFile.Items.Count >= 1 || BS_BaseGameSandboxPropsFile.Text == "Unsupported" && BS_BaseGameSandboxPropsFile.Items.Count >= 1)
                 {
@@ -1282,7 +1305,8 @@ namespace WSMM
             }
             string SaveFile = "DT_ClothesOutfit = " + BS_BaseClothesOutfitFile.Text + "\nDT_GameCharacterOutfits = " + BS_BaseGameCharacterOutfitFile.Text +
                 "\nDT_GameCharacterCustomization = " + BS_BaseGameCharacterCustomizationFile.Text + "\nMappings = " + BS_Mappings.Text + "\nVerifyIntegrity = " + BS_VerifyFI_CB.CheckState.ToString() +
-                "\nLaunchParams = " + BS_LaunchParams.Text + "\nDT_SandboxProps = " + BS_BaseGameSandboxPropsFile.Text + "\nDT_Tattoo = " + BS_BaseGameTattooFile.Text + "\nMoviesDisabled = " + DisableIntroMovies.CheckState.ToString();
+                "\nLaunchParams = " + BS_LaunchParams.Text + "\nDT_SandboxProps = " + BS_BaseGameSandboxPropsFile.Text + "\nDT_Tattoo = " + BS_BaseGameTattooFile.Text + "\nMoviesDisabled = " + DisableIntroMovies.CheckState.ToString() +
+                "\nWriteDebugFiles = " + BS_WriteDebugFiles.CheckState.ToString();
             File.WriteAllText(Application.StartupPath + @"System\" + LoadedWLVersion + @"_BuildSettings.ini", SaveFile);
         }
 
@@ -1617,7 +1641,7 @@ namespace WSMM
                             File.Delete(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Mod Creator\" + ModName + ".wlmm");
                         }
                         ZipFile.CreateFromDirectory(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\" + ModID + @"\" + ModName, Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Mod Creator\" + ModName + ".wlmm");
-                        
+
                         ValidMods.Add(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Mod Creator\" + ModName + ".wlmm");
                     }
                     catch (Exception ex)
@@ -2502,6 +2526,7 @@ namespace WSMM
             BuildLog = "WLMM - " + WLMM_Version + " - Build Log\n";
             BuildLog += "DataTable Version: " + Datatable_Version + "\n";
             BuildLog += "Initializing...\n";
+
             bool HasAutoMod = false;
             List<string> ActiveMods = new List<string>();
             Dictionary<string, string> HashDict = new Dictionary<string, string>();
@@ -2880,6 +2905,13 @@ namespace WSMM
 
         private void ResetFromBuilding(string Status)
         {
+            InMem_ClothesJSON = string.Empty;
+            InMem_OutfitsJSON = string.Empty;
+            InMem_CustomizationJSON = string.Empty;
+            InMem_GFurJSON = string.Empty;
+            InMem_PropsJSON = string.Empty;
+            InMem_TattoosJSON = string.Empty;
+
             this.Invoke((System.Windows.Forms.MethodInvoker)delegate
             {
                 ProgressPanel.Hide();
@@ -3854,10 +3886,18 @@ namespace WSMM
 
                 ClothesOutfit = ClothesOutfit.Replace("[ENTRYSTART]", CompiledEntries);
                 ClothesOutfit = ClothesOutfit.Replace("[NAMEMAPSTART]", CompiledNameMap);
-                File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_ClothesOutfit_Debug.json", ClothesOutfit);
+                if (WriteDebugFiles)
+                {
+                    File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_ClothesOutfit_Debug.json", ClothesOutfit);
+                }
+                
                 dynamic ClothesArray = JsonConvert.DeserializeObject(ClothesOutfit);
-                string ClothesjsonString = JsonConvert.SerializeObject(ClothesArray, Newtonsoft.Json.Formatting.Indented);
-                File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_ClothesOutfit_Generated.json", ClothesjsonString);
+                InMem_ClothesJSON = JsonConvert.SerializeObject(ClothesArray, Newtonsoft.Json.Formatting.Indented);
+                if (WriteDebugFiles)
+                {
+                    File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_ClothesOutfit_Generated.json", InMem_ClothesJSON);
+                }
+                
                 //ClothesOutfit Done
             }
             catch (Exception ex)
@@ -3899,10 +3939,16 @@ namespace WSMM
                 CompiledNameMap = CompiledNameMap.TrimEnd(',');
 
                 GameCharacterOutfits = GameCharacterOutfits.Replace("[NAMEMAPSTART]", CompiledNameMap);
-                File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GameCharacterOutfits_Debug.json", GameCharacterOutfits);
+                if (WriteDebugFiles)
+                {
+                    File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GameCharacterOutfits_Debug.json", GameCharacterOutfits);
+                }
                 dynamic OutfitsArray = JsonConvert.DeserializeObject(GameCharacterOutfits);
-                string OutfitsjsonString = JsonConvert.SerializeObject(OutfitsArray, Newtonsoft.Json.Formatting.Indented);
-                File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GameCharacterOutfits_Generated.json", OutfitsjsonString);
+                InMem_OutfitsJSON = JsonConvert.SerializeObject(OutfitsArray, Newtonsoft.Json.Formatting.Indented);
+                if (WriteDebugFiles)
+                {
+                    File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GameCharacterOutfits_Generated.json", InMem_OutfitsJSON);
+                }
                 //Outfits Done
             }
             catch (Exception ex)
@@ -4021,24 +4067,22 @@ namespace WSMM
                         CompiledCustomNameMap = CompiledCustomNameMap.TrimEnd(',');
 
                         GameCharacterCustom = GameCharacterCustom.Replace("[NAMEMAPSTART]", CompiledCustomNameMap);
-                        File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GameCharacterCustomization_Debug.json", GameCharacterCustom);
+                        if (WriteDebugFiles)
+                        {
+                            File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GameCharacterCustomization_Debug.json", GameCharacterCustom);
+                        }
+                        
                         dynamic CustomArray = JsonConvert.DeserializeObject(GameCharacterCustom);
-                        string CustomjsonString = JsonConvert.SerializeObject(CustomArray, Newtonsoft.Json.Formatting.Indented);
-                        File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GameCharacterCustomization_Generated.json", CustomjsonString);
+                        InMem_CustomizationJSON = JsonConvert.SerializeObject(CustomArray, Newtonsoft.Json.Formatting.Indented);
+                        if (WriteDebugFiles)
+                        {
+                            File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GameCharacterCustomization_Generated.json", InMem_CustomizationJSON);
+                        }
                         //Customization Done
                     }
                     catch (Exception ex)
                     {
-                        //MessageBox.Show(ex.Message);
                         return "DT_GameCharacterCustomization json error: " + ex.Message;
-                    }
-                }
-                else
-                {
-                    //Skipping Customizer
-                    if (File.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GameCharacterCustomization_Generated.json"))
-                    {
-                        File.Delete(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GameCharacterCustomization_Generated.json");
                     }
                 }
             }
@@ -4055,19 +4099,18 @@ namespace WSMM
                     {
                         stringBuilder.AppendLine(line);
                     }
-                    File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GFur_Debug.json", stringBuilder.ToString());
-                    dynamic CustomArray = JsonConvert.DeserializeObject(stringBuilder.ToString());
-                    string CustomjsonString = JsonConvert.SerializeObject(CustomArray, Newtonsoft.Json.Formatting.Indented);
-                    File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GFur_Generated.json", CustomjsonString);
-                    //GFur Done
-                }
-                else
-                {
-                    //Skipping GFur
-                    if (File.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GFur_Generated.json"))
+                    if (WriteDebugFiles)
                     {
-                        File.Delete(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GFur_Generated.json");
+                        File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GFur_Debug.json", stringBuilder.ToString());
                     }
+                    
+                    dynamic CustomArray = JsonConvert.DeserializeObject(stringBuilder.ToString());
+                    InMem_GFurJSON = JsonConvert.SerializeObject(CustomArray, Newtonsoft.Json.Formatting.Indented);
+                    if (WriteDebugFiles)
+                    {
+                        File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GFur_Generated.json", InMem_GFurJSON);
+                    }
+                    //GFur Done
                 }
             }
             catch (Exception ex)
@@ -4097,10 +4140,16 @@ namespace WSMM
 
                     SandboxProps = SandboxProps.Replace("[ENTRYSTART]", CompiledPropEntries);
                     SandboxProps = SandboxProps.Replace("[NAMEMAPSTART]", CompiledPropNameMap);
-                    File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_SandboxProps_Debug.json", SandboxProps);
+                    if (WriteDebugFiles)
+                    {
+                        File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_SandboxProps_Debug.json", SandboxProps);
+                    }
                     dynamic PropsArray = JsonConvert.DeserializeObject(SandboxProps);
-                    string PropsjsonString = JsonConvert.SerializeObject(PropsArray, Newtonsoft.Json.Formatting.Indented);
-                    File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_SandboxProps_Generated.json", PropsjsonString);
+                    InMem_PropsJSON = JsonConvert.SerializeObject(PropsArray, Newtonsoft.Json.Formatting.Indented);
+                    if (WriteDebugFiles)
+                    {
+                        File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_SandboxProps_Generated.json", InMem_PropsJSON);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -4130,10 +4179,17 @@ namespace WSMM
 
                     Tattoos = Tattoos.Replace("[ENTRYSTART]", CompiledTattooEntries);
                     Tattoos = Tattoos.Replace("[NAMEMAPSTART]", CompiledTattooNameMap);
-                    File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_Tattoo_Debug.json", Tattoos);
+                    
+                    if (WriteDebugFiles)
+                    {
+                        File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_Tattoo_Debug.json", Tattoos);
+                    }
                     dynamic TattooArray = JsonConvert.DeserializeObject(Tattoos);
-                    string TattoojsonString = JsonConvert.SerializeObject(TattooArray, Newtonsoft.Json.Formatting.Indented);
-                    File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_Tattoo_Generated.json", TattoojsonString);
+                    InMem_TattoosJSON = JsonConvert.SerializeObject(TattooArray, Newtonsoft.Json.Formatting.Indented);
+                    if (WriteDebugFiles)
+                    {
+                        File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_Tattoo_Generated.json", InMem_TattoosJSON);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -4179,10 +4235,7 @@ namespace WSMM
             var DT_ClothesOutfit = new UAsset();
             try
             {
-                using (var sr = new FileStream(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_ClothesOutfit_Generated.json", FileMode.Open))
-                {
-                    DT_ClothesOutfit = UAsset.DeserializeJson(sr);
-                }
+                DT_ClothesOutfit = UAsset.DeserializeJson(new MemoryStream(Encoding.UTF8.GetBytes(InMem_ClothesJSON)));
                 DT_ClothesOutfit.Mappings = mappings;
 
                 DT_ClothesOutfit.Write(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P\WildLifeC\Content\DataTables\DT_ClothesOutfit.uasset");
@@ -4195,10 +4248,7 @@ namespace WSMM
             var DT_GameCharacterOutfits = new UAsset();
             try
             {
-                using (var sr = new FileStream(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GameCharacterOutfits_Generated.json", FileMode.Open))
-                {
-                    DT_GameCharacterOutfits = UAsset.DeserializeJson(sr);
-                }
+                DT_GameCharacterOutfits = UAsset.DeserializeJson(new MemoryStream(Encoding.UTF8.GetBytes(InMem_OutfitsJSON)));
                 DT_GameCharacterOutfits.Mappings = mappings;
 
                 DT_GameCharacterOutfits.Write(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P\WildLifeC\Content\DataTables\NPC\DT_GameCharacterOutfits.uasset");
@@ -4208,15 +4258,12 @@ namespace WSMM
                 return "DT_GameCharacterOutfits Serialization Error: " + ex.Message;
             }
 
-            if (File.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GameCharacterCustomization_Generated.json"))
+            if (InMem_CustomizationJSON != "")
             {
                 var DT_GameCharacterCustomization = new UAsset();
                 try
                 {
-                    using (var sr = new FileStream(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GameCharacterCustomization_Generated.json", FileMode.Open))
-                    {
-                        DT_GameCharacterCustomization = UAsset.DeserializeJson(sr);
-                    }
+                    DT_GameCharacterCustomization = UAsset.DeserializeJson(new MemoryStream(Encoding.UTF8.GetBytes(InMem_CustomizationJSON)));
                     DT_GameCharacterCustomization.Mappings = mappings;
 
                     DT_GameCharacterCustomization.Write(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P\WildLifeC\Content\DataTables\NPC\DT_GameCharacterCustomization.uasset");
@@ -4227,15 +4274,12 @@ namespace WSMM
                 }
             }
 
-            if (File.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GFur_Generated.json"))
+            if (InMem_GFurJSON != "")
             {
                 var DT_GFur = new UAsset();
                 try
                 {
-                    using (var sr = new FileStream(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GFur_Generated.json", FileMode.Open))
-                    {
-                        DT_GFur = UAsset.DeserializeJson(sr);
-                    }
+                    DT_GFur = UAsset.DeserializeJson(new MemoryStream(Encoding.UTF8.GetBytes(InMem_GFurJSON)));
                     DT_GFur.Mappings = mappings;
 
                     DT_GFur.Write(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P\WildLifeC\Content\DataTables\DT_GFur.uasset");
@@ -4246,15 +4290,12 @@ namespace WSMM
                 }
             }
 
-            if (File.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_SandboxProps_Generated.json"))
+            if (InMem_PropsJSON != "")
             {
                 var DT_SandboxProps = new UAsset();
                 try
                 {
-                    using (var sr = new FileStream(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_SandboxProps_Generated.json", FileMode.Open))
-                    {
-                        DT_SandboxProps = UAsset.DeserializeJson(sr);
-                    }
+                    DT_SandboxProps = UAsset.DeserializeJson(new MemoryStream(Encoding.UTF8.GetBytes(InMem_PropsJSON)));
                     DT_SandboxProps.Mappings = mappings;
 
                     DT_SandboxProps.Write(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P\WildLifeC\Content\DataTables\Sandbox\DT_SandboxProps.uasset");
@@ -4265,15 +4306,12 @@ namespace WSMM
                 }
             }
 
-            if (File.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_Tattoo_Generated.json"))
+            if (InMem_TattoosJSON != "")
             {
                 var DT_Tattoo = new UAsset();
                 try
                 {
-                    using (var sr = new FileStream(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_Tattoo_Generated.json", FileMode.Open))
-                    {
-                        DT_Tattoo = UAsset.DeserializeJson(sr);
-                    }
+                    DT_Tattoo = UAsset.DeserializeJson(new MemoryStream(Encoding.UTF8.GetBytes(InMem_TattoosJSON)));
                     DT_Tattoo.Mappings = mappings;
 
                     DT_Tattoo.Write(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P\WildLifeC\Content\DataTables\DT_Tattoo.uasset");
@@ -4302,24 +4340,24 @@ namespace WSMM
                     var pak_writer = builder.Writer(stream);
                     pak_writer.WriteFile("WildLifeC/Content/DataTables/DT_ClothesOutfit.uasset", File.ReadAllBytes(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P\WildLifeC\Content\DataTables\DT_ClothesOutfit.uasset"));
                     pak_writer.WriteFile("WildLifeC/Content/DataTables/DT_ClothesOutfit.uexp", File.ReadAllBytes(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P\WildLifeC\Content\DataTables\DT_ClothesOutfit.uexp"));
-                    if (File.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GFur_Generated.json"))
+                    if (File.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P\WildLifeC\Content\DataTables\DT_GFur.uasset"))
                     {
                         pak_writer.WriteFile("WildLifeC/Content/DataTables/DT_GFur.uasset", File.ReadAllBytes(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P\WildLifeC\Content\DataTables\DT_GFur.uasset"));
                         pak_writer.WriteFile("WildLifeC/Content/DataTables/DT_GFur.uexp", File.ReadAllBytes(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P\WildLifeC\Content\DataTables\DT_GFur.uexp"));
                     }
                     pak_writer.WriteFile("WildLifeC/Content/DataTables/NPC/DT_GameCharacterOutfits.uasset", File.ReadAllBytes(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P\WildLifeC\Content\DataTables\NPC\DT_GameCharacterOutfits.uasset"));
                     pak_writer.WriteFile("WildLifeC/Content/DataTables/NPC/DT_GameCharacterOutfits.uexp", File.ReadAllBytes(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P\WildLifeC\Content\DataTables\NPC\DT_GameCharacterOutfits.uexp"));
-                    if (File.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GameCharacterCustomization_Generated.json"))
+                    if (File.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P\WildLifeC\Content\DataTables\NPC\DT_GameCharacterCustomization.uasset"))
                     {
                         pak_writer.WriteFile("WildLifeC/Content/DataTables/NPC/DT_GameCharacterCustomization.uasset", File.ReadAllBytes(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P\WildLifeC\Content\DataTables\NPC\DT_GameCharacterCustomization.uasset"));
                         pak_writer.WriteFile("WildLifeC/Content/DataTables/NPC/DT_GameCharacterCustomization.uexp", File.ReadAllBytes(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P\WildLifeC\Content\DataTables\NPC\DT_GameCharacterCustomization.uexp"));
                     }
-                    if (File.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_SandboxProps_Generated.json"))
+                    if (File.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P\WildLifeC\Content\DataTables\Sandbox\DT_SandboxProps.uasset"))
                     {
                         pak_writer.WriteFile("WildLifeC/Content/DataTables/Sandbox/DT_SandboxProps.uasset", File.ReadAllBytes(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P\WildLifeC\Content\DataTables\Sandbox\DT_SandboxProps.uasset"));
                         pak_writer.WriteFile("WildLifeC/Content/DataTables/Sandbox/DT_SandboxProps.uexp", File.ReadAllBytes(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P\WildLifeC\Content\DataTables\Sandbox\DT_SandboxProps.uexp"));
                     }
-                    if (File.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_Tattoo_Generated.json"))
+                    if (File.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P\WildLifeC\Content\DataTables\DT_Tattoo.uasset"))
                     {
                         pak_writer.WriteFile("WildLifeC/Content/DataTables/DT_Tattoo.uasset", File.ReadAllBytes(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P\WildLifeC\Content\DataTables\DT_Tattoo.uasset"));
                         pak_writer.WriteFile("WildLifeC/Content/DataTables/DT_Tattoo.uexp", File.ReadAllBytes(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P\WildLifeC\Content\DataTables\DT_Tattoo.uexp"));
@@ -5407,7 +5445,7 @@ namespace WSMM
             }
             catch
             {
-                
+
             }
 
             DT_Updater_Panel.Hide();
@@ -6012,6 +6050,14 @@ namespace WSMM
                 {
                     AddChange("Enabled intro movies.");
                 }
+            }
+        }
+
+        private void BS_WriteDebugFiles_CheckedChanged(object sender, EventArgs e)
+        {
+            if (StartingUp == false)
+            {
+                SaveBuildSettings();
             }
         }
     }
