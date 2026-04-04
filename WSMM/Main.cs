@@ -700,6 +700,35 @@ namespace WSMM
             ModPack_Close_Button.Enabled = State;
         }
 
+        private async Task DownloadFileAsync(Uri uri, string destinationPath, Action<int> progress)
+        {
+            using (var client = new HttpClient())
+            using (var response = await client.GetAsync(uri, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false))
+            {
+                response.EnsureSuccessStatusCode();
+                var contentLength = response.Content.Headers.ContentLength ?? -1L;
+                using (var contentStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
+                using (var fileStream = new FileStream(destinationPath, FileMode.Create, FileAccess.Write, FileShare.None, 81920, useAsync: true))
+                {
+                    var buffer = new byte[81920];
+                    long totalRead = 0;
+                    int read;
+                    while ((read = await contentStream.ReadAsync(buffer, 0, buffer.Length).ConfigureAwait(false)) > 0)
+                    {
+                        await fileStream.WriteAsync(buffer, 0, read).ConfigureAwait(false);
+                        totalRead += read;
+
+                        if (contentLength > 0)
+                        {
+                            var percent = (int)((totalRead * 100) / contentLength);
+                            progress?.Invoke(percent);
+                        }
+                    }
+                    if (contentLength <= 0) progress?.Invoke(100);
+                }
+            }
+        }
+
         async void DownloadDatatables(string url, string version)
         {
             DTDownload_Progress.Value = 0;
@@ -708,56 +737,51 @@ namespace WSMM
             string DTFileName = "DT_" + LoadedWLVersion + ".zip";
             try
             {
-                if (Directory.Exists(Application.StartupPath + @"Temp") == false)
+                string tempDir = Path.Combine(Application.StartupPath, "Temp");
+                if (!Directory.Exists(tempDir))
                 {
-                    Directory.CreateDirectory(Application.StartupPath + @"Temp");
+                    Directory.CreateDirectory(tempDir);
                 }
 
                 Uri fileLink = new Uri(url);
+                string destPath = Path.Combine(tempDir, DTFileName);
 
-                if (File.Exists(Application.StartupPath + @"Temp\" + DTFileName))
+                if (File.Exists(destPath))
                 {
-                    File.Delete(Application.StartupPath + @"Temp\" + DTFileName);
+                    File.Delete(destPath);
                 }
 
-                using (System.Net.WebClient wc = new System.Net.WebClient())
+                await DownloadFileAsync(fileLink, destPath, pct =>
                 {
-                    wc.Headers.Add("User-Agent: WLMM");
-                    wc.DownloadProgressChanged += DT_DownloadProgressChanged;
-                    wc.DownloadFileAsync(fileLink, Application.StartupPath + @"Temp\" + DTFileName);
+                    DTDownload_Progress.Invoke((System.Windows.Forms.MethodInvoker)(() => DTDownload_Progress.Value = Math.Min(100, Math.Max(0, pct))));
+                });
+
+                DT_Updater_ProgressLabel.Invoke((System.Windows.Forms.MethodInvoker)(() => DT_Updater_ProgressLabel.Text = "Installing DataTables.."));
+                DTDownload_Progress.Invoke((System.Windows.Forms.MethodInvoker)(() => DTDownload_Progress.Value = 100));
+                Application.DoEvents();
+
+                if (File.Exists(destPath))
+                {
+                    InstallDatatables(destPath, version);
                 }
             }
             catch (Exception ex)
             {
-                if (Directory.Exists(Application.StartupPath + @"Temp"))
+                string tempDir = Path.Combine(Application.StartupPath, "Temp");
+                if (Directory.Exists(tempDir))
                 {
-                    Directory.Delete(Application.StartupPath + @"Temp", true);
+                    try 
+                    { 
+                        Directory.Delete(tempDir, true); 
+                    } catch 
+                    {  
+
+                    }
                 }
 
                 DT_Updater_Panel.Hide();
                 MessageBox.Show(ex.Message, "WLMM Download Error\n" + ex.Message);
                 ToggleButtons(true);
-            }
-        }
-
-        void DT_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
-        {
-            DTDownload_Progress.Value = e.ProgressPercentage;
-
-            if (DTDownload_Progress.Value == 100)
-            {
-                DT_Updater_ProgressLabel.Text = "Installing DataTables..";
-                DTDownload_Progress.Value = 100;
-                Application.DoEvents();
-                string DTFileName = "DT_" + LoadedWLVersion + ".zip";
-                while (IsFileLocked(new FileInfo(Application.StartupPath + @"Temp\" + DTFileName)))
-                {
-                    Thread.Sleep(100);
-                }
-                if (File.Exists(Application.StartupPath + @"Temp\" + DTFileName))
-                {
-                    InstallDatatables(Application.StartupPath + @"Temp\" + DTFileName, DTVersion);
-                }
             }
         }
 
@@ -1512,10 +1536,10 @@ namespace WSMM
                             ProgressInfo_Label.Text = "Fetching Icon...";
                         });
                         //Attempt to fetch icon from Minervha API
-                        string ImgState = DownloadImageWithWebClient("https://minervha.shop/api/products/image/" + ModID + "_image.jpg", Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\" + ModID + @"\" + ModName + @"\Icon.png");
+                        string ImgState = DownloadImageWithHttpClient("https://minervha.shop/api/products/image/" + ModID + "_image.jpg", Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\" + ModID + @"\" + ModName + @"\Icon.png");
                         if (ImgState == "Fail")
                         {
-                            ImgState = DownloadImageWithWebClient("https://minervha.shop/api/products/image/" + ModName + ".jpg", Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\" + ModID + @"\" + ModName + @"\Icon.png");
+                            ImgState = DownloadImageWithHttpClient("https://minervha.shop/api/products/image/" + ModName + ".jpg", Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\" + ModID + @"\" + ModName + @"\Icon.png");
                             if (ImgState == "Fail")
                             {
                                 File.Copy(Application.StartupPath + @"System\Minervha_Icon.png", Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\" + ModID + @"\" + ModName + @"\Icon.png");
@@ -1591,27 +1615,39 @@ namespace WSMM
             AddMods(ValidMods);
         }
 
-        public string DownloadImageWithWebClient(string url, string fileName)
+        public string DownloadImageWithHttpClient(string url, string fileName)
         {
             try
             {
-                using (var webClient = new WebClient())
+                using (var client = new HttpClient())
                 {
-                    byte[] imageBytes = webClient.DownloadData(url);
-                    using (var ms = new MemoryStream(imageBytes))
+                    client.DefaultRequestHeaders.UserAgent.ParseAdd("WLMM");
+                    using (var response = client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead).GetAwaiter().GetResult())
                     {
-                        Bitmap image = new Bitmap(ms);
-                        image.Save(fileName, System.Drawing.Imaging.ImageFormat.Png);
+                        if (response.StatusCode == HttpStatusCode.NotFound)
+                        {
+                            Debug.WriteLine("Image not found at URL: " + url);
+                            return "Fail";
+                        }
+
+                        response.EnsureSuccessStatusCode();
+                        var imageBytes = response.Content.ReadAsByteArrayAsync().GetAwaiter().GetResult();
+
+                        using (var ms = new MemoryStream(imageBytes))
+                        using (var image = new Bitmap(ms))
+                        {
+                            image.Save(fileName, System.Drawing.Imaging.ImageFormat.Png);
+                        }
                         return "Success";
                     }
                 }
             }
-            catch (WebException ex) when (ex.Status == WebExceptionStatus.ProtocolError && ex.Response is HttpWebResponse httpResponse && httpResponse.StatusCode == HttpStatusCode.NotFound)
+            catch (HttpRequestException hre) when (hre.StatusCode == HttpStatusCode.NotFound)
             {
                 Debug.WriteLine("Image not found at URL: " + url);
                 return "Fail";
             }
-            catch (WebException ex)
+            catch (Exception ex)
             {
                 Debug.WriteLine("Failed to download image from URL: " + url + ". Error: " + ex.Message);
                 return "Fail";
@@ -5331,17 +5367,17 @@ namespace WSMM
 
         private void InstallDatatables(string filename, string version)
         {
-            bool Valid = true;
             ZipFile.ExtractToDirectory(filename, Application.StartupPath, true);
+            File.WriteAllText(Path.Combine(Application.StartupPath, "DataTables", LoadedWLVersion, "Version.dat"), version);
 
-            // Update Version.dat
-            File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\Version.dat", version);
-
-            while (IsFileLocked(new FileInfo(filename)))
+            try
             {
-                Thread.Sleep(100);
+                Directory.Delete(Path.Combine(Application.StartupPath, "Temp"), true);
             }
-            Directory.Delete(Application.StartupPath + @"Temp", true);
+            catch
+            {
+                
+            }
 
             DT_Updater_Panel.Hide();
             DT_Updater_CloseButton.Enabled = true;
