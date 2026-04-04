@@ -1963,7 +1963,7 @@ namespace WSMM
             Mod_VersionLabel[EntryID].AutoSize = true;
             Graphics g = CreateGraphics();
             SizeF LabelSize = g.MeasureString(Mod_VersionLabel[EntryID].Text, Mod_VersionLabel[EntryID].Font);
-            Mod_VersionLabel[EntryID].Location = new Point(PanelSize.Width - (int)Math.Floor(LabelSize.Width * 1.25), Mod_Icon[EntryID].Top);
+            Mod_VersionLabel[EntryID].Location = new Point(PanelSize.Width - (int)LabelSize.Width - (int)Math.Floor(PanelSize.Width * 0.02), Mod_Icon[EntryID].Top);
             //Label[] Mod_ErrorLabel = new Label[50];
             Mod_ErrorLabel[EntryID] = new Label();
             Mod_ErrorLabel[EntryID].BackColor = System.Drawing.Color.FromArgb(32, 34, 81);
