@@ -490,6 +490,7 @@ namespace WSMM
         private async Task LoadFromMarketplaceAsync()
         {
             bool Found = false;
+            ResetInfo();
             try
             {
                 string VersionInfo = "";
@@ -583,6 +584,15 @@ namespace WSMM
         private void ModWLMMPath_TB_DragEnter(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
+        }
+
+        private void ResetInfo()
+        {
+            ModIconURL_TB.Text = "";
+            ModDescription_TB.Text = "";
+            ModDLURL_TB.Text = "";
+            ScreenshotAdd_TB.Text = "";
+            Screenshots_LB.Items.Clear();
         }
     }
 }
