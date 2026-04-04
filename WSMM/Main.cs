@@ -60,8 +60,8 @@ namespace WSMM
 
         bool MMMode = false;
 
-        string LuckyUpdateLink = "";
-        string UpdateDataLink = "";
+        Uri LuckyUpdateLink;
+        Uri UpdateDataLink;
 
         string ModPackPath = string.Empty;
 
@@ -580,11 +580,11 @@ namespace WSMM
                     }
                     else if (line.StartsWith("UpdaterDownload:"))
                     {
-                        LuckyUpdateLink = line.Replace("UpdaterDownload:", "").Trim();
+                        LuckyUpdateLink = new Uri(line.Replace("UpdaterDownload:", "").Trim());
                     }
                     else if (line.StartsWith("UpdaterData:"))
                     {
-                        UpdateDataLink = line.Replace("UpdaterData:", "").Trim();
+                        UpdateDataLink = new Uri(line.Replace("UpdaterData:", "").Trim());
                     }
                     else if (line.StartsWith("Categories:"))
                     {
@@ -617,13 +617,38 @@ namespace WSMM
                 {
                     UpdateLink.Text = "New version " + LatestVersion + " available! Click here to update!";
                     UpdateLink.Show();
+
+                    System.Windows.Forms.Timer HidePanelTimer = new System.Windows.Forms.Timer();
+                    HidePanelTimer.Interval = 3000;
+                    HidePanelTimer.Tick += (s, ev) =>
+                    {
+                        HidePanelTimer.Stop();
+                        ProgressPanel.Hide();
+                        HidePanelTimer.Dispose();
+                    };
                     if (!File.Exists("LuckyUpdater.exe"))
                     {
-                        await DownloadFileAsync(LuckyUpdateLink, "LuckyUpdater.exe");
+                        HidePanelTimer.Start();
+                        ProgressPanel.Show();
+                        ProgressInfo_Label.Text = "Downloading LuckyUpdater...";
+                        BuildModProgress_PB.Value = 0;
+                        BuildModProgress_PB.Maximum = 100;
+                        await DownloadFileAsync(LuckyUpdateLink, "LuckyUpdater.exe", pct =>
+                        {
+                            BuildModProgress_PB.Invoke((System.Windows.Forms.MethodInvoker)(() => BuildModProgress_PB.Value = Math.Min(100, Math.Max(0, pct))));
+                        });
                     }
                     if (!File.Exists("UpdateData.ini"))
                     {
-                        await DownloadFileAsync(UpdateDataLink, "UpdateData.ini");
+                        HidePanelTimer.Start();
+                        ProgressPanel.Show();
+                        ProgressInfo_Label.Text = "Downloading Update Data...";
+                        BuildModProgress_PB.Value = 0;
+                        BuildModProgress_PB.Maximum = 100;
+                        await DownloadFileAsync(UpdateDataLink, "UpdateData.ini", pct =>
+                        {
+                            BuildModProgress_PB.Invoke((System.Windows.Forms.MethodInvoker)(() => BuildModProgress_PB.Value = Math.Min(100, Math.Max(0, pct))));
+                        });
                     }
                 }
                 else
@@ -4352,11 +4377,17 @@ namespace WSMM
                 {
                     if (!File.Exists("LuckyUpdater.exe"))
                     {
-                        await DownloadFileAsync(LuckyUpdateLink, "LuckyUpdater.exe");
+                        await DownloadFileAsync(LuckyUpdateLink, "LuckyUpdater.exe", pct =>
+                        {
+                            BuildModProgress_PB.Invoke((System.Windows.Forms.MethodInvoker)(() => BuildModProgress_PB.Value = Math.Min(100, Math.Max(0, pct))));
+                        });
                     }
                     if (!File.Exists("UpdateData.ini"))
                     {
-                        await DownloadFileAsync(UpdateDataLink, "UpdateData.ini");
+                        await DownloadFileAsync(UpdateDataLink, "UpdateData.ini", pct =>
+                        {
+                            BuildModProgress_PB.Invoke((System.Windows.Forms.MethodInvoker)(() => BuildModProgress_PB.Value = Math.Min(100, Math.Max(0, pct))));
+                        });
                     }
                     using (Process p = new Process())
                     {
@@ -5635,28 +5666,7 @@ namespace WSMM
                 SaveBuildSettings();
             }
         }
-        private async Task DownloadFileAsync(string fileUrl, string destinationPath)
-        {
-            try
-            {
-                using (HttpClient client = new HttpClient())
-                {
-                    var response = await client.GetAsync(fileUrl);
-                    response.EnsureSuccessStatusCode();
 
-                    using (var fs = new FileStream(destinationPath, FileMode.Create))
-                    {
-                        await response.Content.CopyToAsync(fs);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MM_Panel.Show();
-                MM_Info.Text = "Unable to download file.";
-                MM_Message.Text = "Is your network down or firewall blocking WLMM?\r\nIf not, check the WLMM post on Discord for info/help.\r\nException:\r\n" + ex.Message;
-            }
-        }
         private bool IsFileLocked(FileInfo file)
         {
             FileStream stream = null;
