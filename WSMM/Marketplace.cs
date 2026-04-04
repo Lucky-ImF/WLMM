@@ -732,7 +732,7 @@ namespace WSMM
             }
         }
 
-        private void DownloadMod_Button_Click(object sender, EventArgs e)
+        private async void DownloadMod_Button_Click(object sender, EventArgs e)
         {
             if (DownloadMod_Button.Text != "Mod Downloaded!")
             {
@@ -749,11 +749,11 @@ namespace WSMM
                 DownloadProgress_PB.Value = 0;
                 CloseModPanel_Button.Enabled = false;
                 Close_Button.Enabled = false;
-                DownloadFile(DownloadMod_Button.Tag.ToString(), ModName_Label.Text);
+                await DownloadFile(DownloadMod_Button.Tag.ToString(), ModName_Label.Text);
             }
         }
 
-        async void DownloadFile(string link, string ModName)
+        async Task DownloadFile(string link, string ModName)
         {
             try
             {
@@ -764,9 +764,10 @@ namespace WSMM
 
                 Uri fileLink = new Uri(link);
 
-                if (File.Exists(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Downloads\" + ModName + ".wlmm"))
+                string targetPath = Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Downloads\" + ModName + ".wlmm";
+                if (File.Exists(targetPath))
                 {
-                    File.Delete(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Downloads\" + ModName + ".wlmm");
+                    File.Delete(targetPath);
                 }
 
                 ProgressInfo_Label.Text = "Downloading... 0%";
@@ -774,107 +775,88 @@ namespace WSMM
                 CurrentlyDownloadingModName = ModName;
 
                 startTime = DateTime.Now;
-                using (System.Net.WebClient wc = new System.Net.WebClient())
+                lastProgressUpdateTime = DateTime.Now;
+                lastProgressUpdateBytes = 0;
+
+                using (var http = new HttpClient())
                 {
-                    wc.Headers.Add("User-Agent: WLMM");
-                    wc.DownloadProgressChanged += MP_DownloadProgressChanged;
-                    wc.DownloadFileAsync(fileLink, Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Downloads\" + ModName + ".wlmm");
-                }
-            }
-            catch (Exception ex)
-            {
-                DownloadMod_Button.Show();
-                DownloadMod_Button.Text = "Download";
-                ModFileSize_Label.Show();
-                ProgressInfo_Label.Hide();
-                ProgressInfo_Label.Text = "Initializing...";
-                ProgressDetails_Label.Hide();
-                ProgressDetails_Label.Text = "Speed: 0 B/s | 0 B / 0 B | Time Left: 00:00:00";
-                DownloadProgress_PB.Hide();
-                DownloadProgress_PB.Value = 0;
-                CloseModPanel_Button.Enabled = true;
-                Close_Button.Enabled = true;
-
-                MessageBox.Show(ex.Message, "WLMM Download Error");
-                LoadMarketplaceMods();
-            }
-        }
-
-        void MP_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
-        {
-            double bytesIn = e.BytesReceived;
-            double totalBytes = e.TotalBytesToReceive;
-            double percentage = bytesIn / totalBytes * 100;
-
-            string DLSpeed = string.Empty;
-            string DLCurrent = string.Empty;
-            string DLTimeLeft = string.Empty;
-
-            DownloadProgress_PB.Value = (int)Math.Truncate(percentage);
-
-            // Calculate download speed
-            DateTime now = DateTime.Now;
-            TimeSpan timeElapsed = now - lastProgressUpdateTime;
-
-            if (timeElapsed.TotalMilliseconds > 250)
-            {
-                long bytesSinceLastUpdate = e.BytesReceived - lastProgressUpdateBytes;
-                double speedInBytesPerSecond = bytesSinceLastUpdate / timeElapsed.TotalSeconds;
-
-                if (speedInBytesPerSecond < 0)
-                {
-                    speedInBytesPerSecond = 0;
-                }
-
-                DLSpeed = FormatBytes(speedInBytesPerSecond) + "/s";
-
-                DLCurrent = string.Format("{0} / {1}", FormatBytes(bytesIn), FormatBytes(totalBytes));
-
-                // Calculate time left
-                if (e.BytesReceived > 0 && e.BytesReceived < e.TotalBytesToReceive)
-                {
-                    double downloadRate = bytesIn / (DateTime.Now - startTime).TotalSeconds;
-                    double remainingBytes = totalBytes - bytesIn;
-                    double timeLeftInSeconds = remainingBytes / downloadRate;
-
-                    if (timeLeftInSeconds > 0)
+                    http.DefaultRequestHeaders.UserAgent.ParseAdd("WLMM");
+                    using (var response = await http.GetAsync(fileLink, HttpCompletionOption.ResponseHeadersRead))
                     {
-                        TimeSpan timeLeft = TimeSpan.FromSeconds(timeLeftInSeconds);
+                        response.EnsureSuccessStatusCode();
+                        var contentLength = response.Content.Headers.ContentLength ?? -1L;
 
-                        // Display time left
-                        DLTimeLeft = string.Format("{0:D2}:{1:D2}:{2:D2}", timeLeft.Hours, timeLeft.Minutes, timeLeft.Seconds);
+                        using (var contentStream = await response.Content.ReadAsStreamAsync())
+                        using (var fileStream = new FileStream(targetPath, FileMode.Create, FileAccess.Write, FileShare.None, 81920, true))
+                        {
+                            var buffer = new byte[81920];
+                            long totalRead = 0;
+                            int read;
+                            while ((read = await contentStream.ReadAsync(buffer, 0, buffer.Length)) > 0)
+                            {
+                                await fileStream.WriteAsync(buffer, 0, read);
+                                totalRead += read;
+
+                                double percentage = contentLength > 0 ? (totalRead * 100.0 / contentLength) : 0.0;
+                                DownloadProgress_PB.Value = (int)Math.Truncate(Math.Min(100, percentage));
+
+                                DateTime now = DateTime.Now;
+                                TimeSpan timeElapsed = now - lastProgressUpdateTime;
+                                if (timeElapsed.TotalMilliseconds > 250)
+                                {
+                                    long bytesSinceLastUpdate = totalRead - lastProgressUpdateBytes;
+                                    double speedInBytesPerSecond = bytesSinceLastUpdate / Math.Max(1.0, timeElapsed.TotalSeconds);
+
+                                    if (speedInBytesPerSecond < 0)
+                                        speedInBytesPerSecond = 0;
+
+                                    string DLSpeed = FormatBytes(speedInBytesPerSecond) + "/s";
+                                    string DLCurrent = string.Format("{0} / {1}", FormatBytes(totalRead), contentLength > 0 ? FormatBytes(contentLength) : "?");
+                                    string DLTimeLeft = string.Empty;
+
+                                    if (contentLength > 0 && totalRead > 0 && totalRead < contentLength)
+                                    {
+                                        double downloadRate = totalRead / (DateTime.Now - startTime).TotalSeconds;
+                                        if (downloadRate > 0)
+                                        {
+                                            double remainingBytes = contentLength - totalRead;
+                                            double timeLeftInSeconds = remainingBytes / downloadRate;
+                                            if (timeLeftInSeconds > 0)
+                                            {
+                                                TimeSpan timeLeft = TimeSpan.FromSeconds(timeLeftInSeconds);
+                                                DLTimeLeft = string.Format("{0:D2}:{1:D2}:{2:D2}", timeLeft.Hours, timeLeft.Minutes, timeLeft.Seconds);
+                                            }
+                                        }
+                                    }
+
+                                    ProgressDetails_Label.Text = "Speed: " + DLSpeed + " | " + DLCurrent + " | Time Left: " + DLTimeLeft;
+
+                                    lastProgressUpdateTime = now;
+                                    lastProgressUpdateBytes = totalRead;
+                                }
+
+                                ProgressInfo_Label.Text = "Downloading... " + (int)Math.Truncate(Math.Min(100, percentage)) + "%";
+                                Application.DoEvents();
+                            }
+                        }
                     }
                 }
 
-                ProgressDetails_Label.Text = "Speed: " + DLSpeed + " | " + DLCurrent + " | Time Left: " + DLTimeLeft;
-
-                lastProgressUpdateTime = now;
-                lastProgressUpdateBytes = e.BytesReceived;
-            }
-
-            ProgressInfo_Label.Text = "Downloading... " + (string)Math.Truncate(percentage).ToString() + "%";
-
-
-            if (DownloadProgress_PB.Value == 100)
-            {
                 ProgressInfo_Label.Text = "Extracting Mod...";
                 ProgressDetails_Label.Text = "Almost there.";
                 DownloadProgress_PB.Value = 100;
                 Application.DoEvents();
+
                 try
                 {
-                    while (IsFileLocked(new FileInfo(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Downloads\" + CurrentlyDownloadingModName + ".wlmm")))
-                    {
-                        Thread.Sleep(100);
-                    }
                     //Add Mod to active mods
-                    List<string> mods = new List<string>();
-                    mods.Add(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Downloads\" + CurrentlyDownloadingModName + ".wlmm");
+                    List<string> mods = new();
+                    mods.Add(targetPath);
                     Main_Form.AddMods(mods);
 
                     if (DeleteAfterDownload_CB.Checked == true)
                     {
-                        File.Delete(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Downloads\" + CurrentlyDownloadingModName + ".wlmm");
+                        File.Delete(targetPath);
                         Main_Form.LoadMods();
                     }
 
@@ -895,15 +877,29 @@ namespace WSMM
                     IncrementDownloadAmount(CurrentlyDownloadingModName);
                     ModFileSize_Label.Text = GetSlice(ModFileSize_Label.Text, "|", 0) + " | Downloads: " + ModDownloadsDict.GetValueOrDefault(CurrentlyDownloadingModName.Replace(" ", "_")).ToString();
 
-                    //Update to show as downloaded
-                    //Perhaps recheck each mod if they are downloaded?
-                    //LoadMarketplaceMods(); Disabled to prevent auto-scrolling
                     CheckModState();
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "WLMM Download Error");
                 }
+            }
+            catch (Exception ex)
+            {
+                DownloadMod_Button.Show();
+                DownloadMod_Button.Text = "Download";
+                ModFileSize_Label.Show();
+                ProgressInfo_Label.Hide();
+                ProgressInfo_Label.Text = "Initializing...";
+                ProgressDetails_Label.Hide();
+                ProgressDetails_Label.Text = "Speed: 0 B/s | 0 B / 0 B | Time Left: 00:00:00";
+                DownloadProgress_PB.Hide();
+                DownloadProgress_PB.Value = 0;
+                CloseModPanel_Button.Enabled = true;
+                Close_Button.Enabled = true;
+
+                MessageBox.Show(ex.Message, "WLMM Download Error");
+                LoadMarketplaceMods();
             }
         }
 
@@ -957,7 +953,6 @@ namespace WSMM
 
         private void Filter_CB_TextChanged(object sender, EventArgs e)
         {
-            //LoadMarketplaceMods();
             if (Filter_CB.Text == "Latest")
             {
                 LoadMarketplaceMods();
@@ -1071,28 +1066,6 @@ namespace WSMM
         private void Website_Button_Click(object sender, EventArgs e)
         {
             Process.Start("explorer", MarketplaceWebURL + ModName_Label.Text.Replace(" ", ""));
-        }
-
-        private bool IsFileLocked(FileInfo file)
-        {
-            FileStream stream = null;
-
-            try
-            {
-                stream = file.Open(FileMode.Open, FileAccess.ReadWrite, FileShare.None);
-            }
-            catch (IOException)
-            {
-                return true;
-            }
-            finally
-            {
-                if (stream != null)
-                    stream.Close();
-            }
-
-            //file is not locked
-            return false;
         }
 
         private void CheckModState()
