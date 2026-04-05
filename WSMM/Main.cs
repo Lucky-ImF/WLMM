@@ -1402,6 +1402,11 @@ namespace WSMM
 
         public void AddMods(List<string> Mods)
         {
+            BuildModProgress_PB.Invoke((System.Windows.Forms.MethodInvoker)delegate
+            {
+                BuildModProgress_PB.Value = 0;
+                BuildModProgress_PB.Maximum = Mods.Count;
+            });
             foreach (string Mod in Mods)
             {
                 //Unzip to Loaded\Mod Name
@@ -1413,7 +1418,6 @@ namespace WSMM
                 {
                     Directory.Delete(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + Path.GetFileNameWithoutExtension(Mod), true);
                 }
-                //ZipFile.ExtractToDirectory(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + Path.GetFileName(Mod), Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + Path.GetFileNameWithoutExtension(Mod), true);
                 ZipFile.ExtractToDirectory(Mod, Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\" + Path.GetFileNameWithoutExtension(Mod), true);
 
                 //Calculate hash for each .pak
@@ -1435,7 +1439,6 @@ namespace WSMM
                     BuildModProgress_PB.Value++;
                 });
 
-                Debug.WriteLine("Adding new mod: " + Mod);
                 LoadedMods.Add(Path.GetFileNameWithoutExtension(Mod));
                 AddChange("Added mod: " + Path.GetFileNameWithoutExtension(Mod));
             }
@@ -5890,10 +5893,7 @@ namespace WSMM
                 {
                     Directory.Delete(Application.StartupPath + @"Mods\" + SelectedBuild, true);
                 }
-                if (SelectedBuild == LoadedWLVersion)
-                {
-                    LoadMods();
-                }
+
                 BuildManager_LoadBuilds();
 
                 BuildManager_BuildList.SelectedIndex = BuildManager_BuildList.FindStringExact(SelectedBuild);

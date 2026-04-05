@@ -853,13 +853,11 @@ namespace WSMM
                     List<string> mods = new();
                     mods.Add(targetPath);
                     Main_Form.AddMods(mods);
-
                     if (DeleteAfterDownload_CB.Checked == true)
                     {
                         File.Delete(targetPath);
                         Main_Form.LoadMods();
                     }
-
                     DownloadMod_Button.Show();
                     DownloadMod_Button.Text = "Mod Downloaded!";
                     ModFileSize_Label.Show();
@@ -871,12 +869,9 @@ namespace WSMM
                     DownloadProgress_PB.Value = 0;
                     CloseModPanel_Button.Enabled = true;
                     Close_Button.Enabled = true;
-
                     DownloadsRemaining -= 1;
-
                     IncrementDownloadAmount(CurrentlyDownloadingModName);
                     ModFileSize_Label.Text = GetSlice(ModFileSize_Label.Text, "|", 0) + " | Downloads: " + ModDownloadsDict.GetValueOrDefault(CurrentlyDownloadingModName.Replace(" ", "_")).ToString();
-
                     CheckModState();
                 }
                 catch (Exception ex)
