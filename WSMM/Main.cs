@@ -6057,6 +6057,7 @@ namespace WSMM
         {
             if (StartingUp == false)
             {
+                WriteDebugFiles = BS_WriteDebugFiles.Checked;
                 SaveBuildSettings();
             }
         }
