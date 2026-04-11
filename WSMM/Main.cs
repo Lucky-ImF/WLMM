@@ -1578,7 +1578,7 @@ namespace WSMM
                     bool IconFound = false;
                     foreach (string Img in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\" + ModID + @"\" + ModName, "*.jpg"))
                     {
-                        File.Move(Img, Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\" + ModID + @"\" + ModName + @"\Icon.png");
+                        File.Move(Img, Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\" + ModID + @"\" + ModName + @"\Icon.png", true);
                         IconFound = true;
                     }
                     if (IconFound == false)
