@@ -83,24 +83,24 @@ namespace WSMM
         string InMem_TattoosJSON = string.Empty;
 
         //Panel, Picturebox, Label(Name), Label(Error), Label(Version), Label(SupportedVersions), Label(Author), LinkLabel(Remove), LinkLabel(Link), Checkbox
-        Panel[] Mod_Panel = new Panel[100];
-        PictureBox[] Mod_Icon = new PictureBox[100];
-        Label[] Mod_NameLabel = new Label[100];
-        Label[] Mod_ErrorLabel = new Label[100];
-        Label[] Mod_VersionLabel = new Label[100];
-        Label[] Mod_SupportedVersionsLabel = new Label[100];
-        Label[] Mod_CharactersLabel = new Label[100];
-        LinkLabel[] Mod_ContainsLabel = new LinkLabel[100];
-        Label[] Mod_AuthorLabel = new Label[100];
-        LinkLabel[] Mod_RemoveButton = new LinkLabel[100];
-        LinkLabel[] Mod_ReloadButton = new LinkLabel[100];
-        LinkLabel[] Mod_EditButton = new LinkLabel[100];
-        LinkLabel[] Mod_LinkButton = new LinkLabel[100];
-        CheckBox[] Mod_EnabledCB = new CheckBox[100];
-        string[] Mod_WLMMPath = new string[100];
-        string[] Mod_Categories = new string[100];
-        List<string>[] Mod_Dependencies = new List<string>[100];
-        List<string>[] Mod_Incompatibilities = new List<string>[100];
+        Panel[] Mod_Panel = new Panel[500];
+        PictureBox[] Mod_Icon = new PictureBox[500];
+        Label[] Mod_NameLabel = new Label[500];
+        Label[] Mod_ErrorLabel = new Label[500];
+        Label[] Mod_VersionLabel = new Label[500];
+        Label[] Mod_SupportedVersionsLabel = new Label[500];
+        Label[] Mod_CharactersLabel = new Label[500];
+        LinkLabel[] Mod_ContainsLabel = new LinkLabel[500];
+        Label[] Mod_AuthorLabel = new Label[500];
+        LinkLabel[] Mod_RemoveButton = new LinkLabel[500];
+        LinkLabel[] Mod_ReloadButton = new LinkLabel[500];
+        LinkLabel[] Mod_EditButton = new LinkLabel[500];
+        LinkLabel[] Mod_LinkButton = new LinkLabel[500];
+        CheckBox[] Mod_EnabledCB = new CheckBox[500];
+        string[] Mod_WLMMPath = new string[500];
+        string[] Mod_Categories = new string[500];
+        List<string>[] Mod_Dependencies = new List<string>[500];
+        List<string>[] Mod_Incompatibilities = new List<string>[500];
 
         List<int> Mod_Entries = new List<int>();
         int Mod_CurrentEntryID = 0;
@@ -1858,7 +1858,7 @@ namespace WSMM
             GetMarketplaceMods();
             CheckCategories();
 
-            if (Mod_CurrentEntryID >= 101)
+            if (Mod_CurrentEntryID >= 501)
             {
                 MessageBox.Show("Mod limit reached.");
             }
@@ -1871,7 +1871,7 @@ namespace WSMM
 
         private void CreateModEntry(string ModName)
         {
-            if (Mod_CurrentEntryID >= 101)
+            if (Mod_CurrentEntryID >= 501)
             {
                 return;
             }
