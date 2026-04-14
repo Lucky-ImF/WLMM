@@ -1478,32 +1478,39 @@ namespace WSMM
                 if (ModDirs.Length > 0)
                 {
                     string ModName = Path.GetFileNameWithoutExtension(ModDirs[0]);
+                    string ModPath = Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\" + ModID + @"\" + ModName;
+                    if (ModName.Contains("WildLifeC"))
+                    {
+                        ModName = ModID;
+                        ModPath = Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\" + ModName;
+                        //Using no subfolder structure
+                    }
                     ProgressInfo_Label.Invoke((System.Windows.Forms.MethodInvoker)delegate
                     {
                         ProgressInfo_Label.Text = "Converting " + ModName + "...";
                     });
                     //Create Folders
-                    Directory.CreateDirectory(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\" + ModID + @"\" + ModName + @"\Paks");
-                    Directory.CreateDirectory(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\" + ModID + @"\" + ModName + @"\AutoMod");
+                    Directory.CreateDirectory(ModPath + @"\Paks");
+                    Directory.CreateDirectory(ModPath + @"\AutoMod");
                     //Move .txt files to AutoMod
-                    foreach (string AMs in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\" + ModID + @"\" + ModName, "*.txt"))
+                    foreach (string AMs in Directory.EnumerateFiles(ModPath, "*.txt"))
                     {
-                        File.Move(AMs, Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\" + ModID + @"\" + ModName + @"\AutoMod\" + Path.GetFileName(AMs));
+                        File.Move(AMs, ModPath + @"\AutoMod\" + Path.GetFileName(AMs));
                     }
-                    if (File.Exists(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\" + ModID + @"\" + ModName + @"\meta.json"))
+                    if (File.Exists(ModPath + @"\meta.json"))
                     {
-                        File.Delete(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\" + ModID + @"\" + ModName + @"\meta.json");
+                        File.Delete(ModPath + @"\meta.json");
                     }
                     ProgressInfo_Label.Invoke((System.Windows.Forms.MethodInvoker)delegate
                     {
                         BuildModProgress_PB.Value++;
                     });
-                    if (File.Exists(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\" + ModID + @"\" + ModName + @"\mod.dat"))
+                    if (File.Exists(ModPath + @"\mod.dat"))
                     {
-                        File.Move(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\" + ModID + @"\" + ModName + @"\mod.dat", Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\" + ModID + @"\" + ModName + @"\Metadata.dat");
-                        string contents = File.ReadAllText(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\" + ModID + @"\" + ModName + @"\Metadata.dat");
+                        File.Move(ModPath + @"\mod.dat", ModPath + @"\Metadata.dat");
+                        string contents = File.ReadAllText(ModPath + @"\Metadata.dat");
                         contents = contents.Replace("SupportedWLVersions = ", "SupportedWLVersions = UE5.4");
-                        File.WriteAllText(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\" + ModID + @"\" + ModName + @"\Metadata.dat", contents);
+                        File.WriteAllText(ModPath + @"\Metadata.dat", contents);
                     }
                     else
                     {
@@ -1511,7 +1518,7 @@ namespace WSMM
                         string Categories = "";
                         //Guess characters from automod files
                         string Characters = "";
-                        foreach (string AMs in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\" + ModID + @"\" + ModName + @"\AutoMod", "*.txt"))
+                        foreach (string AMs in Directory.EnumerateFiles(ModPath + @"\AutoMod", "*.txt"))
                         {
                             string[] contents;
                             contents = File.ReadAllLines(AMs);
@@ -1566,19 +1573,19 @@ namespace WSMM
                         "\nModVersion = " + "?" + "\nSupportedWLVersions = " + "UE5.4" +
                         "\nModURL = " + "" + "\nCategories = " + Categories +
                         "\nCharacters = " + Characters + "\nDependencies = " + "" + "\nIncompatibilities = " + "";
-                        File.WriteAllText(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\" + ModID + @"\" + ModName + @"\Metadata.dat", Metadata);
+                        File.WriteAllText(ModPath + @"\Metadata.dat", Metadata);
                     }
 
-                    File.WriteAllText(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\" + ModID + @"\" + ModName + @"\Enabled.dat", "Checked");
+                    File.WriteAllText(ModPath + @"\Enabled.dat", "Checked");
                     ProgressInfo_Label.Invoke((System.Windows.Forms.MethodInvoker)delegate
                     {
                         BuildModProgress_PB.Value++;
                     });
                     //Icon
                     bool IconFound = false;
-                    foreach (string Img in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\" + ModID + @"\" + ModName, "*.jpg"))
+                    foreach (string Img in Directory.EnumerateFiles(ModPath, "*.jpg"))
                     {
-                        File.Move(Img, Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\" + ModID + @"\" + ModName + @"\Icon.png", true);
+                        File.Move(Img, ModPath + @"\Icon.png", true);
                         IconFound = true;
                     }
                     if (IconFound == false)
@@ -1588,13 +1595,13 @@ namespace WSMM
                             ProgressInfo_Label.Text = "Fetching Icon...";
                         });
                         //Attempt to fetch icon from Minervha API
-                        string ImgState = DownloadImageWithHttpClient("https://minervha.shop/api/products/image/" + ModID + "_image.jpg", Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\" + ModID + @"\" + ModName + @"\Icon.png");
+                        string ImgState = DownloadImageWithHttpClient("https://minervha.shop/api/products/image/" + ModID + "_image.jpg", ModPath + @"\Icon.png");
                         if (ImgState == "Fail")
                         {
-                            ImgState = DownloadImageWithHttpClient("https://minervha.shop/api/products/image/" + ModName + ".jpg", Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\" + ModID + @"\" + ModName + @"\Icon.png");
+                            ImgState = DownloadImageWithHttpClient("https://minervha.shop/api/products/image/" + ModName + ".jpg", ModPath + @"\Icon.png");
                             if (ImgState == "Fail")
                             {
-                                File.Copy(Application.StartupPath + @"System\Minervha_Icon.png", Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\" + ModID + @"\" + ModName + @"\Icon.png");
+                                File.Copy(Application.StartupPath + @"System\Minervha_Icon.png", ModPath + @"\Icon.png");
                             }
                         }
                     }
@@ -1606,16 +1613,16 @@ namespace WSMM
 
                     try
                     {
-                        using (FileStream stream = new FileStream(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\" + ModID + @"\" + ModName + @"\Paks\" + ModName + "_P.pak", FileMode.Create))
+                        using (FileStream stream = new FileStream(ModPath + @"\Paks\" + ModName + "_P.pak", FileMode.Create))
                         {
                             var builder = new PakBuilder();
                             builder.Compression(new PakCompression[] { PakCompression.Zlib });
                             var pak_writer = builder.Writer(stream);
 
                             // Write all mod files to .pak
-                            foreach (string file in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\" + ModID + @"\" + ModName + @"\WildLifeC", "*.*", SearchOption.AllDirectories))
+                            foreach (string file in Directory.EnumerateFiles(ModPath + @"\WildLifeC", "*.*", SearchOption.AllDirectories))
                             {
-                                string relativePath = Path.GetRelativePath(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\" + ModID + @"\" + ModName, file);
+                                string relativePath = Path.GetRelativePath(ModPath, file);
                                 string pakPath = relativePath.Replace('\\', '/');
                                 pak_writer.WriteFile(pakPath, File.ReadAllBytes(file));
                             }
@@ -1629,9 +1636,9 @@ namespace WSMM
                             BuildModProgress_PB.Value++;
                         });
                         //Remove Loose Files
-                        if (Directory.Exists(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\" + ModID + @"\" + ModName + @"\WildLifeC"))
+                        if (Directory.Exists(ModPath + @"\WildLifeC"))
                         {
-                            Directory.Delete(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\" + ModID + @"\" + ModName + @"\WildLifeC", true);
+                            Directory.Delete(ModPath + @"\WildLifeC", true);
                         }
 
                         ProgressInfo_Label.Invoke((System.Windows.Forms.MethodInvoker)delegate
@@ -1643,7 +1650,7 @@ namespace WSMM
                         {
                             File.Delete(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Mod Creator\" + ModName + ".wlmm");
                         }
-                        ZipFile.CreateFromDirectory(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Temp\" + ModID + @"\" + ModName, Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Mod Creator\" + ModName + ".wlmm");
+                        ZipFile.CreateFromDirectory(ModPath, Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Mod Creator\" + ModName + ".wlmm");
 
                         ValidMods.Add(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Mod Creator\" + ModName + ".wlmm");
                     }
