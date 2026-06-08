@@ -12,6 +12,7 @@ using System.Net;
 using System.Numerics;
 using System.Reflection;
 using System.Resources;
+using System.Runtime.Intrinsics.X86;
 using System.Security.Cryptography;
 using System.Security.Policy;
 using System.Text;
@@ -40,7 +41,7 @@ namespace WSMM
         private bool StartingUp = true;
         private bool HasOldChanges = false;
 
-        private string WLMM_Version = "1.5.0";
+        private string WLMM_Version = "1.5.2";
         private string Datatable_Version = string.Empty;
         string BuildLog = string.Empty;
 
@@ -113,6 +114,12 @@ namespace WSMM
         public List<string> Categories_List = new List<string>();
 
         List<string> MarketplaceMods = new List<string>();
+
+        List<string> PakWhitelist = new List<string>();
+
+        List<string> ExternalMods = new List<string>();
+        Dictionary<string, string> ExternalModsPaths = new Dictionary<string, string>();
+        Dictionary<string, string> ExternalModsWLs = new Dictionary<string, string>();
 
         public Main()
         {
@@ -390,6 +397,8 @@ namespace WSMM
             //Load Mods
             NoModsFound_Label.Visible = true;
             LoadMods();
+
+            LoadExternalMods();
 
             if (DT_Updater_Panel.Visible == true)
             {
@@ -1131,6 +1140,10 @@ namespace WSMM
                         LastSuccessfullBuild = GetSlice(file, "=", 1);
                         ChangesPanel_LastBuildLabel.Text = "Last Build: " + LastSuccessfullBuild;
                     }
+                    else if (file.StartsWith("PakWL"))
+                    {
+                        PakWhitelist = new List<string>(GetSlice(file, "=", 1).Split('*'));
+                    }
                 }
 
                 if (LoadedWLPath != "" && LoadedWLPath != string.Empty)
@@ -1173,7 +1186,13 @@ namespace WSMM
                 ChangesMadeString += save + ",";
             }
             ChangesMadeString = ChangesMadeString.TrimEnd(',');
-            string SaveFile = "WL_Path = " + LoadedWLPath + "\nWL_Version = " + LoadedWLVersion + "\nUE_Version = " + LoadedUEVersion + "\nChangesMade = " + ChangesMade.ToString() + "\nprevIconPath = " + prevIconPath + "\nprevPakPath = " + prevPakPath + "\nprevAutoModPath = " + prevAutoModPath + "\nprevModPath = " + prevModPath + "\nTutorial = " + TutorialEnabled.ToString() + "\nDeleteAfterDownload = " + DeleteWLMMAfterDownload.ToString() + "\nSkippedDTs = " + SkippedDTs.ToString() + "\nSavedChanges = " + ChangesMadeString + "\nLastBuild = " + LastSuccessfullBuild;
+            string PakWL = "";
+            foreach (string item in PakWhitelist)
+            {
+                PakWL += item + "*";
+            }
+            PakWL = PakWL.TrimEnd('*');
+            string SaveFile = "WL_Path = " + LoadedWLPath + "\nWL_Version = " + LoadedWLVersion + "\nUE_Version = " + LoadedUEVersion + "\nChangesMade = " + ChangesMade.ToString() + "\nprevIconPath = " + prevIconPath + "\nprevPakPath = " + prevPakPath + "\nprevAutoModPath = " + prevAutoModPath + "\nprevModPath = " + prevModPath + "\nTutorial = " + TutorialEnabled.ToString() + "\nDeleteAfterDownload = " + DeleteWLMMAfterDownload.ToString() + "\nSkippedDTs = " + SkippedDTs.ToString() + "\nSavedChanges = " + ChangesMadeString + "\nLastBuild = " + LastSuccessfullBuild + "\nPakWL = " + PakWL;
             File.WriteAllText(Application.StartupPath + @"System\Session.dat", SaveFile);
         }
 
@@ -1303,6 +1322,7 @@ namespace WSMM
             {
                 return;
             }
+            
             string SaveFile = "DT_ClothesOutfit = " + BS_BaseClothesOutfitFile.Text + "\nDT_GameCharacterOutfits = " + BS_BaseGameCharacterOutfitFile.Text +
                 "\nDT_GameCharacterCustomization = " + BS_BaseGameCharacterCustomizationFile.Text + "\nMappings = " + BS_Mappings.Text + "\nVerifyIntegrity = " + BS_VerifyFI_CB.CheckState.ToString() +
                 "\nLaunchParams = " + BS_LaunchParams.Text + "\nDT_SandboxProps = " + BS_BaseGameSandboxPropsFile.Text + "\nDT_Tattoo = " + BS_BaseGameTattooFile.Text + "\nMoviesDisabled = " + DisableIntroMovies.CheckState.ToString() +
@@ -1449,6 +1469,7 @@ namespace WSMM
                 BuildModProgress_PB.Value = 0;
             });
             LoadMods();
+            LoadExternalMods();
         }
 
         public void ConvertMods(List<string> Mods)
@@ -2557,6 +2578,180 @@ namespace WSMM
                 Directory.CreateDirectory(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\AutoMod");
             }
 
+            // External Mods
+            // Extract .wlmms
+            //List<string> ExternalMods = new List<string>();
+            //Dictionary<string, string> ExternalModsPaths = new Dictionary<string, string>();
+            //Dictionary<string, string> ExternalModsWLs = new Dictionary<string, string>();
+            foreach (string EXM in ExternalMods)
+            {
+                if (Directory.Exists(ExternalModsPaths[EXM]))
+                {
+                    if (Directory.Exists(ExternalModsPaths[EXM] + @"\Extracted"))
+                    {
+                        Directory.Delete(ExternalModsPaths[EXM] + @"\Extracted", true);
+                    }
+                    Directory.CreateDirectory(ExternalModsPaths[EXM] + @"\Extracted");
+                    foreach (string modpath in Directory.EnumerateFiles(ExternalModsPaths[EXM], "*.wlmm"))
+                    {
+                        //Unzip to ExternalModsPaths\Extracted\Mod Name
+                        ProgressInfo_Label.Invoke((System.Windows.Forms.MethodInvoker)delegate
+                        {
+                            ProgressInfo_Label.Text = "Unpacking External Mod " + Path.GetFileName(modpath) + "...";
+                        });
+                        
+                        ZipFile.ExtractToDirectory(modpath, ExternalModsPaths[EXM] + @"\Extracted\" + Path.GetFileNameWithoutExtension(modpath), true);
+
+                        //Calculate hash for each .pak
+                        string Hashes = string.Empty;
+                        foreach (string file in Directory.EnumerateFiles(ExternalModsPaths[EXM] + @"\Extracted\" + Path.GetFileNameWithoutExtension(modpath) + @"\Paks", "*.pak"))
+                        {
+                            ProgressInfo_Label.Invoke((System.Windows.Forms.MethodInvoker)delegate
+                            {
+                                ProgressInfo_Label.Text = "Calculating MD5 hash for " + Path.GetFileName(file) + "...";
+                            });
+                            string Md5Hash = CalculateMD5(file);
+                            Hashes += Path.GetFileName(file) + " = " + Md5Hash + "\n";
+                        }
+                        Hashes = Hashes.Trim();
+                        File.WriteAllText(ExternalModsPaths[EXM] + @"\Extracted\" + Path.GetFileNameWithoutExtension(modpath) + @"\Integrity.dat", Hashes);
+                        File.WriteAllText(ExternalModsPaths[EXM] + @"\Extracted\" + Path.GetFileNameWithoutExtension(modpath) + @"\WLMM.dat", modpath);
+                    }
+                    // Move .paks to Game and .txt to AutoMod
+                    BuildLog += "Copying external .paks and AutoMod files...\n";
+                    ProgressInfo_Label.Invoke((System.Windows.Forms.MethodInvoker)delegate
+                    {
+                        ProgressInfo_Label.Text = "Copying external .pak files to Wild Life..."; //1
+                    });
+                    // Get all folders in Extracted
+                    string FCMessage = string.Empty;
+                    foreach (string ModPath in Directory.EnumerateDirectories(ExternalModsPaths[EXM] + @"\Extracted\", "*"))
+                    {
+                        string ModName = Path.GetFileName(ModPath);
+                        if (ModName == "AutoMod") { continue; }
+                        BuildLog += "+ " + ModName + "\n";
+                        string isEnabled = File.ReadAllText(ExternalModsPaths[EXM] + @"\Extracted\" + ModName + @"\Enabled.dat");
+                        List<string> EnabledPaks = new List<string>();
+                        List<string> EnabledAutoMod = new List<string>();
+                        if (isEnabled == "Checked")
+                        {
+                            if (File.Exists(ExternalModsPaths[EXM] + @"\Extracted\" + ModName + @"\LoadEdit_Mod.dat"))
+                            {
+                                BuildLog += "+ " + "Load Edit Modified" + "\n";
+                                var LE_Mod_Content = File.ReadAllLines(ExternalModsPaths[EXM] + @"\Extracted\" + ModName + @"\LoadEdit_Mod.dat");
+                                foreach (string line in LE_Mod_Content)
+                                {
+                                    if (line.EndsWith(".pak"))
+                                    {
+                                        EnabledPaks.Add(line.Trim());
+                                    }
+                                    else if (line.EndsWith(".txt"))
+                                    {
+                                        EnabledAutoMod.Add(line.Trim());
+                                    }
+                                }
+                            }
+
+                            try
+                            {
+                                //Copy .paks to Game
+                                foreach (string pak in Directory.EnumerateFiles(ExternalModsPaths[EXM] + @"\Extracted\" + ModName + @"\Paks", "*.pak"))
+                                {
+                                    if (EnabledPaks.Count == 0)
+                                    {
+                                        BuildLog += "+ + " + Path.GetFileName(pak) + "\n";
+                                        File.Copy(pak, LoadedWLPath + @"\WildLifeC\Content\Paks\" + Path.GetFileName(pak), true);
+                                        ActiveMods.Add(Path.GetFileName(pak));
+                                    }
+                                    else
+                                    {
+                                        if (EnabledPaks.Contains(Path.GetFileName(pak)))
+                                        {
+                                            BuildLog += "+ + " + Path.GetFileName(pak) + "\n";
+                                            File.Copy(pak, LoadedWLPath + @"\WildLifeC\Content\Paks\" + Path.GetFileName(pak), true);
+                                            ActiveMods.Add(Path.GetFileName(pak));
+                                        }
+                                        else
+                                        {
+                                            BuildLog += "+ - [Disabled] " + Path.GetFileName(pak) + "\n";
+                                        }
+                                    }
+                                }
+
+                                //Copy .txt and .collection to AutoMod
+                                foreach (string AMFile in Directory.EnumerateFiles(ExternalModsPaths[EXM] + @"\Extracted\" + ModName + @"\AutoMod", "*.txt"))
+                                {
+                                    if (EnabledAutoMod.Count == 0)
+                                    {
+                                        BuildLog += "+ + " + Path.GetFileName(AMFile) + "\n";
+                                        File.Copy(AMFile, Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\AutoMod\" + Path.GetFileName(AMFile), true);
+                                        HasAutoMod = true;
+                                    }
+                                    else
+                                    {
+                                        if (EnabledAutoMod.Contains(Path.GetFileName(AMFile)))
+                                        {
+                                            BuildLog += "+ + " + Path.GetFileName(AMFile) + "\n";
+                                            File.Copy(AMFile, Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\AutoMod\" + Path.GetFileName(AMFile), true);
+                                            HasAutoMod = true;
+                                        }
+                                        else
+                                        {
+                                            BuildLog += "+ - [Disabled] " + Path.GetFileName(AMFile) + "\n";
+                                        }
+                                    }
+                                }
+                                foreach (string AMFile in Directory.EnumerateFiles(ExternalModsPaths[EXM] + @"\Extracted\" + ModName + @"\AutoMod", "*.collection"))
+                                {
+                                    BuildLog += "+ + " + Path.GetFileName(AMFile) + "\n";
+                                    File.Copy(AMFile, Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\AutoMod\" + Path.GetFileName(AMFile), true);
+                                    HasAutoMod = true;
+                                }
+
+                                //Read Integrity.dat
+                                if (BS_VerifyFI_CB.Checked)
+                                {
+                                    if (File.Exists(ExternalModsPaths[EXM] + @"\Extracted\" + ModName + @"\Integrity.dat"))
+                                    {
+                                        string[] Integrity = File.ReadAllLines(ExternalModsPaths[EXM] + @"\Extracted\" + ModName + @"\Integrity.dat");
+                                        foreach (string hash in Integrity)
+                                        {
+                                            if (HashDict.ContainsKey(GetSlice(hash, "=", 0)) == false)
+                                            {
+                                                HashDict.Add(GetSlice(hash, "=", 0), GetSlice(hash, "=", 1));
+                                            }
+                                            else
+                                            {
+                                                BuildLog += "+ - " + GetSlice(hash, "=", 0) + " already exists in HashDict.\n";
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                FCMessage = ex.Message;
+                                BuildLog += "+ - Failed deploying external mod: " + ModName + "\n";
+                                BuildLog += "+ - ex: " + FCMessage + "\n";
+                                MessageBox.Show("Failed deploying external mod: " + ModName + "\nCheck build log for detailed info.", "Wild Life Mod Manager");
+                                ResetFromBuilding("Failure");
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            BuildLog += "+ - Disabled\n";
+                        }
+                        //BuildModProgress_PB.Invoke((System.Windows.Forms.MethodInvoker)delegate
+                        //{
+                        //    BuildModProgress_PB.Value++;
+                        //});
+                    }
+                }
+            }
+            
+            
+
             BuildLog += "Copying .paks and AutoMod files...\n";
             ProgressInfo_Label.Invoke((System.Windows.Forms.MethodInvoker)delegate
             {
@@ -2697,6 +2892,7 @@ namespace WSMM
             //Check what .paks are not in the active mods
             FileCopyMessage = string.Empty;
             bool KeepAll = false;
+            bool RememberAll = false;
             bool RemoveAll = false;
             foreach (string pak in Directory.EnumerateFiles(LoadedWLPath + @"\WildLifeC\Content\Paks", "*.pak"))
             {
@@ -2719,7 +2915,18 @@ namespace WSMM
                     }
                     else if (KeepAll == true)
                     {
-                        continue;
+                        if (RememberAll == true)
+                        {
+                            Result = "KeepAllRemember";
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+                    else if (PakWhitelist.Contains(Path.GetFileNameWithoutExtension(pak)))
+                    {
+                        BuildLog += "Mod found in whitelist\n";
                     }
                     else
                     {
@@ -2735,10 +2942,20 @@ namespace WSMM
                             //Keep
                             Result = "Keep";
                         }
+                        else if (dialogResult == DialogResult.OK)
+                        {
+                            //Keep Remember
+                            Result = "KeepRemember";
+                        }
                         else if (dialogResult == DialogResult.Continue)
                         {
                             //Keep All
                             Result = "KeepAll";
+                        }
+                        else if (dialogResult == DialogResult.Abort)
+                        {
+                            //Keep All Remember
+                            Result = "KeepAllRemember";
                         }
                         else if (dialogResult == DialogResult.No)
                         {
@@ -2758,6 +2975,20 @@ namespace WSMM
                         {
                             //Keep
                             BuildLog += "+ Keeping\n";
+                        }
+                        else if (Result == "KeepRemember")
+                        {
+                            //Keep Remember
+                            BuildLog += "+ Keeping and remembering\n";
+                            ManagePakWhitelist("Add", Path.GetFileNameWithoutExtension(pak));
+                        }
+                        else if (Result == "KeepAllRemember")
+                        {
+                            //Keep All Remember
+                            KeepAll = true;
+                            RememberAll = true;
+                            BuildLog += "+ Keeping and remembering\n";
+                            ManagePakWhitelist("Add", Path.GetFileNameWithoutExtension(pak));
                         }
                         else if (Result == "KeepAll")
                         {
@@ -4807,6 +5038,7 @@ namespace WSMM
             }
 
             LoadMods();
+            LoadExternalMods();
         }
 
         private void ConflictCheck()
@@ -5079,6 +5311,7 @@ namespace WSMM
         private void ReloadMods_Button_Click(object sender, EventArgs e)
         {
             LoadMods();
+            LoadExternalMods();
         }
 
         private static bool HasMissingDLLS()
@@ -5272,6 +5505,7 @@ namespace WSMM
                 SkippedDTs = true;
             }
             LoadMods();
+            LoadExternalMods();
             Tutorial_0.Hide();
         }
 
@@ -5421,6 +5655,7 @@ namespace WSMM
                 ToggleButtons(true);
                 ModPack_Panel.Hide();
                 LoadMods();
+                LoadExternalMods();
                 MessageBox.Show("Mod Pack added successfully.", "Wild Life Mod Manager", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
@@ -5486,6 +5721,7 @@ namespace WSMM
             LoadMappings();
 
             LoadMods();
+            LoadExternalMods();
         }
 
         private void BuildSettingsDTUpdater_Button_Click(object sender, EventArgs e)
@@ -5922,6 +6158,7 @@ namespace WSMM
                     LoadDataTables();
                     SkippedDTs = true;
                     LoadMods();
+                    LoadExternalMods();
                 }
                 BuildManager_LoadBuilds();
 
@@ -6066,6 +6303,110 @@ namespace WSMM
             {
                 WriteDebugFiles = BS_WriteDebugFiles.Checked;
                 SaveBuildSettings();
+            }
+        }
+
+        private void LoadExternalMods()
+        {
+            if (Directory.Exists(Application.StartupPath + @"System\External"))
+            {
+                foreach (string file in Directory.EnumerateFiles(Application.StartupPath + @"System\External", "*.txt"))
+                {
+                    //AppName: My Cool App
+                    //ModLoadPath: C:/CoolApp/Mods
+                    //PakWhitelist: App*Cool*MyMod
+                    //Enabled: True/False
+                    string AppName = string.Empty;
+                    string ModLoadPath = string.Empty;
+                    string PakWL = string.Empty;
+                    string Enabled = "True";
+                    int ModCount = 0;
+                    foreach (string line in File.ReadLines(file))
+                    {
+                        if (GetSlice(line, ":", 0) == "AppName")
+                        {
+                            AppName = GetSlice(line, ":", 1).Trim();
+                        }
+                        else if (GetSlice(line, ":", 0) == "ModLoadPath")
+                        {
+                            ModLoadPath = line.Replace("ModLoadPath:", "").Trim();
+                        }
+                        else if (GetSlice(line, ":", 0) == "PakWhitelist")
+                        {
+                            PakWL= GetSlice(line, ":", 1).Trim();
+                        }
+                        else if (GetSlice(line, ":", 0) == "Enabled")
+                        {
+                            Enabled = GetSlice(line, ":", 1).Trim();
+                        }
+                    }
+
+                    if (Enabled != "True")
+                    {
+                        continue;
+                    }
+
+                    if (Directory.Exists(ModLoadPath))
+                    {
+                        ModCount = Directory.EnumerateFiles(ModLoadPath, "*.wlmm").Count();
+                    }
+
+                    Cat_Button[Cat_CurrentEntryID] = new System.Windows.Forms.Button();
+                    Cat_Button[Cat_CurrentEntryID].Text = "[External] " + AppName + ": " + ModCount.ToString();
+                    Cat_Button[Cat_CurrentEntryID].BackColor = Color.FromArgb(75, 68, 138);
+                    Cat_Button[Cat_CurrentEntryID].FlatStyle = FlatStyle.Flat;
+                    Cat_Button[Cat_CurrentEntryID].Size = new System.Drawing.Size(ModFlow_Panel.Width - SystemInformation.VerticalScrollBarWidth - ModFlow_Panel.Margin.Right * 3, ModFlow_Panel.ClientSize.Height / 16);
+                    Cat_Button[Cat_CurrentEntryID].ForeColor = SystemColors.ActiveCaption;
+                    Cat_Button[Cat_CurrentEntryID].Font = new Font(Cat_Button[Cat_CurrentEntryID].Font.FontFamily, 14, FontStyle.Bold);
+                    Cat_Button[Cat_CurrentEntryID].Tag = ModLoadPath;
+                    Cat_Button[Cat_CurrentEntryID].Click += Cat_Button_ExternalClick;
+
+                    ModFlow_Panel.Invoke((System.Windows.Forms.MethodInvoker)delegate
+                    {
+                        ModFlow_Panel.Controls.Add(Cat_Button[Cat_CurrentEntryID]);
+                    });
+
+                    Cat_Entries.Add(Cat_CurrentEntryID);
+                    Cat_CurrentEntryID++;
+
+                    ExternalMods.Add(AppName);
+                    ExternalModsPaths[AppName] = ModLoadPath;
+                    if (PakWL != string.Empty)
+                    {
+                        ExternalModsWLs[AppName] = PakWL;
+                        string[] PakWLArray = PakWL.Split('*');
+                        foreach (string pak in PakWLArray)
+                        {
+                            ManagePakWhitelist("Add", pak);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void Cat_Button_ExternalClick(object sender, EventArgs e)
+        {
+            System.Windows.Forms.Button Casted = sender as System.Windows.Forms.Button;
+            string ModPath = Casted.Tag.ToString();
+
+            Process.Start("explorer.exe", ModPath);
+        }
+
+        private void ManagePakWhitelist(string Opt, string Name)
+        {
+                if (Opt == "Add")
+                {
+                    if (PakWhitelist.Contains(Name) == false)
+                    {
+                        PakWhitelist.Add(Name);
+                    }
+                }
+                else if (Opt == "Remove")
+                {
+                    if (PakWhitelist.Contains(Name) == true)
+                    {
+                        PakWhitelist.Remove(Name);
+                }
             }
         }
     }

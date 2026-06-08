@@ -35,6 +35,7 @@
             KeepAll_Button = new Button();
             ModName_Label = new Label();
             label22 = new Label();
+            AlwaysKeep_CB = new CheckBox();
             SuspendLayout();
             // 
             // label20
@@ -130,12 +131,24 @@
             label22.TabIndex = 41;
             label22.Text = "Inactive Mod Found";
             // 
+            // AlwaysKeep_CB
+            // 
+            AlwaysKeep_CB.AutoSize = true;
+            AlwaysKeep_CB.ForeColor = SystemColors.ActiveCaption;
+            AlwaysKeep_CB.Location = new Point(359, 149);
+            AlwaysKeep_CB.Name = "AlwaysKeep_CB";
+            AlwaysKeep_CB.Size = new Size(92, 19);
+            AlwaysKeep_CB.TabIndex = 48;
+            AlwaysKeep_CB.Text = "Always Keep";
+            AlwaysKeep_CB.UseVisualStyleBackColor = true;
+            // 
             // CustomMsgBox
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(75, 68, 138);
-            ClientSize = new Size(534, 159);
+            ClientSize = new Size(534, 174);
+            Controls.Add(AlwaysKeep_CB);
             Controls.Add(label20);
             Controls.Add(Remove_Button);
             Controls.Add(RemoveAll_Button);
@@ -161,5 +174,6 @@
         private Button KeepAll_Button;
         private Label ModName_Label;
         private Label label22;
+        private CheckBox AlwaysKeep_CB;
     }
 }

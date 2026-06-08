@@ -29,7 +29,14 @@ namespace WSMM
             {
                 myParent.Enabled = true;
             });
-            this.DialogResult = DialogResult.Yes;
+            if (AlwaysKeep_CB.Checked == true)
+            {
+                this.DialogResult = DialogResult.OK;
+            }
+            else
+            {
+                this.DialogResult = DialogResult.Yes;
+            }
         }
 
         private void KeepAll_Button_Click(object sender, EventArgs e)
@@ -38,7 +45,15 @@ namespace WSMM
             {
                 myParent.Enabled = true;
             });
-            this.DialogResult = DialogResult.Continue;
+            
+            if (AlwaysKeep_CB.Checked == true)
+            {
+                this.DialogResult = DialogResult.Abort;
+            }
+            else
+            {
+                this.DialogResult = DialogResult.Continue;
+            }
         }
 
         private void Remove_Button_Click(object sender, EventArgs e)
