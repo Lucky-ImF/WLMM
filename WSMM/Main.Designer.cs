@@ -90,6 +90,7 @@
             folderBrowserDialog1 = new FolderBrowserDialog();
             BuildSettings_Button = new Button();
             BuildSettings_Panel = new Panel();
+            BS_WriteDebugFiles = new CheckBox();
             DisableIntroMovies = new CheckBox();
             label54 = new Label();
             BS_BaseGameTattooFile = new ComboBox();
@@ -230,7 +231,7 @@
             label53 = new Label();
             ChangesPanel_LastBuildLabel = new Label();
             ChangesMade_Label = new LinkLabel();
-            BS_WriteDebugFiles = new CheckBox();
+            BuildSettingsGenerateSexVarReplace_Button = new Button();
             TitlePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
@@ -1054,6 +1055,7 @@
             // BuildSettings_Panel
             // 
             BuildSettings_Panel.BorderStyle = BorderStyle.FixedSingle;
+            BuildSettings_Panel.Controls.Add(BuildSettingsGenerateSexVarReplace_Button);
             BuildSettings_Panel.Controls.Add(BS_WriteDebugFiles);
             BuildSettings_Panel.Controls.Add(DisableIntroMovies);
             BuildSettings_Panel.Controls.Add(label54);
@@ -1076,18 +1078,31 @@
             BuildSettings_Panel.Controls.Add(BS_BaseGameCharacterOutfitFile);
             BuildSettings_Panel.Controls.Add(label14);
             BuildSettings_Panel.Controls.Add(BS_BaseClothesOutfitFile);
-            BuildSettings_Panel.Location = new Point(898, 70);
+            BuildSettings_Panel.Location = new Point(898, 48);
             BuildSettings_Panel.Name = "BuildSettings_Panel";
-            BuildSettings_Panel.Size = new Size(231, 568);
+            BuildSettings_Panel.Size = new Size(231, 590);
             BuildSettings_Panel.TabIndex = 13;
             BuildSettings_Panel.Visible = false;
+            // 
+            // BS_WriteDebugFiles
+            // 
+            BS_WriteDebugFiles.AutoSize = true;
+            BS_WriteDebugFiles.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BS_WriteDebugFiles.ForeColor = SystemColors.ActiveCaption;
+            BS_WriteDebugFiles.Location = new Point(5, 487);
+            BS_WriteDebugFiles.Name = "BS_WriteDebugFiles";
+            BS_WriteDebugFiles.Size = new Size(146, 24);
+            BS_WriteDebugFiles.TabIndex = 56;
+            BS_WriteDebugFiles.Text = "Write Debug Files";
+            BS_WriteDebugFiles.UseVisualStyleBackColor = true;
+            BS_WriteDebugFiles.CheckedChanged += BS_WriteDebugFiles_CheckedChanged;
             // 
             // DisableIntroMovies
             // 
             DisableIntroMovies.AutoSize = true;
             DisableIntroMovies.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             DisableIntroMovies.ForeColor = SystemColors.ActiveCaption;
-            DisableIntroMovies.Location = new Point(5, 439);
+            DisableIntroMovies.Location = new Point(5, 463);
             DisableIntroMovies.Name = "DisableIntroMovies";
             DisableIntroMovies.Size = new Size(164, 24);
             DisableIntroMovies.TabIndex = 55;
@@ -1100,7 +1115,7 @@
             label54.AutoSize = true;
             label54.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label54.ForeColor = SystemColors.ActiveCaption;
-            label54.Location = new Point(80, 191);
+            label54.Location = new Point(80, 182);
             label54.Name = "label54";
             label54.Size = new Size(68, 17);
             label54.TabIndex = 54;
@@ -1112,7 +1127,7 @@
             BS_BaseGameTattooFile.FlatStyle = FlatStyle.Flat;
             BS_BaseGameTattooFile.ForeColor = SystemColors.ActiveCaption;
             BS_BaseGameTattooFile.FormattingEnabled = true;
-            BS_BaseGameTattooFile.Location = new Point(5, 211);
+            BS_BaseGameTattooFile.Location = new Point(5, 202);
             BS_BaseGameTattooFile.Name = "BS_BaseGameTattooFile";
             BS_BaseGameTattooFile.Size = new Size(218, 23);
             BS_BaseGameTattooFile.TabIndex = 53;
@@ -1125,9 +1140,9 @@
             BuildSettingsBuildManager_Button.FlatStyle = FlatStyle.Flat;
             BuildSettingsBuildManager_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             BuildSettingsBuildManager_Button.ForeColor = SystemColors.ActiveCaption;
-            BuildSettingsBuildManager_Button.Location = new Point(35, 312);
+            BuildSettingsBuildManager_Button.Location = new Point(6, 301);
             BuildSettingsBuildManager_Button.Name = "BuildSettingsBuildManager_Button";
-            BuildSettingsBuildManager_Button.Size = new Size(159, 26);
+            BuildSettingsBuildManager_Button.Size = new Size(218, 26);
             BuildSettingsBuildManager_Button.TabIndex = 52;
             BuildSettingsBuildManager_Button.Text = "Build Manager";
             BuildSettingsBuildManager_Button.UseVisualStyleBackColor = false;
@@ -1138,7 +1153,7 @@
             label46.AutoSize = true;
             label46.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label46.ForeColor = SystemColors.ActiveCaption;
-            label46.Location = new Point(56, 143);
+            label46.Location = new Point(56, 137);
             label46.Name = "label46";
             label46.Size = new Size(116, 17);
             label46.TabIndex = 51;
@@ -1150,7 +1165,7 @@
             BS_BaseGameSandboxPropsFile.FlatStyle = FlatStyle.Flat;
             BS_BaseGameSandboxPropsFile.ForeColor = SystemColors.ActiveCaption;
             BS_BaseGameSandboxPropsFile.FormattingEnabled = true;
-            BS_BaseGameSandboxPropsFile.Location = new Point(5, 163);
+            BS_BaseGameSandboxPropsFile.Location = new Point(5, 157);
             BS_BaseGameSandboxPropsFile.Name = "BS_BaseGameSandboxPropsFile";
             BS_BaseGameSandboxPropsFile.Size = new Size(218, 23);
             BS_BaseGameSandboxPropsFile.TabIndex = 50;
@@ -1160,7 +1175,7 @@
             // 
             BS_LaunchParams.BackColor = Color.FromArgb(32, 34, 81);
             BS_LaunchParams.ForeColor = SystemColors.ActiveCaption;
-            BS_LaunchParams.Location = new Point(6, 537);
+            BS_LaunchParams.Location = new Point(6, 561);
             BS_LaunchParams.Name = "BS_LaunchParams";
             BS_LaunchParams.Size = new Size(218, 23);
             BS_LaunchParams.TabIndex = 49;
@@ -1170,7 +1185,7 @@
             label44.AutoSize = true;
             label44.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label44.ForeColor = SystemColors.ActiveCaption;
-            label44.Location = new Point(54, 517);
+            label44.Location = new Point(54, 541);
             label44.Name = "label44";
             label44.Size = new Size(121, 17);
             label44.TabIndex = 48;
@@ -1183,9 +1198,9 @@
             BuildSettingsDTUpdater_Button.FlatStyle = FlatStyle.Flat;
             BuildSettingsDTUpdater_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             BuildSettingsDTUpdater_Button.ForeColor = SystemColors.ActiveCaption;
-            BuildSettingsDTUpdater_Button.Location = new Point(35, 280);
+            BuildSettingsDTUpdater_Button.Location = new Point(6, 269);
             BuildSettingsDTUpdater_Button.Name = "BuildSettingsDTUpdater_Button";
-            BuildSettingsDTUpdater_Button.Size = new Size(159, 26);
+            BuildSettingsDTUpdater_Button.Size = new Size(218, 26);
             BuildSettingsDTUpdater_Button.TabIndex = 46;
             BuildSettingsDTUpdater_Button.Text = "DataTable Downloader";
             BuildSettingsDTUpdater_Button.UseVisualStyleBackColor = false;
@@ -1196,7 +1211,7 @@
             BS_AlwaysRunAM_CB.AutoSize = true;
             BS_AlwaysRunAM_CB.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             BS_AlwaysRunAM_CB.ForeColor = SystemColors.ActiveCaption;
-            BS_AlwaysRunAM_CB.Location = new Point(5, 415);
+            BS_AlwaysRunAM_CB.Location = new Point(5, 439);
             BS_AlwaysRunAM_CB.Name = "BS_AlwaysRunAM_CB";
             BS_AlwaysRunAM_CB.Size = new Size(220, 24);
             BS_AlwaysRunAM_CB.TabIndex = 45;
@@ -1208,7 +1223,7 @@
             BS_AllowOutdated_CB.AutoSize = true;
             BS_AllowOutdated_CB.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             BS_AllowOutdated_CB.ForeColor = Color.Firebrick;
-            BS_AllowOutdated_CB.Location = new Point(5, 487);
+            BS_AllowOutdated_CB.Location = new Point(5, 511);
             BS_AllowOutdated_CB.Name = "BS_AllowOutdated_CB";
             BS_AllowOutdated_CB.Size = new Size(227, 24);
             BS_AllowOutdated_CB.TabIndex = 44;
@@ -1223,7 +1238,7 @@
             BS_VerifyFI_CB.CheckState = CheckState.Checked;
             BS_VerifyFI_CB.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             BS_VerifyFI_CB.ForeColor = SystemColors.ActiveCaption;
-            BS_VerifyFI_CB.Location = new Point(5, 391);
+            BS_VerifyFI_CB.Location = new Point(5, 415);
             BS_VerifyFI_CB.Name = "BS_VerifyFI_CB";
             BS_VerifyFI_CB.Size = new Size(224, 24);
             BS_VerifyFI_CB.TabIndex = 43;
@@ -1236,7 +1251,7 @@
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label1.ForeColor = SystemColors.ActiveCaption;
-            label1.Location = new Point(79, 341);
+            label1.Location = new Point(79, 365);
             label1.Name = "label1";
             label1.Size = new Size(70, 17);
             label1.TabIndex = 42;
@@ -1248,7 +1263,7 @@
             BS_Mappings.FlatStyle = FlatStyle.Flat;
             BS_Mappings.ForeColor = SystemColors.ActiveCaption;
             BS_Mappings.FormattingEnabled = true;
-            BS_Mappings.Location = new Point(6, 361);
+            BS_Mappings.Location = new Point(6, 385);
             BS_Mappings.Name = "BS_Mappings";
             BS_Mappings.Size = new Size(218, 23);
             BS_Mappings.TabIndex = 41;
@@ -1261,9 +1276,9 @@
             BuildSettingsDTFolder_Button.FlatStyle = FlatStyle.Flat;
             BuildSettingsDTFolder_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             BuildSettingsDTFolder_Button.ForeColor = SystemColors.ActiveCaption;
-            BuildSettingsDTFolder_Button.Location = new Point(35, 248);
+            BuildSettingsDTFolder_Button.Location = new Point(6, 237);
             BuildSettingsDTFolder_Button.Name = "BuildSettingsDTFolder_Button";
-            BuildSettingsDTFolder_Button.Size = new Size(159, 26);
+            BuildSettingsDTFolder_Button.Size = new Size(218, 26);
             BuildSettingsDTFolder_Button.TabIndex = 40;
             BuildSettingsDTFolder_Button.Text = "Open DataTable Folder";
             BuildSettingsDTFolder_Button.UseVisualStyleBackColor = false;
@@ -1274,7 +1289,7 @@
             label16.AutoSize = true;
             label16.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label16.ForeColor = SystemColors.ActiveCaption;
-            label16.Location = new Point(13, 96);
+            label16.Location = new Point(13, 93);
             label16.Name = "label16";
             label16.Size = new Size(203, 17);
             label16.TabIndex = 39;
@@ -1286,7 +1301,7 @@
             BS_BaseGameCharacterCustomizationFile.FlatStyle = FlatStyle.Flat;
             BS_BaseGameCharacterCustomizationFile.ForeColor = SystemColors.ActiveCaption;
             BS_BaseGameCharacterCustomizationFile.FormattingEnabled = true;
-            BS_BaseGameCharacterCustomizationFile.Location = new Point(5, 116);
+            BS_BaseGameCharacterCustomizationFile.Location = new Point(5, 113);
             BS_BaseGameCharacterCustomizationFile.Name = "BS_BaseGameCharacterCustomizationFile";
             BS_BaseGameCharacterCustomizationFile.Size = new Size(218, 23);
             BS_BaseGameCharacterCustomizationFile.TabIndex = 38;
@@ -1297,7 +1312,7 @@
             label15.AutoSize = true;
             label15.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label15.ForeColor = SystemColors.ActiveCaption;
-            label15.Location = new Point(35, 50);
+            label15.Location = new Point(35, 48);
             label15.Name = "label15";
             label15.Size = new Size(159, 17);
             label15.TabIndex = 37;
@@ -1309,7 +1324,7 @@
             BS_BaseGameCharacterOutfitFile.FlatStyle = FlatStyle.Flat;
             BS_BaseGameCharacterOutfitFile.ForeColor = SystemColors.ActiveCaption;
             BS_BaseGameCharacterOutfitFile.FormattingEnabled = true;
-            BS_BaseGameCharacterOutfitFile.Location = new Point(6, 70);
+            BS_BaseGameCharacterOutfitFile.Location = new Point(6, 68);
             BS_BaseGameCharacterOutfitFile.Name = "BS_BaseGameCharacterOutfitFile";
             BS_BaseGameCharacterOutfitFile.Size = new Size(217, 23);
             BS_BaseGameCharacterOutfitFile.TabIndex = 36;
@@ -2892,18 +2907,20 @@
             ChangesMade_Label.VisitedLinkColor = SystemColors.ActiveCaption;
             ChangesMade_Label.LinkClicked += ChangesMade_Label_LinkClicked;
             // 
-            // BS_WriteDebugFiles
+            // BuildSettingsGenerateSexVarReplace_Button
             // 
-            BS_WriteDebugFiles.AutoSize = true;
-            BS_WriteDebugFiles.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            BS_WriteDebugFiles.ForeColor = SystemColors.ActiveCaption;
-            BS_WriteDebugFiles.Location = new Point(5, 463);
-            BS_WriteDebugFiles.Name = "BS_WriteDebugFiles";
-            BS_WriteDebugFiles.Size = new Size(146, 24);
-            BS_WriteDebugFiles.TabIndex = 56;
-            BS_WriteDebugFiles.Text = "Write Debug Files";
-            BS_WriteDebugFiles.UseVisualStyleBackColor = true;
-            BS_WriteDebugFiles.CheckedChanged += BS_WriteDebugFiles_CheckedChanged;
+            BuildSettingsGenerateSexVarReplace_Button.BackColor = Color.FromArgb(75, 68, 138);
+            BuildSettingsGenerateSexVarReplace_Button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            BuildSettingsGenerateSexVarReplace_Button.FlatStyle = FlatStyle.Flat;
+            BuildSettingsGenerateSexVarReplace_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BuildSettingsGenerateSexVarReplace_Button.ForeColor = SystemColors.ActiveCaption;
+            BuildSettingsGenerateSexVarReplace_Button.Location = new Point(6, 333);
+            BuildSettingsGenerateSexVarReplace_Button.Name = "BuildSettingsGenerateSexVarReplace_Button";
+            BuildSettingsGenerateSexVarReplace_Button.Size = new Size(218, 26);
+            BuildSettingsGenerateSexVarReplace_Button.TabIndex = 57;
+            BuildSettingsGenerateSexVarReplace_Button.Text = "Generate Sex Var Replace DT";
+            BuildSettingsGenerateSexVarReplace_Button.UseVisualStyleBackColor = false;
+            BuildSettingsGenerateSexVarReplace_Button.Click += BuildSettingsGenerateSexVarReplace_Button_Click;
             // 
             // Main
             // 
@@ -3239,5 +3256,6 @@
         private ComboBox BS_BaseGameTattooFile;
         private CheckBox DisableIntroMovies;
         private CheckBox BS_WriteDebugFiles;
+        private Button BuildSettingsGenerateSexVarReplace_Button;
     }
 }

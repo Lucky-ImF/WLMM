@@ -1322,7 +1322,7 @@ namespace WSMM
             {
                 return;
             }
-            
+
             string SaveFile = "DT_ClothesOutfit = " + BS_BaseClothesOutfitFile.Text + "\nDT_GameCharacterOutfits = " + BS_BaseGameCharacterOutfitFile.Text +
                 "\nDT_GameCharacterCustomization = " + BS_BaseGameCharacterCustomizationFile.Text + "\nMappings = " + BS_Mappings.Text + "\nVerifyIntegrity = " + BS_VerifyFI_CB.CheckState.ToString() +
                 "\nLaunchParams = " + BS_LaunchParams.Text + "\nDT_SandboxProps = " + BS_BaseGameSandboxPropsFile.Text + "\nDT_Tattoo = " + BS_BaseGameTattooFile.Text + "\nMoviesDisabled = " + DisableIntroMovies.CheckState.ToString() +
@@ -2599,7 +2599,7 @@ namespace WSMM
                         {
                             ProgressInfo_Label.Text = "Unpacking External Mod " + Path.GetFileName(modpath) + "...";
                         });
-                        
+
                         ZipFile.ExtractToDirectory(modpath, ExternalModsPaths[EXM] + @"\Extracted\" + Path.GetFileNameWithoutExtension(modpath), true);
 
                         //Calculate hash for each .pak
@@ -2749,8 +2749,8 @@ namespace WSMM
                     }
                 }
             }
-            
-            
+
+
 
             BuildLog += "Copying .paks and AutoMod files...\n";
             ProgressInfo_Label.Invoke((System.Windows.Forms.MethodInvoker)delegate
@@ -4131,14 +4131,14 @@ namespace WSMM
                 {
                     File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_ClothesOutfit_Debug.json", ClothesOutfit);
                 }
-                
+
                 dynamic ClothesArray = JsonConvert.DeserializeObject(ClothesOutfit);
                 InMem_ClothesJSON = JsonConvert.SerializeObject(ClothesArray, Newtonsoft.Json.Formatting.Indented);
                 if (WriteDebugFiles)
                 {
                     File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_ClothesOutfit_Generated.json", InMem_ClothesJSON);
                 }
-                
+
                 //ClothesOutfit Done
             }
             catch (Exception ex)
@@ -4312,7 +4312,7 @@ namespace WSMM
                         {
                             File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GameCharacterCustomization_Debug.json", GameCharacterCustom);
                         }
-                        
+
                         dynamic CustomArray = JsonConvert.DeserializeObject(GameCharacterCustom);
                         InMem_CustomizationJSON = JsonConvert.SerializeObject(CustomArray, Newtonsoft.Json.Formatting.Indented);
                         if (WriteDebugFiles)
@@ -4344,7 +4344,7 @@ namespace WSMM
                     {
                         File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GFur_Debug.json", stringBuilder.ToString());
                     }
-                    
+
                     dynamic CustomArray = JsonConvert.DeserializeObject(stringBuilder.ToString());
                     InMem_GFurJSON = JsonConvert.SerializeObject(CustomArray, Newtonsoft.Json.Formatting.Indented);
                     if (WriteDebugFiles)
@@ -4420,7 +4420,7 @@ namespace WSMM
 
                     Tattoos = Tattoos.Replace("[ENTRYSTART]", CompiledTattooEntries);
                     Tattoos = Tattoos.Replace("[NAMEMAPSTART]", CompiledTattooNameMap);
-                    
+
                     if (WriteDebugFiles)
                     {
                         File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_Tattoo_Debug.json", Tattoos);
@@ -6333,7 +6333,7 @@ namespace WSMM
                         }
                         else if (GetSlice(line, ":", 0) == "PakWhitelist")
                         {
-                            PakWL= GetSlice(line, ":", 1).Trim();
+                            PakWL = GetSlice(line, ":", 1).Trim();
                         }
                         else if (GetSlice(line, ":", 0) == "Enabled")
                         {
@@ -6394,20 +6394,96 @@ namespace WSMM
 
         private void ManagePakWhitelist(string Opt, string Name)
         {
-                if (Opt == "Add")
+            if (Opt == "Add")
+            {
+                if (PakWhitelist.Contains(Name) == false)
                 {
-                    if (PakWhitelist.Contains(Name) == false)
-                    {
-                        PakWhitelist.Add(Name);
-                    }
-                }
-                else if (Opt == "Remove")
-                {
-                    if (PakWhitelist.Contains(Name) == true)
-                    {
-                        PakWhitelist.Remove(Name);
+                    PakWhitelist.Add(Name);
                 }
             }
+            else if (Opt == "Remove")
+            {
+                if (PakWhitelist.Contains(Name) == true)
+                {
+                    PakWhitelist.Remove(Name);
+                }
+            }
+        }
+
+        private void BuildSettingsGenerateSexVarReplace_Button_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string NewJSON = "";
+                string State = "";
+                string PackageName = "";
+                string AssetName = "";
+                StringBuilder stringBuilder = new StringBuilder();
+
+                var logFile = File.ReadAllLines(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\" + BS_BaseClothesOutfitFile.Text);
+                var logList = new List<string>(logFile);
+                //StreamReader sr = new StreamReader(SexVarPath.Text);
+
+                foreach (string line in logList)
+                {
+                    string ModifiedLine = line;
+                    if (State == "")
+                    {
+                        if (line.Contains("Name") && line.Contains("Meshes"))
+                        {
+                            // Found Meshes
+                            State = "FindPackage";
+                        }
+                    }
+                    else if (State == "FindPackage")
+                    {
+                        if (line.Contains("PackageName"))
+                        {
+                            // Found PackageName
+                            PackageName = line;
+                            State = "FindAsset";
+                        }
+                    }
+                    else if (State == "FindAsset")
+                    {
+                        if (line.Contains("AssetName"))
+                        {
+                            // Found AssetName
+                            AssetName = line;
+                            State = "FindPackageSex";
+                        }
+                    }
+                    else if (State == "FindPackageSex")
+                    {
+                        if (line.Contains("PackageName"))
+                        {
+                            // Found PackageName
+                            ModifiedLine = PackageName;
+                            State = "FindAssetSex";
+                        }
+                    }
+                    else if (State == "FindAssetSex")
+                    {
+                        if (line.Contains("AssetName"))
+                        {
+                            // Found AssetName
+                            ModifiedLine = AssetName;
+                            State = "";
+                        }
+                    }
+
+                    stringBuilder.AppendLine(ModifiedLine);
+                }
+
+                File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_ClothesOutfit_SexVarReplaced.json", stringBuilder.ToString());
+                LoadDataTables();
+                MessageBox.Show("Datatable Generated Successfully!", "Wild Life Mod Manager", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed generating datatable. \nError:\n" + ex.Message, "Wild Life Mod Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            
         }
     }
 }
