@@ -41,7 +41,7 @@ namespace WSMM
         private bool StartingUp = true;
         private bool HasOldChanges = false;
 
-        private string WLMM_Version = "1.5.2";
+        private string WLMM_Version = "1.5.3";
         private string Datatable_Version = string.Empty;
         string BuildLog = string.Empty;
 
@@ -352,7 +352,10 @@ namespace WSMM
                 foreach (int EntryID in Cat_Entries)
                 {
                     Cat_Button[EntryID].Dispose();
-                    Cat_Flow[EntryID].Dispose();
+                    if (Cat_Flow[EntryID] != null)
+                    {
+                        Cat_Flow[EntryID].Dispose();
+                    }
                 }
                 Cat_Entries.Clear();
                 Cat_CurrentEntryID = 0;
@@ -449,6 +452,11 @@ namespace WSMM
 
             //Version Check
             CheckForUpdate();
+            LoadSupportedVersions();
+
+            Debug.WriteLine(Application.StartupPath + @"System\External");
+            Debug.WriteLine(Application.StartupPath);
+            Debug.WriteLine(@"System\External");
         }
 
         private void LoadSupportedVersions()
@@ -2509,7 +2517,10 @@ namespace WSMM
                 foreach (int EntryID in Cat_Entries)
                 {
                     Cat_Button[EntryID].Dispose();
-                    Cat_Flow[EntryID].Dispose();
+                    if (Cat_Flow[EntryID] != null)
+                    {
+                        Cat_Flow[EntryID].Dispose();
+                    }
                 }
                 Cat_Entries.Clear();
                 Cat_CurrentEntryID = 0;
@@ -3218,6 +3229,7 @@ namespace WSMM
                 }
                 else
                 {
+                    Debug.WriteLine(File.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\" + BS_BaseGameSandboxPropsFile.Text));
                     BuildLog += "+ - DT_SandboxProps not found. Skipping prop mods.\n";
                     SandboxProps = "";
                     //Skipping Props
@@ -3227,8 +3239,9 @@ namespace WSMM
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Debug.WriteLine(ex.Message);
                 BuildLog += "+ - DT_SandboxProps not found. Skipping prop mods.\n";
                 SandboxProps = "";
                 //Skipping Props
@@ -5643,7 +5656,10 @@ namespace WSMM
                     foreach (int EntryID in Cat_Entries)
                     {
                         Cat_Button[EntryID].Dispose();
-                        Cat_Flow[EntryID].Dispose();
+                        if (Cat_Flow[EntryID] != null)
+                        {
+                            Cat_Flow[EntryID].Dispose();
+                        }
                     }
                     Cat_Entries.Clear();
                     Cat_CurrentEntryID = 0;
@@ -6273,6 +6289,11 @@ namespace WSMM
                     File.Move(LoadedWLPath + @"\WildLifeC\Content\Movies\UE_moving_logo_v04_4k.mp4", LoadedWLPath + @"\WildLifeC\Content\Movies\UE_moving_logo_v04_4k.mp4_DISABLED");
                     IncludeInChanges = true;
                 }
+                if (File.Exists(LoadedWLPath + @"\WildLifeC\Content\Movies\Kiiroo-Splash.mp4") == true)
+                {
+                    File.Move(LoadedWLPath + @"\WildLifeC\Content\Movies\Kiiroo-Splash.mp4", LoadedWLPath + @"\WildLifeC\Content\Movies\Kiiroo-Splash.mp4_DISABLED");
+                    IncludeInChanges = true;
+                }
                 if (IncludeInChanges == true)
                 {
                     AddChange("Disabled intro movies.");
@@ -6288,6 +6309,11 @@ namespace WSMM
                 if (File.Exists(LoadedWLPath + @"\WildLifeC\Content\Movies\UE_moving_logo_v04_4k.mp4_DISABLED") == true)
                 {
                     File.Move(LoadedWLPath + @"\WildLifeC\Content\Movies\UE_moving_logo_v04_4k.mp4_DISABLED", LoadedWLPath + @"\WildLifeC\Content\Movies\UE_moving_logo_v04_4k.mp4");
+                    IncludeInChanges = true;
+                }
+                if (File.Exists(LoadedWLPath + @"\WildLifeC\Content\Movies\Kiiroo-Splash.mp4_DISABLED") == true)
+                {
+                    File.Move(LoadedWLPath + @"\WildLifeC\Content\Movies\Kiiroo-Splash.mp4_DISABLED", LoadedWLPath + @"\WildLifeC\Content\Movies\Kiiroo-Splash.mp4");
                     IncludeInChanges = true;
                 }
                 if (IncludeInChanges == true)
