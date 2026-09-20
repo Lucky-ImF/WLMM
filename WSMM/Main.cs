@@ -41,8 +41,14 @@ namespace WSMM
         private bool StartingUp = true;
         private bool HasOldChanges = false;
 
-        private string WLMM_Version = "1.5.3";
+        private string WLMM_Version = "1.5.4";
         private string Datatable_Version = string.Empty;
+        private string DLSS5_BaseFilesVersion = string.Empty;
+        private string DLSS5_BaseFilesLatestVersion = string.Empty;
+        private Uri DLSS5_BaseFilesURL;
+        private string DLSS5_AddonVersion = string.Empty;
+        private string DLSS5_AddonLatestVersion = string.Empty;
+        private Uri DLSS5_AddonURL;
         string BuildLog = string.Empty;
 
         public string prevIconPath = string.Empty;
@@ -636,6 +642,28 @@ namespace WSMM
                             File.WriteAllText(Application.StartupPath + @"System\Categories.ini", LiveCategories);
                             Debug.WriteLine("Creating new Categories.ini");
                         }
+                    }
+                    else if (line.StartsWith("DLSS5BaseVersion:"))
+                    {
+                        DLSS5_BaseFilesLatestVersion = line.Replace("DLSS5BaseVersion:", "").Trim();
+                        DLSS5_BaseFilesLatest.Text = DLSS5_BaseFilesLatestVersion;
+                    }
+                    else if (line.StartsWith("DLSS5BaseURL:"))
+                    {
+                        DLSS5_BaseFilesURL = new Uri(line.Replace("DLSS5BaseURL:", "").Trim());
+                    }
+                    else if (line.StartsWith("DLSS5AddonVersion:"))
+                    {
+                        DLSS5_AddonLatestVersion = line.Replace("DLSS5AddonVersion:", "").Trim();
+                        DLSS5_AddonLatest.Text = DLSS5_AddonLatestVersion;
+                    }
+                    else if (line.StartsWith("DLSS5AddonURL:"))
+                    {
+                        DLSS5_AddonURL = new Uri(line.Replace("DLSS5AddonURL:", "").Trim());
+                    }
+                    else if (line.StartsWith("DLSS5AddonDevURL:"))
+                    {
+                        DLSS5_AddonDevLink.Tag = new Uri(line.Replace("DLSS5AddonDevURL:", "").Trim());
                     }
                 }
 
@@ -6509,7 +6537,308 @@ namespace WSMM
             {
                 MessageBox.Show("Failed generating datatable. \nError:\n" + ex.Message, "Wild Life Mod Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            
+        }
+
+        private void DLSS5_Close_Button_MouseEnter(object sender, EventArgs e)
+        {
+            DLSS5_Close_Button.Image = Properties.Resources.Close_Icon_Hover;
+        }
+
+        private void DLSS5_Close_Button_MouseLeave(object sender, EventArgs e)
+        {
+            DLSS5_Close_Button.Image = Properties.Resources.Close_Icon;
+        }
+
+        private void DLSS5_Close_Button_Click(object sender, EventArgs e)
+        {
+            DLSS5_Panel.Visible = false;
+        }
+
+        private void BuildSettingsDLSS5_Button_Click(object sender, EventArgs e)
+        {
+            DLSS5_Panel.Visible = true;
+
+            // Check if DLSS5 is installed
+            if (CheckDLSS5BaseFilesInstalled() == true)
+            {
+                DLSS5_BaseFilesStatus.Text = File.ReadAllText(LoadedWLPath + @"\WildLifeC\Binaries\Win64\dlss5_BaseVersion.txt");
+            }
+            else
+            {
+                DLSS5_BaseFilesStatus.Text = "No";
+                DLSS5_BaseFilesStatus.ForeColor = Color.White;
+            }
+
+            if (CheckDLSS5AddonInstalled() == true)
+            {
+                DLSS5_AddonStatus.Text = File.ReadAllText(LoadedWLPath + @"\WildLifeC\Binaries\Win64\dlss5_AddonVersion.txt");
+            }
+            else
+            {
+                DLSS5_AddonStatus.Text = "No";
+            }
+
+            if (DLSS5_AddonStatus.Text != "No" && DLSS5_BaseFilesStatus.Text != "No")
+            {
+                DLSS5_InstallButton.Text = "Uninstall";
+            }
+            else if (DLSS5_AddonStatus.Text == "No" && DLSS5_BaseFilesStatus.Text != "No" || DLSS5_AddonStatus.Text != "No" && DLSS5_BaseFilesStatus.Text == "No")
+            {
+                DLSS5_InstallButton.Text = "Repair";
+            }
+            else
+            {
+                DLSS5_InstallButton.Text = "Install";
+            }
+
+            // Check if updates are available
+            if (DLSS5_BaseFilesStatus.Text != "No" && DLSS5_BaseFilesStatus.Text != DLSS5_BaseFilesLatestVersion)
+            {
+                DLSS5_BaseFilesUpdate.Show();
+            }
+            else
+            {
+                DLSS5_BaseFilesUpdate.Hide();
+            }
+            if (DLSS5_AddonStatus.Text != "No" && DLSS5_AddonStatus.Text != DLSS5_AddonLatestVersion)
+            {
+                DLSS5_AddonUpdate.Show();
+            }
+            else
+            {
+                DLSS5_AddonUpdate.Hide();
+            }
+        }
+
+        private bool CheckDLSS5BaseFilesInstalled()
+        {
+            if (File.Exists(LoadedWLPath + @"\WildLifeC\Binaries\Win64\dxgi.dll") && File.Exists(LoadedWLPath + @"\WildLifeC\Binaries\Win64\sl.dlss.dll") && File.Exists(LoadedWLPath + @"\WildLifeC\Binaries\Win64\nvngx_dlssnr.dll") && File.Exists(LoadedWLPath + @"\WildLifeC\Binaries\Win64\dlss5_BaseVersion.txt"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        private bool CheckDLSS5AddonInstalled()
+        {
+            if (File.Exists(LoadedWLPath + @"\WildLifeC\Binaries\Win64\renodx-dlss5.addon64") && File.Exists(LoadedWLPath + @"\WildLifeC\Binaries\Win64\dlss5_AddonVersion.txt"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private void DLSS5_ReShadeLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("explorer", "https://reshade.me/");
+        }
+
+        private void DLSS5_NVIDIASLLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("explorer", "https://github.com/NVIDIA-RTX/Streamline");
+        }
+
+        private void DLSS5_AddonDevLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("explorer", DLSS5_AddonDevLink.Tag.ToString());
+        }
+
+        private async void DLSS5_InstallButton_Click(object sender, EventArgs e)
+        {
+            if (DLSS5_InstallButton.Text == "Install")
+            {
+                await DLSS5_InstallDLSS5();
+            }
+            else if (DLSS5_InstallButton.Text == "Repair")
+            {
+                await DLSS5_RepairDLSS5();
+            }
+            else if (DLSS5_InstallButton.Text == "Uninstall")
+            {
+                DLSS5_UninstallDLSS5();
+            }
+        }
+
+        private async void DLSS5_BaseFilesUpdate_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            DLSS5_BaseFilesUpdate.Hide();
+            DLSS5_InstallButton.Hide();
+            DLSS5_ProgressBar.Show();
+            DLSS5_ProgressBar.Value = 0;
+            await DLSS5_InstallBaseFiles();
+            DLSS5_InstallButton.Show();
+            DLSS5_ProgressBar.Hide();
+        }
+
+        private async void DLSS5_AddonUpdate_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            DLSS5_AddonUpdate.Hide();
+            DLSS5_InstallButton.Hide();
+            DLSS5_ProgressBar.Show();
+            DLSS5_ProgressBar.Value = 0;
+            await DLSS5_InstallAddon();
+            DLSS5_InstallButton.Show();
+            DLSS5_ProgressBar.Hide();
+        }
+
+        private async Task DLSS5_InstallDLSS5()
+        {
+            DLSS5_InstallButton.Hide();
+            DLSS5_ProgressBar.Show();
+            DLSS5_ProgressBar.Value = 0;
+            if (DLSS5_BaseFilesStatus.Text == "No")
+            {
+                // Install Base Files
+                await DLSS5_InstallBaseFiles();
+            }
+            if (DLSS5_AddonStatus.Text == "No")
+            {
+                // Install Addon
+                await DLSS5_InstallAddon();
+            }
+            DLSS5_InstallButton.Show();
+            DLSS5_InstallButton.Text = "Uninstall";
+            DLSS5_ProgressBar.Hide();
+        }
+
+        private async Task DLSS5_RepairDLSS5()
+        {
+            DLSS5_InstallButton.Hide();
+            DLSS5_ProgressBar.Show();
+            DLSS5_ProgressBar.Value = 0;
+            if (DLSS5_BaseFilesStatus.Text == "No")
+            {
+                // Install Base Files
+                await DLSS5_InstallBaseFiles();
+            }
+            if (DLSS5_AddonStatus.Text == "No")
+            {
+                // Install Addon
+                await DLSS5_InstallAddon();
+            }
+            DLSS5_InstallButton.Show();
+            DLSS5_InstallButton.Text = "Uninstall";
+            DLSS5_ProgressBar.Hide();
+        }
+
+        private void DLSS5_UninstallDLSS5()
+        {
+            DLSS5_InstallButton.Hide();
+            try
+            {
+                // Uninstall DLSS5 Base Files
+                if (CheckDLSS5BaseFilesInstalled() == true)
+                {
+                    File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\dxgi.dll");
+                    File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\ReShade.log");
+                    File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\ReShade.ini");
+                    File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\ReShadePreset.ini");
+                    File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\ReShade.LICENSE.md");
+                    File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\nvngx_dlss.dll");
+                    File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\nvngx_dlssd.dll");
+                    File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\nvngx_dlssg.dll");
+                    File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\nvngx_dlssnr.dll");
+                    File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\sl.common.dll");
+                    File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\sl.deepdvc.dll");
+                    File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\sl.dlss.dll");
+                    File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\sl.dlss_d.dll");
+                    File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\sl.dlss_g.dll");
+                    File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\sl.dlss_nr.dll");
+                    File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\sl.interposer.dll");
+                    File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\sl.nis.dll");
+                    File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\sl.pcl.dll");
+                    File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\sl.reflex.dll");
+                    File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\NVIDIA.LICENSE.txt");
+                    File.Delete(LoadedWLPath + @"\Engine\Plugins\Marketplace\nvidia\StreamlineCore\Binaries\ThirdParty\Win64\sl.dlss_d.dll");
+                    File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\dlss5_BaseVersion.txt");
+                    DLSS5_BaseFilesStatus.Text = "No";
+                }
+                // Uninstall DLSS5 Addon
+                if (CheckDLSS5AddonInstalled() == true)
+                {
+                    File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\renodx-dlss5.addon64");
+                    File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\dlss5_AddonVersion.txt");
+                    DLSS5_AddonStatus.Text = "No";
+                }
+                DLSS5_InstallButton.Show();
+                DLSS5_AddonUpdate.Hide();
+                DLSS5_BaseFilesUpdate.Hide();
+                DLSS5_InstallButton.Text = "Install";
+            }
+            catch (Exception)
+            {
+                DLSS5_InstallButton.Show();
+                MessageBox.Show("Failed uninstalling DLSS5. Please make sure the game is not running and try again.", "Wild Life Mod Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private async Task DLSS5_InstallBaseFiles()
+        {
+            try
+            {
+                // Download and install DLSS5 Base Files
+                await DownloadFileAsync(DLSS5_BaseFilesURL, LoadedWLPath + @"\WildLifeC\Binaries\Win64\DLSS5_BaseFiles.zip", pct =>
+                {
+                    DLSS5_ProgressBar.Invoke((System.Windows.Forms.MethodInvoker)(() => DLSS5_ProgressBar.Value = Math.Min(100, Math.Max(0, pct))));
+                });
+                // Extract the zip
+                ZipFile.ExtractToDirectory(LoadedWLPath + @"\WildLifeC\Binaries\Win64\DLSS5_BaseFiles.zip", LoadedWLPath + @"\WildLifeC\Binaries\Win64\", true);
+                // Copy sl.dlss_d.dll to Streamline Plugin
+                File.Copy(LoadedWLPath + @"\WildLifeC\Binaries\Win64\sl.dlss_d.dll", LoadedWLPath + @"\Engine\Plugins\Marketplace\nvidia\StreamlineCore\Binaries\ThirdParty\Win64\sl.dlss_d.dll", true);
+                // Read the version from the version file
+                if (File.Exists(LoadedWLPath + @"\WildLifeC\Binaries\Win64\dlss5_BaseVersion.txt"))
+                {
+                    DLSS5_BaseFilesStatus.Invoke((System.Windows.Forms.MethodInvoker)delegate
+                    {
+                        DLSS5_BaseFilesStatus.Text = File.ReadAllText(LoadedWLPath + @"\WildLifeC\Binaries\Win64\dlss5_BaseVersion.txt");
+                    });
+                }
+                //Delete the zip file
+                if (File.Exists(LoadedWLPath + @"\WildLifeC\Binaries\Win64\DLSS5_BaseFiles.zip"))
+                {
+                    File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\DLSS5_BaseFiles.zip");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed installing DLSS5 Base Files.\n" + ex.Message, "Wild Life Mod Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private async Task DLSS5_InstallAddon()
+        {
+            try
+            {
+                // Download and install DLSS5 Addon
+                await DownloadFileAsync(DLSS5_AddonURL, LoadedWLPath + @"\WildLifeC\Binaries\Win64\DLSS5_Addon.zip", pct =>
+                {
+                    DLSS5_ProgressBar.Invoke((System.Windows.Forms.MethodInvoker)(() => DLSS5_ProgressBar.Value = Math.Min(100, Math.Max(0, pct))));
+                });
+                // Extract the zip
+                ZipFile.ExtractToDirectory(LoadedWLPath + @"\WildLifeC\Binaries\Win64\DLSS5_Addon.zip", LoadedWLPath + @"\WildLifeC\Binaries\Win64\", true);
+                // Read the version from the version file
+                if (File.Exists(LoadedWLPath + @"\WildLifeC\Binaries\Win64\dlss5_AddonVersion.txt"))
+                {
+                    DLSS5_AddonStatus.Invoke((System.Windows.Forms.MethodInvoker)delegate
+                    {
+                        DLSS5_AddonStatus.Text = File.ReadAllText(LoadedWLPath + @"\WildLifeC\Binaries\Win64\dlss5_AddonVersion.txt");
+                    });
+                }
+                // Delete the zip file
+                if (File.Exists(LoadedWLPath + @"\WildLifeC\Binaries\Win64\DLSS5_Addon.zip"))
+                {
+                    File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\DLSS5_Addon.zip");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed installing DLSS5 Addon.\n" + ex.Message, "Wild Life Mod Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

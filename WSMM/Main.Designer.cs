@@ -90,6 +90,8 @@
             folderBrowserDialog1 = new FolderBrowserDialog();
             BuildSettings_Button = new Button();
             BuildSettings_Panel = new Panel();
+            BuildSettingsDLSS5_Button = new Button();
+            BuildSettingsGenerateSexVarReplace_Button = new Button();
             BS_WriteDebugFiles = new CheckBox();
             DisableIntroMovies = new CheckBox();
             label54 = new Label();
@@ -231,7 +233,27 @@
             label53 = new Label();
             ChangesPanel_LastBuildLabel = new Label();
             ChangesMade_Label = new LinkLabel();
-            BuildSettingsGenerateSexVarReplace_Button = new Button();
+            DLSS5_Panel = new Panel();
+            DLSS5_AddonDevLink = new LinkLabel();
+            DLSS5_NVIDIASLLink = new LinkLabel();
+            label48 = new Label();
+            DLSS5_ReShadeLink = new LinkLabel();
+            DLSS5_ProgressBar = new ProgressBar();
+            panel2 = new Panel();
+            DLSS5_BaseFilesUpdate = new LinkLabel();
+            label62 = new Label();
+            DLSS5_AddonLatest = new Label();
+            DLSS5_AddonUpdate = new LinkLabel();
+            label60 = new Label();
+            DLSS5_BaseFilesLatest = new Label();
+            label58 = new Label();
+            DLSS5_AddonStatus = new Label();
+            label57 = new Label();
+            DLSS5_BaseFilesStatus = new Label();
+            DLSS5_InstallButton = new Button();
+            DLSS5_Close_Button = new PictureBox();
+            label52 = new Label();
+            label55 = new Label();
             TitlePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
@@ -276,6 +298,9 @@
             ((System.ComponentModel.ISupportInitialize)BuildManager_Close).BeginInit();
             ChangesPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Changes_Close).BeginInit();
+            DLSS5_Panel.SuspendLayout();
+            panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)DLSS5_Close_Button).BeginInit();
             SuspendLayout();
             // 
             // TitlePanel
@@ -1055,6 +1080,7 @@
             // BuildSettings_Panel
             // 
             BuildSettings_Panel.BorderStyle = BorderStyle.FixedSingle;
+            BuildSettings_Panel.Controls.Add(BuildSettingsDLSS5_Button);
             BuildSettings_Panel.Controls.Add(BuildSettingsGenerateSexVarReplace_Button);
             BuildSettings_Panel.Controls.Add(BS_WriteDebugFiles);
             BuildSettings_Panel.Controls.Add(DisableIntroMovies);
@@ -1078,18 +1104,48 @@
             BuildSettings_Panel.Controls.Add(BS_BaseGameCharacterOutfitFile);
             BuildSettings_Panel.Controls.Add(label14);
             BuildSettings_Panel.Controls.Add(BS_BaseClothesOutfitFile);
-            BuildSettings_Panel.Location = new Point(898, 48);
+            BuildSettings_Panel.Location = new Point(898, 17);
             BuildSettings_Panel.Name = "BuildSettings_Panel";
-            BuildSettings_Panel.Size = new Size(231, 590);
+            BuildSettings_Panel.Size = new Size(231, 620);
             BuildSettings_Panel.TabIndex = 13;
             BuildSettings_Panel.Visible = false;
+            // 
+            // BuildSettingsDLSS5_Button
+            // 
+            BuildSettingsDLSS5_Button.BackColor = Color.FromArgb(75, 68, 138);
+            BuildSettingsDLSS5_Button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            BuildSettingsDLSS5_Button.FlatStyle = FlatStyle.Flat;
+            BuildSettingsDLSS5_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BuildSettingsDLSS5_Button.ForeColor = SystemColors.ActiveCaption;
+            BuildSettingsDLSS5_Button.Location = new Point(6, 365);
+            BuildSettingsDLSS5_Button.Name = "BuildSettingsDLSS5_Button";
+            BuildSettingsDLSS5_Button.Size = new Size(218, 26);
+            BuildSettingsDLSS5_Button.TabIndex = 58;
+            BuildSettingsDLSS5_Button.Text = "DLSS 5";
+            BuildSettingsDLSS5_Button.UseVisualStyleBackColor = false;
+            BuildSettingsDLSS5_Button.Click += BuildSettingsDLSS5_Button_Click;
+            // 
+            // BuildSettingsGenerateSexVarReplace_Button
+            // 
+            BuildSettingsGenerateSexVarReplace_Button.BackColor = Color.FromArgb(75, 68, 138);
+            BuildSettingsGenerateSexVarReplace_Button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            BuildSettingsGenerateSexVarReplace_Button.FlatStyle = FlatStyle.Flat;
+            BuildSettingsGenerateSexVarReplace_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BuildSettingsGenerateSexVarReplace_Button.ForeColor = SystemColors.ActiveCaption;
+            BuildSettingsGenerateSexVarReplace_Button.Location = new Point(6, 333);
+            BuildSettingsGenerateSexVarReplace_Button.Name = "BuildSettingsGenerateSexVarReplace_Button";
+            BuildSettingsGenerateSexVarReplace_Button.Size = new Size(218, 26);
+            BuildSettingsGenerateSexVarReplace_Button.TabIndex = 57;
+            BuildSettingsGenerateSexVarReplace_Button.Text = "Generate Sex Var Replace DT";
+            BuildSettingsGenerateSexVarReplace_Button.UseVisualStyleBackColor = false;
+            BuildSettingsGenerateSexVarReplace_Button.Click += BuildSettingsGenerateSexVarReplace_Button_Click;
             // 
             // BS_WriteDebugFiles
             // 
             BS_WriteDebugFiles.AutoSize = true;
             BS_WriteDebugFiles.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             BS_WriteDebugFiles.ForeColor = SystemColors.ActiveCaption;
-            BS_WriteDebugFiles.Location = new Point(5, 487);
+            BS_WriteDebugFiles.Location = new Point(5, 516);
             BS_WriteDebugFiles.Name = "BS_WriteDebugFiles";
             BS_WriteDebugFiles.Size = new Size(146, 24);
             BS_WriteDebugFiles.TabIndex = 56;
@@ -1102,7 +1158,7 @@
             DisableIntroMovies.AutoSize = true;
             DisableIntroMovies.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             DisableIntroMovies.ForeColor = SystemColors.ActiveCaption;
-            DisableIntroMovies.Location = new Point(5, 463);
+            DisableIntroMovies.Location = new Point(5, 492);
             DisableIntroMovies.Name = "DisableIntroMovies";
             DisableIntroMovies.Size = new Size(164, 24);
             DisableIntroMovies.TabIndex = 55;
@@ -1175,7 +1231,7 @@
             // 
             BS_LaunchParams.BackColor = Color.FromArgb(32, 34, 81);
             BS_LaunchParams.ForeColor = SystemColors.ActiveCaption;
-            BS_LaunchParams.Location = new Point(6, 561);
+            BS_LaunchParams.Location = new Point(6, 590);
             BS_LaunchParams.Name = "BS_LaunchParams";
             BS_LaunchParams.Size = new Size(218, 23);
             BS_LaunchParams.TabIndex = 49;
@@ -1185,7 +1241,7 @@
             label44.AutoSize = true;
             label44.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label44.ForeColor = SystemColors.ActiveCaption;
-            label44.Location = new Point(54, 541);
+            label44.Location = new Point(54, 570);
             label44.Name = "label44";
             label44.Size = new Size(121, 17);
             label44.TabIndex = 48;
@@ -1211,7 +1267,7 @@
             BS_AlwaysRunAM_CB.AutoSize = true;
             BS_AlwaysRunAM_CB.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             BS_AlwaysRunAM_CB.ForeColor = SystemColors.ActiveCaption;
-            BS_AlwaysRunAM_CB.Location = new Point(5, 439);
+            BS_AlwaysRunAM_CB.Location = new Point(5, 468);
             BS_AlwaysRunAM_CB.Name = "BS_AlwaysRunAM_CB";
             BS_AlwaysRunAM_CB.Size = new Size(220, 24);
             BS_AlwaysRunAM_CB.TabIndex = 45;
@@ -1223,7 +1279,7 @@
             BS_AllowOutdated_CB.AutoSize = true;
             BS_AllowOutdated_CB.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             BS_AllowOutdated_CB.ForeColor = Color.Firebrick;
-            BS_AllowOutdated_CB.Location = new Point(5, 511);
+            BS_AllowOutdated_CB.Location = new Point(5, 540);
             BS_AllowOutdated_CB.Name = "BS_AllowOutdated_CB";
             BS_AllowOutdated_CB.Size = new Size(227, 24);
             BS_AllowOutdated_CB.TabIndex = 44;
@@ -1238,7 +1294,7 @@
             BS_VerifyFI_CB.CheckState = CheckState.Checked;
             BS_VerifyFI_CB.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             BS_VerifyFI_CB.ForeColor = SystemColors.ActiveCaption;
-            BS_VerifyFI_CB.Location = new Point(5, 415);
+            BS_VerifyFI_CB.Location = new Point(5, 444);
             BS_VerifyFI_CB.Name = "BS_VerifyFI_CB";
             BS_VerifyFI_CB.Size = new Size(224, 24);
             BS_VerifyFI_CB.TabIndex = 43;
@@ -1251,7 +1307,7 @@
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label1.ForeColor = SystemColors.ActiveCaption;
-            label1.Location = new Point(79, 365);
+            label1.Location = new Point(79, 394);
             label1.Name = "label1";
             label1.Size = new Size(70, 17);
             label1.TabIndex = 42;
@@ -1263,7 +1319,7 @@
             BS_Mappings.FlatStyle = FlatStyle.Flat;
             BS_Mappings.ForeColor = SystemColors.ActiveCaption;
             BS_Mappings.FormattingEnabled = true;
-            BS_Mappings.Location = new Point(6, 385);
+            BS_Mappings.Location = new Point(6, 414);
             BS_Mappings.Name = "BS_Mappings";
             BS_Mappings.Size = new Size(218, 23);
             BS_Mappings.TabIndex = 41;
@@ -2907,20 +2963,277 @@
             ChangesMade_Label.VisitedLinkColor = SystemColors.ActiveCaption;
             ChangesMade_Label.LinkClicked += ChangesMade_Label_LinkClicked;
             // 
-            // BuildSettingsGenerateSexVarReplace_Button
+            // DLSS5_Panel
             // 
-            BuildSettingsGenerateSexVarReplace_Button.BackColor = Color.FromArgb(75, 68, 138);
-            BuildSettingsGenerateSexVarReplace_Button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            BuildSettingsGenerateSexVarReplace_Button.FlatStyle = FlatStyle.Flat;
-            BuildSettingsGenerateSexVarReplace_Button.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            BuildSettingsGenerateSexVarReplace_Button.ForeColor = SystemColors.ActiveCaption;
-            BuildSettingsGenerateSexVarReplace_Button.Location = new Point(6, 333);
-            BuildSettingsGenerateSexVarReplace_Button.Name = "BuildSettingsGenerateSexVarReplace_Button";
-            BuildSettingsGenerateSexVarReplace_Button.Size = new Size(218, 26);
-            BuildSettingsGenerateSexVarReplace_Button.TabIndex = 57;
-            BuildSettingsGenerateSexVarReplace_Button.Text = "Generate Sex Var Replace DT";
-            BuildSettingsGenerateSexVarReplace_Button.UseVisualStyleBackColor = false;
-            BuildSettingsGenerateSexVarReplace_Button.Click += BuildSettingsGenerateSexVarReplace_Button_Click;
+            DLSS5_Panel.BackColor = Color.FromArgb(75, 68, 138);
+            DLSS5_Panel.BorderStyle = BorderStyle.FixedSingle;
+            DLSS5_Panel.Controls.Add(DLSS5_AddonDevLink);
+            DLSS5_Panel.Controls.Add(DLSS5_NVIDIASLLink);
+            DLSS5_Panel.Controls.Add(label48);
+            DLSS5_Panel.Controls.Add(DLSS5_ReShadeLink);
+            DLSS5_Panel.Controls.Add(DLSS5_ProgressBar);
+            DLSS5_Panel.Controls.Add(panel2);
+            DLSS5_Panel.Controls.Add(DLSS5_InstallButton);
+            DLSS5_Panel.Controls.Add(DLSS5_Close_Button);
+            DLSS5_Panel.Controls.Add(label52);
+            DLSS5_Panel.Controls.Add(label55);
+            DLSS5_Panel.Location = new Point(316, 227);
+            DLSS5_Panel.Name = "DLSS5_Panel";
+            DLSS5_Panel.Size = new Size(503, 261);
+            DLSS5_Panel.TabIndex = 70;
+            DLSS5_Panel.Visible = false;
+            // 
+            // DLSS5_AddonDevLink
+            // 
+            DLSS5_AddonDevLink.ActiveLinkColor = Color.MistyRose;
+            DLSS5_AddonDevLink.AutoSize = true;
+            DLSS5_AddonDevLink.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            DLSS5_AddonDevLink.LinkColor = SystemColors.ActiveCaption;
+            DLSS5_AddonDevLink.Location = new Point(346, 189);
+            DLSS5_AddonDevLink.Name = "DLSS5_AddonDevLink";
+            DLSS5_AddonDevLink.Size = new Size(131, 21);
+            DLSS5_AddonDevLink.TabIndex = 58;
+            DLSS5_AddonDevLink.TabStop = true;
+            DLSS5_AddonDevLink.Text = "Addon Developer";
+            DLSS5_AddonDevLink.VisitedLinkColor = SystemColors.ActiveCaption;
+            DLSS5_AddonDevLink.LinkClicked += DLSS5_AddonDevLink_LinkClicked;
+            // 
+            // DLSS5_NVIDIASLLink
+            // 
+            DLSS5_NVIDIASLLink.ActiveLinkColor = Color.MistyRose;
+            DLSS5_NVIDIASLLink.AutoSize = true;
+            DLSS5_NVIDIASLLink.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            DLSS5_NVIDIASLLink.LinkColor = SystemColors.ActiveCaption;
+            DLSS5_NVIDIASLLink.Location = new Point(181, 189);
+            DLSS5_NVIDIASLLink.Name = "DLSS5_NVIDIASLLink";
+            DLSS5_NVIDIASLLink.Size = new Size(139, 21);
+            DLSS5_NVIDIASLLink.TabIndex = 57;
+            DLSS5_NVIDIASLLink.TabStop = true;
+            DLSS5_NVIDIASLLink.Text = "NVIDIA Streamline";
+            DLSS5_NVIDIASLLink.VisitedLinkColor = SystemColors.ActiveCaption;
+            DLSS5_NVIDIASLLink.LinkClicked += DLSS5_NVIDIASLLink_LinkClicked;
+            // 
+            // label48
+            // 
+            label48.AutoSize = true;
+            label48.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label48.ForeColor = SystemColors.ActiveCaption;
+            label48.Location = new Point(29, 169);
+            label48.Name = "label48";
+            label48.Size = new Size(52, 17);
+            label48.TabIndex = 56;
+            label48.Text = "Credits:";
+            // 
+            // DLSS5_ReShadeLink
+            // 
+            DLSS5_ReShadeLink.ActiveLinkColor = Color.MistyRose;
+            DLSS5_ReShadeLink.AutoSize = true;
+            DLSS5_ReShadeLink.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            DLSS5_ReShadeLink.LinkColor = SystemColors.ActiveCaption;
+            DLSS5_ReShadeLink.Location = new Point(27, 189);
+            DLSS5_ReShadeLink.Name = "DLSS5_ReShadeLink";
+            DLSS5_ReShadeLink.Size = new Size(71, 21);
+            DLSS5_ReShadeLink.TabIndex = 55;
+            DLSS5_ReShadeLink.TabStop = true;
+            DLSS5_ReShadeLink.Text = "ReShade";
+            DLSS5_ReShadeLink.VisitedLinkColor = SystemColors.ActiveCaption;
+            DLSS5_ReShadeLink.LinkClicked += DLSS5_ReShadeLink_LinkClicked;
+            // 
+            // DLSS5_ProgressBar
+            // 
+            DLSS5_ProgressBar.Location = new Point(27, 229);
+            DLSS5_ProgressBar.Name = "DLSS5_ProgressBar";
+            DLSS5_ProgressBar.Size = new Size(450, 13);
+            DLSS5_ProgressBar.TabIndex = 54;
+            DLSS5_ProgressBar.Visible = false;
+            // 
+            // panel2
+            // 
+            panel2.BorderStyle = BorderStyle.FixedSingle;
+            panel2.Controls.Add(DLSS5_BaseFilesUpdate);
+            panel2.Controls.Add(label62);
+            panel2.Controls.Add(DLSS5_AddonLatest);
+            panel2.Controls.Add(DLSS5_AddonUpdate);
+            panel2.Controls.Add(label60);
+            panel2.Controls.Add(DLSS5_BaseFilesLatest);
+            panel2.Controls.Add(label58);
+            panel2.Controls.Add(DLSS5_AddonStatus);
+            panel2.Controls.Add(label57);
+            panel2.Controls.Add(DLSS5_BaseFilesStatus);
+            panel2.Location = new Point(27, 60);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(450, 105);
+            panel2.TabIndex = 53;
+            // 
+            // DLSS5_BaseFilesUpdate
+            // 
+            DLSS5_BaseFilesUpdate.ActiveLinkColor = Color.MistyRose;
+            DLSS5_BaseFilesUpdate.AutoSize = true;
+            DLSS5_BaseFilesUpdate.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            DLSS5_BaseFilesUpdate.LinkColor = SystemColors.ActiveCaption;
+            DLSS5_BaseFilesUpdate.Location = new Point(376, 25);
+            DLSS5_BaseFilesUpdate.Name = "DLSS5_BaseFilesUpdate";
+            DLSS5_BaseFilesUpdate.Size = new Size(60, 21);
+            DLSS5_BaseFilesUpdate.TabIndex = 60;
+            DLSS5_BaseFilesUpdate.TabStop = true;
+            DLSS5_BaseFilesUpdate.Text = "Update";
+            DLSS5_BaseFilesUpdate.Visible = false;
+            DLSS5_BaseFilesUpdate.VisitedLinkColor = SystemColors.ActiveCaption;
+            DLSS5_BaseFilesUpdate.LinkClicked += DLSS5_BaseFilesUpdate_LinkClicked;
+            // 
+            // label62
+            // 
+            label62.AutoSize = true;
+            label62.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label62.ForeColor = SystemColors.ActiveCaption;
+            label62.Location = new Point(8, 75);
+            label62.Name = "label62";
+            label62.Size = new Size(88, 17);
+            label62.TabIndex = 59;
+            label62.Text = "Latest Addon:";
+            // 
+            // DLSS5_AddonLatest
+            // 
+            DLSS5_AddonLatest.AutoSize = true;
+            DLSS5_AddonLatest.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            DLSS5_AddonLatest.ForeColor = Color.White;
+            DLSS5_AddonLatest.Location = new Point(98, 73);
+            DLSS5_AddonLatest.Name = "DLSS5_AddonLatest";
+            DLSS5_AddonLatest.Size = new Size(84, 21);
+            DLSS5_AddonLatest.TabIndex = 58;
+            DLSS5_AddonLatest.Text = "Not Found";
+            // 
+            // DLSS5_AddonUpdate
+            // 
+            DLSS5_AddonUpdate.ActiveLinkColor = Color.MistyRose;
+            DLSS5_AddonUpdate.AutoSize = true;
+            DLSS5_AddonUpdate.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            DLSS5_AddonUpdate.LinkColor = SystemColors.ActiveCaption;
+            DLSS5_AddonUpdate.Location = new Point(375, 73);
+            DLSS5_AddonUpdate.Name = "DLSS5_AddonUpdate";
+            DLSS5_AddonUpdate.Size = new Size(60, 21);
+            DLSS5_AddonUpdate.TabIndex = 49;
+            DLSS5_AddonUpdate.TabStop = true;
+            DLSS5_AddonUpdate.Text = "Update";
+            DLSS5_AddonUpdate.Visible = false;
+            DLSS5_AddonUpdate.VisitedLinkColor = SystemColors.ActiveCaption;
+            DLSS5_AddonUpdate.LinkClicked += DLSS5_AddonUpdate_LinkClicked;
+            // 
+            // label60
+            // 
+            label60.AutoSize = true;
+            label60.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label60.ForeColor = SystemColors.ActiveCaption;
+            label60.Location = new Point(8, 29);
+            label60.Name = "label60";
+            label60.Size = new Size(105, 17);
+            label60.TabIndex = 57;
+            label60.Text = "Latest Base Files:";
+            // 
+            // DLSS5_BaseFilesLatest
+            // 
+            DLSS5_BaseFilesLatest.AutoSize = true;
+            DLSS5_BaseFilesLatest.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            DLSS5_BaseFilesLatest.ForeColor = Color.White;
+            DLSS5_BaseFilesLatest.Location = new Point(113, 27);
+            DLSS5_BaseFilesLatest.Name = "DLSS5_BaseFilesLatest";
+            DLSS5_BaseFilesLatest.Size = new Size(81, 21);
+            DLSS5_BaseFilesLatest.TabIndex = 56;
+            DLSS5_BaseFilesLatest.Text = "Not found";
+            // 
+            // label58
+            // 
+            label58.AutoSize = true;
+            label58.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label58.ForeColor = SystemColors.ActiveCaption;
+            label58.Location = new Point(8, 52);
+            label58.Name = "label58";
+            label58.Size = new Size(102, 17);
+            label58.TabIndex = 55;
+            label58.Text = "Addon Installed:";
+            // 
+            // DLSS5_AddonStatus
+            // 
+            DLSS5_AddonStatus.AutoSize = true;
+            DLSS5_AddonStatus.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            DLSS5_AddonStatus.ForeColor = Color.White;
+            DLSS5_AddonStatus.Location = new Point(110, 50);
+            DLSS5_AddonStatus.Name = "DLSS5_AddonStatus";
+            DLSS5_AddonStatus.Size = new Size(31, 21);
+            DLSS5_AddonStatus.TabIndex = 54;
+            DLSS5_AddonStatus.Text = "No";
+            // 
+            // label57
+            // 
+            label57.AutoSize = true;
+            label57.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label57.ForeColor = SystemColors.ActiveCaption;
+            label57.Location = new Point(8, 6);
+            label57.Name = "label57";
+            label57.Size = new Size(119, 17);
+            label57.TabIndex = 53;
+            label57.Text = "Base Files Installed:";
+            // 
+            // DLSS5_BaseFilesStatus
+            // 
+            DLSS5_BaseFilesStatus.AutoSize = true;
+            DLSS5_BaseFilesStatus.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            DLSS5_BaseFilesStatus.ForeColor = Color.White;
+            DLSS5_BaseFilesStatus.Location = new Point(130, 4);
+            DLSS5_BaseFilesStatus.Name = "DLSS5_BaseFilesStatus";
+            DLSS5_BaseFilesStatus.Size = new Size(31, 21);
+            DLSS5_BaseFilesStatus.TabIndex = 52;
+            DLSS5_BaseFilesStatus.Text = "No";
+            // 
+            // DLSS5_InstallButton
+            // 
+            DLSS5_InstallButton.BackColor = Color.FromArgb(75, 68, 138);
+            DLSS5_InstallButton.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            DLSS5_InstallButton.FlatStyle = FlatStyle.Flat;
+            DLSS5_InstallButton.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            DLSS5_InstallButton.ForeColor = SystemColors.ActiveCaption;
+            DLSS5_InstallButton.Location = new Point(184, 220);
+            DLSS5_InstallButton.Name = "DLSS5_InstallButton";
+            DLSS5_InstallButton.Size = new Size(128, 30);
+            DLSS5_InstallButton.TabIndex = 35;
+            DLSS5_InstallButton.Text = "Install";
+            DLSS5_InstallButton.UseVisualStyleBackColor = false;
+            DLSS5_InstallButton.Click += DLSS5_InstallButton_Click;
+            // 
+            // DLSS5_Close_Button
+            // 
+            DLSS5_Close_Button.Image = Properties.Resources.Close_Icon;
+            DLSS5_Close_Button.Location = new Point(460, 4);
+            DLSS5_Close_Button.Name = "DLSS5_Close_Button";
+            DLSS5_Close_Button.Size = new Size(37, 39);
+            DLSS5_Close_Button.SizeMode = PictureBoxSizeMode.Zoom;
+            DLSS5_Close_Button.TabIndex = 34;
+            DLSS5_Close_Button.TabStop = false;
+            DLSS5_Close_Button.Click += DLSS5_Close_Button_Click;
+            DLSS5_Close_Button.MouseEnter += DLSS5_Close_Button_MouseEnter;
+            DLSS5_Close_Button.MouseLeave += DLSS5_Close_Button_MouseLeave;
+            // 
+            // label52
+            // 
+            label52.AutoSize = true;
+            label52.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label52.ForeColor = SystemColors.ActiveCaption;
+            label52.Location = new Point(24, 38);
+            label52.Name = "label52";
+            label52.Size = new Size(46, 17);
+            label52.TabIndex = 33;
+            label52.Text = "Status:";
+            // 
+            // label55
+            // 
+            label55.AutoSize = true;
+            label55.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label55.ForeColor = SystemColors.ActiveCaption;
+            label55.Location = new Point(167, 4);
+            label55.Name = "label55";
+            label55.Size = new Size(166, 30);
+            label55.TabIndex = 2;
+            label55.Text = "DLSS 5 Manager";
             // 
             // Main
             // 
@@ -2929,10 +3242,12 @@
             BackColor = Color.FromArgb(32, 34, 81);
             ClientSize = new Size(1134, 761);
             ControlBox = false;
+            Controls.Add(DLSS5_Panel);
+            Controls.Add(BuildManager_Panel);
+            Controls.Add(ModPack_Panel);
             Controls.Add(BuildSettings_Panel);
             Controls.Add(ChangesMade_Label);
             Controls.Add(ChangesPanel);
-            Controls.Add(BuildManager_Panel);
             Controls.Add(DT_Updater_Panel);
             Controls.Add(BugReport_Panel);
             Controls.Add(Tutorial_0);
@@ -2942,7 +3257,6 @@
             Controls.Add(NoGameLoaded_Panel);
             Controls.Add(LoadEdit_Panel);
             Controls.Add(MM_Panel);
-            Controls.Add(ModPack_Panel);
             Controls.Add(CreateModPack_Button);
             Controls.Add(ExpandedLink_Panel);
             Controls.Add(TransferMods_Panel);
@@ -3039,6 +3353,11 @@
             ((System.ComponentModel.ISupportInitialize)BuildManager_Close).EndInit();
             ChangesPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)Changes_Close).EndInit();
+            DLSS5_Panel.ResumeLayout(false);
+            DLSS5_Panel.PerformLayout();
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)DLSS5_Close_Button).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -3237,16 +3556,11 @@
         private LinkLabel BuildManager_DTsDelete;
         private LinkLabel BuildManager_ModsDelete;
         private Panel ChangesPanel;
-        private LinkLabel linkLabel5;
         private LinkLabel linkLabel8;
-        private Label label48;
-        private LinkLabel linkLabel9;
         private LinkLabel linkLabel10;
-        private Label label50;
         private LinkLabel linkLabel11;
         private ListBox ChangesLB;
-        private Label label51;
-        private Button button2;
+        private Button DLSS5_InstallButton;
         private PictureBox Changes_Close;
         private Label label52;
         private Label label53;
@@ -3257,5 +3571,26 @@
         private CheckBox DisableIntroMovies;
         private CheckBox BS_WriteDebugFiles;
         private Button BuildSettingsGenerateSexVarReplace_Button;
+        private Button BuildSettingsDLSS5_Button;
+        private Panel DLSS5_Panel;
+        private LinkLabel DLSS5_AddonUpdate;
+        private ListBox listBox1;
+        private PictureBox DLSS5_Close_Button;
+        private Label label55;
+        private Label DLSS5_BaseFilesStatus;
+        private Panel panel2;
+        private Label label60;
+        private Label DLSS5_BaseFilesLatest;
+        private Label label58;
+        private Label DLSS5_AddonStatus;
+        private Label label57;
+        private LinkLabel DLSS5_BaseFilesUpdate;
+        private Label label62;
+        private Label DLSS5_AddonLatest;
+        private ProgressBar DLSS5_ProgressBar;
+        private LinkLabel DLSS5_AddonDevLink;
+        private LinkLabel DLSS5_NVIDIASLLink;
+        private Label label48;
+        private LinkLabel DLSS5_ReShadeLink;
     }
 }
