@@ -41,7 +41,7 @@ namespace WSMM
         private bool StartingUp = true;
         private bool HasOldChanges = false;
 
-        private string WLMM_Version = "1.5.4";
+        private string WLMM_Version = "1.5.5";
         private string Datatable_Version = string.Empty;
         private string DLSS5_BaseFilesVersion = string.Empty;
         private string DLSS5_BaseFilesLatestVersion = string.Empty;
@@ -6581,14 +6581,18 @@ namespace WSMM
             if (DLSS5_AddonStatus.Text != "No" && DLSS5_BaseFilesStatus.Text != "No")
             {
                 DLSS5_InstallButton.Text = "Uninstall";
+                DLSS5_Enabled_CB.Show();
+                DLSS5_Enabled_CB.Checked = isDLSS5Enabled();
             }
             else if (DLSS5_AddonStatus.Text == "No" && DLSS5_BaseFilesStatus.Text != "No" || DLSS5_AddonStatus.Text != "No" && DLSS5_BaseFilesStatus.Text == "No")
             {
                 DLSS5_InstallButton.Text = "Repair";
+                DLSS5_Enabled_CB.Hide();
             }
             else
             {
                 DLSS5_InstallButton.Text = "Install";
+                DLSS5_Enabled_CB.Hide();
             }
 
             // Check if updates are available
@@ -6616,6 +6620,10 @@ namespace WSMM
             {
                 return true;
             }
+            else if (File.Exists(LoadedWLPath + @"\WildLifeC\Binaries\Win64\dxgi.dllx") && File.Exists(LoadedWLPath + @"\WildLifeC\Binaries\Win64\sl.dlss.dll") && File.Exists(LoadedWLPath + @"\WildLifeC\Binaries\Win64\nvngx_dlssnr.dll") && File.Exists(LoadedWLPath + @"\WildLifeC\Binaries\Win64\dlss5_BaseVersion.txt"))
+            {
+                return true;
+            }
             else
             {
                 return false;
@@ -6624,6 +6632,18 @@ namespace WSMM
         private bool CheckDLSS5AddonInstalled()
         {
             if (File.Exists(LoadedWLPath + @"\WildLifeC\Binaries\Win64\renodx-dlss5.addon64") && File.Exists(LoadedWLPath + @"\WildLifeC\Binaries\Win64\dlss5_AddonVersion.txt"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool isDLSS5Enabled()
+        {
+            if (File.Exists(LoadedWLPath + @"\WildLifeC\Binaries\Win64\dxgi.dll"))
             {
                 return true;
             }
@@ -6702,6 +6722,8 @@ namespace WSMM
                 await DLSS5_InstallAddon();
             }
             DLSS5_InstallButton.Show();
+            DLSS5_Enabled_CB.Show();
+            DLSS5_Enabled_CB.Checked = true;
             DLSS5_InstallButton.Text = "Uninstall";
             DLSS5_ProgressBar.Hide();
         }
@@ -6722,6 +6744,8 @@ namespace WSMM
                 await DLSS5_InstallAddon();
             }
             DLSS5_InstallButton.Show();
+            DLSS5_Enabled_CB.Show();
+            DLSS5_Enabled_CB.Checked = true;
             DLSS5_InstallButton.Text = "Uninstall";
             DLSS5_ProgressBar.Hide();
         }
@@ -6735,6 +6759,7 @@ namespace WSMM
                 if (CheckDLSS5BaseFilesInstalled() == true)
                 {
                     File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\dxgi.dll");
+                    File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\dxgi.dllx");
                     File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\ReShade.log");
                     File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\ReShade.ini");
                     File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\ReShadePreset.ini");
@@ -6768,6 +6793,7 @@ namespace WSMM
                 DLSS5_InstallButton.Show();
                 DLSS5_AddonUpdate.Hide();
                 DLSS5_BaseFilesUpdate.Hide();
+                DLSS5_Enabled_CB.Hide();
                 DLSS5_InstallButton.Text = "Install";
             }
             catch (Exception)
@@ -6802,6 +6828,11 @@ namespace WSMM
                 if (File.Exists(LoadedWLPath + @"\WildLifeC\Binaries\Win64\DLSS5_BaseFiles.zip"))
                 {
                     File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\DLSS5_BaseFiles.zip");
+                }
+                // Delete the dxgi.dllx file if it exists
+                if (File.Exists(LoadedWLPath + @"\WildLifeC\Binaries\Win64\dxgi.dllx"))
+                {
+                    File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\dxgi.dllx");
                 }
             }
             catch (Exception ex)
@@ -6838,6 +6869,69 @@ namespace WSMM
             catch (Exception ex)
             {
                 MessageBox.Show("Failed installing DLSS5 Addon.\n" + ex.Message, "Wild Life Mod Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void DLSS5_Enabled_CB_CheckedChanged(object sender, EventArgs e)
+        {
+            Debug.WriteLine(DLSS5_Enabled_CB.Checked);
+            if (DLSS5_Enabled_CB.Checked == true)
+            {
+                // Enable DLSS5
+                if (File.Exists(LoadedWLPath + @"\WildLifeC\Binaries\Win64\dxgi.dll") == false && File.Exists(LoadedWLPath + @"\WildLifeC\Binaries\Win64\dxgi.dllx"))
+                {
+                    try
+                    {
+                        File.Move(LoadedWLPath + @"\WildLifeC\Binaries\Win64\dxgi.dllx", LoadedWLPath + @"\WildLifeC\Binaries\Win64\dxgi.dll");
+                    }
+                    catch (Exception)
+                    {
+                        DLSS5_Enabled_CB.CheckedChanged -= DLSS5_Enabled_CB_CheckedChanged;
+                        DLSS5_Enabled_CB.Checked = false;
+                        DLSS5_Enabled_CB.CheckedChanged += DLSS5_Enabled_CB_CheckedChanged;
+                        MessageBox.Show("Failed enabling DLSS5. Please make sure the game is not running and try again.", "Wild Life Mod Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                else if (File.Exists(LoadedWLPath + @"\WildLifeC\Binaries\Win64\dxgi.dll"))
+                {
+                    // Don't do shit
+                }
+                else
+                {
+                    DLSS5_BaseFilesStatus.Text = "No";
+                    DLSS5_InstallButton.Text = "Repair";
+                    DLSS5_Enabled_CB.Hide();
+                    MessageBox.Show("Failed enabling DLSS5. File not found. Try repairing install.", "Wild Life Mod Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                // Disable DLSS5
+                if (File.Exists(LoadedWLPath + @"\WildLifeC\Binaries\Win64\dxgi.dll"))
+                {
+                    try
+                    {
+                        File.Move(LoadedWLPath + @"\WildLifeC\Binaries\Win64\dxgi.dll", LoadedWLPath + @"\WildLifeC\Binaries\Win64\dxgi.dllx");
+                    }
+                    catch (Exception)
+                    {
+                        DLSS5_Enabled_CB.CheckedChanged -= DLSS5_Enabled_CB_CheckedChanged;
+                        DLSS5_Enabled_CB.Checked = true;
+                        DLSS5_Enabled_CB.CheckedChanged += DLSS5_Enabled_CB_CheckedChanged;
+                        MessageBox.Show("Failed disabling DLSS5. Please make sure the game is not running and try again.", "Wild Life Mod Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                else if (File.Exists(LoadedWLPath + @"\WildLifeC\Binaries\Win64\dxgi.dllx"))
+                {
+                    // Don't do shit
+                }
+                else
+                {
+                    DLSS5_BaseFilesStatus.Text = "No";
+                    DLSS5_InstallButton.Text = "Repair";
+                    DLSS5_Enabled_CB.Hide();
+                    MessageBox.Show("Failed disabling DLSS5. File not found. Try repairing install.", "Wild Life Mod Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
     }

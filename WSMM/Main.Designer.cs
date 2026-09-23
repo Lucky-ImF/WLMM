@@ -234,6 +234,7 @@
             ChangesPanel_LastBuildLabel = new Label();
             ChangesMade_Label = new LinkLabel();
             DLSS5_Panel = new Panel();
+            DLSS5_Enabled_CB = new CheckBox();
             DLSS5_AddonDevLink = new LinkLabel();
             DLSS5_NVIDIASLLink = new LinkLabel();
             label48 = new Label();
@@ -2967,6 +2968,7 @@
             // 
             DLSS5_Panel.BackColor = Color.FromArgb(75, 68, 138);
             DLSS5_Panel.BorderStyle = BorderStyle.FixedSingle;
+            DLSS5_Panel.Controls.Add(DLSS5_Enabled_CB);
             DLSS5_Panel.Controls.Add(DLSS5_AddonDevLink);
             DLSS5_Panel.Controls.Add(DLSS5_NVIDIASLLink);
             DLSS5_Panel.Controls.Add(label48);
@@ -2982,6 +2984,21 @@
             DLSS5_Panel.Size = new Size(503, 261);
             DLSS5_Panel.TabIndex = 70;
             DLSS5_Panel.Visible = false;
+            // 
+            // DLSS5_Enabled_CB
+            // 
+            DLSS5_Enabled_CB.AutoSize = true;
+            DLSS5_Enabled_CB.Checked = true;
+            DLSS5_Enabled_CB.CheckState = CheckState.Checked;
+            DLSS5_Enabled_CB.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            DLSS5_Enabled_CB.ForeColor = Color.White;
+            DLSS5_Enabled_CB.Location = new Point(59, 222);
+            DLSS5_Enabled_CB.Name = "DLSS5_Enabled_CB";
+            DLSS5_Enabled_CB.Size = new Size(84, 25);
+            DLSS5_Enabled_CB.TabIndex = 59;
+            DLSS5_Enabled_CB.Text = "Enabled";
+            DLSS5_Enabled_CB.UseVisualStyleBackColor = true;
+            DLSS5_Enabled_CB.CheckedChanged += DLSS5_Enabled_CB_CheckedChanged;
             // 
             // DLSS5_AddonDevLink
             // 
@@ -3592,5 +3609,6 @@
         private LinkLabel DLSS5_NVIDIASLLink;
         private Label label48;
         private LinkLabel DLSS5_ReShadeLink;
+        private CheckBox DLSS5_Enabled_CB;
     }
 }
