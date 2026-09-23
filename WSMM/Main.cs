@@ -1,4 +1,4 @@
-using Microsoft.VisualBasic;
+ï»¿using Microsoft.VisualBasic;
 using Microsoft.VisualBasic.ApplicationServices;
 using Newtonsoft.Json;
 using System;
@@ -46,9 +46,11 @@ namespace WSMM
         private string DLSS5_BaseFilesVersion = string.Empty;
         private string DLSS5_BaseFilesLatestVersion = string.Empty;
         private Uri DLSS5_BaseFilesURL;
+        private string DLSS5_BaseFilesDLS = string.Empty;
         private string DLSS5_AddonVersion = string.Empty;
         private string DLSS5_AddonLatestVersion = string.Empty;
         private Uri DLSS5_AddonURL;
+        private string DLSS5_AddonDLS = string.Empty;
         string BuildLog = string.Empty;
 
         public string prevIconPath = string.Empty;
@@ -3446,7 +3448,7 @@ namespace WSMM
                     OutfitsNameMap.Add("Mod_" + OutfitNR.ToString());
                     OutfitEntry = OutfitEntry.Replace("[CLOTHING_ID]", GetCleanString(contents, "[CLOTHING_ID]"));
                     OutfitEntry += "," + "\n";
-                    OutfitEntry = OutfitEntry.Insert(0, GetCleanString(contents, "Character") + "¤");
+                    OutfitEntry = OutfitEntry.Insert(0, GetCleanString(contents, "Character") + "Â¤");
 
                     bool DupeFound = false;
                     foreach (string itm in NameMap_Defaults)
@@ -3630,7 +3632,7 @@ namespace WSMM
                     OutfitsNameMap.Add("Mod_" + OutfitNR.ToString());
                     OutfitEntry = OutfitEntry.Replace("[CLOTHING_ID]", GetCleanString(contents, "[CLOTHING_ID]"));
                     OutfitEntry += "," + "\n";
-                    OutfitEntry = OutfitEntry.Insert(0, GetCleanString(contents, "Character") + "¤");
+                    OutfitEntry = OutfitEntry.Insert(0, GetCleanString(contents, "Character") + "Â¤");
                     Outfits.Add(OutfitEntry);
 
                     OutfitNR += 1;
@@ -3677,7 +3679,7 @@ namespace WSMM
                                     CustomEntry = CustomEntry.Replace("[PHYSICS_PACKAGE_NAME]", "None");
                                 }
                             }
-                            CustomEntry = CustomEntry.Insert(0, GetCleanString(contents, "Character") + "¤");
+                            CustomEntry = CustomEntry.Insert(0, GetCleanString(contents, "Character") + "Â¤");
                             Hair.Add(CustomEntry);
                             CustomNameMap.Add("Mod_" + CustomNR.ToString());
                             CustomNR += 1;
@@ -3687,7 +3689,7 @@ namespace WSMM
                             string[] PathNameArray = TempArray[1].Split(',');
                             CustomEntry = CustomEntry.Replace("[PACKAGE_PATH]", PathNameArray[0].Trim());
                             CustomEntry = CustomEntry.Replace("[PACKAGE_NAME]", PathNameArray[1].Trim());
-                            CustomEntry = CustomEntry.Insert(0, GetCleanString(contents, "Character") + "¤");
+                            CustomEntry = CustomEntry.Insert(0, GetCleanString(contents, "Character") + "Â¤");
                             Beard.Add(CustomEntry);
                             CustomNameMap.Add("Mod_" + CustomNR.ToString());
                             CustomNR += 1;
@@ -3697,7 +3699,7 @@ namespace WSMM
                             string[] PathNameArray = TempArray[1].Split(',');
                             CustomEntry = CustomEntry.Replace("[PACKAGE_PATH]", PathNameArray[0].Trim());
                             CustomEntry = CustomEntry.Replace("[PACKAGE_NAME]", PathNameArray[1].Trim());
-                            CustomEntry = CustomEntry.Insert(0, GetCleanString(contents, "Character") + "¤");
+                            CustomEntry = CustomEntry.Insert(0, GetCleanString(contents, "Character") + "Â¤");
                             Skin.Add(CustomEntry);
                             CustomNameMap.Add("Mod_" + CustomNR.ToString());
                             CustomNR += 1;
@@ -3707,7 +3709,7 @@ namespace WSMM
                             string[] PathNameArray = TempArray[1].Split(',');
                             CustomEntry = CustomEntry.Replace("[PACKAGE_PATH]", PathNameArray[0].Trim());
                             CustomEntry = CustomEntry.Replace("[PACKAGE_NAME]", PathNameArray[1].Trim());
-                            CustomEntry = CustomEntry.Insert(0, GetCleanString(contents, "Character") + "¤");
+                            CustomEntry = CustomEntry.Insert(0, GetCleanString(contents, "Character") + "Â¤");
                             PubicHair.Add(CustomEntry);
                             CustomNameMap.Add("Mod_" + CustomNR.ToString());
                             CustomNR += 1;
@@ -3717,7 +3719,7 @@ namespace WSMM
                             string[] PathNameArray = TempArray[1].Split(',');
                             CustomEntry = CustomEntry.Replace("[PACKAGE_PATH]", PathNameArray[0].Trim());
                             CustomEntry = CustomEntry.Replace("[PACKAGE_NAME]", PathNameArray[1].Trim());
-                            CustomEntry = CustomEntry.Insert(0, GetCleanString(contents, "Character") + "¤");
+                            CustomEntry = CustomEntry.Insert(0, GetCleanString(contents, "Character") + "Â¤");
                             Eyes.Add(CustomEntry);
                             CustomNameMap.Add("Mod_" + CustomNR.ToString());
                             CustomNR += 1;
@@ -3727,7 +3729,7 @@ namespace WSMM
                             string[] PathNameArray = TempArray[1].Split(',');
                             CustomEntry = CustomEntry.Replace("[PACKAGE_PATH]", PathNameArray[0].Trim());
                             CustomEntry = CustomEntry.Replace("[PACKAGE_NAME]", PathNameArray[1].Trim());
-                            CustomEntry = CustomEntry.Insert(0, GetCleanString(contents, "Character") + "¤");
+                            CustomEntry = CustomEntry.Insert(0, GetCleanString(contents, "Character") + "Â¤");
                             EyeLiner.Add(CustomEntry);
                             CustomNameMap.Add("Mod_" + CustomNR.ToString());
                             CustomNR += 1;
@@ -3737,7 +3739,7 @@ namespace WSMM
                             string[] PathNameArray = TempArray[1].Split(',');
                             CustomEntry = CustomEntry.Replace("[PACKAGE_PATH]", PathNameArray[0].Trim());
                             CustomEntry = CustomEntry.Replace("[PACKAGE_NAME]", PathNameArray[1].Trim());
-                            CustomEntry = CustomEntry.Insert(0, GetCleanString(contents, "Character") + "¤");
+                            CustomEntry = CustomEntry.Insert(0, GetCleanString(contents, "Character") + "Â¤");
                             EyeShadow.Add(CustomEntry);
                             CustomNameMap.Add("Mod_" + CustomNR.ToString());
                             CustomNR += 1;
@@ -3747,7 +3749,7 @@ namespace WSMM
                             string[] PathNameArray = TempArray[1].Split(',');
                             CustomEntry = CustomEntry.Replace("[PACKAGE_PATH]", PathNameArray[0].Trim());
                             CustomEntry = CustomEntry.Replace("[PACKAGE_NAME]", PathNameArray[1].Trim());
-                            CustomEntry = CustomEntry.Insert(0, GetCleanString(contents, "Character") + "¤");
+                            CustomEntry = CustomEntry.Insert(0, GetCleanString(contents, "Character") + "Â¤");
                             Lipstick.Add(CustomEntry);
                             CustomNameMap.Add("Mod_" + CustomNR.ToString());
                             CustomNR += 1;
@@ -3757,7 +3759,7 @@ namespace WSMM
                             string[] PathNameArray = TempArray[1].Split(',');
                             CustomEntry = CustomEntry.Replace("[PACKAGE_PATH]", PathNameArray[0].Trim());
                             CustomEntry = CustomEntry.Replace("[PACKAGE_NAME]", PathNameArray[1].Trim());
-                            CustomEntry = CustomEntry.Insert(0, GetCleanString(contents, "Character") + "¤");
+                            CustomEntry = CustomEntry.Insert(0, GetCleanString(contents, "Character") + "Â¤");
                             Tanlines.Add(CustomEntry);
                             CustomNameMap.Add("Mod_" + CustomNR.ToString());
                             CustomNR += 1;
@@ -4196,7 +4198,7 @@ namespace WSMM
                     foreach (string Ent in Outfits)
                     {
                         //Trim out the Character
-                        string[] TempArray = Ent.Split('¤');
+                        string[] TempArray = Ent.Split('Â¤');
                         if (TempArray[0] == GameChar)
                         {
                             CompiledEntries += TempArray[1];
@@ -4257,7 +4259,7 @@ namespace WSMM
                         string GameChar = "HUMANFEMALESTANDARD";
                         foreach (string Ent in Hair)
                         {
-                            string[] TempArray = Ent.Split('¤');
+                            string[] TempArray = Ent.Split('Â¤');
                             GameChar = TempArray[0].ToUpper();
                             CompiledHairEntries = "\n" + TempArray[1].TrimEnd('\n') + ",[" + GameChar + "_HAIR]";
                             GameCharacterCustom = GameCharacterCustom.Replace("[" + GameChar + "_HAIR]", CompiledHairEntries);
@@ -4265,7 +4267,7 @@ namespace WSMM
 
                         foreach (string Ent in Beard)
                         {
-                            string[] TempArray = Ent.Split('¤');
+                            string[] TempArray = Ent.Split('Â¤');
                             GameChar = TempArray[0].ToUpper();
                             CompiledBeardEntries = "\n" + TempArray[1].TrimEnd('\n') + ",[" + GameChar + "_BEARD]";
                             GameCharacterCustom = GameCharacterCustom.Replace("[" + GameChar + "_BEARD]", CompiledBeardEntries);
@@ -4273,7 +4275,7 @@ namespace WSMM
 
                         foreach (string Ent in Skin)
                         {
-                            string[] TempArray = Ent.Split('¤');
+                            string[] TempArray = Ent.Split('Â¤');
                             GameChar = TempArray[0].ToUpper();
                             CompiledSkinEntries = "\n" + TempArray[1].TrimEnd('\n') + ",[" + GameChar + "_SKIN]";
                             GameCharacterCustom = GameCharacterCustom.Replace("[" + GameChar + "_SKIN]", CompiledSkinEntries);
@@ -4281,7 +4283,7 @@ namespace WSMM
 
                         foreach (string Ent in PubicHair)
                         {
-                            string[] TempArray = Ent.Split('¤');
+                            string[] TempArray = Ent.Split('Â¤');
                             GameChar = TempArray[0].ToUpper();
                             CompiledPubicHairEntries = "\n" + TempArray[1].TrimEnd('\n') + ",[" + GameChar + "_PUBICHAIR]";
                             GameCharacterCustom = GameCharacterCustom.Replace("[" + GameChar + "_PUBICHAIR]", CompiledPubicHairEntries);
@@ -4289,7 +4291,7 @@ namespace WSMM
 
                         foreach (string Ent in Eyes)
                         {
-                            string[] TempArray = Ent.Split('¤');
+                            string[] TempArray = Ent.Split('Â¤');
                             GameChar = TempArray[0].ToUpper();
                             CompiledEyesEntries = "\n" + TempArray[1].TrimEnd('\n') + ",[" + GameChar + "_EYES]";
                             GameCharacterCustom = GameCharacterCustom.Replace("[" + GameChar + "_EYES]", CompiledEyesEntries);
@@ -4297,7 +4299,7 @@ namespace WSMM
 
                         foreach (string Ent in EyeLiner)
                         {
-                            string[] TempArray = Ent.Split('¤');
+                            string[] TempArray = Ent.Split('Â¤');
                             GameChar = TempArray[0].ToUpper();
                             CompiledEyeLinerEntries = "\n" + TempArray[1].TrimEnd('\n') + ",[" + GameChar + "_EYELINER]";
                             GameCharacterCustom = GameCharacterCustom.Replace("[" + GameChar + "_EYELINER]", CompiledEyeLinerEntries);
@@ -4305,7 +4307,7 @@ namespace WSMM
 
                         foreach (string Ent in EyeShadow)
                         {
-                            string[] TempArray = Ent.Split('¤');
+                            string[] TempArray = Ent.Split('Â¤');
                             GameChar = TempArray[0].ToUpper();
                             CompiledEyeShadowEntries = "\n" + TempArray[1].TrimEnd('\n') + ",[" + GameChar + "_EYESHADOW]";
                             GameCharacterCustom = GameCharacterCustom.Replace("[" + GameChar + "_EYESHADOW]", CompiledEyeShadowEntries);
@@ -4313,7 +4315,7 @@ namespace WSMM
 
                         foreach (string Ent in Lipstick)
                         {
-                            string[] TempArray = Ent.Split('¤');
+                            string[] TempArray = Ent.Split('Â¤');
                             GameChar = TempArray[0].ToUpper();
                             CompiledLipstickEntries = "\n" + TempArray[1].TrimEnd('\n') + ",[" + GameChar + "_LIPSTICK]";
                             GameCharacterCustom = GameCharacterCustom.Replace("[" + GameChar + "_LIPSTICK]", CompiledLipstickEntries);
@@ -4321,7 +4323,7 @@ namespace WSMM
 
                         foreach (string Ent in Tanlines)
                         {
-                            string[] TempArray = Ent.Split('¤');
+                            string[] TempArray = Ent.Split('Â¤');
                             GameChar = TempArray[0].ToUpper();
                             CompiledTanlinesEntries = "\n" + TempArray[1].TrimEnd('\n') + ",[" + GameChar + "_TANLINES]";
                             GameCharacterCustom = GameCharacterCustom.Replace("[" + GameChar + "_TANLINES]", CompiledTanlinesEntries);
@@ -6554,9 +6556,21 @@ namespace WSMM
             DLSS5_Panel.Visible = false;
         }
 
-        private void BuildSettingsDLSS5_Button_Click(object sender, EventArgs e)
+        private async void BuildSettingsDLSS5_Button_Click(object sender, EventArgs e)
         {
             DLSS5_Panel.Visible = true;
+
+            //Get new download amounts
+            if (DLSS5_BaseFilesLatest.Text.Contains("â‡©") == false)
+            {
+                DLSS5_BaseFilesDLS = await Generic_GetDTDownloadAmount("DLSS5_BaseFiles_" + DLSS5_BaseFilesLatestVersion);
+                DLSS5_BaseFilesLatest.Text = DLSS5_BaseFilesLatestVersion + " (â‡©" + DLSS5_BaseFilesDLS + ")";
+            }
+            if (DLSS5_AddonLatest.Text.Contains("â‡©") == false)
+            {
+                DLSS5_AddonDLS = await Generic_GetDTDownloadAmount("DLSS5_Addon_" + DLSS5_AddonLatestVersion);
+                DLSS5_AddonLatest.Text = DLSS5_AddonLatestVersion + " (â‡©" + DLSS5_AddonDLS + ")";
+            }
 
             // Check if DLSS5 is installed
             if (CheckDLSS5BaseFilesInstalled() == true)
@@ -6812,6 +6826,12 @@ namespace WSMM
                 {
                     DLSS5_ProgressBar.Invoke((System.Windows.Forms.MethodInvoker)(() => DLSS5_ProgressBar.Value = Math.Min(100, Math.Max(0, pct))));
                 });
+                IncrementDownloadAmount("DLSS5_BaseFiles_" + DLSS5_BaseFilesLatestVersion);
+                if (DLSS5_BaseFilesDLS != "Downloaded many times")
+                {
+                    DLSS5_BaseFilesDLS = (Convert.ToInt32(DLSS5_BaseFilesDLS) + 1).ToString();
+                }
+                DLSS5_BaseFilesLatest.Text = DLSS5_BaseFilesLatestVersion + " (â‡©" + DLSS5_BaseFilesDLS + ")";
                 // Extract the zip
                 ZipFile.ExtractToDirectory(LoadedWLPath + @"\WildLifeC\Binaries\Win64\DLSS5_BaseFiles.zip", LoadedWLPath + @"\WildLifeC\Binaries\Win64\", true);
                 // Copy sl.dlss_d.dll to Streamline Plugin
@@ -6850,6 +6870,13 @@ namespace WSMM
                 {
                     DLSS5_ProgressBar.Invoke((System.Windows.Forms.MethodInvoker)(() => DLSS5_ProgressBar.Value = Math.Min(100, Math.Max(0, pct))));
                 });
+                IncrementDownloadAmount("DLSS5_Addon_" + DLSS5_AddonLatestVersion);
+                if (DLSS5_AddonDLS != "Downloaded many times")
+                {
+                    DLSS5_AddonDLS = (Convert.ToInt32(DLSS5_AddonDLS) + 1).ToString();
+                }
+                DLSS5_AddonLatest.Text = DLSS5_AddonLatestVersion + " (â‡©" + DLSS5_AddonDLS + ")";
+
                 // Extract the zip
                 ZipFile.ExtractToDirectory(LoadedWLPath + @"\WildLifeC\Binaries\Win64\DLSS5_Addon.zip", LoadedWLPath + @"\WildLifeC\Binaries\Win64\", true);
                 // Read the version from the version file
@@ -6932,6 +6959,29 @@ namespace WSMM
                     DLSS5_Enabled_CB.Hide();
                     MessageBox.Show("Failed disabling DLSS5. File not found. Try repairing install.", "Wild Life Mod Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
+        }
+
+        private async Task<string> Generic_GetDTDownloadAmount(string Target)
+        {
+            try
+            {
+                string Raw = "";
+
+                using (HttpClient client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.UserAgent.ParseAdd("WLMM");
+                    HttpResponseMessage response = await client.GetAsync("https://wlmm-worker.luckybot.one/?action=GET&" + "modName=" + Target);
+                    response.EnsureSuccessStatusCode();
+                    Raw = await response.Content.ReadAsStringAsync();
+                }
+                string DLAmount = GetSlice(Raw, ":", 999).TrimEnd('}');
+                return DLAmount;
+            }
+            catch (Exception ex)
+            {
+                
+                return "Downloaded many times";
             }
         }
     }
