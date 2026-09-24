@@ -47,10 +47,12 @@ namespace WSMM
         private string DLSS5_BaseFilesLatestVersion = string.Empty;
         private Uri DLSS5_BaseFilesURL;
         private string DLSS5_BaseFilesDLS = string.Empty;
+        private string DLSS5_BaseFilesDLSize = string.Empty;
         private string DLSS5_AddonVersion = string.Empty;
         private string DLSS5_AddonLatestVersion = string.Empty;
         private Uri DLSS5_AddonURL;
         private string DLSS5_AddonDLS = string.Empty;
+        private string DLSS5_AddonDLSize = string.Empty;
         string BuildLog = string.Empty;
 
         public string prevIconPath = string.Empty;
@@ -6563,13 +6565,15 @@ namespace WSMM
             //Get new download amounts
             if (DLSS5_BaseFilesLatest.Text.Contains("⇩") == false)
             {
-                DLSS5_BaseFilesDLS = await Generic_GetDTDownloadAmount("DLSS5_BaseFiles_" + DLSS5_BaseFilesLatestVersion);
-                DLSS5_BaseFilesLatest.Text = DLSS5_BaseFilesLatestVersion + " (⇩" + DLSS5_BaseFilesDLS + ")";
+                DLSS5_BaseFilesDLS = await Generic_GetDownloadAmount("DLSS5_BaseFiles_" + DLSS5_BaseFilesLatestVersion);
+                DLSS5_BaseFilesDLSize = await GetDownloadSize(DLSS5_BaseFilesURL);
+                DLSS5_BaseFilesLatest.Text = DLSS5_BaseFilesLatestVersion + " (" + DLSS5_BaseFilesDLSize + " ⇩" + DLSS5_BaseFilesDLS + ")";
             }
             if (DLSS5_AddonLatest.Text.Contains("⇩") == false)
             {
-                DLSS5_AddonDLS = await Generic_GetDTDownloadAmount("DLSS5_Addon_" + DLSS5_AddonLatestVersion);
-                DLSS5_AddonLatest.Text = DLSS5_AddonLatestVersion + " (⇩" + DLSS5_AddonDLS + ")";
+                DLSS5_AddonDLS = await Generic_GetDownloadAmount("DLSS5_Addon_" + DLSS5_AddonLatestVersion);
+                DLSS5_AddonDLSize = await GetDownloadSize(DLSS5_AddonURL);
+                DLSS5_AddonLatest.Text = DLSS5_AddonLatestVersion + " (" + DLSS5_AddonDLSize + " ⇩" + DLSS5_AddonDLS + ")";
             }
 
             // Check if DLSS5 is installed
@@ -6612,18 +6616,22 @@ namespace WSMM
             // Check if updates are available
             if (DLSS5_BaseFilesStatus.Text != "No" && DLSS5_BaseFilesStatus.Text != DLSS5_BaseFilesLatestVersion)
             {
+                DLSS5_BaseFilesLatest.ForeColor = Color.Lime;
                 DLSS5_BaseFilesUpdate.Show();
             }
             else
             {
+                DLSS5_BaseFilesLatest.ForeColor = Color.White;
                 DLSS5_BaseFilesUpdate.Hide();
             }
             if (DLSS5_AddonStatus.Text != "No" && DLSS5_AddonStatus.Text != DLSS5_AddonLatestVersion)
             {
+                DLSS5_AddonLatest.ForeColor = Color.Lime;
                 DLSS5_AddonUpdate.Show();
             }
             else
             {
+                DLSS5_AddonLatest.ForeColor = Color.White;
                 DLSS5_AddonUpdate.Hide();
             }
         }
@@ -6702,22 +6710,34 @@ namespace WSMM
         {
             DLSS5_BaseFilesUpdate.Hide();
             DLSS5_InstallButton.Hide();
+            DLSS5_Enabled_CB.Hide();
             DLSS5_ProgressBar.Show();
             DLSS5_ProgressBar.Value = 0;
             await DLSS5_InstallBaseFiles();
             DLSS5_InstallButton.Show();
             DLSS5_ProgressBar.Hide();
+            DLSS5_BaseFilesLatest.ForeColor = Color.White;
+            if (CheckDLSS5AddonInstalled() == true)
+            {
+                DLSS5_Enabled_CB.Show();
+            }
         }
 
         private async void DLSS5_AddonUpdate_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             DLSS5_AddonUpdate.Hide();
             DLSS5_InstallButton.Hide();
+            DLSS5_Enabled_CB.Hide();
             DLSS5_ProgressBar.Show();
             DLSS5_ProgressBar.Value = 0;
             await DLSS5_InstallAddon();
             DLSS5_InstallButton.Show();
             DLSS5_ProgressBar.Hide();
+            DLSS5_AddonLatest.ForeColor = Color.White;
+            if (CheckDLSS5BaseFilesInstalled() == true)
+            {
+                DLSS5_Enabled_CB.Show();
+            }
         }
 
         private async Task DLSS5_InstallDLSS5()
@@ -6745,6 +6765,7 @@ namespace WSMM
         private async Task DLSS5_RepairDLSS5()
         {
             DLSS5_InstallButton.Hide();
+            DLSS5_Enabled_CB.Hide();
             DLSS5_ProgressBar.Show();
             DLSS5_ProgressBar.Value = 0;
             if (DLSS5_BaseFilesStatus.Text == "No")
@@ -6762,11 +6783,14 @@ namespace WSMM
             DLSS5_Enabled_CB.Checked = true;
             DLSS5_InstallButton.Text = "Uninstall";
             DLSS5_ProgressBar.Hide();
+            DLSS5_BaseFilesLatest.ForeColor = Color.White;
+            DLSS5_AddonLatest.ForeColor = Color.White;
         }
 
         private void DLSS5_UninstallDLSS5()
         {
             DLSS5_InstallButton.Hide();
+            DLSS5_Enabled_CB.Hide();
             try
             {
                 // Uninstall DLSS5 Base Files
@@ -6809,10 +6833,13 @@ namespace WSMM
                 DLSS5_BaseFilesUpdate.Hide();
                 DLSS5_Enabled_CB.Hide();
                 DLSS5_InstallButton.Text = "Install";
+                DLSS5_BaseFilesLatest.ForeColor = Color.White;
+                DLSS5_AddonLatest.ForeColor = Color.White;
             }
             catch (Exception)
             {
                 DLSS5_InstallButton.Show();
+                DLSS5_Enabled_CB.Show();
                 MessageBox.Show("Failed uninstalling DLSS5. Please make sure the game is not running and try again.", "Wild Life Mod Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -6827,11 +6854,11 @@ namespace WSMM
                     DLSS5_ProgressBar.Invoke((System.Windows.Forms.MethodInvoker)(() => DLSS5_ProgressBar.Value = Math.Min(100, Math.Max(0, pct))));
                 });
                 IncrementDownloadAmount("DLSS5_BaseFiles_" + DLSS5_BaseFilesLatestVersion);
-                if (DLSS5_BaseFilesDLS != "Downloaded many times")
+                if (DLSS5_BaseFilesDLS != "∞")
                 {
                     DLSS5_BaseFilesDLS = (Convert.ToInt32(DLSS5_BaseFilesDLS) + 1).ToString();
                 }
-                DLSS5_BaseFilesLatest.Text = DLSS5_BaseFilesLatestVersion + " (⇩" + DLSS5_BaseFilesDLS + ")";
+                DLSS5_BaseFilesLatest.Text = DLSS5_BaseFilesLatestVersion + " (" + DLSS5_BaseFilesDLSize + " ⇩" + DLSS5_BaseFilesDLS + ")";
                 // Extract the zip
                 ZipFile.ExtractToDirectory(LoadedWLPath + @"\WildLifeC\Binaries\Win64\DLSS5_BaseFiles.zip", LoadedWLPath + @"\WildLifeC\Binaries\Win64\", true);
                 // Copy sl.dlss_d.dll to Streamline Plugin
@@ -6871,11 +6898,11 @@ namespace WSMM
                     DLSS5_ProgressBar.Invoke((System.Windows.Forms.MethodInvoker)(() => DLSS5_ProgressBar.Value = Math.Min(100, Math.Max(0, pct))));
                 });
                 IncrementDownloadAmount("DLSS5_Addon_" + DLSS5_AddonLatestVersion);
-                if (DLSS5_AddonDLS != "Downloaded many times")
+                if (DLSS5_AddonDLS != "∞")
                 {
                     DLSS5_AddonDLS = (Convert.ToInt32(DLSS5_AddonDLS) + 1).ToString();
                 }
-                DLSS5_AddonLatest.Text = DLSS5_AddonLatestVersion + " (⇩" + DLSS5_AddonDLS + ")";
+                DLSS5_AddonLatest.Text = DLSS5_AddonLatestVersion + " (" + DLSS5_AddonDLSize + " ⇩" + DLSS5_AddonDLS + ")";
 
                 // Extract the zip
                 ZipFile.ExtractToDirectory(LoadedWLPath + @"\WildLifeC\Binaries\Win64\DLSS5_Addon.zip", LoadedWLPath + @"\WildLifeC\Binaries\Win64\", true);
@@ -6962,7 +6989,7 @@ namespace WSMM
             }
         }
 
-        private async Task<string> Generic_GetDTDownloadAmount(string Target)
+        private async Task<string> Generic_GetDownloadAmount(string Target)
         {
             try
             {
@@ -6981,7 +7008,36 @@ namespace WSMM
             catch (Exception ex)
             {
                 
-                return "Downloaded many times";
+                return "∞";
+            }
+        }
+
+        private async Task<string> GetDownloadSize(Uri TargetURL)
+        {
+            try
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    using (var request = new HttpRequestMessage(HttpMethod.Head, TargetURL))
+                    using (var response = await httpClient.SendAsync(request))
+                    {
+                        response.EnsureSuccessStatusCode();
+
+                        if (response.Content.Headers.ContentLength.HasValue)
+                        {
+                            long bytes = response.Content.Headers.ContentLength.Value;
+                            return ($"{bytes / (1024.0 * 1024.0):N2} MB");
+                        }
+                        else
+                        {
+                            return("?");
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return ("?");
             }
         }
     }
