@@ -6796,12 +6796,18 @@ namespace WSMM
                 // Uninstall DLSS5 Base Files
                 if (CheckDLSS5BaseFilesInstalled() == true)
                 {
-                    File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\dxgi.dll");
-                    File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\dxgi.dllx");
-                    File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\ReShade.log");
-                    File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\ReShade.ini");
-                    File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\ReShadePreset.ini");
-                    File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\ReShade.LICENSE.md");
+                    if (MessageBox.Show("Do you want to delete ReShade? (dxgi.dll)", "Delete ReShade?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\dxgi.dll");
+                        File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\dxgi.dllx");
+                        File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\ReShade.LICENSE.md");
+                        File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\ReShade.log");
+                        if (MessageBox.Show("Do you want to delete the ReShade configuration files as well? (ReShade.ini, ReShadePreset.ini)", "Delete ReShade Config Files?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        {
+                            File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\ReShade.ini");
+                            File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\ReShadePreset.ini");
+                        }
+                    }
                     File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\nvngx_dlss.dll");
                     File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\nvngx_dlssd.dll");
                     File.Delete(LoadedWLPath + @"\WildLifeC\Binaries\Win64\nvngx_dlssg.dll");
