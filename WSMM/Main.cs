@@ -41,7 +41,7 @@ namespace WSMM
         private bool StartingUp = true;
         private bool HasOldChanges = false;
 
-        private string WLMM_Version = "1.5.5";
+        private string WLMM_Version = "1.6.0";
         private string Datatable_Version = string.Empty;
         private string DLSS5_BaseFilesVersion = string.Empty;
         private string DLSS5_BaseFilesLatestVersion = string.Empty;

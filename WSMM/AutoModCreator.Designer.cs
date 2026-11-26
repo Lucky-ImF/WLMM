@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AutoModCreator));
             Close_Button = new PictureBox();
             Separator_1 = new PictureBox();
             TitlePanel = new Panel();
@@ -417,6 +416,38 @@
             TattoosGB = new GroupBox();
             TattoosAdd = new LinkLabel();
             TattoosFlow = new FlowLayoutPanel();
+            CharactersGB = new GroupBox();
+            label150 = new Label();
+            Characters_Poser = new TextBox();
+            label149 = new Label();
+            Characters_Outfits = new TextBox();
+            label148 = new Label();
+            Characters_Customization = new TextBox();
+            label147 = new Label();
+            Characters_Animations = new TextBox();
+            label145 = new Label();
+            Characters_PhysicsName = new TextBox();
+            label146 = new Label();
+            Characters_PhysicsPath = new TextBox();
+            label144 = new Label();
+            Characters_MeshName = new TextBox();
+            label143 = new Label();
+            Characters_MeshPath = new TextBox();
+            Characters_CanFly = new CheckBox();
+            label142 = new Label();
+            Characters_Ejaculation = new TextBox();
+            label141 = new Label();
+            Characters_Gender = new TextBox();
+            label140 = new Label();
+            Characters_AI = new TextBox();
+            label139 = new Label();
+            Characters_Voice = new TextBox();
+            label138 = new Label();
+            Characters_Sound = new TextBox();
+            label137 = new Label();
+            Characters_CustProfile = new TextBox();
+            label136 = new Label();
+            Characters_CharName = new TextBox();
             ((System.ComponentModel.ISupportInitialize)Close_Button).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Separator_1).BeginInit();
             TitlePanel.SuspendLayout();
@@ -466,6 +497,7 @@
             ((System.ComponentModel.ISupportInitialize)PropPivotOffset_Y).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PropPivotOffset_X).BeginInit();
             TattoosGB.SuspendLayout();
+            CharactersGB.SuspendLayout();
             SuspendLayout();
             // 
             // Close_Button
@@ -552,7 +584,7 @@
             Variant.FlatStyle = FlatStyle.Popup;
             Variant.ForeColor = SystemColors.ActiveCaption;
             Variant.FormattingEnabled = true;
-            Variant.Items.AddRange(new object[] { "Add", "Port", "Character Customization", "Fur Customization", "Props", "Tattoos" });
+            Variant.Items.AddRange(new object[] { "Add", "Port", "Character Customization", "Fur Customization", "Props", "Tattoos", "Characters" });
             Variant.Location = new Point(315, 124);
             Variant.Margin = new Padding(4, 3, 4, 3);
             Variant.Name = "Variant";
@@ -610,6 +642,7 @@
             // 
             OutfitName.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             OutfitName.BackColor = Color.FromArgb(75, 68, 138);
+            OutfitName.BorderStyle = BorderStyle.FixedSingle;
             OutfitName.ForeColor = SystemColors.ActiveCaption;
             OutfitName.Location = new Point(315, 78);
             OutfitName.Margin = new Padding(4, 3, 4, 3);
@@ -631,6 +664,7 @@
             // OutfitID
             // 
             OutfitID.BackColor = Color.FromArgb(75, 68, 138);
+            OutfitID.BorderStyle = BorderStyle.FixedSingle;
             OutfitID.ForeColor = SystemColors.ActiveCaption;
             OutfitID.Location = new Point(34, 78);
             OutfitID.Margin = new Padding(4, 3, 4, 3);
@@ -654,6 +688,7 @@
             // 
             ModAuthor.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             ModAuthor.BackColor = Color.FromArgb(75, 68, 138);
+            ModAuthor.BorderStyle = BorderStyle.FixedSingle;
             ModAuthor.ForeColor = SystemColors.ActiveCaption;
             ModAuthor.Location = new Point(315, 34);
             ModAuthor.Margin = new Padding(4, 3, 4, 3);
@@ -675,6 +710,7 @@
             // ModName
             // 
             ModName.BackColor = Color.FromArgb(75, 68, 138);
+            ModName.BorderStyle = BorderStyle.FixedSingle;
             ModName.ForeColor = SystemColors.ActiveCaption;
             ModName.Location = new Point(34, 34);
             ModName.Margin = new Padding(4, 3, 4, 3);
@@ -5454,6 +5490,409 @@
             TattoosFlow.Size = new Size(596, 701);
             TattoosFlow.TabIndex = 42;
             // 
+            // CharactersGB
+            // 
+            CharactersGB.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            CharactersGB.Controls.Add(label150);
+            CharactersGB.Controls.Add(Characters_Poser);
+            CharactersGB.Controls.Add(label149);
+            CharactersGB.Controls.Add(Characters_Outfits);
+            CharactersGB.Controls.Add(label148);
+            CharactersGB.Controls.Add(Characters_Customization);
+            CharactersGB.Controls.Add(label147);
+            CharactersGB.Controls.Add(Characters_Animations);
+            CharactersGB.Controls.Add(label145);
+            CharactersGB.Controls.Add(Characters_PhysicsName);
+            CharactersGB.Controls.Add(label146);
+            CharactersGB.Controls.Add(Characters_PhysicsPath);
+            CharactersGB.Controls.Add(label144);
+            CharactersGB.Controls.Add(Characters_MeshName);
+            CharactersGB.Controls.Add(label143);
+            CharactersGB.Controls.Add(Characters_MeshPath);
+            CharactersGB.Controls.Add(Characters_CanFly);
+            CharactersGB.Controls.Add(label142);
+            CharactersGB.Controls.Add(Characters_Ejaculation);
+            CharactersGB.Controls.Add(label141);
+            CharactersGB.Controls.Add(Characters_Gender);
+            CharactersGB.Controls.Add(label140);
+            CharactersGB.Controls.Add(Characters_AI);
+            CharactersGB.Controls.Add(label139);
+            CharactersGB.Controls.Add(Characters_Voice);
+            CharactersGB.Controls.Add(label138);
+            CharactersGB.Controls.Add(Characters_Sound);
+            CharactersGB.Controls.Add(label137);
+            CharactersGB.Controls.Add(Characters_CustProfile);
+            CharactersGB.Controls.Add(label136);
+            CharactersGB.Controls.Add(Characters_CharName);
+            CharactersGB.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            CharactersGB.ForeColor = Color.White;
+            CharactersGB.Location = new Point(5, 211);
+            CharactersGB.Margin = new Padding(4, 3, 4, 3);
+            CharactersGB.Name = "CharactersGB";
+            CharactersGB.Padding = new Padding(4, 3, 4, 3);
+            CharactersGB.Size = new Size(606, 728);
+            CharactersGB.TabIndex = 44;
+            CharactersGB.TabStop = false;
+            CharactersGB.Text = "Characters";
+            CharactersGB.Visible = false;
+            // 
+            // label150
+            // 
+            label150.AutoSize = true;
+            label150.ForeColor = SystemColors.ActiveCaption;
+            label150.Location = new Point(304, 461);
+            label150.Margin = new Padding(4, 0, 4, 0);
+            label150.Name = "label150";
+            label150.Size = new Size(42, 15);
+            label150.TabIndex = 38;
+            label150.Text = "Poser:";
+            // 
+            // Characters_Poser
+            // 
+            Characters_Poser.BackColor = Color.FromArgb(75, 68, 138);
+            Characters_Poser.BorderStyle = BorderStyle.FixedSingle;
+            Characters_Poser.ForeColor = SystemColors.ActiveCaption;
+            Characters_Poser.Location = new Point(318, 479);
+            Characters_Poser.Margin = new Padding(4, 3, 4, 3);
+            Characters_Poser.Name = "Characters_Poser";
+            Characters_Poser.Size = new Size(252, 21);
+            Characters_Poser.TabIndex = 37;
+            Characters_Poser.Text = "Maya";
+            // 
+            // label149
+            // 
+            label149.AutoSize = true;
+            label149.ForeColor = SystemColors.ActiveCaption;
+            label149.Location = new Point(304, 417);
+            label149.Margin = new Padding(4, 0, 4, 0);
+            label149.Name = "label149";
+            label149.Size = new Size(44, 15);
+            label149.TabIndex = 36;
+            label149.Text = "Outfits:";
+            // 
+            // Characters_Outfits
+            // 
+            Characters_Outfits.BackColor = Color.FromArgb(75, 68, 138);
+            Characters_Outfits.BorderStyle = BorderStyle.FixedSingle;
+            Characters_Outfits.ForeColor = SystemColors.ActiveCaption;
+            Characters_Outfits.Location = new Point(318, 435);
+            Characters_Outfits.Margin = new Padding(4, 3, 4, 3);
+            Characters_Outfits.Name = "Characters_Outfits";
+            Characters_Outfits.Size = new Size(252, 21);
+            Characters_Outfits.TabIndex = 35;
+            Characters_Outfits.Text = "Outfits_Maya_AB2";
+            // 
+            // label148
+            // 
+            label148.AutoSize = true;
+            label148.ForeColor = SystemColors.ActiveCaption;
+            label148.Location = new Point(12, 461);
+            label148.Margin = new Padding(4, 0, 4, 0);
+            label148.Name = "label148";
+            label148.Size = new Size(144, 15);
+            label148.TabIndex = 34;
+            label148.Text = "Character Customization:";
+            // 
+            // Characters_Customization
+            // 
+            Characters_Customization.BackColor = Color.FromArgb(75, 68, 138);
+            Characters_Customization.BorderStyle = BorderStyle.FixedSingle;
+            Characters_Customization.ForeColor = SystemColors.ActiveCaption;
+            Characters_Customization.Location = new Point(26, 479);
+            Characters_Customization.Margin = new Padding(4, 3, 4, 3);
+            Characters_Customization.Name = "Characters_Customization";
+            Characters_Customization.Size = new Size(252, 21);
+            Characters_Customization.TabIndex = 33;
+            Characters_Customization.Text = "HumanFemaleStandard";
+            // 
+            // label147
+            // 
+            label147.AutoSize = true;
+            label147.ForeColor = SystemColors.ActiveCaption;
+            label147.Location = new Point(12, 417);
+            label147.Margin = new Padding(4, 0, 4, 0);
+            label147.Name = "label147";
+            label147.Size = new Size(71, 15);
+            label147.TabIndex = 32;
+            label147.Text = "Animations:";
+            // 
+            // Characters_Animations
+            // 
+            Characters_Animations.BackColor = Color.FromArgb(75, 68, 138);
+            Characters_Animations.BorderStyle = BorderStyle.FixedSingle;
+            Characters_Animations.ForeColor = SystemColors.ActiveCaption;
+            Characters_Animations.Location = new Point(26, 435);
+            Characters_Animations.Margin = new Padding(4, 3, 4, 3);
+            Characters_Animations.Name = "Characters_Animations";
+            Characters_Animations.Size = new Size(252, 21);
+            Characters_Animations.TabIndex = 31;
+            Characters_Animations.Text = "Maya";
+            // 
+            // label145
+            // 
+            label145.AutoSize = true;
+            label145.ForeColor = SystemColors.ActiveCaption;
+            label145.Location = new Point(12, 297);
+            label145.Margin = new Padding(4, 0, 4, 0);
+            label145.Name = "label145";
+            label145.Size = new Size(88, 15);
+            label145.TabIndex = 30;
+            label145.Text = "Physics Name:";
+            // 
+            // Characters_PhysicsName
+            // 
+            Characters_PhysicsName.BackColor = Color.FromArgb(75, 68, 138);
+            Characters_PhysicsName.BorderStyle = BorderStyle.FixedSingle;
+            Characters_PhysicsName.ForeColor = SystemColors.ActiveCaption;
+            Characters_PhysicsName.Location = new Point(26, 315);
+            Characters_PhysicsName.Margin = new Padding(4, 3, 4, 3);
+            Characters_PhysicsName.Name = "Characters_PhysicsName";
+            Characters_PhysicsName.Size = new Size(554, 21);
+            Characters_PhysicsName.TabIndex = 29;
+            Characters_PhysicsName.Text = "maya_ragdollPhysicsAsset";
+            // 
+            // label146
+            // 
+            label146.AutoSize = true;
+            label146.ForeColor = SystemColors.ActiveCaption;
+            label146.Location = new Point(12, 253);
+            label146.Margin = new Padding(4, 0, 4, 0);
+            label146.Name = "label146";
+            label146.Size = new Size(79, 15);
+            label146.TabIndex = 28;
+            label146.Text = "Physics Path:";
+            // 
+            // Characters_PhysicsPath
+            // 
+            Characters_PhysicsPath.BackColor = Color.FromArgb(75, 68, 138);
+            Characters_PhysicsPath.BorderStyle = BorderStyle.FixedSingle;
+            Characters_PhysicsPath.ForeColor = SystemColors.ActiveCaption;
+            Characters_PhysicsPath.Location = new Point(26, 271);
+            Characters_PhysicsPath.Margin = new Padding(4, 3, 4, 3);
+            Characters_PhysicsPath.Name = "Characters_PhysicsPath";
+            Characters_PhysicsPath.Size = new Size(554, 21);
+            Characters_PhysicsPath.TabIndex = 27;
+            Characters_PhysicsPath.Text = "/Game/Meshes/Characters/Maya/maya_ragdollPhysicsAsset";
+            // 
+            // label144
+            // 
+            label144.AutoSize = true;
+            label144.ForeColor = SystemColors.ActiveCaption;
+            label144.Location = new Point(12, 207);
+            label144.Margin = new Padding(4, 0, 4, 0);
+            label144.Name = "label144";
+            label144.Size = new Size(78, 15);
+            label144.TabIndex = 26;
+            label144.Text = "Mesh Name:";
+            // 
+            // Characters_MeshName
+            // 
+            Characters_MeshName.BackColor = Color.FromArgb(75, 68, 138);
+            Characters_MeshName.BorderStyle = BorderStyle.FixedSingle;
+            Characters_MeshName.ForeColor = SystemColors.ActiveCaption;
+            Characters_MeshName.Location = new Point(26, 225);
+            Characters_MeshName.Margin = new Padding(4, 3, 4, 3);
+            Characters_MeshName.Name = "Characters_MeshName";
+            Characters_MeshName.Size = new Size(554, 21);
+            Characters_MeshName.TabIndex = 25;
+            Characters_MeshName.Text = "maya_skMeshAB2";
+            // 
+            // label143
+            // 
+            label143.AutoSize = true;
+            label143.ForeColor = SystemColors.ActiveCaption;
+            label143.Location = new Point(12, 163);
+            label143.Margin = new Padding(4, 0, 4, 0);
+            label143.Name = "label143";
+            label143.Size = new Size(69, 15);
+            label143.TabIndex = 24;
+            label143.Text = "Mesh Path:";
+            // 
+            // Characters_MeshPath
+            // 
+            Characters_MeshPath.BackColor = Color.FromArgb(75, 68, 138);
+            Characters_MeshPath.BorderStyle = BorderStyle.FixedSingle;
+            Characters_MeshPath.ForeColor = SystemColors.ActiveCaption;
+            Characters_MeshPath.Location = new Point(26, 181);
+            Characters_MeshPath.Margin = new Padding(4, 3, 4, 3);
+            Characters_MeshPath.Name = "Characters_MeshPath";
+            Characters_MeshPath.Size = new Size(554, 21);
+            Characters_MeshPath.TabIndex = 23;
+            Characters_MeshPath.Text = "/Game/Meshes/Characters/Maya/maya_skMeshAB2";
+            // 
+            // Characters_CanFly
+            // 
+            Characters_CanFly.AutoSize = true;
+            Characters_CanFly.Checked = true;
+            Characters_CanFly.CheckState = CheckState.Checked;
+            Characters_CanFly.Location = new Point(408, 375);
+            Characters_CanFly.Name = "Characters_CanFly";
+            Characters_CanFly.Size = new Size(66, 19);
+            Characters_CanFly.TabIndex = 22;
+            Characters_CanFly.Text = "Can Fly";
+            Characters_CanFly.UseVisualStyleBackColor = true;
+            // 
+            // label142
+            // 
+            label142.AutoSize = true;
+            label142.ForeColor = SystemColors.ActiveCaption;
+            label142.Location = new Point(12, 355);
+            label142.Margin = new Padding(4, 0, 4, 0);
+            label142.Name = "label142";
+            label142.Size = new Size(71, 15);
+            label142.TabIndex = 19;
+            label142.Text = "Ejaculation:";
+            // 
+            // Characters_Ejaculation
+            // 
+            Characters_Ejaculation.BackColor = Color.FromArgb(75, 68, 138);
+            Characters_Ejaculation.BorderStyle = BorderStyle.FixedSingle;
+            Characters_Ejaculation.ForeColor = SystemColors.ActiveCaption;
+            Characters_Ejaculation.Location = new Point(26, 373);
+            Characters_Ejaculation.Margin = new Padding(4, 3, 4, 3);
+            Characters_Ejaculation.Name = "Characters_Ejaculation";
+            Characters_Ejaculation.Size = new Size(252, 21);
+            Characters_Ejaculation.TabIndex = 18;
+            Characters_Ejaculation.Text = "Default";
+            // 
+            // label141
+            // 
+            label141.AutoSize = true;
+            label141.ForeColor = SystemColors.ActiveCaption;
+            label141.Location = new Point(304, 113);
+            label141.Margin = new Padding(4, 0, 4, 0);
+            label141.Name = "label141";
+            label141.Size = new Size(51, 15);
+            label141.TabIndex = 17;
+            label141.Text = "Gender:";
+            // 
+            // Characters_Gender
+            // 
+            Characters_Gender.BackColor = Color.FromArgb(75, 68, 138);
+            Characters_Gender.BorderStyle = BorderStyle.FixedSingle;
+            Characters_Gender.ForeColor = SystemColors.ActiveCaption;
+            Characters_Gender.Location = new Point(318, 131);
+            Characters_Gender.Margin = new Padding(4, 3, 4, 3);
+            Characters_Gender.Name = "Characters_Gender";
+            Characters_Gender.Size = new Size(252, 21);
+            Characters_Gender.TabIndex = 16;
+            Characters_Gender.Text = "Female";
+            // 
+            // label140
+            // 
+            label140.AutoSize = true;
+            label140.ForeColor = SystemColors.ActiveCaption;
+            label140.Location = new Point(12, 113);
+            label140.Margin = new Padding(4, 0, 4, 0);
+            label140.Name = "label140";
+            label140.Size = new Size(20, 15);
+            label140.TabIndex = 15;
+            label140.Text = "AI:";
+            // 
+            // Characters_AI
+            // 
+            Characters_AI.BackColor = Color.FromArgb(75, 68, 138);
+            Characters_AI.BorderStyle = BorderStyle.FixedSingle;
+            Characters_AI.ForeColor = SystemColors.ActiveCaption;
+            Characters_AI.Location = new Point(26, 131);
+            Characters_AI.Margin = new Padding(4, 3, 4, 3);
+            Characters_AI.Name = "Characters_AI";
+            Characters_AI.Size = new Size(252, 21);
+            Characters_AI.TabIndex = 14;
+            Characters_AI.Text = "AI_Default";
+            // 
+            // label139
+            // 
+            label139.AutoSize = true;
+            label139.ForeColor = SystemColors.ActiveCaption;
+            label139.Location = new Point(304, 67);
+            label139.Margin = new Padding(4, 0, 4, 0);
+            label139.Name = "label139";
+            label139.Size = new Size(40, 15);
+            label139.TabIndex = 13;
+            label139.Text = "Voice:";
+            // 
+            // Characters_Voice
+            // 
+            Characters_Voice.BackColor = Color.FromArgb(75, 68, 138);
+            Characters_Voice.BorderStyle = BorderStyle.FixedSingle;
+            Characters_Voice.ForeColor = SystemColors.ActiveCaption;
+            Characters_Voice.Location = new Point(318, 85);
+            Characters_Voice.Margin = new Padding(4, 3, 4, 3);
+            Characters_Voice.Name = "Characters_Voice";
+            Characters_Voice.Size = new Size(252, 21);
+            Characters_Voice.TabIndex = 12;
+            Characters_Voice.Text = "Maya";
+            // 
+            // label138
+            // 
+            label138.AutoSize = true;
+            label138.ForeColor = SystemColors.ActiveCaption;
+            label138.Location = new Point(12, 67);
+            label138.Margin = new Padding(4, 0, 4, 0);
+            label138.Name = "label138";
+            label138.Size = new Size(46, 15);
+            label138.TabIndex = 11;
+            label138.Text = "Sound:";
+            // 
+            // Characters_Sound
+            // 
+            Characters_Sound.BackColor = Color.FromArgb(75, 68, 138);
+            Characters_Sound.BorderStyle = BorderStyle.FixedSingle;
+            Characters_Sound.ForeColor = SystemColors.ActiveCaption;
+            Characters_Sound.Location = new Point(26, 85);
+            Characters_Sound.Margin = new Padding(4, 3, 4, 3);
+            Characters_Sound.Name = "Characters_Sound";
+            Characters_Sound.Size = new Size(252, 21);
+            Characters_Sound.TabIndex = 10;
+            Characters_Sound.Text = "Maya";
+            // 
+            // label137
+            // 
+            label137.AutoSize = true;
+            label137.ForeColor = SystemColors.ActiveCaption;
+            label137.Location = new Point(304, 20);
+            label137.Margin = new Padding(4, 0, 4, 0);
+            label137.Name = "label137";
+            label137.Size = new Size(126, 15);
+            label137.TabIndex = 9;
+            label137.Text = "Customization Profile:";
+            // 
+            // Characters_CustProfile
+            // 
+            Characters_CustProfile.BackColor = Color.FromArgb(75, 68, 138);
+            Characters_CustProfile.BorderStyle = BorderStyle.FixedSingle;
+            Characters_CustProfile.ForeColor = SystemColors.ActiveCaption;
+            Characters_CustProfile.Location = new Point(318, 38);
+            Characters_CustProfile.Margin = new Padding(4, 3, 4, 3);
+            Characters_CustProfile.Name = "Characters_CustProfile";
+            Characters_CustProfile.Size = new Size(252, 21);
+            Characters_CustProfile.TabIndex = 8;
+            Characters_CustProfile.Text = "Maya";
+            // 
+            // label136
+            // 
+            label136.AutoSize = true;
+            label136.ForeColor = SystemColors.ActiveCaption;
+            label136.Location = new Point(12, 20);
+            label136.Margin = new Padding(4, 0, 4, 0);
+            label136.Name = "label136";
+            label136.Size = new Size(100, 15);
+            label136.TabIndex = 7;
+            label136.Text = "Character Name:";
+            // 
+            // Characters_CharName
+            // 
+            Characters_CharName.BackColor = Color.FromArgb(75, 68, 138);
+            Characters_CharName.BorderStyle = BorderStyle.FixedSingle;
+            Characters_CharName.ForeColor = SystemColors.ActiveCaption;
+            Characters_CharName.Location = new Point(26, 38);
+            Characters_CharName.Margin = new Padding(4, 3, 4, 3);
+            Characters_CharName.Name = "Characters_CharName";
+            Characters_CharName.Size = new Size(252, 21);
+            Characters_CharName.TabIndex = 6;
+            Characters_CharName.Text = "Maya";
+            // 
             // AutoModCreator
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
@@ -5461,6 +5900,7 @@
             BackColor = Color.FromArgb(32, 34, 81);
             ClientSize = new Size(615, 997);
             ControlBox = false;
+            Controls.Add(CharactersGB);
             Controls.Add(TattoosGB);
             Controls.Add(CurrentlyEditing_LL);
             Controls.Add(label106);
@@ -5478,7 +5918,6 @@
             Controls.Add(PropsGB);
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.SizableToolWindow;
-            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "AutoModCreator";
             StartPosition = FormStartPosition.CenterScreen;
             Load += AutoModCreator_Load;
@@ -5560,6 +5999,8 @@
             ((System.ComponentModel.ISupportInitialize)PropPivotOffset_X).EndInit();
             TattoosGB.ResumeLayout(false);
             TattoosGB.PerformLayout();
+            CharactersGB.ResumeLayout(false);
+            CharactersGB.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -5953,5 +6394,37 @@
         private GroupBox TattoosGB;
         private LinkLabel TattoosAdd;
         private FlowLayoutPanel TattoosFlow;
+        private GroupBox CharactersGB;
+        private Label label136;
+        private TextBox Characters_CharName;
+        private Label label145;
+        private TextBox Characters_PhysicsName;
+        private Label label146;
+        private TextBox Characters_PhysicsPath;
+        private Label label144;
+        private TextBox Characters_MeshName;
+        private Label label143;
+        private TextBox Characters_MeshPath;
+        private CheckBox Characters_CanFly;
+        private Label label142;
+        private TextBox Characters_Ejaculation;
+        private Label label141;
+        private TextBox Characters_Gender;
+        private Label label140;
+        private TextBox Characters_AI;
+        private Label label139;
+        private TextBox Characters_Voice;
+        private Label label138;
+        private TextBox Characters_Sound;
+        private Label label137;
+        private TextBox Characters_CustProfile;
+        private Label label150;
+        private TextBox Characters_Poser;
+        private Label label149;
+        private TextBox Characters_Outfits;
+        private Label label148;
+        private TextBox Characters_Customization;
+        private Label label147;
+        private TextBox Characters_Animations;
     }
 }

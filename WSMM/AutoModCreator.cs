@@ -858,6 +858,76 @@ namespace WSMM
                     ModCreator_Form.AddToAutoModList(SavePath);
                     EditNewFile(SavePath);
                 }
+                else if (Variant.Text == "Characters")
+                {
+                    ModString += "NameMap: [NAMEMAPREPLACE]" + "\n";
+                    ModString += "[CHAR_NAME]: " + Characters_CharName.Text + "\n";
+                    AddToNameMap(Characters_CharName.Text);
+                    ModString += "[CUST_PROFILE]: " + Characters_CustProfile.Text + "\n";
+                    AddToNameMap(Characters_CustProfile.Text);
+
+                    ModString += "[SOUND]: " + Characters_Sound.Text + "\n";
+                    AddToNameMap(Characters_Sound.Text);
+                    ModString += "[VOICE]: " + Characters_Voice.Text + "\n";
+                    AddToNameMap(Characters_Voice.Text);
+                    ModString += "[AI]: " + Characters_AI.Text + "\n";
+                    AddToNameMap(Characters_AI.Text);
+                    ModString += "[GENDER]: " + Characters_Gender.Text + "\n";
+                    AddToNameMap(Characters_Gender.Text);
+                    ModString += "[EJACULATION]: " + Characters_Ejaculation.Text + "\n";
+                    AddToNameMap(Characters_Ejaculation.Text);
+                    ModString += "[FLYING]: " + Characters_CanFly.Checked.ToString().ToLower() + "\n";
+                    //AddToNameMap(Characters_CanFly.Text);
+
+                    ModString += "[MESH_PATH]: " + Characters_MeshPath.Text + "\n";
+                    AddToNameMap(Characters_MeshPath.Text);
+                    ModString += "[MESH_NAME]: " + Characters_MeshName.Text + "\n";
+                    AddToNameMap(Characters_MeshName.Text);
+                    ModString += "[PHYSICS_PATH]: " + Characters_PhysicsPath.Text + "\n";
+                    AddToNameMap(Characters_PhysicsPath.Text);
+                    ModString += "[PHYSICS_NAME]: " + Characters_PhysicsName.Text + "\n";
+                    AddToNameMap(Characters_PhysicsName.Text);
+
+
+                    ModString += "[ANIMATIONS]: " + Characters_Animations.Text + "\n";
+                    AddToNameMap(Characters_Animations.Text);
+                    ModString += "[CHAR_CUST]: " + Characters_Customization.Text + "\n";
+                    AddToNameMap(Characters_Customization.Text);
+                    ModString += "[OUTFITS]: " + Characters_Outfits.Text + "\n";
+                    AddToNameMap(Characters_Outfits.Text);
+                    ModString += "[POSER]: " + Characters_Poser.Text + "\n";
+                    AddToNameMap(Characters_Poser.Text);
+
+                    string NameMapString = string.Empty;
+                    foreach (string itm in NameMap)
+                    {
+                        NameMapString += itm + ",";
+                    }
+                    NameMapString = NameMapString.TrimEnd(',');
+                    ModString = ModString.Replace("[NAMEMAPREPLACE]", NameMapString);
+
+                    string SavePath = string.Empty;
+                    if (CurrentlyEditing_Path == string.Empty)
+                    {
+                        SavePath = Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Mod Creator\AutoMod\" + ModName.Text + "_" + Characters_CharName.Text + ".txt";
+                    }
+                    else
+                    {
+                        if (File.Exists(CurrentlyEditing_Path))
+                        {
+                            SavePath = CurrentlyEditing_Path;
+                        }
+                        else
+                        {
+                            MessageBox.Show("The file you are editing could not be found.\nMod write was unsuccessful.", "Wild Life Mod Manager");
+                            return;
+                        }
+                    }
+
+                    File.WriteAllText(SavePath, ModString);
+                    ModCreator_Form.AddToAutoModList(SavePath);
+                    EditNewFile(SavePath);
+                }
                 MessageBox.Show("Mod file created!", "AutoMod");
             }
             catch (Exception)
@@ -888,87 +958,61 @@ namespace WSMM
 
         private void Variant_SelectedIndexChanged(object sender, EventArgs e)
         {
+            tabControl1.Visible = false;
+            tabControl1.Enabled = false;
+            FurCustomizationGB.Visible = false;
+            Character.Items.Clear();
+            Character.Enabled = false;
+            CharCustomBox.Visible = false;
+            OutfitID.Enabled = false;
+            OutfitName.Enabled = false;
+            PropsGB.Visible = false;
+            TattoosGB.Visible = false;
+            CharactersGB.Visible = false;
+
             if (Variant.Text == "Add")
             {
                 tabControl1.Visible = true;
-                CharCustomBox.Visible = false;
-                FurCustomizationGB.Visible = false;
                 tabControl1.Enabled = true;
                 OutfitName.Enabled = true;
                 OutfitID.Enabled = true;
-                Character.Items.Clear();
                 Character.Items.AddRange(OutfitChars);
                 Character.SelectedIndex = 0;
-                PropsGB.Visible = false;
                 Character.Enabled = true;
-                TattoosGB.Visible = false;
             }
             else if (Variant.Text == "Port")
             {
                 tabControl1.Visible = true;
-                CharCustomBox.Visible = false;
-                FurCustomizationGB.Visible = false;
-                tabControl1.Enabled = false;
-                OutfitName.Enabled = false;
                 OutfitID.Enabled = true;
-                Character.Items.Clear();
                 Character.Items.AddRange(OutfitChars);
                 Character.SelectedIndex = 0;
-                PropsGB.Visible = false;
                 Character.Enabled = true;
-                TattoosGB.Visible = false;
             }
             else if (Variant.Text == "Character Customization")
             {
-                tabControl1.Visible = false;
-                FurCustomizationGB.Visible = false;
-                Character.Items.Clear();
                 Character.Items.AddRange(CustomizationChars);
                 Character.SelectedIndex = 0;
                 CharCustomBox.Visible = true;
-                OutfitID.Enabled = false;
-                OutfitName.Enabled = false;
-                PropsGB.Visible = false;
                 Character.Enabled = true;
-                TattoosGB.Visible = false;
             }
             else if (Variant.Text == "Fur Customization")
             {
-                tabControl1.Visible = false;
-                Character.Items.Clear();
                 Character.Items.AddRange(FurChars);
-                CharCustomBox.Visible = false;
                 Character.SelectedIndex = 0;
                 FurCustomizationGB.Visible = true;
-                OutfitID.Enabled = false;
-                OutfitName.Enabled = false;
-                PropsGB.Visible = false;
                 Character.Enabled = true;
-                TattoosGB.Visible = false;
             }
             else if (Variant.Text == "Props")
             {
-                tabControl1.Visible = false;
-                FurCustomizationGB.Visible = false;
-                Character.Items.Clear();
-                Character.Enabled = false;
-                CharCustomBox.Visible = false;
-                OutfitID.Enabled = false;
-                OutfitName.Enabled = false;
                 PropsGB.Visible = true;
-                TattoosGB.Visible = false;
             }
             else if (Variant.Text == "Tattoos")
             {
-                tabControl1.Visible = false;
-                FurCustomizationGB.Visible = false;
-                Character.Items.Clear();
-                Character.Enabled = false;
-                CharCustomBox.Visible = false;
-                OutfitID.Enabled = false;
-                OutfitName.Enabled = false;
-                PropsGB.Visible = false;
                 TattoosGB.Visible = true;
+            }
+            else if (Variant.Text == "Characters")
+            {
+                CharactersGB.Visible = true;
             }
         }
 
@@ -1103,6 +1147,23 @@ namespace WSMM
                 else if (TempArray[0].Trim() == "MaxForceTorqueFactor") { Fur_MaxForceTorqueFactor.Text = TempArray[1].Trim(); }
                 else if (TempArray[0].Trim() == "ReferenceHairBias") { Fur_RefHairBias.Text = TempArray[1].Trim(); }
                 else if (TempArray[0].Trim() == "HairLengthForceUniformity") { Fur_HairLengthForceUniformity.Text = TempArray[1].Trim(); }
+                else if (TempArray[0].Trim() == "[CHAR_NAME]") { Characters_CharName.Text = TempArray[1].Trim(); }
+                else if (TempArray[0].Trim() == "[CUST_PROFILE]") { Characters_CustProfile.Text = TempArray[1].Trim(); }
+                else if (TempArray[0].Trim() == "[SOUND]") { Characters_Sound.Text = TempArray[1].Trim(); }
+                else if (TempArray[0].Trim() == "[VOICE]") { Characters_Voice.Text = TempArray[1].Trim(); }
+                else if (TempArray[0].Trim() == "[AI]") { Characters_AI.Text = TempArray[1].Trim(); }
+                else if (TempArray[0].Trim() == "[GENDER]") { Characters_Gender.Text = TempArray[1].Trim(); }
+                else if (TempArray[0].Trim() == "[EJACULATION]") { Characters_Ejaculation.Text = TempArray[1].Trim(); }
+                else if (TempArray[0].Trim() == "[FLYING]" && TempArray[1].Trim() == "true") { Characters_CanFly.Checked = true; }
+                else if (TempArray[0].Trim() == "[FLYING]" && TempArray[1].Trim() == "false") { Characters_CanFly.Checked = false; }
+                else if (TempArray[0].Trim() == "[MESH_PATH]") { Characters_MeshPath.Text = TempArray[1].Trim(); }
+                else if (TempArray[0].Trim() == "[MESH_NAME]") { Characters_MeshName.Text = TempArray[1].Trim(); }
+                else if (TempArray[0].Trim() == "[PHYSICS_PATH]") { Characters_PhysicsPath.Text = TempArray[1].Trim(); }
+                else if (TempArray[0].Trim() == "[PHYSICS_NAME]") { Characters_PhysicsName.Text = TempArray[1].Trim(); }
+                else if (TempArray[0].Trim() == "[ANIMATIONS]") { Characters_Animations.Text = TempArray[1].Trim(); }
+                else if (TempArray[0].Trim() == "[CHAR_CUST]") { Characters_Customization.Text = TempArray[1].Trim(); }
+                else if (TempArray[0].Trim() == "[OUTFITS]") { Characters_Outfits.Text = TempArray[1].Trim(); }
+                else if (TempArray[0].Trim() == "[POSER]") { Characters_Poser.Text = TempArray[1].Trim(); }
                 else if (TempArray[0].Trim() == "Prop")
                 {
                     Props_LB.Items.Add(TempArray[1].Trim());
