@@ -3557,14 +3557,12 @@ namespace WSMM
                     }
 
                     Entry = Entry.Replace("[HEAD_PHYSICSAREAS]", GetCleanString(contents, "[HEAD_PHYSICSAREAS]"));
-                    Entry = Entry.Replace("[HEAD_MORPHTARGET]", GetCleanString(contents, "[HEAD_MORPHTARGET]"));
+                    Entry = Entry.Replace("[HEAD_MORPHTARGET]", GetCleanString(contents, "[HEAD_MORPHTARGET]", true));
                     Entry = Entry.Replace("[HEAD_MORPHTARGETVALUE]", GetCleanString(contents, "[HEAD_MORPHTARGETVALUE]"));
-                    Entry = Entry.Replace("[HEAD_CONSTRAINTPROFILE]", GetCleanString(contents, "[HEAD_CONSTRAINTPROFILE]"));
+                    Entry = Entry.Replace("[HEAD_CONSTRAINTPROFILE]", GetCleanString(contents, "[HEAD_CONSTRAINTPROFILE]", true));
                     Entry = Entry.Replace("[HEAD_AROUSALBLEND]", GetCleanString(contents, "[HEAD_AROUSALBLEND]"));
                     Entry = Entry.Replace("[HEAD_FLEXREGIONS]", GetCleanString(contents, "[HEAD_FLEXREGIONS]"));
 
-                    Entry = Entry.Replace("[CLOTHING_ID]", GetCleanString(contents, "[CLOTHING_ID]"));
-                    Entry = Entry.Replace("[CLOTHING_NAME]", GetCleanString(contents, "[CLOTHING_NAME]"));
                     Entry = Entry.Replace("[CHEST_MESH_PATH]", GetCleanString(contents, "[CHEST_MESH_PATH]"));
                     Entry = Entry.Replace("[CHEST_MESH_NAME]", GetCleanString(contents, "[CHEST_MESH_NAME]"));
                     Entry = Entry.Replace("[CHEST_SEX_MESH_PATH]", GetCleanString(contents, "[CHEST_SEX_MESH_PATH]"));
@@ -3580,14 +3578,12 @@ namespace WSMM
                     }
 
                     Entry = Entry.Replace("[CHEST_PHYSICSAREAS]", GetCleanString(contents, "[CHEST_PHYSICSAREAS]"));
-                    Entry = Entry.Replace("[CHEST_MORPHTARGET]", GetCleanString(contents, "[CHEST_MORPHTARGET]"));
+                    Entry = Entry.Replace("[CHEST_MORPHTARGET]", GetCleanString(contents, "[CHEST_MORPHTARGET]", true));
                     Entry = Entry.Replace("[CHEST_MORPHTARGETVALUE]", GetCleanString(contents, "[CHEST_MORPHTARGETVALUE]"));
-                    Entry = Entry.Replace("[CHEST_CONSTRAINTPROFILE]", GetCleanString(contents, "[CHEST_CONSTRAINTPROFILE]"));
+                    Entry = Entry.Replace("[CHEST_CONSTRAINTPROFILE]", GetCleanString(contents, "[CHEST_CONSTRAINTPROFILE]", true));
                     Entry = Entry.Replace("[CHEST_AROUSALBLEND]", GetCleanString(contents, "[CHEST_AROUSALBLEND]"));
                     Entry = Entry.Replace("[CHEST_FLEXREGIONS]", GetCleanString(contents, "[CHEST_FLEXREGIONS]"));
 
-                    Entry = Entry.Replace("[CLOTHING_ID]", GetCleanString(contents, "[CLOTHING_ID]"));
-                    Entry = Entry.Replace("[CLOTHING_NAME]", GetCleanString(contents, "[CLOTHING_NAME]"));
                     Entry = Entry.Replace("[HANDS_MESH_PATH]", GetCleanString(contents, "[HANDS_MESH_PATH]"));
                     Entry = Entry.Replace("[HANDS_MESH_NAME]", GetCleanString(contents, "[HANDS_MESH_NAME]"));
                     Entry = Entry.Replace("[HANDS_SEX_MESH_PATH]", GetCleanString(contents, "[HANDS_SEX_MESH_PATH]"));
@@ -3603,14 +3599,12 @@ namespace WSMM
                     }
 
                     Entry = Entry.Replace("[HANDS_PHYSICSAREAS]", GetCleanString(contents, "[HANDS_PHYSICSAREAS]"));
-                    Entry = Entry.Replace("[HANDS_MORPHTARGET]", GetCleanString(contents, "[HANDS_MORPHTARGET]"));
+                    Entry = Entry.Replace("[HANDS_MORPHTARGET]", GetCleanString(contents, "[HANDS_MORPHTARGET]", true));
                     Entry = Entry.Replace("[HANDS_MORPHTARGETVALUE]", GetCleanString(contents, "[HANDS_MORPHTARGETVALUE]"));
-                    Entry = Entry.Replace("[HANDS_CONSTRAINTPROFILE]", GetCleanString(contents, "[HANDS_CONSTRAINTPROFILE]"));
+                    Entry = Entry.Replace("[HANDS_CONSTRAINTPROFILE]", GetCleanString(contents, "[HANDS_CONSTRAINTPROFILE]", true));
                     Entry = Entry.Replace("[HANDS_AROUSALBLEND]", GetCleanString(contents, "[HANDS_AROUSALBLEND]"));
                     Entry = Entry.Replace("[HANDS_FLEXREGIONS]", GetCleanString(contents, "[HANDS_FLEXREGIONS]"));
 
-                    Entry = Entry.Replace("[CLOTHING_ID]", GetCleanString(contents, "[CLOTHING_ID]"));
-                    Entry = Entry.Replace("[CLOTHING_NAME]", GetCleanString(contents, "[CLOTHING_NAME]"));
                     Entry = Entry.Replace("[LEGS_MESH_PATH]", GetCleanString(contents, "[LEGS_MESH_PATH]"));
                     Entry = Entry.Replace("[LEGS_MESH_NAME]", GetCleanString(contents, "[LEGS_MESH_NAME]"));
                     Entry = Entry.Replace("[LEGS_SEX_MESH_PATH]", GetCleanString(contents, "[LEGS_SEX_MESH_PATH]"));
@@ -3626,14 +3620,12 @@ namespace WSMM
                     }
 
                     Entry = Entry.Replace("[LEGS_PHYSICSAREAS]", GetCleanString(contents, "[LEGS_PHYSICSAREAS]"));
-                    Entry = Entry.Replace("[LEGS_MORPHTARGET]", GetCleanString(contents, "[LEGS_MORPHTARGET]"));
+                    Entry = Entry.Replace("[LEGS_MORPHTARGET]", GetCleanString(contents, "[LEGS_MORPHTARGET]", true));
                     Entry = Entry.Replace("[LEGS_MORPHTARGETVALUE]", GetCleanString(contents, "[LEGS_MORPHTARGETVALUE]"));
-                    Entry = Entry.Replace("[LEGS_CONSTRAINTPROFILE]", GetCleanString(contents, "[LEGS_CONSTRAINTPROFILE]"));
+                    Entry = Entry.Replace("[LEGS_CONSTRAINTPROFILE]", GetCleanString(contents, "[LEGS_CONSTRAINTPROFILE]", true));
                     Entry = Entry.Replace("[LEGS_AROUSALBLEND]", GetCleanString(contents, "[LEGS_AROUSALBLEND]"));
                     Entry = Entry.Replace("[LEGS_FLEXREGIONS]", GetCleanString(contents, "[LEGS_FLEXREGIONS]"));
 
-                    Entry = Entry.Replace("[CLOTHING_ID]", GetCleanString(contents, "[CLOTHING_ID]"));
-                    Entry = Entry.Replace("[CLOTHING_NAME]", GetCleanString(contents, "[CLOTHING_NAME]"));
                     Entry = Entry.Replace("[FEET_MESH_PATH]", GetCleanString(contents, "[FEET_MESH_PATH]"));
                     Entry = Entry.Replace("[FEET_MESH_NAME]", GetCleanString(contents, "[FEET_MESH_NAME]"));
                     Entry = Entry.Replace("[FEET_SEX_MESH_PATH]", GetCleanString(contents, "[FEET_SEX_MESH_PATH]"));
@@ -3649,9 +3641,9 @@ namespace WSMM
                     }
 
                     Entry = Entry.Replace("[FEET_PHYSICSAREAS]", GetCleanString(contents, "[FEET_PHYSICSAREAS]"));
-                    Entry = Entry.Replace("[FEET_MORPHTARGET]", GetCleanString(contents, "[FEET_MORPHTARGET]"));
+                    Entry = Entry.Replace("[FEET_MORPHTARGET]", GetCleanString(contents, "[FEET_MORPHTARGET]", true));
                     Entry = Entry.Replace("[FEET_MORPHTARGETVALUE]", GetCleanString(contents, "[FEET_MORPHTARGETVALUE]"));
-                    Entry = Entry.Replace("[FEET_CONSTRAINTPROFILE]", GetCleanString(contents, "[FEET_CONSTRAINTPROFILE]"));
+                    Entry = Entry.Replace("[FEET_CONSTRAINTPROFILE]", GetCleanString(contents, "[FEET_CONSTRAINTPROFILE]", true));
                     Entry = Entry.Replace("[FEET_AROUSALBLEND]", GetCleanString(contents, "[FEET_AROUSALBLEND]"));
                     Entry = Entry.Replace("[FEET_FLEXREGIONS]", GetCleanString(contents, "[FEET_FLEXREGIONS]"));
                     Entry += "," + "\n";
@@ -3659,6 +3651,38 @@ namespace WSMM
                     Entries.Add(Entry);
 
                     string NM = GetCleanString(contents, "NameMap");
+
+                    if (NM == "")
+                    {
+                        Debug.WriteLine("No namemap provided. Generating from clothing data.");
+                        NM = GetCleanString(contents, "[CLOTHING_ID]") + "," + GetCleanString(contents, "[CLOTHING_NAME]") + "," +
+                            GetCleanString(contents, "[HEAD_MESH_PATH]") + "," + GetCleanString(contents, "[HEAD_MESH_NAME]") + "," +
+                            GetCleanString(contents, "[HEAD_SEX_MESH_PATH]") + "," + GetCleanString(contents, "[HEAD_SEX_MESH_NAME]") + "," +
+                            GetCleanString(contents, "[HEAD_ICON_PATH]") + "," + GetCleanString(contents, "[HEAD_ICON_NAME]") + "," +
+                            GetCleanString(contents, "[HEAD_FURMASK_PATH]") + "," + GetCleanString(contents, "[HEAD_FURMASK_NAME]") + "," +
+                            GetCleanString(contents, "[HEAD_SEX_FURMASK_PATH]") + "," + GetCleanString(contents, "[HEAD_SEX_FURMASK_NAME]") + "," +
+                            GetCleanString(contents, "[CHEST_MESH_PATH]") + "," + GetCleanString(contents, "[CHEST_MESH_NAME]") + "," +
+                            GetCleanString(contents, "[CHEST_SEX_MESH_PATH]") + "," + GetCleanString(contents, "[CHEST_SEX_MESH_NAME]") + "," +
+                            GetCleanString(contents, "[CHEST_ICON_PATH]") + "," + GetCleanString(contents, "[CHEST_ICON_NAME]") + "," +
+                            GetCleanString(contents, "[CHEST_FURMASK_PATH]") + "," + GetCleanString(contents, "[CHEST_FURMASK_NAME]") + "," +
+                            GetCleanString(contents, "[CHEST_SEX_FURMASK_PATH]") + "," + GetCleanString(contents, "[CHEST_SEX_FURMASK_NAME]") + "," +
+                            GetCleanString(contents, "[HANDS_MESH_PATH]") + "," + GetCleanString(contents, "[HANDS_MESH_NAME]") + "," +
+                            GetCleanString(contents, "[HANDS_SEX_MESH_PATH]") + "," + GetCleanString(contents, "[HANDS_SEX_MESH_NAME]") + "," +
+                            GetCleanString(contents, "[HANDS_ICON_PATH]") + "," + GetCleanString(contents, "[HANDS_ICON_NAME]") + "," +
+                            GetCleanString(contents, "[HANDS_FURMASK_PATH]") + "," + GetCleanString(contents, "[HANDS_FURMASK_NAME]") + "," +
+                            GetCleanString(contents, "[HANDS_SEX_FURMASK_PATH]") + "," + GetCleanString(contents, "[HANDS_SEX_FURMASK_NAME]") + "," +
+                            GetCleanString(contents, "[LEGS_MESH_PATH]") + "," + GetCleanString(contents, "[LEGS_MESH_NAME]") + "," +
+                            GetCleanString(contents, "[LEGS_SEX_MESH_PATH]") + "," + GetCleanString(contents, "[LEGS_SEX_MESH_NAME]") + "," +
+                            GetCleanString(contents, "[LEGS_ICON_PATH]") + "," + GetCleanString(contents, "[LEGS_ICON_NAME]") + "," +
+                            GetCleanString(contents, "[LEGS_FURMASK_PATH]") + "," + GetCleanString(contents, "[LEGS_FURMASK_NAME]") + "," +
+                            GetCleanString(contents, "[LEGS_SEX_FURMASK_PATH]") + "," + GetCleanString(contents, "[LEGS_SEX_FURMASK_NAME]") + "," +
+                            GetCleanString(contents, "[FEET_MESH_PATH]") + "," + GetCleanString(contents, "[FEET_MESH_NAME]") + "," +
+                            GetCleanString(contents, "[FEET_SEX_MESH_PATH]") + "," + GetCleanString(contents, "[FEET_SEX_MESH_NAME]") + "," +
+                            GetCleanString(contents, "[FEET_ICON_PATH]") + "," + GetCleanString(contents, "[FEET_ICON_NAME]") + "," +
+                            GetCleanString(contents, "[FEET_FURMASK_PATH]") + "," + GetCleanString(contents, "[FEET_FURMASK_NAME]") + "," +
+                            GetCleanString(contents, "[FEET_SEX_FURMASK_PATH]") + "," + GetCleanString(contents, "[FEET_SEX_FURMASK_NAME]");
+                    }
+
                     string[] TempArray = NM.Split(',');
                     foreach (string temp in TempArray)
                     {
@@ -4729,7 +4753,13 @@ namespace WSMM
                     string[] TempArray = CleanString.Split(':');
                     CleanString = TempArray[1].Trim(' ');
 
-                    if (WrapInQuotes)
+                    //Fix for values that start with a + sign, which will break the JSON if not wrapped in quotes
+                    if (WrapInQuotes == false && CleanString.StartsWith("+"))
+                    {
+                        WrapInQuotes = true;
+                    }
+
+                    if (WrapInQuotes && CleanString.StartsWith("\"") == false && CleanString.EndsWith("\"") == false && CleanString != "null")
                     {
                         CleanString = "\"" + CleanString + "\"";
                     }
