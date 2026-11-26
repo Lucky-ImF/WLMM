@@ -92,6 +92,8 @@ namespace WSMM
         string InMem_GFurJSON = string.Empty;
         string InMem_PropsJSON = string.Empty;
         string InMem_TattoosJSON = string.Empty;
+        string InMem_NPCData_SandboxJSON = string.Empty;
+        string InMem_NPCStaticDataJSON = string.Empty;
 
         //Panel, Picturebox, Label(Name), Label(Error), Label(Version), Label(SupportedVersions), Label(Author), LinkLabel(Remove), LinkLabel(Link), Checkbox
         Panel[] Mod_Panel = new Panel[500];
@@ -3229,6 +3231,9 @@ namespace WSMM
             string SandboxProps = string.Empty;
             string Tattoos = string.Empty;
 
+            string NPCData_Sandbox = string.Empty;
+            string NPCStaticData = string.Empty;
+
             BS_BaseGameCharacterCustomizationFile.Invoke((System.Windows.Forms.MethodInvoker)delegate
             {
                 GameCharacterCustom = File.ReadAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\" + BS_BaseGameCharacterCustomizationFile.Text);
@@ -3316,12 +3321,38 @@ namespace WSMM
                 }
             }
 
+            try
+            {
+                if (File.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\" + "DT_NPCData_Sandbox_Default.json"))
+                {
+                    NPCData_Sandbox = File.ReadAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\" + "DT_NPCData_Sandbox_Default.json");
+                }
+                if (File.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\" + "DT_NPCStaticData_Default.json"))
+                {
+                    NPCStaticData = File.ReadAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\" + "DT_NPCStaticData_Default.json");
+                }
+            }
+            catch (Exception)
+            {
+                BuildLog += "+ - DT_NPCData_Sandbox_Default or DT_NPCStaticData_Default not found. Skipping character mods.\n";
+                if (File.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_NPCData_Sandbox_Generated.json"))
+                {
+                    File.Delete(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_NPCData_Sandbox_Generated.json");
+                }
+                if (File.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_NPCStaticData_Generated.json"))
+                {
+                    File.Delete(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_NPCStaticData_Generated.json");
+                }
+            }
+
             List<string> Entries = new List<string>();
             List<string> NameMap = new List<string>();
             List<string> OutfitsNameMap = new List<string>();
             List<string> CustomNameMap = new List<string>();
             List<string> SandboxPropsNameMap = new List<string>();
             List<string> TattoosNameMap = new List<string>();
+            List<string> NPCData_SandboxNameMap = new List<string>();
+            List<string> NPCStaticDataNameMap = new List<string>();
             List<string> Outfits = new List<string>();
             List<string> Hair = new List<string>();
             List<string> Beard = new List<string>();
@@ -3334,6 +3365,8 @@ namespace WSMM
             List<string> Tanlines = new List<string>();
             List<string> Props = new List<string>();
             List<string> TattoosList = new List<string>();
+            List<string> NPCData_Sandbox_List = new List<string>();
+            List<string> NPCStaticData_List = new List<string>();
             bool CustomEdited = false;
             bool FurEdited = false;
             bool UseNewHairJSON = true;
@@ -3384,6 +3417,17 @@ namespace WSMM
                 TattooNameMap_Defaults = File.ReadAllLines(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_Tattoo_Default_NameMap.txt");
             }
 
+            string[] NPCData_SandboxNameMap_Defaults = null;
+            if (NPCData_Sandbox != "")
+            {
+                NPCData_SandboxNameMap_Defaults = File.ReadAllLines(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_NPCData_Sandbox_Default_NameMap.txt");
+            }
+            string[] NPCStaticDataNameMap_Defaults = null;
+            if (NPCStaticData != "")
+            {
+                NPCStaticDataNameMap_Defaults = File.ReadAllLines(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_NPCStaticData_Default_NameMap.txt");
+            }
+
             string Original_Entry = File.ReadAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_ClothesOutfit_Entry_Default.json");
             string Original_FurmaskEntry = File.ReadAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_ClothesOutfit_Entry_FurMask.json");
             string Original_OutfitEntry = File.ReadAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_GameCharacterOutfits_Entry_Default.json");
@@ -3410,6 +3454,17 @@ namespace WSMM
                 UseNewHairJSON = false;
             }
 
+            string Original_NPCData_SandboxEntry = "";
+            if (NPCData_Sandbox != "")
+            {
+                Original_NPCData_SandboxEntry = File.ReadAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_NPCData_Sandbox_Entry_Default.json");
+            }
+            string Original_NPCStaticDataEntry = "";
+            if (NPCStaticData != "")
+            {
+                Original_NPCStaticDataEntry = File.ReadAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_NPCStaticData_Entry_Default.json");
+            }
+
             Directory.CreateDirectory(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\AutoMod\Unzipped");
             foreach (string file in Directory.EnumerateFiles(Application.StartupPath + @"Mods\" + LoadedWLVersion + @"\Loaded\AutoMod", "*.collection"))
             {
@@ -3430,6 +3485,8 @@ namespace WSMM
                 string CustomEntry = Original_CustomEntry;
                 string SandboxPropsEntry = Original_SandboxPropsEntry;
                 string TattooEntry = Original_TattooEntry;
+                string NPCData_SandboxEntry = Original_NPCData_SandboxEntry;
+                string NPCStaticDataEntry = Original_NPCStaticDataEntry;
                 string[] contents;
                 bool UsingFurMask = false;
                 contents = File.ReadAllLines(file);
@@ -4148,6 +4205,89 @@ namespace WSMM
                         }
                     }
                 }
+                else if (GetCleanString(contents, "Variant") == "Characters")
+                {
+                    NPCData_SandboxEntry = NPCData_SandboxEntry.Replace("[CHAR_NAME]", GetCleanString(contents, "[CHAR_NAME]", true));
+                    NPCData_SandboxEntry = NPCData_SandboxEntry.Replace("[CUST_PROFILE]", GetCleanString(contents, "[CUST_PROFILE]", true));
+                    NPCData_SandboxEntry = NPCData_SandboxEntry.Replace("[SOUND]", GetCleanString(contents, "[SOUND]", true));
+                    NPCData_SandboxEntry = NPCData_SandboxEntry.Replace("[VOICE]", GetCleanString(contents, "[VOICE]", true));
+                    NPCData_SandboxEntry = NPCData_SandboxEntry.Replace("[AI]", GetCleanString(contents, "[AI]", true));
+
+                    NPCStaticDataEntry = NPCStaticDataEntry.Replace("[CHAR_NAME]", GetCleanString(contents, "[CHAR_NAME]", true));
+                    NPCStaticDataEntry = NPCStaticDataEntry.Replace("[GENDER]", GetCleanString(contents, "[GENDER]", true));
+                    NPCStaticDataEntry = NPCStaticDataEntry.Replace("[EJACULATION]", GetCleanString(contents, "[EJACULATION]", true));
+                    NPCStaticDataEntry = NPCStaticDataEntry.Replace("[FLYING]", GetCleanString(contents, "[FLYING]", false));
+                    NPCStaticDataEntry = NPCStaticDataEntry.Replace("[MESH_PATH]", GetCleanString(contents, "[MESH_PATH]", true));
+                    NPCStaticDataEntry = NPCStaticDataEntry.Replace("[MESH_NAME]", GetCleanString(contents, "[MESH_NAME]", true));
+                    NPCStaticDataEntry = NPCStaticDataEntry.Replace("[PHYSICS_PATH]", GetCleanString(contents, "[PHYSICS_PATH]", true));
+                    NPCStaticDataEntry = NPCStaticDataEntry.Replace("[PHYSICS_NAME]", GetCleanString(contents, "[PHYSICS_NAME]", true));
+                    NPCStaticDataEntry = NPCStaticDataEntry.Replace("[ANIMATIONS]", GetCleanString(contents, "[ANIMATIONS]", true));
+                    NPCStaticDataEntry = NPCStaticDataEntry.Replace("[CHAR_CUST]", GetCleanString(contents, "[CHAR_CUST]", true));
+                    NPCStaticDataEntry = NPCStaticDataEntry.Replace("[OUTFITS]", GetCleanString(contents, "[OUTFITS]", true));
+                    NPCStaticDataEntry = NPCStaticDataEntry.Replace("[POSER]", GetCleanString(contents, "[POSER]", true));
+                    NPCStaticDataEntry = NPCStaticDataEntry.Replace("[ANIMATIONS]", GetCleanString(contents, "[ANIMATIONS]", true));
+
+                    NPCData_SandboxEntry += "," + "\n";
+                    NPCStaticDataEntry += "," + "\n";
+
+                    NPCData_Sandbox_List.Add(NPCData_SandboxEntry);
+                    NPCStaticData_List.Add(NPCStaticDataEntry);
+
+                    string NM = GetCleanString(contents, "NameMap");
+                    string[] TempArray = NM.Split(',');
+                    foreach (string temp in TempArray)
+                    {
+                        bool isDupe = false;
+                        foreach (string itm in NPCData_SandboxNameMap)
+                        {
+                            if (itm == temp)
+                            {
+                                isDupe = true;
+                                break;
+                            }
+                        }
+                        if (isDupe == false)
+                        {
+                            foreach (string itm in NPCData_SandboxNameMap_Defaults)
+                            {
+                                if (itm == temp)
+                                {
+                                    isDupe = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if (isDupe == false)
+                        {
+                            NPCData_SandboxNameMap.Add(temp);
+                        }
+
+                        isDupe = false;
+                        foreach (string itm in NPCStaticDataNameMap)
+                        {
+                            if (itm == temp)
+                            {
+                                isDupe = true;
+                                break;
+                            }
+                        }
+                        if (isDupe == false)
+                        {
+                            foreach (string itm in NPCStaticDataNameMap_Defaults)
+                            {
+                                if (itm == temp)
+                                {
+                                    isDupe = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if (isDupe == false)
+                        {
+                            NPCStaticDataNameMap.Add(temp);
+                        }
+                    }
+                }
             }
 
             //Remove Temp files
@@ -4488,16 +4628,98 @@ namespace WSMM
                 }
             }
 
+            string CompiledNPCData_SandboxEntries = string.Empty;
+            string CompiledNPCData_SandboxNameMap = string.Empty;
+            if (NPCData_Sandbox != "")
+            {
+                try
+                {
+                    foreach (string Ent in NPCData_Sandbox_List)
+                    {
+                        CompiledNPCData_SandboxEntries += Ent + ",\n";
+                    }
+                    CompiledNPCData_SandboxEntries = CompiledNPCData_SandboxEntries.TrimEnd('\n');
+                    CompiledNPCData_SandboxEntries = CompiledNPCData_SandboxEntries.TrimEnd(',');
+
+                    foreach (string Ent in NPCData_SandboxNameMap)
+                    {
+                        CompiledNPCData_SandboxNameMap += "\"" + Ent + "\"" + "," + "\n";
+                    }
+                    CompiledNPCData_SandboxNameMap = CompiledNPCData_SandboxNameMap.TrimEnd('\n');
+                    CompiledNPCData_SandboxNameMap = CompiledNPCData_SandboxNameMap.TrimEnd(',');
+
+                    NPCData_Sandbox = NPCData_Sandbox.Replace("[ENTRYSTART]", CompiledNPCData_SandboxEntries);
+                    NPCData_Sandbox = NPCData_Sandbox.Replace("[NAMEMAPSTART]", CompiledNPCData_SandboxNameMap);
+
+                    if (WriteDebugFiles)
+                    {
+                        File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_NPCData_Sandbox_Debug.json", NPCData_Sandbox);
+                    }
+                    dynamic NPCArray = JsonConvert.DeserializeObject(NPCData_Sandbox);
+                    InMem_NPCData_SandboxJSON = JsonConvert.SerializeObject(NPCArray, Newtonsoft.Json.Formatting.Indented);
+                    if (WriteDebugFiles)
+                    {
+                        File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_NPCData_Sandbox_Generated.json", InMem_NPCData_SandboxJSON);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return "DT_NPCData_Sandbox json error: " + ex.Message;
+                }
+            }
+
+            string CompiledNPCStaticDataEntries = string.Empty;
+            string CompiledNPCStaticDataNameMap = string.Empty;
+            if (NPCStaticData != "")
+            {
+                try
+                {
+                    foreach (string Ent in NPCStaticData_List)
+                    {
+                        CompiledNPCStaticDataEntries += Ent + ",\n";
+                    }
+                    CompiledNPCStaticDataEntries = CompiledNPCStaticDataEntries.TrimEnd('\n');
+                    CompiledNPCStaticDataEntries = CompiledNPCStaticDataEntries.TrimEnd(',');
+
+                    foreach (string Ent in NPCStaticDataNameMap)
+                    {
+                        CompiledNPCStaticDataNameMap += "\"" + Ent + "\"" + "," + "\n";
+                    }
+                    CompiledNPCStaticDataNameMap = CompiledNPCStaticDataNameMap.TrimEnd('\n');
+                    CompiledNPCStaticDataNameMap = CompiledNPCStaticDataNameMap.TrimEnd(',');
+
+                    NPCStaticData = NPCStaticData.Replace("[ENTRYSTART]", CompiledNPCStaticDataEntries);
+                    NPCStaticData = NPCStaticData.Replace("[NAMEMAPSTART]", CompiledNPCStaticDataNameMap);
+
+                    if (WriteDebugFiles)
+                    {
+                        File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_NPCStaticData_Debug.json", NPCStaticData);
+                    }
+                    dynamic NPCArray = JsonConvert.DeserializeObject(NPCStaticData);
+                    InMem_NPCStaticDataJSON = JsonConvert.SerializeObject(NPCArray, Newtonsoft.Json.Formatting.Indented);
+                    if (WriteDebugFiles)
+                    {
+                        File.WriteAllText(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\DT_NPCStaticData_Generated.json", InMem_NPCStaticDataJSON);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return "DT_NPCStaticData json error: " + ex.Message;
+                }
+            }
+
             ClothesOutfit = string.Empty;
             GameCharacterOutfits = string.Empty;
             GameCharacterCustom = string.Empty;
             SandboxProps = string.Empty;
             Tattoos = string.Empty;
+            NPCData_Sandbox = string.Empty;
+            NPCStaticData = string.Empty;
 
             return "Success";
         }
 
-        private string GetCleanString(string[] contents, string txt)
+        private string GetCleanString(string[] contents, string txt, bool WrapInQuotes = false)
         {
             foreach (string S in contents)
             {
@@ -4506,6 +4728,11 @@ namespace WSMM
                     string CleanString = S;
                     string[] TempArray = CleanString.Split(':');
                     CleanString = TempArray[1].Trim(' ');
+
+                    if (WrapInQuotes)
+                    {
+                        CleanString = "\"" + CleanString + "\"";
+                    }
 
                     return CleanString;
                 }
@@ -4613,6 +4840,38 @@ namespace WSMM
                 }
             }
 
+            if (InMem_NPCData_SandboxJSON != "")
+            {
+                var DT_NPCData_Sandbox = new UAsset();
+                try
+                {
+                    DT_NPCData_Sandbox = UAsset.DeserializeJson(new MemoryStream(Encoding.UTF8.GetBytes(InMem_NPCData_SandboxJSON)));
+                    DT_NPCData_Sandbox.Mappings = mappings;
+
+                    DT_NPCData_Sandbox.Write(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P\WildLifeC\Content\DataTables\NPC\DT_NPCData_Sandbox.uasset");
+                }
+                catch (Exception ex)
+                {
+                    return "DT_NPCData_Sandbox Serialization Error: " + ex.Message;
+                }
+            }
+
+            if (InMem_NPCStaticDataJSON != "")
+            {
+                var DT_NPCStaticData = new UAsset();
+                try
+                {
+                    DT_NPCStaticData = UAsset.DeserializeJson(new MemoryStream(Encoding.UTF8.GetBytes(InMem_NPCStaticDataJSON)));
+                    DT_NPCStaticData.Mappings = mappings;
+
+                    DT_NPCStaticData.Write(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P\WildLifeC\Content\DataTables\NPC\DT_NPCStaticData.uasset");
+                }
+                catch (Exception ex)
+                {
+                    return "DT_NPCStaticData Serialization Error: " + ex.Message;
+                }
+            }
+
             return "Success";
         }
 
@@ -4652,6 +4911,16 @@ namespace WSMM
                     {
                         pak_writer.WriteFile("WildLifeC/Content/DataTables/DT_Tattoo.uasset", File.ReadAllBytes(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P\WildLifeC\Content\DataTables\DT_Tattoo.uasset"));
                         pak_writer.WriteFile("WildLifeC/Content/DataTables/DT_Tattoo.uexp", File.ReadAllBytes(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P\WildLifeC\Content\DataTables\DT_Tattoo.uexp"));
+                    }
+                    if (File.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P\WildLifeC\Content\DataTables\NPC\DT_NPCData_Sandbox.uasset"))
+                    {
+                        pak_writer.WriteFile("WildLifeC/Content/DataTables/NPC/DT_NPCData_Sandbox.uasset", File.ReadAllBytes(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P\WildLifeC\Content\DataTables\NPC\DT_NPCData_Sandbox.uasset"));
+                        pak_writer.WriteFile("WildLifeC/Content/DataTables/NPC/DT_NPCData_Sandbox.uexp", File.ReadAllBytes(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P\WildLifeC\Content\DataTables\NPC\DT_NPCData_Sandbox.uexp"));
+                    }
+                    if (File.Exists(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P\WildLifeC\Content\DataTables\NPC\DT_NPCStaticData.uasset"))
+                    {
+                        pak_writer.WriteFile("WildLifeC/Content/DataTables/NPC/DT_NPCStaticData.uasset", File.ReadAllBytes(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P\WildLifeC\Content\DataTables\NPC\DT_NPCStaticData.uasset"));
+                        pak_writer.WriteFile("WildLifeC/Content/DataTables/NPC/DT_NPCStaticData.uexp", File.ReadAllBytes(Application.StartupPath + @"DataTables\" + LoadedWLVersion + @"\AutoMod_P\WildLifeC\Content\DataTables\NPC\DT_NPCStaticData.uexp"));
                     }
                     pak_writer.WriteIndex();
                 }

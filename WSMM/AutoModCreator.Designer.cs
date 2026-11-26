@@ -5900,6 +5900,7 @@
             BackColor = Color.FromArgb(32, 34, 81);
             ClientSize = new Size(615, 997);
             ControlBox = false;
+            Controls.Add(tabControl1);
             Controls.Add(CharactersGB);
             Controls.Add(TattoosGB);
             Controls.Add(CurrentlyEditing_LL);
@@ -5914,7 +5915,6 @@
             Controls.Add(StopEditing_LL);
             Controls.Add(CharCustomBox);
             Controls.Add(FurCustomizationGB);
-            Controls.Add(tabControl1);
             Controls.Add(PropsGB);
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.SizableToolWindow;
