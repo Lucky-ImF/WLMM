@@ -1649,6 +1649,11 @@ namespace WSMM
                         File.Move(Img, ModPath + @"\Icon.png", true);
                         IconFound = true;
                     }
+                    //Fix for .mod files that already have a png icon
+                    if (IconFound == false && File.Exists(ModPath + @"\Icon.png"))
+                    {
+                        IconFound = true;
+                    }
                     if (IconFound == false)
                     {
                         ProgressInfo_Label.Invoke((System.Windows.Forms.MethodInvoker)delegate
